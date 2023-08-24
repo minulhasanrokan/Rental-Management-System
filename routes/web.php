@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+// registration route..................
+Route::controller(RegistrationController::class)->group(function(){
+
+    Route::get('/registration','registration_page')->name('admin.registration');
+    Route::post('/registration-store','registration_store')->name('admin.registration.store');
+});
+
+
+// login route..................
+Route::controller(LoginController::class)->group(function(){
+
+    Route::get('/login','login_page')->name('admin.login');
+    Route::post('/login-store','login_store')->name('admin.login.store');
 });
