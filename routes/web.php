@@ -23,7 +23,7 @@ Route::get('/', function () {
 // registration route..................
 Route::controller(RegistrationController::class)->group(function(){
 
-    Route::get('/registration','registration_page')->name('admin.registration');
+    Route::get('/registration','registration_page')->name('admin.registration')->middleware(['logincheck']);
     Route::post('/registration-store','registration_store')->name('admin.registration.store');
 });
 
@@ -31,7 +31,7 @@ Route::controller(RegistrationController::class)->group(function(){
 // login route..................
 Route::controller(LoginController::class)->group(function(){
 
-    Route::get('/login','login_page')->name('admin.login');
+    Route::get('/login','login_page')->name('admin.login')->middleware(['logincheck']);
     Route::post('/login-store','login_store')->name('admin.login.store');
 });
 
@@ -39,5 +39,5 @@ Route::controller(LoginController::class)->group(function(){
 // dashboard route..............
 Route::controller(DashboardController::class)->group(function(){
 
-    Route::get('/dashboard','dashboard')->name('admin.dashboard');
+    Route::get('/dashboard','dashboard')->name('admin.dashboard')->middleware(['dashboardcheck']);
 });
