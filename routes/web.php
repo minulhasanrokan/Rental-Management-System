@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,11 @@ Route::controller(LoginController::class)->group(function(){
 
     Route::get('/login','login_page')->name('admin.login');
     Route::post('/login-store','login_store')->name('admin.login.store');
+});
+
+
+// dashboard route..............
+Route::controller(DashboardController::class)->group(function(){
+
+    Route::get('/dashboard','dashboard')->name('admin.dashboard');
 });

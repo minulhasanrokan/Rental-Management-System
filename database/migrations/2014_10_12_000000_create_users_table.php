@@ -31,6 +31,8 @@ return new class extends Migration
             $table->integer('delete_status')->default(0);
             $table->integer('status')->default(1);
             $table->integer('edit_status')->default(0);
+            $table->integer('super_admin_status')->default(0);
+            $table->integer('user_type')->default(0);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
