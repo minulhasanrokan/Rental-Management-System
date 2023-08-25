@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SystemSettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,5 +41,12 @@ Route::controller(LoginController::class)->group(function(){
 Route::controller(DashboardController::class)->group(function(){
 
     Route::get('/dashboard','dashboard')->name('admin.dashboard')->middleware(['dashboardcheck']);
-    Route::get('/logout','logout')->name('admin.logout')->middleware(['dashboardcheck']);
+    Route::get('/dashboard/logout','logout')->name('admin.logout')->middleware(['dashboardcheck']);
+});
+
+
+// dashboard route..............
+Route::controller(SystemSettingController::class)->group(function(){
+
+    Route::get('/dashboard/system-setting-information','system_setting_page')->name('system_setting.information.add')->middleware(['checkroute']);
 });

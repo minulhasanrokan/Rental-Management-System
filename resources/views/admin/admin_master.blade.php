@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{asset('uploads/icon/rental_icon.png')}}">
+    <title>Rental | Admin-Dashboard</title>
     <!-- css -->
         @yield('css')
     <!-- /.css -->
@@ -23,9 +24,6 @@
             <!-- /.Main Sidebar Container -->
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
-                    @include('admin.includes.content_header')
-                <!-- /.content-header -->
                 <!-- Main content -->
                 @yield('content')
                 <!-- /.content -->

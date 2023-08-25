@@ -101,7 +101,7 @@
                                             foreach($right_arr[$group_data['g_id']][$cat_data['c_id']] as $right_data){
                                         @endphp
                                             <li class="nav-item">
-                                                <a href="pages/examples/login.html" class="nav-link">
+                                                <a href="#" onclick="get_new_page('{{route($right_data['r_route_name'])}}','{{$right_data['r_title']}}');" class="nav-link">
                                                     <i class="nav-icon {{$right_data['r_icon']}}"></i>
                                                     <p>{{$right_data['r_name']}}</p>
                                                 </a>
@@ -647,3 +647,11 @@
     </div>
 <!-- /.sidebar -->
 </aside>
+
+<script type="text/javascript">
+    
+    function get_new_page(route_name,r_title) {
+        
+        alert(r_title);
+    }
+</script>
