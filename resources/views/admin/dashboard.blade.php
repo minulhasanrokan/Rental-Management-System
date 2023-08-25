@@ -1,6 +1,5 @@
 @extends('admin.admin_master')
 
-
 @section('content')
     <div class="container-fluid" style="padding-top: 20px !important;">
         <!-- Info boxes -->

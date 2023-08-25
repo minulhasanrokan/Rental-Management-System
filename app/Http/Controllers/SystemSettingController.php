@@ -136,9 +136,9 @@ class SystemSettingController extends Controller
 
             $extension = $file->getClientOriginalExtension();
 
-            $title_name = str_replace(' ','_',$request->title);
+            $title_name = str_replace(' ','_',$request->system_name);
 
-            $fileName = $data->system_name.'_logo_'.time().'.'.$extension;
+            $fileName = $title_name.'_logo_'.time().'.'.$extension;
 
             Image::make($file)->resize(500,500)->save('uploads/logo/'.$fileName);
 
@@ -161,9 +161,9 @@ class SystemSettingController extends Controller
 
             $extension = $file->getClientOriginalExtension();
 
-            $title_name = str_replace(' ','_',$request->title);
+            $title_name = str_replace(' ','_',$request->system_name);
 
-            $fileName = $data->system_name.'_bg_'.time().'.'.$extension;
+            $fileName = $title_name.'_bg_'.time().'.'.$extension;
 
             Image::make($file)->resize(1920,1080)->save('uploads/login_bg/'.$fileName);
 
@@ -186,9 +186,9 @@ class SystemSettingController extends Controller
 
             $extension = $file->getClientOriginalExtension();
 
-            $title_name = str_replace(' ','_',$request->title);
+            $title_name = str_replace(' ','_',$request->system_name);
 
-            $fileName = $data->system_name.'_icon_'.time().'.'.$extension;
+            $fileName = $title_name.'_icon_'.time().'.'.$extension;
 
             Image::make($file)->resize(100,100)->save('uploads/icon/'.$fileName);
 

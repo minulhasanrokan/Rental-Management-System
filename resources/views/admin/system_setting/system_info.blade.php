@@ -172,9 +172,11 @@
         var form_data = new FormData();
 
         var system_logo = $('#system_logo')[0].files;
+        var system_bg_image = $('#system_bg_image')[0].files;
         var system_favicon = $('#system_favicon')[0].files;
 
         form_data.append('system_logo',system_logo[0]);
+        form_data.append('system_bg_image',system_bg_image[0]);
         form_data.append('system_favicon',system_favicon[0]);
 
         form_data.append("system_name", system_name);

@@ -61,8 +61,8 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="{{asset('backend/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <a href="{{route('admin.dashboard')}}" class="brand-link">
+        <img src="{{asset('uploads/logo')}}/{{!empty($system_data['system_logo'])?$system_data['system_logo']:'rental_logo.png'}}" alt="{{!empty($system_data['system_name'])?$system_data['system_name']:'Rental Management System'}}" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
     <!-- Sidebar -->
@@ -652,7 +652,7 @@
     
     function get_new_page(route_name,r_title,data) {
 
-        document.title = r_title;
+        document.title = '{{!empty($system_data['system_name'])?$system_data['system_name']:'Rental Management System'}}'+' | '+r_title;
         
         var approval_setup =route_name;
         var r_title =r_title;
