@@ -28,14 +28,12 @@ Route::controller(RegistrationController::class)->group(function(){
     Route::post('/registration-store','registration_store')->name('admin.registration.store');
 });
 
-
 // login route..................
 Route::controller(LoginController::class)->group(function(){
 
     Route::get('/login','login_page')->name('admin.login')->middleware(['logincheck']);
     Route::post('/login-store','login_store')->name('admin.login.store');
 });
-
 
 // dashboard route..............
 Route::controller(DashboardController::class)->group(function(){
@@ -49,4 +47,5 @@ Route::controller(DashboardController::class)->group(function(){
 Route::controller(SystemSettingController::class)->group(function(){
 
     Route::get('/dashboard/system-setting-information','system_setting_page')->name('system_setting.information.add')->middleware(['checkroute']);
+    Route::post('/dashboard/system-setting-information','system_information_update')->name('system_setting.information.add')->middleware(['checkroute']);
 });

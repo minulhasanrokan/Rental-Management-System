@@ -101,7 +101,7 @@
                                             foreach($right_arr[$group_data['g_id']][$cat_data['c_id']] as $right_data){
                                         @endphp
                                             <li class="nav-item">
-                                                <a href="#" onclick="get_new_page('{{route($right_data['r_route_name'])}}','{{$right_data['r_title']}}');" class="nav-link">
+                                                <a href="#" onclick="get_new_page('{{route($right_data['r_route_name'])}}','{{$right_data['r_title']}}','');" class="nav-link">
                                                     <i class="nav-icon {{$right_data['r_icon']}}"></i>
                                                     <p>{{$right_data['r_name']}}</p>
                                                 </a>
@@ -650,8 +650,39 @@
 
 <script type="text/javascript">
     
-    function get_new_page(route_name,r_title) {
+    function get_new_page(route_name,r_title,data) {
+
+        document.title = r_title;
         
-        alert(r_title);
+        var approval_setup =route_name;
+        var r_title =r_title;
+                
+        var data=data;
+
+        http.open("GET",route_name,true);
+        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        http.send(data);
+        http.onreadystatechange = get_new_page_reponse;
+    }
+
+    function get_new_page_reponse(){
+
+        if(http.readyState == 4)
+        {
+            var reponse=trim(http.responseText).split("****");
+
+            if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+
+                alert('Session Expire');
+
+                location.replace('<?php echo url('/login');?>');
+            }
+            else{
+
+                $("#page_content").html(reponse[0]);
+
+                $('meta[name="csrf-token"]').attr('content', reponse[1]);
+            }
+        }
     }
 </script>

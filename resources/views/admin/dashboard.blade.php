@@ -2,7 +2,6 @@
 
 
 @section('content')
-<section class="content" id="page_content">
     <div class="container-fluid" style="padding-top: 20px !important;">
         <!-- Info boxes -->
         <div class="row">
@@ -789,7 +788,6 @@
         <!-- /.row -->
     </div>
     <!--/. container-fluid -->
-</section>
 @endsection
 
 @section('css')
@@ -802,6 +800,8 @@
     <link rel="stylesheet" href="{{asset('backend/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('backend/dist/css/adminlte.min.css')}}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{asset('backend/plugins/summernote/summernote-bs4.min.css')}}">
 
 @endsection
 
@@ -829,5 +829,9 @@
     <script src="{{asset('backend/dist/js/demo.js')}}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{asset('backend/dist/js/pages/dashboard2.js')}}"></script>
+    <!-- Summernote -->
+    <script src="{{asset('backend/plugins/summernote/summernote-bs4.min.js')}}"></script>
+    <!--common js-->
+    <script src="{{asset('backend/dist/js/common.js')}}"></script>
 
 @endsection

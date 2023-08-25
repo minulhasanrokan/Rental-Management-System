@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/x-icon" href="{{asset('uploads/icon/rental_icon.png')}}">
     <title>Rental | Admin-Dashboard</title>
     <!-- css -->
@@ -25,7 +26,9 @@
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Main content -->
-                @yield('content')
+                <section class="content" id="page_content">
+                    @yield('content')
+                </section>
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->

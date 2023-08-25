@@ -1185,6 +1185,8 @@ class Blueprint
     {
         $this->timestamp('created_at', $precision)->nullable();
 
+        $this->timestamp('deleted_at', $precision)->nullable();
+
         $this->timestamp('updated_at', $precision)->nullable();
     }
 

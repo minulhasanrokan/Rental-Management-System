@@ -29,6 +29,8 @@ class CheckRoute
         else if($user_session_data[config('app.app_session_name')]['super_admin_status']!=1){
 
             $route_name = request()->route()->getName();
+
+            //echo 'Right Not Found';
         }
 
         return $next($request);
