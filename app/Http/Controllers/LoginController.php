@@ -12,9 +12,13 @@ class LoginController extends Controller
     
     public $common;
 
+    public $app_session_name ='';
+
     public function __construct(){
 
         $this->common = new CommonController();
+
+        $this->app_session_name = config('app.app_session_name');
     }
 
     public function login_page(){
@@ -78,7 +82,7 @@ class LoginController extends Controller
 
                     $user_session_data = (array) json_decode(json_encode($user_data));
 
-                    $request->session()->put('rental', $user_session_data);
+                    $request->session()->put($this->app_session_name, $user_session_data);
 
                     $notification = array(
                         'message'=> "User Account Login Successfully!",

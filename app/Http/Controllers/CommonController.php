@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 class CommonController extends Controller
 {
 
+    public $app_session_name ='';
+
+    public function __construct(){
+
+        $this->app_session_name = config('app.app_session_name');
+    }
+
     public function encrypt_data($data){
 
         $encrypt_method = "AES-256-CBC";

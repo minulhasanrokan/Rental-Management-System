@@ -1,3 +1,64 @@
+@php
+
+    $admin_status = Session::get(config('app.app_session_name').'.super_admin_status');
+
+    $user_right_data = array();
+
+    if($admin_status==1)
+    {
+        $user_right_data = Illuminate\Support\Facades\DB::table('right_groups')
+                ->join('right_categories', 'right_groups.id', '=', 'right_categories.group_id')
+                ->join('right_details', 'right_categories.id', '=', 'right_details.cat_id')
+                ->select('right_groups.id as g_id', 'right_groups.name as g_name', 'right_groups.action_name as g_action_name', 'right_groups.details as g_details', 'right_groups.title as g_title', 'right_groups.short_order as g_short_order', 'right_groups.icon as g_icon', 'right_categories.id as c_id', 'right_categories.group_id as group_id', 'right_categories.c_name', 'right_categories.c_title', 'right_categories.c_action_name', 'right_categories.c_details', 'right_categories.short_order as c_short_order', 'right_categories.c_icon as c_icon', 'right_details.id  as r_id', 'right_details.cat_id', 'right_details.r_name', 'right_details.r_title', 'right_details.r_action_name', 'right_details.r_route_name', 'right_details.r_details', 'right_details.r_short_order', 'right_details.r_icon')
+                ->where('right_groups.status',1)
+                ->where('right_categories.status',1)
+                ->where('right_details.status',1)
+                ->where('right_groups.delete_status',0)
+                ->where('right_categories.delete_status',0)
+                ->where('right_details.delete_status',0)
+                ->orderBy('right_groups.short_order', 'ASC')
+                ->orderBy('right_categories.short_order', 'ASC')
+                ->orderBy('right_details.r_short_order', 'ASC')
+                ->get()->toArray();
+    }
+
+    $right_group_arr = array();
+    $right_cat_arr = array();
+    $right_arr = array();
+
+    if(!empty($user_right_data)){
+
+        foreach($user_right_data as $data){
+
+            $right_group_arr[$data->g_id]['g_id'] = $data->g_id;
+            $right_group_arr[$data->g_id]['g_name'] = $data->g_name;
+            $right_group_arr[$data->g_id]['g_action_name'] = $data->g_action_name;
+            $right_group_arr[$data->g_id]['g_details'] = $data->g_details;
+            $right_group_arr[$data->g_id]['g_title'] = $data->g_title;
+            $right_group_arr[$data->g_id]['g_short_order'] = $data->g_short_order;
+            $right_group_arr[$data->g_id]['g_icon'] = $data->g_icon;
+
+            $right_cat_arr[$data->g_id][$data->c_id]['c_id'] = $data->c_id;
+            $right_cat_arr[$data->g_id][$data->c_id]['c_name'] = $data->c_name;
+            $right_cat_arr[$data->g_id][$data->c_id]['c_title'] = $data->c_title;
+            $right_cat_arr[$data->g_id][$data->c_id]['c_action_name'] = $data->c_action_name;
+            $right_cat_arr[$data->g_id][$data->c_id]['c_details'] = $data->c_details;
+            $right_cat_arr[$data->g_id][$data->c_id]['c_short_order'] = $data->c_short_order;
+            $right_cat_arr[$data->g_id][$data->c_id]['c_icon'] = $data->c_icon;
+
+            $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_id'] = $data->r_id;
+            $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_name'] = $data->r_name;
+            $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_title'] = $data->r_title;
+            $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_action_name'] = $data->r_action_name;
+            $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_route_name'] = $data->r_route_name;
+            $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_details'] = $data->r_details;
+            $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_short_order'] = $data->r_short_order;
+            $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_icon'] = $data->r_icon;
+        }
+    }
+
+@endphp
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
@@ -15,26 +76,57 @@
                 <a href="#" class="d-block">Alexander Pierce</a>
             </div>
         </div>
-        <!-- SidebarSearch Form -->
-        <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                @php
+                    foreach($right_group_arr as $group_data){
+                @endphp
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon {{$group_data['g_icon']}}"></i>
+                            <p>{{$group_data['g_name']}}<i class="fas fa-angle-left right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @php
+                                foreach($right_cat_arr[$group_data['g_id']] as $cat_data){
+                            @endphp
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon {{$cat_data['c_icon']}}"></i>
+                                        <p>{{$cat_data['c_name']}}<i class="fas fa-angle-left right"></i></p>
+                                     </a>
+                                    <ul class="nav nav-treeview">
+                                        @php
+                                            foreach($right_arr[$group_data['g_id']][$cat_data['c_id']] as $right_data){
+                                        @endphp
+                                            <li class="nav-item">
+                                                <a href="pages/examples/login.html" class="nav-link">
+                                                    <i class="nav-icon {{$right_data['r_icon']}}"></i>
+                                                    <p>{{$right_data['r_name']}}</p>
+                                                </a>
+                                            </li>
+                                        @php
+                                            }
+                                        @endphp
+                                    </ul>
+                                </li>
+                            @php
+                                }
+                            @endphp
+                        </ul>
+                    </li>
+                @php
+                    }
+                @endphp
+
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>Widgets<span class="right badge badge-danger">New</span></p>
+                    <a href="{{route('admin.logout')}}" class="nav-link">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <p>Logout</p>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>

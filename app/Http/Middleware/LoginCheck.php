@@ -18,7 +18,7 @@ class LoginCheck
 
         $user_session_data = session()->all();
 
-        if(isset($user_session_data['rental'])){
+        if(isset($user_session_data[config('app.app_session_name')])){
 
             return redirect('/dashboard');
 

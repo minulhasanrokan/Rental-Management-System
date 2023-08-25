@@ -40,4 +40,5 @@ Route::controller(LoginController::class)->group(function(){
 Route::controller(DashboardController::class)->group(function(){
 
     Route::get('/dashboard','dashboard')->name('admin.dashboard')->middleware(['dashboardcheck']);
+    Route::get('/logout','logout')->name('admin.logout')->middleware(['dashboardcheck']);
 });

@@ -18,6 +18,10 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+
+    // session name
+    'app_session_name' => env('APP_SESSION_NAME', 'rental'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
