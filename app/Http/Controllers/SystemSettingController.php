@@ -46,6 +46,7 @@ class SystemSettingController extends Controller
             $system_data['id']=$data->id;
             $system_data['edit_status']=$data->edit_status;
             $system_data['delete_status']=$data->delete_status;
+            $system_data['system_bg_image']=$data->system_bg_image;
         }
         else{
             $system_data['system_name']='';
@@ -63,6 +64,7 @@ class SystemSettingController extends Controller
             $system_data['id']='';
             $system_data['edit_status']='';
             $system_data['delete_status']='';
+            $system_data['system_bg_image']='';
         }
 
         return view('admin.system_setting.system_info',compact('system_data'));
@@ -78,6 +80,7 @@ class SystemSettingController extends Controller
             'system_copy_right' => 'required|string|max:250',
             'system_logo' => $request->input('hidden_system_logo') === '' ? 'required' : '',
             'system_favicon' => $request->input('hidden_system_favicon') === '' ? 'required' : '',
+            'system_bg_image' => $request->input('hidden_system_bg_image') === '' ? 'required' : '',
 
         ]);
   
@@ -150,6 +153,31 @@ class SystemSettingController extends Controller
             }
 
             $data->system_logo = $fileName;
+        }
+
+        if ($request->hasFile('system_bg_image')) {
+
+            $file = $request->file('system_bg_image');
+
+            $extension = $file->getClientOriginalExtension();
+
+            $title_name = str_replace(' ','_',$request->title);
+
+            $fileName = $data->system_name.'_bg_'.time().'.'.$extension;
+
+            Image::make($file)->resize(1920,1080)->save('uploads/login_bg/'.$fileName);
+
+            if($data->system_bg_image!='')
+            {
+                $deletePhoto = "uploads/login_bg/".$data->system_bg_image;
+                
+                if(file_exists($deletePhoto)){
+
+                    unlink($deletePhoto);
+                }
+            }
+
+            $data->system_bg_image = $fileName;
         }
 
         if ($request->hasFile('system_favicon')) {

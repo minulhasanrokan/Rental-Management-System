@@ -62,7 +62,7 @@
                                     <div class="input-error" style="display:none; color: red;" id="system_deatils_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="system_logo">System Logo</label>
                                     <input onchange="readUrl(this,'system_logo_photo');" type="file" class="form-control" id="system_logo" name="system_logo" placeholder="Enter System Logo" required>
@@ -70,12 +70,25 @@
                                     <div class="input-error" style="display:none; color: red;" id="system_logo_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <img class="rounded avatar-lg" width="80" height="80" id="system_logo_photo" src="{{asset('uploads/logo')}}/{{!empty(($system_data['system_logo']))? $system_data['system_logo'] : 'rental_logo.png'}}"/>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="system_bg_image">System Backgroup</label>
+                                    <input onchange="readUrl(this,'system_bg_image_photo');" type="file" class="form-control" id="system_bg_image" name="system_bg_image" placeholder="Enter System Backgroup" required>
+                                    <input type="hidden" name="hidden_system_bg_image" id="hidden_system_bg_image" value="{{$system_data['system_bg_image']}}">
+                                    <div class="input-error" style="display:none; color: red;" id="system_logo_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <img class="rounded avatar-lg" width="80" height="80" id="system_bg_image_photo" src="{{asset('uploads/login_bg')}}/{{!empty(($system_data['system_bg_image']))? $system_data['system_bg_image'] : 'login_register_bg.jpg'}}"/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="system_favicon">System Favicon</label>
                                     <input onchange="readUrl(this,'system_favicon_photo');" type="file" class="form-control" id="system_favicon" name="system_favicon" placeholder="Enter System Favicon" required>
@@ -83,7 +96,7 @@
                                     <div class="input-error" style="display:none; color: red;" id="system_favicon_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <img class="rounded avatar-lg" width="80" height="80" id="system_favicon_photo" src="{{asset('uploads/icon')}}/{{!empty(($system_data['system_favicon']))? $system_data['system_favicon'] : 'rental_icon.png'}}"/>
                                 </div>

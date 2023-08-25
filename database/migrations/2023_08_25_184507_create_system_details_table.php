@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('system_copy_right')->nullable();
             $table->text('system_deatils')->nullable();
             $table->string('system_logo')->nullable();
+            $table->string('system_bg_image')->nullable();
             $table->string('system_favicon')->nullable();
             $table->integer('add_by')->nullable();
             $table->integer('edit_by')->nullable();
