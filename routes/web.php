@@ -27,7 +27,7 @@ Route::controller(RegistrationController::class)->group(function(){
     Route::get('/registration','registration_page')->name('admin.registration')->middleware(['logincheck']);
     Route::post('/registration-store','registration_store')->name('admin.registration.store');
 
-    Route::get('/verify-email/{token}','verify_email_page')->name('admin.verify.email')->middleware(['logincheck']);
+    Route::get('/verify-email/{token}','verify_email_page')->name('admin.verify.email');
 });
 
 // login route..................
