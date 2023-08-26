@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\SystemDetails;
 use Illuminate\Support\Facades\Hash;
+use DB;
 
 class RegistrationController extends Controller
 {
@@ -85,6 +86,8 @@ class RegistrationController extends Controller
 
         $token = rand(1000,9999);
 
+        DB::beginTransaction();
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -98,14 +101,36 @@ class RegistrationController extends Controller
 
             $encrypt_data = $this->common->encrypt_data($user->id);
 
-            $notification = array(
-                'message'=> "User Account Created Successfully",
-                'alert-type'=>'info',
-                'create_status'=>1,
-                'user_id' =>$encrypt_data,
-            );
+            $mail_data = new MailController();
+
+            $status = $mail_data->sent_email_verify_email($request->email,$encrypt_data,$request->name);
+
+            if($status==true){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "User Account Created Successfully",
+                    'alert-type'=>'info',
+                    'create_status'=>1,
+                    'user_id' =>$encrypt_data,
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "User Account Does Not Created Successfully",
+                    'alert-type'=>'warning',
+                    'create_status'=>0,
+                    'user_id' =>'',
+                );
+            }
         }
         else{
+
+            DB::rollBack();
 
             $notification = array(
                 'message'=> "User Account Does Not Created Successfully",
@@ -116,5 +141,10 @@ class RegistrationController extends Controller
         }
 
         return redirect()->back()->with($notification);
+    }
+
+    public function verify_email_page($token){
+
+        
     }
 }

@@ -22,6 +22,12 @@ return [
     // session name
     'app_session_name' => env('APP_SESSION_NAME', 'rental'),
 
+    // encription method name
+    'app_encrypt_method' => env('APP_ENCRIPTION_METHOD', 'AES-256-CBC'),
+    'app_encrypt_secret_key' => env('APP_ENCRIPTION_SECRET_KEY', '7aE3OKIZxusugQdpk3gwNi9x63MRAFLgkMJ4nyil88ZYMyjqTSE3FIo8L5KJghfi'),
+    'app_encrypt_secret_iv' => env('APP_ENCRIPTION_SECRET_IV', '7aE3OKIZxusugQdpk3gwNi9x63MRAFLgkMJ4nyil88ZYMyjqTSE3FIo8L5KJghfi'),
+    'app_encrypt_hash' => env('APP_ENCRIPTION_HASH', 'sha256'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -172,6 +178,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\MailServiceProvider::class,
     ])->toArray(),
 
     /*

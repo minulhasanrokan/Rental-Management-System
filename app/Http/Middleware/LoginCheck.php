@@ -21,10 +21,9 @@ class LoginCheck
         if(isset($user_session_data[config('app.app_session_name')])){
 
             return redirect('/dashboard');
-
         }
 
-        session()->flush();
+        session()->forget(config('app.app_session_name'));
         session()->regenerate();
 
         return $next($request);

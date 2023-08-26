@@ -1,3 +1,4 @@
+<script type="text/javascript"></script>
 <!DOCTYPE html>
 <html lang="en">
     <head>

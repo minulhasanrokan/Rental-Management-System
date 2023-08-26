@@ -26,6 +26,8 @@ Route::controller(RegistrationController::class)->group(function(){
 
     Route::get('/registration','registration_page')->name('admin.registration')->middleware(['logincheck']);
     Route::post('/registration-store','registration_store')->name('admin.registration.store');
+
+    Route::get('/verify-email/{token}','verify_email_page')->name('admin.verify.email')->middleware(['logincheck']);
 });
 
 // login route..................
@@ -48,4 +50,8 @@ Route::controller(SystemSettingController::class)->group(function(){
 
     Route::get('/dashboard/system-setting-information','system_setting_page')->name('system_setting.information.add')->middleware(['checkroute']);
     Route::post('/dashboard/system-setting-information','system_information_update')->name('system_setting.information.add')->middleware(['checkroute']);
+
+    // mail setup ............
+    Route::get('/dashboard/system-setting-mail','system_mail_page')->name('system_setting.mail')->middleware(['checkroute']);
+    Route::post('/dashboard/system-setting-mail','system_mail_update')->name('system_setting.mail')->middleware(['checkroute']);
 });

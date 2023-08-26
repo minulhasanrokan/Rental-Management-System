@@ -22,14 +22,14 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="system_name">System E-mail</label>
+                                    <label for="system_email">System E-mail</label>
                                     <input type="email" class="form-control" id="system_email" name="system_email" placeholder="Enter System E-mail" value="{{$system_data['system_email']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="system_email_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="system_name">System Mobile Number</label>
+                                    <label for="system_mobile">System Mobile Number</label>
                                     <input type="text" class="form-control" id="system_mobile" name="system_mobile" placeholder="Enter System Mobile Number" value="{{$system_data['system_mobile']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="system_mobile_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>

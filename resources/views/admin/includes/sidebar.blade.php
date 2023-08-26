@@ -673,7 +673,7 @@
 
             if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
 
-                alert('Session Expire');
+                alert(http.responseText);
 
                 location.replace('<?php echo url('/login');?>');
             }
