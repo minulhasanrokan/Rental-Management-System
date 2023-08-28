@@ -402,7 +402,7 @@ class RegistrationController extends Controller
                     'user_id' =>'',
                 );
             }
-            esle if($data->verify_status!=1){
+            else if($data->verify_status!=1){
 
                 $notification = array(
                     'message'=> "Please Verify Your Account First",

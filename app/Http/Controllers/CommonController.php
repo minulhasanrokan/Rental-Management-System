@@ -37,7 +37,7 @@ class CommonController extends Controller
 
     public function decrypt_data($data){
 
-        data = urldecode($data);
+        $data = urldecode($data);
 
         $encrypt_method = $this->app_session_name = config('app.app_encrypt_method');
         $secret_key = $this->app_session_name = config('app.app_encrypt_secret_key');
