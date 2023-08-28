@@ -24,28 +24,21 @@
                     <p class="h4"><b>{{!empty($system_data['system_name'])?$system_data['system_name']:'Rental Management System'}}</b></p>
                 </div>
                 <div class="card-body">
-                    @if(Session::has('message') && Session::has('create_status') && Session::get('create_status')==1)
-                        <h5 class="text-center">A Verification Link Has Been Sent To The E-mail Address You Provided During Registration.</h5>
-                        <button type="button" class="btn btn-block btn-primary"><a style="text-decoration: none; color:white;" href="{{route('admin.resend.verify.email',Session::get('user_id'))}}">Resend Verification Email</a></button>
+                    @if(Session::has('message') && Session::has('create_status') && Session::get('create_status')==1 && Session::get('verify_mail')==0)
+                        <h5 class="text-center">A Reset Password Link Has Been Sent To The E-mail Address You Provided During Registration.</h5>
+                        <button type="button" class="btn btn-block btn-primary"><a style="text-decoration: none; color:white;" href="{{route('admin.forgot.resend.password',Session::get('user_id'))}}">Resend Reset Password Email</a></button>
+                    @elseif(Session::has('message') && Session::has('create_status') && Session::get('create_status')==1 && Session::get('verify_mail')==1)
+                        <h5 class="text-center">{{Session::get('message')}}</h5>
+                        <button type="button" class="btn btn-block btn-primary"><a style="text-decoration: none; color:white;" href="{{route('admin.resend.verify.email',Session::get('user_id'))}}">Send Verification E-mail</a></button>
                     @else
-                    <p class="login-box-msg">Register A New Account</p>
-                    <form action="{{route('admin.registration.store')}}" method="post">
-                        @csrf
+                    <p class="login-box-msg">Reset Password</p>
+                    @if(Session::has('message'))
+                        <p class="text-center input-error" style="color: red;">{{Session::get('message')}}</p>
+                    @endif
+                    <form action="{{route('admin.forgot.password')}}" method="post">
+                        @csrf   
                         <div class="input-group mb-3">
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Full name" required>
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-user"></span>
-                                </div>
-                            </div>
-                            @error('name')
-                                <div class="input-error" style="display: inline-block; width:100%; color: red;">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="email" name="email" id="email" class="form-control" placeholder="E-mail Address" required>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Enter Your E-mail Address" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-envelope"></span>
@@ -57,57 +50,18 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="input-group mb-3">
-                            <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile Number" required>
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-mobile"></span>
-                                </div>
-                            </div>
-                            @error('mobile')
-                                <div class="input-error" style="display: inline-block; width:100%; color: red;">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
-                                </div>
-                            </div>
-                            @error('password')
-                                <div class="input-error" style="display: inline-block; width:100%; color: red;">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Retype password" required>
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
-                                </div>
-                            </div>
-                            @error('confirm_password')
-                                <div class="input-error" style="display: inline-block; width:100%; color: red;">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
                         <!-- /.col -->
                         <div class="input-group mb-3">
-                            <button type="submit" class="btn btn-primary btn-block">Register</button>
-                        </div>
-                        <div class="col-12">
-                            <p class="mb-1 text-center">
-                                <a href="{{route('admin.forgot.password')}}">I Forgot My Password</a>
-                            </p>
+                            <button type="submit" class="btn btn-primary btn-block">Send Reset Password Link</button>
                         </div>
                         <div class="col-12">
                             <p class="mb-1 text-center">
                                 <a href="{{route('admin.login')}}">I Already Have A Account</a>
+                            </p>
+                        </div>
+                        <div class="col-12">
+                            <p class="mb-1 text-center">
+                                <a href="{{route('admin.registration')}}">Register A New Account</a>
                             </p>
                         </div>
                     </form>

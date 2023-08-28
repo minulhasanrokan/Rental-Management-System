@@ -26,8 +26,13 @@ Route::controller(RegistrationController::class)->group(function(){
 
     Route::get('/registration','registration_page')->name('admin.registration')->middleware(['logincheck']);
     Route::post('/registration-store','registration_store')->name('admin.registration.store');
+    Route::get('/resend-verify-email/{token}','resend_verify_email')->name('admin.resend.verify.email')->middleware(['logincheck']);
 
     Route::get('/verify-email/{token}','verify_email_page')->name('admin.verify.email');
+
+    Route::get('/forgot-password','forgot_password_page')->name('admin.forgot.password')->middleware(['logincheck']);
+    Route::post('/forgot-password','forgot_password_link')->name('admin.forgot.password');
+    Route::get('/resend-forgot-password/{email}','resend_forgot_password')->name('admin.forgot.resend.password')->middleware(['logincheck']);
 });
 
 // login route..................

@@ -102,7 +102,16 @@ class LoginController extends Controller
             }
             else{
 
-                if($user_data->verify_status==0){
+                if($user_data->status==0){
+
+                    $notification = array(
+                        'message'=> "Your Account Was Deactivated, Please Contact With Adminstrator",
+                        'alert-type'=>'warning'
+                    );
+
+                    return redirect()->back()->with($notification);
+                }
+                else if($user_data->verify_status==0){
 
                     $encrypt_data = $this->common->encrypt_data($user_data->id);
 
@@ -114,15 +123,6 @@ class LoginController extends Controller
                     );
 
                     return redirect('/registration')->with($notification);
-                }
-                else if($user_data->status==0){
-
-                    $notification = array(
-                        'message'=> "Your Account Was Deactivated, Please Contact With Adminstrator",
-                        'alert-type'=>'warning'
-                    );
-
-                    return redirect()->back()->with($notification);
                 }
                 else{
 

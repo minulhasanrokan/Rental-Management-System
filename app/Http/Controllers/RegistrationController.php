@@ -142,6 +142,65 @@ class RegistrationController extends Controller
         return redirect()->back()->with($notification);
     }
 
+    public function resend_verify_email($token){
+
+        $notification = array();
+
+        $user_id = $this->common->decrypt_data($token);
+
+        $data = User::where('delete_status',0)
+            ->where('id',$user_id)
+            ->first();
+
+        if($data->status==0 && !empty($data)){
+
+            $notification = array(
+                'message'=> "Your Account Was Deactivated. Please Contact With Adminstrator To Active Your Account.",
+                'alert_type'=>'warning',
+                'create_status'=>0,
+                'user_id' =>'',
+            );
+        }
+        else if($data->verify_status==1 || empty($data)){
+
+            $notification = array(
+                'message'=> "Invalid Url",
+                'alert_type'=>'warning',
+                'create_status'=>0,
+                'user_id' =>'',
+            );
+        }
+        else{
+
+            $mail_data = new MailController();
+
+            $status = $mail_data->sent_email_verify_email($data->email,$token,$data->name);
+
+            if($status==true){
+
+                $notification = array(
+                    'message'=> "A Verification Link Sent To Your E-mail Account",
+                    'alert-type'=>'info',
+                    'create_status'=>1,
+                    'verify_mail'=>1,
+                    'user_id' =>$token,
+                );
+            }
+            else{
+
+                $notification = array(
+                    'message'=> "Something Went Wrong",
+                    'alert-type'=>'warning',
+                    'create_status'=>0,
+                    'verify_mail' =>0,
+                    'user_id' =>'',
+                );
+            }
+        }
+
+        return redirect()->back()->with($notification);
+    }
+
     public function verify_email_page($token){
 
         DB::beginTransaction();
@@ -151,7 +210,6 @@ class RegistrationController extends Controller
         $user_id = $this->common->decrypt_data($token);
 
         $data = User::where('delete_status',0)
-            ->where('status',1)
             ->where('id',$user_id)
             ->first();
 
@@ -166,7 +224,16 @@ class RegistrationController extends Controller
         }
         else{
 
-            if ($data->verify_status==1) {
+            if ($data->status==0) {
+
+                $notification = array(
+                    'message'=> "Your Account Was Deactivated. Please Contact With Adminstrator",
+                    'alert_type'=>'warning',
+                    'create_status'=>0,
+                    'user_id' =>'',
+                );
+            }
+            else if ($data->verify_status==1) {
                 
                 $notification = array(
                     'message'=> "Invalid Url",
@@ -209,5 +276,180 @@ class RegistrationController extends Controller
         }
 
         return view('admin.user_verify',compact('notification'));
+    }
+
+    public function forgot_password_page(){
+
+        return view('admin.forgot_password');
+    }
+
+    public function forgot_password_link(Request $request){
+
+        $notification = array();
+
+        $request->validate(
+            [
+                'email'             =>      'required|email'
+            ]
+        );
+
+        $data = User::where('delete_status',0)
+            ->where('email',$request->email)
+            ->first();
+
+        if(empty($data)){
+
+            $notification = array(
+                'message'=> "No User Account Found",
+                'alert_type'=>'warning',
+                'create_status'=>0,
+                'user_id' =>'',
+            );
+        }
+        else{
+
+            $user_id = $this->common->encrypt_data($data->id);
+
+            if($data->status==0){
+
+                $notification = array(
+                    'message'=> "Your Account Was Deactivated. Please Contact With Adminstrator To Active Your Account.",
+                    'alert_type'=>'warning',
+                    'create_status'=>0,
+                    'user_id' =>'',
+                );
+            }
+            else if($data->verify_status!=1){
+
+                $notification = array(
+                    'message'=> "Please Verify Your Account First",
+                    'alert_type'=>'warning',
+                    'create_status'=>1,
+                    'verify_mail'=>1,
+                    'user_id' =>$user_id,
+                );
+            }
+            else{
+
+                $token = rand(1000,9999);
+
+                $data->remember_token = $token;
+
+                $data->save();
+
+                $status = false;
+
+                if($data==true){
+
+                    $mail_data = new MailController();
+
+                    $status = $mail_data->sent_password_reset_email($request->email,$user_id,$data->name,$token);
+                }
+
+                if($status==false){
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong",
+                        'alert_type'=>'warning',
+                        'create_status'=>0,
+                        'user_id' =>'',
+                    );
+                }
+                else{
+
+                    $email = $this->common->encrypt_data($request->email);
+
+                    $notification = array(
+                        'message'=> "A Password Reset Link Sent To Your E-mail Account",
+                        'alert_type'=>'info',
+                        'create_status'=>1,
+                        'user_id' =>$email,
+                    );
+                }
+            }
+        }
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function resend_forgot_password($email){
+
+        $email = $this->common->decrypt_data($email);
+
+        $data = User::where('delete_status',0)
+            ->where('email',$email)
+            ->first();
+
+        if(empty($data)){
+
+            $notification = array(
+                'message'=> "No User Account Found",
+                'alert_type'=>'warning',
+                'create_status'=>0,
+                'user_id' =>'',
+            );
+        }
+        else{
+
+            $user_id = $this->common->encrypt_data($data->id);
+
+            if($data->status==0){
+
+                $notification = array(
+                    'message'=> "Your Account Was Deactivated. Please Contact With Adminstrator To Active Your Account.",
+                    'alert_type'=>'warning',
+                    'create_status'=>0,
+                    'user_id' =>'',
+                );
+            }
+            esle if($data->verify_status!=1){
+
+                $notification = array(
+                    'message'=> "Please Verify Your Account First",
+                    'alert_type'=>'warning',
+                    'create_status'=>1,
+                    'verify_mail' =>1,
+                    'user_id' =>$user_id,
+                );
+            }
+            else{
+
+                $token = rand(1000,9999);
+
+                $data->remember_token = $token;
+
+                $data->save();
+
+                $status = false;
+
+                if($data==true){
+
+                    $mail_data = new MailController();
+
+                    $status = $mail_data->sent_password_reset_email($data->email,$user_id,$data->name,$token);
+                }
+
+                if($status==false){
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong",
+                        'alert_type'=>'warning',
+                        'create_status'=>0,
+                        'user_id' =>'',
+                    );
+                }
+                else{
+
+                    $notification = array(
+                        'message'=> "A Password Reset Link Sent To Your E-mail Account",
+                        'alert_type'=>'info',
+                        'create_status'=>1,
+                        'user_id' =>$email,
+                    );
+                }
+            }
+        }
+
+        return redirect()->back()->with($notification);
     }
 }
