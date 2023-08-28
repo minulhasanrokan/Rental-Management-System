@@ -101,6 +101,8 @@ class SystemSettingController extends Controller
             ]);
         }
 
+        DB::beginTransaction();
+
         $data = SystemDetails::where('delete_status',0)
             ->where('status',1)
             ->where('id',1)
@@ -210,6 +212,8 @@ class SystemSettingController extends Controller
 
         if($data==true){
 
+            DB::commit();
+
             $notification = array(
                 'message'=> "System Details Created Successfully",
                 'alert_type'=>'info',
@@ -217,6 +221,8 @@ class SystemSettingController extends Controller
             );
         }
         else{
+
+            DB::rollBack();
 
             $notification = array(
                 'message'=> "System Details Does Not Created Successfully",
@@ -310,6 +316,8 @@ class SystemSettingController extends Controller
             ]);
         }
 
+        DB::beginTransaction();
+
         $data = MailSetup::where('delete_status',0)
             ->where('status',1)
             ->where('id',1)
@@ -349,6 +357,8 @@ class SystemSettingController extends Controller
 
         if($data==true){
 
+            DB::commit();
+
             $notification = array(
                 'message'=> "System E-mail Created Successfully",
                 'alert_type'=>'info',
@@ -356,6 +366,8 @@ class SystemSettingController extends Controller
             );
         }
         else{
+
+            DB::rollBack();
 
             $notification = array(
                 'message'=> "System E-mail Does Not Created Successfully",

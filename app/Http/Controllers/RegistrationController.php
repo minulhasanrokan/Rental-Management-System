@@ -10,7 +10,6 @@ use DB;
 
 class RegistrationController extends Controller
 {
-
     public $common;
 
     public $app_session_name ='';
@@ -145,6 +144,70 @@ class RegistrationController extends Controller
 
     public function verify_email_page($token){
 
-        
+        DB::beginTransaction();
+
+        $notification = array();
+
+        $user_id = $this->common->decrypt_data($token);
+
+        $data = User::where('delete_status',0)
+            ->where('status',1)
+            ->where('id',$user_id)
+            ->first();
+
+        if(empty($data)){
+
+            $notification = array(
+                'message'=> "Invalid Url",
+                'alert_type'=>'warning',
+                'create_status'=>0,
+                'user_id' =>'',
+            );
+        }
+        else{
+
+            if ($data->verify_status==1) {
+                
+                $notification = array(
+                    'message'=> "Invalid Url",
+                    'alert_type'=>'warning',
+                    'create_status'=>0,
+                    'user_id' =>'',
+                );
+            }
+            else{
+
+                $data->verify_status =1;
+                $data->email_verified_at =now();
+
+                $data->save();
+
+                if($data==true){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Your Account Successfully Verified. Please Login To Access your Account",
+                        'alert_type'=>'info',
+                        'create_status'=>1,
+                        'user_id' =>'',
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Please Try Again",
+                        'alert_type'=>'warning',
+                        'create_status'=>0,
+                        'user_id' =>'',
+                    );
+                }
+            }
+
+        }
+
+        return view('admin.user_verify',compact('notification'));
     }
 }
