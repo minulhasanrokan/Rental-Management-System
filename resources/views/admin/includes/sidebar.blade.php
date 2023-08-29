@@ -101,7 +101,7 @@
                                             foreach($right_arr[$group_data['g_id']][$cat_data['c_id']] as $right_data){
                                         @endphp
                                             <li class="nav-item">
-                                                <a href="#" onclick="get_new_page('{{route($right_data['r_route_name'])}}','{{$right_data['r_title']}}','');" class="nav-link">
+                                                <a href="#" onclick="get_new_page('{{route($right_data['r_route_name'])}}','{{$right_data['r_title']}}','','');" class="nav-link">
                                                     <i class="nav-icon {{$right_data['r_icon']}}"></i>
                                                     <p>{{$right_data['r_name']}}</p>
                                                 </a>
@@ -650,9 +650,16 @@
 
 <script type="text/javascript">
     
-    function get_new_page(route_name,r_title,data) {
+    function get_new_page(route_name,r_title,data,name) {
 
-        document.title = '{{!empty($system_data['system_name'])?$system_data['system_name']:'Rental Management System'}}'+' | '+r_title;
+        var name_details = '';
+
+        if(name!=''){
+
+            name_details +=" - "+name;
+        }
+
+        document.title = r_title +name_details+ ' | '+'{{!empty($system_data['system_name'])?$system_data['system_name']:'Rental Management System'}}';
         
         var approval_setup =route_name;
         var r_title =r_title;

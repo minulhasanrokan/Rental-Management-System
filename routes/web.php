@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SystemSettingController;
+use App\Http\Controllers\UserGroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,4 +62,22 @@ Route::controller(SystemSettingController::class)->group(function(){
     // mail setup ............
     Route::get('/dashboard/system-setting-mail','system_mail_page')->name('system_setting.mail')->middleware(['checkroute']);
     Route::post('/dashboard/system-setting-mail','system_mail_update')->name('system_setting.mail')->middleware(['checkroute']);
+});
+
+// user group route..............
+Route::controller(UserGroupController::class)->group(function(){
+
+    Route::get('/dashboard/user-group-add','user_group_add_page')->name('user_management.user_group.add')->middleware(['checkroute']);
+    Route::post('/dashboard/user-group-add','system_information_update')->name('user_management.user_group.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/user-group-edit/{id?}','system_setting_page')->name('user_management.user_group.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/user-group-edit/{id?}','system_information_update')->name('user_management.user_group.edit')->middleware(['checkroute']);
+
+    Route::get('/dashboard/user-group-delete/{id?}','system_setting_page')->name('user_management.user_group.delete')->middleware(['checkroute']);
+
+    Route::get('/dashboard/user-group-right/{id?}','system_setting_page')->name('user_management.user_group.right')->middleware(['checkroute']);
+    Route::post('/dashboard/user-group-right/{id?}','system_setting_page')->name('user_management.user_group.right')->middleware(['checkroute']);
+
+    Route::get('/dashboard/user-group-view/{id?}','system_setting_page')->name('user_management.user_group.view')->middleware(['checkroute']);
+
 });
