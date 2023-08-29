@@ -272,15 +272,105 @@ class RegistrationController extends Controller
                     );
                 }
             }
-
         }
 
-        return view('admin.user_verify',compact('notification'));
+        $data = SystemDetails::where('delete_status',0)
+            ->where('status',1)
+            ->where('id',1)
+            ->first();
+
+        $system_data = array();
+
+        if($data!=''){
+
+            $system_data['system_name']=$data->system_name;
+            $system_data['system_email']=$data->system_email;
+            $system_data['system_mobile']=$data->system_mobile;
+            $system_data['system_title']=$data->system_title;
+            $system_data['system_address']=$data->system_address;
+            $system_data['system_copy_right']=$data->system_copy_right;
+            $system_data['system_deatils']=$data->system_deatils;
+            $system_data['system_logo']=$data->system_logo;
+            $system_data['system_favicon']=$data->system_favicon;
+            $system_data['add_by']=$data->add_by;
+            $system_data['edit_by']=$data->edit_by;
+            $system_data['delete_by']=$data->delete_by;
+            $system_data['id']=$data->id;
+            $system_data['edit_status']=$data->edit_status;
+            $system_data['delete_status']=$data->delete_status;
+            $system_data['system_bg_image']=$data->system_bg_image;
+        }
+        else{
+            $system_data['system_name']='';
+            $system_data['system_email']='';
+            $system_data['system_mobile']='';
+            $system_data['system_title']='';
+            $system_data['system_address']='';
+            $system_data['system_copy_right']='';
+            $system_data['system_deatils']='';
+            $system_data['system_logo']='';
+            $system_data['system_favicon']='';
+            $system_data['add_by']='';
+            $system_data['edit_by']='';
+            $system_data['delete_by']='';
+            $system_data['id']='';
+            $system_data['edit_status']='';
+            $system_data['delete_status']='';
+            $system_data['system_bg_image']='';
+        }
+
+        return view('admin.user_verify',compact('notification','system_data'));
     }
 
     public function forgot_password_page(){
 
-        return view('admin.forgot_password');
+        $data = SystemDetails::where('delete_status',0)
+            ->where('status',1)
+            ->where('id',1)
+            ->first();
+
+        $system_data = array();
+
+        if($data!=''){
+
+            $system_data['system_name']=$data->system_name;
+            $system_data['system_email']=$data->system_email;
+            $system_data['system_mobile']=$data->system_mobile;
+            $system_data['system_title']=$data->system_title;
+            $system_data['system_address']=$data->system_address;
+            $system_data['system_copy_right']=$data->system_copy_right;
+            $system_data['system_deatils']=$data->system_deatils;
+            $system_data['system_logo']=$data->system_logo;
+            $system_data['system_favicon']=$data->system_favicon;
+            $system_data['add_by']=$data->add_by;
+            $system_data['edit_by']=$data->edit_by;
+            $system_data['delete_by']=$data->delete_by;
+            $system_data['id']=$data->id;
+            $system_data['edit_status']=$data->edit_status;
+            $system_data['delete_status']=$data->delete_status;
+            $system_data['system_bg_image']=$data->system_bg_image;
+        }
+        else{
+            $system_data['system_name']='';
+            $system_data['system_email']='';
+            $system_data['system_mobile']='';
+            $system_data['system_title']='';
+            $system_data['system_address']='';
+            $system_data['system_copy_right']='';
+            $system_data['system_deatils']='';
+            $system_data['system_logo']='';
+            $system_data['system_favicon']='';
+            $system_data['add_by']='';
+            $system_data['edit_by']='';
+            $system_data['delete_by']='';
+            $system_data['id']='';
+            $system_data['edit_status']='';
+            $system_data['delete_status']='';
+            $system_data['system_bg_image']='';
+        }
+
+
+        return view('admin.forgot_password',compact('system_data'));
     }
 
     public function forgot_password_link(Request $request){
@@ -308,7 +398,9 @@ class RegistrationController extends Controller
         }
         else{
 
-            $user_id = $this->common->encrypt_data($data->id);
+            $token = rand(1000,9999);
+
+            $user_id = $this->common->encrypt_data($data->id."****".$token);
 
             if($data->status==0){
 
@@ -330,8 +422,6 @@ class RegistrationController extends Controller
                 );
             }
             else{
-
-                $token = rand(1000,9999);
 
                 $data->remember_token = $token;
 
@@ -391,7 +481,9 @@ class RegistrationController extends Controller
         }
         else{
 
-            $user_id = $this->common->encrypt_data($data->id);
+            $token = rand(1000,9999);
+
+            $user_id = $this->common->encrypt_data($data->id."****".$token);
 
             if($data->status==0){
 
@@ -413,8 +505,6 @@ class RegistrationController extends Controller
                 );
             }
             else{
-
-                $token = rand(1000,9999);
 
                 $data->remember_token = $token;
 
@@ -451,5 +541,236 @@ class RegistrationController extends Controller
         }
 
         return redirect()->back()->with($notification);
+    }
+
+    public function reset_password_page($token){
+
+        $data = SystemDetails::where('delete_status',0)
+            ->where('status',1)
+            ->where('id',1)
+            ->first();
+
+        $system_data = array();
+
+        if($data!=''){
+
+            $system_data['system_name']=$data->system_name;
+            $system_data['system_email']=$data->system_email;
+            $system_data['system_mobile']=$data->system_mobile;
+            $system_data['system_title']=$data->system_title;
+            $system_data['system_address']=$data->system_address;
+            $system_data['system_copy_right']=$data->system_copy_right;
+            $system_data['system_deatils']=$data->system_deatils;
+            $system_data['system_logo']=$data->system_logo;
+            $system_data['system_favicon']=$data->system_favicon;
+            $system_data['add_by']=$data->add_by;
+            $system_data['edit_by']=$data->edit_by;
+            $system_data['delete_by']=$data->delete_by;
+            $system_data['id']=$data->id;
+            $system_data['edit_status']=$data->edit_status;
+            $system_data['delete_status']=$data->delete_status;
+            $system_data['system_bg_image']=$data->system_bg_image;
+        }
+        else{
+            $system_data['system_name']='';
+            $system_data['system_email']='';
+            $system_data['system_mobile']='';
+            $system_data['system_title']='';
+            $system_data['system_address']='';
+            $system_data['system_copy_right']='';
+            $system_data['system_deatils']='';
+            $system_data['system_logo']='';
+            $system_data['system_favicon']='';
+            $system_data['add_by']='';
+            $system_data['edit_by']='';
+            $system_data['delete_by']='';
+            $system_data['id']='';
+            $system_data['edit_status']='';
+            $system_data['delete_status']='';
+            $system_data['system_bg_image']='';
+        }
+
+        $user_data = explode("****",$this->common->decrypt_data($token));
+
+        if($user_data[0]=='' || !isset($user_data[1])){
+            
+            $notification = array(
+                'message'=> "Invalid Url",
+                'alert_type'=>'warning',
+                'create_status'=>1,
+                'user_id' =>'',
+            );
+        }
+        else{
+
+            $data = User::where('delete_status',0)
+                ->where('id',$user_data[0])
+                ->where('remember_token',$user_data[1])
+                ->first();
+
+            $notification = array();
+
+            if(empty($data) || $data->status==0){
+
+                $notification = array(
+                    'message'=> "Invalid Url",
+                    'alert_type'=>'warning',
+                    'create_status'=>1,
+                    'user_id' =>'',
+                );
+            }
+            else{
+
+                $notification = array(
+                    'message'=> "Reset Your Password",
+                    'alert_type'=>'info',
+                    'create_status'=>0,
+                    'user_id' =>$token,
+                );
+            }
+        }   
+
+        return view('admin.reset_passwoer_page',compact('system_data','notification'));
+    }
+
+    public function reset_password_store($token, Request $request){
+
+        $request->validate(
+            [
+                'token'              =>      'required|string|max:4',
+                'password'          =>      'required|alpha_num|min:6|max:10',
+                'confirm_password'  =>      'required|same:password'
+            ]
+        );
+
+        $user_data = explode("****",$this->common->decrypt_data($token));
+
+        $request_token = $user_data = explode("****",$this->common->decrypt_data($request->hidden_token));
+
+        $diff_token = array_diff($user_data, $request_token);
+
+
+        $notification = array();
+
+        if(!empty($diff_token)){
+
+            $notification = array(
+                'message'=> "Something Went Wrong!",
+                'alert_type'=>'warning',
+                'create_status'=>1,
+                'user_id' =>'',
+            );
+        }
+        else{
+
+            $data = User::where('delete_status',0)
+                ->where('status',1)
+                ->where('id',$user_data[0])
+                ->where('remember_token',$user_data[1])
+                ->first();
+
+            if(empty($data)){
+
+                $notification = array(
+                    'message'=> "Something Went Wrong!",
+                    'alert_type'=>'warning',
+                    'create_status'=>1,
+                    'user_id' =>'',
+                );
+            }
+            else if($data->remember_token!=$request->token && $request->token!=$user_data[1]){
+
+                $notification = array(
+                    'message'=> "Toekn Not Matched!",
+                    'alert_type'=>'warning',
+                    'create_status'=>0,
+                    'user_id' =>'',
+                );
+            }
+            else{
+
+                $token = rand(1111,9999);
+
+                $data->remember_token = $token;
+
+                $data->password = Hash::make($request->password);
+
+                DB::beginTransaction();
+
+                $data->save();
+
+                if($data==true){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Successfully Changed Your Password!",
+                        'alert_type'=>'info',
+                        'create_status'=>2,
+                        'user_id' =>'',
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong!",
+                        'alert_type'=>'warning',
+                        'create_status'=>1,
+                        'user_id' =>'',
+                    );
+                }
+            }
+        }
+
+        $data = SystemDetails::where('delete_status',0)
+            ->where('status',1)
+            ->where('id',1)
+            ->first();
+
+        $system_data = array();
+
+        if($data!=''){
+
+            $system_data['system_name']=$data->system_name;
+            $system_data['system_email']=$data->system_email;
+            $system_data['system_mobile']=$data->system_mobile;
+            $system_data['system_title']=$data->system_title;
+            $system_data['system_address']=$data->system_address;
+            $system_data['system_copy_right']=$data->system_copy_right;
+            $system_data['system_deatils']=$data->system_deatils;
+            $system_data['system_logo']=$data->system_logo;
+            $system_data['system_favicon']=$data->system_favicon;
+            $system_data['add_by']=$data->add_by;
+            $system_data['edit_by']=$data->edit_by;
+            $system_data['delete_by']=$data->delete_by;
+            $system_data['id']=$data->id;
+            $system_data['edit_status']=$data->edit_status;
+            $system_data['delete_status']=$data->delete_status;
+            $system_data['system_bg_image']=$data->system_bg_image;
+        }
+        else{
+            $system_data['system_name']='';
+            $system_data['system_email']='';
+            $system_data['system_mobile']='';
+            $system_data['system_title']='';
+            $system_data['system_address']='';
+            $system_data['system_copy_right']='';
+            $system_data['system_deatils']='';
+            $system_data['system_logo']='';
+            $system_data['system_favicon']='';
+            $system_data['add_by']='';
+            $system_data['edit_by']='';
+            $system_data['delete_by']='';
+            $system_data['id']='';
+            $system_data['edit_status']='';
+            $system_data['delete_status']='';
+            $system_data['system_bg_image']='';
+        }
+
+        return view('admin.reset_passwoer_page',compact('system_data','notification'));
+
+
     }
 }

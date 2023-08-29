@@ -35,6 +35,8 @@ class CommonController extends Controller
 
     public function decrypt_data($data){
 
+        $data = urldecode($data);
+
         $encrypt_method = $this->app_session_name = config('app.app_encrypt_method');
         $secret_key = $this->app_session_name = config('app.app_encrypt_secret_key');
         $secret_iv = $this->app_session_name = config('app.app_encrypt_secret_iv');
@@ -48,6 +50,6 @@ class CommonController extends Controller
         // decrypt token;
         $decrypt_data = openssl_decrypt(base64_decode($data), $encrypt_method, $key, 0, $iv);
 
-        return urldecode($decrypt_data);
+        return $decrypt_data;
     }
 }

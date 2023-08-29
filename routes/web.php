@@ -33,6 +33,8 @@ Route::controller(RegistrationController::class)->group(function(){
     Route::get('/forgot-password','forgot_password_page')->name('admin.forgot.password')->middleware(['logincheck']);
     Route::post('/forgot-password','forgot_password_link')->name('admin.forgot.password');
     Route::get('/resend-forgot-password/{email}','resend_forgot_password')->name('admin.forgot.resend.password')->middleware(['logincheck']);
+    Route::get('/reset-password/{email}','reset_password_page')->name('admin.reset.password');
+    Route::post('/reset-password/{email}','reset_password_store')->name('admin.reset.password');
 });
 
 // login route..................
