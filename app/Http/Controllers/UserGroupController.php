@@ -20,6 +20,9 @@ class UserGroupController extends Controller
     
     public function user_group_add_page(){
 
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.user_group.group_add',compact('menu_data'));
 
     }
 }
