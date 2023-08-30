@@ -86,4 +86,26 @@ class CommonController extends Controller
 
         return $menu_data;
     }
+
+    public function get_duplicate_value($field_name,$table_name, $value, $data_id){
+
+        $field_name = trim($field_name);
+        $table_name = trim($table_name);
+        $value = trim($value);
+        $data_id = trim($data_id);
+
+        $user_right_data = DB::table($table_name)
+                ->select('id')
+                ->where('delete_status',0)
+                ->where($field_name,$value);
+
+        if($data_id!=0 && $data_id!='' && $data_id>0){
+                
+            $user_right_data->where('id','!=',$data_id);
+        }
+
+        $data = $user_right_data->count();
+
+        return $data;
+    }
 }

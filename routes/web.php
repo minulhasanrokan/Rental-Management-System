@@ -6,6 +6,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SystemSettingController;
 use App\Http\Controllers\UserGroupController;
+use App\Http\Controllers\CommonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +69,7 @@ Route::controller(SystemSettingController::class)->group(function(){
 Route::controller(UserGroupController::class)->group(function(){
 
     Route::get('/dashboard/user-group-add','user_group_add_page')->name('user_management.user_group.add')->middleware(['checkroute']);
-    Route::post('/dashboard/user-group-add','system_information_update')->name('user_management.user_group.add')->middleware(['checkroute']);
+    Route::post('/dashboard/user-group-add','user_group_store')->name('user_management.user_group.add')->middleware(['checkroute']);
 
     Route::get('/dashboard/user-group-edit/{id?}','system_setting_page')->name('user_management.user_group.edit')->middleware(['checkroute']);
     Route::post('/dashboard/user-group-edit/{id?}','system_information_update')->name('user_management.user_group.edit')->middleware(['checkroute']);
@@ -80,4 +81,11 @@ Route::controller(UserGroupController::class)->group(function(){
 
     Route::get('/dashboard/user-group-view/{id?}','system_setting_page')->name('user_management.user_group.view')->middleware(['checkroute']);
 
+});
+
+
+// common route..............
+Route::controller(CommonController::class)->group(function(){
+
+    Route::get('/dashboard/get-duplicate-value/{field_name?}/{table_name?}/{value?}/{data_id?}','get_duplicate_value')->name('admin.get.duplicate.value')->middleware(['checkroute']);
 });

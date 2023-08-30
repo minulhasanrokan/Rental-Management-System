@@ -7,6 +7,7 @@ use App\Models\SystemDetails;
 use App\Models\MailSetup;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
+use DB;
 
 class SystemSettingController extends Controller
 {

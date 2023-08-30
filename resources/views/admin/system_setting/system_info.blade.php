@@ -65,7 +65,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="system_logo">System Logo</label>
-                                    <input onchange="readUrl(this,'system_logo_photo');" type="file" class="form-control" id="system_logo" name="system_logo" placeholder="Enter System Logo" required>
+                                    <input onchange="readUrl(this,'system_logo_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="system_logo" name="system_logo" placeholder="Enter System Logo" required>
                                     <input type="hidden" name="hidden_system_logo" id="hidden_system_logo" value="{{$system_data['system_logo']}}">
                                     <div class="input-error" style="display:none; color: red;" id="system_logo_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
@@ -78,7 +78,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="system_bg_image">System Backgroup</label>
-                                    <input onchange="readUrl(this,'system_bg_image_photo');" type="file" class="form-control" id="system_bg_image" name="system_bg_image" placeholder="Enter System Backgroup" required>
+                                    <input onchange="readUrl(this,'system_bg_image_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="system_bg_image" name="system_bg_image" placeholder="Enter System Backgroup" required>
                                     <input type="hidden" name="hidden_system_bg_image" id="hidden_system_bg_image" value="{{$system_data['system_bg_image']}}">
                                     <div class="input-error" style="display:none; color: red;" id="system_logo_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
@@ -91,7 +91,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="system_favicon">System Favicon</label>
-                                    <input onchange="readUrl(this,'system_favicon_photo');" type="file" class="form-control" id="system_favicon" name="system_favicon" placeholder="Enter System Favicon" required>
+                                    <input onchange="readUrl(this,'system_favicon_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="system_favicon" name="system_favicon" placeholder="Enter System Favicon" required>
                                     <input type="hidden" name="hidden_system_favicon" id="hidden_system_favicon" value="{{$system_data['system_favicon']}}">
                                     <div class="input-error" style="display:none; color: red;" id="system_favicon_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
@@ -222,6 +222,7 @@
                     });
 
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
+                    $('input[name="_token"]').attr('value', data.csrf_token);
 
                     // hide all input error.............
                     $(".input-error").delay(3000).fadeOut(800);
@@ -248,6 +249,7 @@
                     }
 
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
+                    $('input[name="_token"]').attr('value', data.csrf_token);
                 }
             }
         }

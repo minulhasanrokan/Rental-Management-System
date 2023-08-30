@@ -649,6 +649,8 @@
 </aside>
 
 <script type="text/javascript">
+
+    var input_field_name = '';
     
     function get_new_page(route_name,r_title,data,name) {
 
@@ -689,6 +691,49 @@
                 $("#page_content").html(reponse[0]);
 
                 $('meta[name="csrf-token"]').attr('content', reponse[1]);
+            }
+        }
+    }
+
+    function check_duplicate_value(field_name,table_name,value,data_id){
+
+        input_field_name = field_name;
+ 
+        var data="&field_name="+field_name+"&table_name="+table_name+"&value="+value+"&data_id="+data_id;
+
+        http.open("GET","{{route('admin.get.duplicate.value')}}"+"/"+field_name+"/"+table_name+"/"+value+"/"+data_id,true);
+        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        http.send(data);
+        http.onreadystatechange = check_duplicate_value_reponse;
+    }
+
+    function check_duplicate_value_reponse(){
+
+        if(http.readyState == 4)
+        {
+
+            var reponse=trim(http.responseText).split("****");
+
+            if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+
+                location.replace('<?php echo url('/login');?>');
+            }
+            else{
+
+                if(reponse[0]*1>0){
+
+                    var field_name_arr = input_field_name.split("_");
+
+                    $("#"+input_field_name).val('');
+
+                    alert('Duplicate '+field_name_arr[0]+' '+field_name_arr[1]+' found');
+
+                    return false;
+                }
+                else{
+
+                    return true;
+                }
             }
         }
     }
