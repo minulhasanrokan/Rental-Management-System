@@ -150,4 +150,84 @@ class UserGroupController extends Controller
 
         return response()->json($notification);
     }
+
+    public function user_group_view_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.user_group.group_view',compact('menu_data'));
+    }
+
+    public function user_group_grid(Request $request){
+
+        $csrf_token = csrf_token();
+
+        $draw = $request->draw;
+        $row = $request->start;
+        $row_per_page  = $request->length;
+
+        $column_index  = $request->order[0]['column'];
+        $column_name = $request->columns[$column_index]['data'];
+
+        $column_ort_order = $request->order[0]['dir'];
+
+        $search_value  = trim($request->search['value']);
+
+        $total_data = array();
+        $filter_data = array();
+        $data = array();
+        $record_data = array();
+        $response = array();
+
+        if($search_value!=''){
+
+            $total_data = UserGroup::select('id')
+                ->where('delete_status',0)
+                ->get();
+
+            $filter_data = UserGroup::select('id')
+                ->where('delete_status',0)
+                ->where('group_name','like',"%".$search_value."%")
+                ->orWhere('group_code','like',"%".$search_value."%")
+                ->orWhere('group_title','like',"%".$search_value."%")
+                ->get();
+
+            $data = UserGroup::select('id','group_logo','group_icon','group_name','group_title','group_code','status','id as action')
+                ->where('delete_status',0)
+                ->where('group_name','like',"%".$search_value."%")
+                ->orWhere('group_code','like',"%".$search_value."%")
+                ->orWhere('group_title','like',"%".$search_value."%")
+                ->orderBy($column_name,$column_ort_order)
+                ->offset($row)
+                ->limit($row_per_page)
+                ->get()->toArray();
+        }
+        else{
+
+            $filter_data = UserGroup::select('id')
+                ->where('delete_status',0)
+                ->get();
+
+            $data = UserGroup::select('id','group_logo','group_icon','group_name','group_title','group_code','status','id as action')
+                ->where('delete_status',0)
+                ->orderBy($column_name,$column_ort_order)
+                ->offset($row)
+                ->limit($row_per_page)
+                ->get()->toArray();
+
+            $total_data = $filter_data;
+        }
+
+        $total_records = count($total_data);
+        $total_records_with_filer = count($filter_data);
+
+        $response['draw'] = $draw;
+        $response['iTotalRecords'] = $total_records;
+        $response['iTotalDisplayRecords'] = $total_records_with_filer;
+        $response['aaData'] = $data;
+        $response['csrf_token'] = $csrf_token;
+
+        echo json_encode($response);
+
+    }
 }

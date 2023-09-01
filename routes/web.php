@@ -71,6 +71,16 @@ Route::controller(UserGroupController::class)->group(function(){
     Route::get('/dashboard/user-group-add','user_group_add_page')->name('user_management.user_group.add')->middleware(['checkroute']);
     Route::post('/dashboard/user-group-add','user_group_store')->name('user_management.user_group.add')->middleware(['checkroute']);
 
+    // for all view user group route........
+    Route::get('/dashboard/user-group-view','user_group_view_page')->name('user_management.user_group.view')->middleware(['checkroute']);
+    // for grid user group route........
+    Route::post('/dashboard/user-group-view','user_group_grid')->name('user_management.user_group.view')->middleware(['checkroute']);
+    // for single view user group route........
+    Route::get('/dashboard/user-group-view/{id?}','user_group_single_view_page')->name('user_management.user_group.view')->middleware(['checkroute']);
+
+
+
+
     Route::get('/dashboard/user-group-edit/{id?}','system_setting_page')->name('user_management.user_group.edit')->middleware(['checkroute']);
     Route::post('/dashboard/user-group-edit/{id?}','system_information_update')->name('user_management.user_group.edit')->middleware(['checkroute']);
 
@@ -78,8 +88,6 @@ Route::controller(UserGroupController::class)->group(function(){
 
     Route::get('/dashboard/user-group-right/{id?}','system_setting_page')->name('user_management.user_group.right')->middleware(['checkroute']);
     Route::post('/dashboard/user-group-right/{id?}','system_setting_page')->name('user_management.user_group.right')->middleware(['checkroute']);
-
-    Route::get('/dashboard/user-group-view/{id?}','system_setting_page')->name('user_management.user_group.view')->middleware(['checkroute']);
 
 });
 
