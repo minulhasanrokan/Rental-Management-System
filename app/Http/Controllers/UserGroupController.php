@@ -222,9 +222,12 @@ class UserGroupController extends Controller
 
         $sl = 0;
 
+        $sl_start = $row+1;
+
         foreach($data as $value){
 
             $record_data[$sl]['id'] = $value->id;
+            $record_data[$sl]['sl'] = $sl_start;
             $record_data[$sl]['group_logo'] = $value->group_logo;
             $record_data[$sl]['group_icon'] = $value->group_icon;
             $record_data[$sl]['group_name'] = $value->group_name;
@@ -235,6 +238,7 @@ class UserGroupController extends Controller
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
+            $sl_start++;
         }
 
         $total_records = count($total_data);

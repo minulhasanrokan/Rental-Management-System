@@ -57,7 +57,7 @@
             "lengthMenu": [2,5,10, 20, 50, 100,200],
             "pageLength": 5,
             "serverSide": true,
-            "processing": false,
+            "processing": true,
             "ajax":{
                 "url": "{{route('user_management.user_group.view')}}",
                 "dataType": "json",
@@ -84,10 +84,16 @@
                 [0, 'desc']
             ],
             "columns": [
-                { data: "id" },
+                {
+                    "data": "id",
+                    "render": function(data, type, full, meta) {
+
+                        return  full.sl;
+                    }
+                },
                 {
                     "data": "group_logo",
-                    "render": function(data, type, full, meta, title) {
+                    "render": function(data, type, full, meta) {
 
                         var titleValue = full.group_name;
 

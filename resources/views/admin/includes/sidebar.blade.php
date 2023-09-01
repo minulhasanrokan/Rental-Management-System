@@ -662,15 +662,10 @@
         }
 
         document.title = r_title +name_details+ ' | '+'{{!empty($system_data['system_name'])?$system_data['system_name']:'Rental Management System'}}';
-        
-        var approval_setup =route_name;
-        var r_title =r_title;
-                
-        var data=data;
 
-        http.open("GET",route_name,true);
+        http.open("GET",route_name+"/"+data,true);
         http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        http.send(data);
+        http.send();
         http.onreadystatechange = get_new_page_reponse;
     }
 
