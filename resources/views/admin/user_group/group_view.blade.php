@@ -18,11 +18,11 @@
                                     <th width="50">Sl</th>
                                     <th width="50">Image</th>
                                     <th width="50">Icon</th>
-                                    <th width="200">Name</th>
+                                    <th width="150">Name</th>
                                     <th>Title</th>
-                                    <th width="100">Code</th>
+                                    <th width="80">Code</th>
                                     <th width="50">Status</th>
-                                    <th>Action</th>
+                                    <th width="200">Action</th>
                                 </tr>
                             </thead>
 
@@ -31,11 +31,11 @@
                                     <th width="50">Sl</th>
                                     <th width="50">Image</th>
                                     <th width="50">Icon</th>
-                                    <th width="200">Name</th>
+                                    <th width="150">Name</th>
                                     <th>Title</th>
-                                    <th width="100">Code</th>
+                                    <th width="80">Code</th>
                                     <th width="50">Status</th>
-                                    <th>Action</th>
+                                    <th width="200">Action</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -137,7 +137,23 @@
                         return data;
                     }
                 },
-                { data: "action" },
+                {
+                    "data": "action",
+                    "render": function(data, type, full, meta) {
+
+                        var menu = full.menu_data;
+                        var group_name = full.group_name;
+
+                        var menu_data = '';
+
+                        menu.forEach(function(item) {
+                            
+                            menu_data +='<button onclick="get_new_page(\''+item.r_route_name+'\',\''+item.r_title+'\',\''+data+'\',\''+group_name+'\');" class="btn btn-primary" style="margin-right:5px;"><i class="fa '+item.r_icon+'"></i></button>'
+                        });
+
+                        return menu_data;
+                    }
+                },
             ],
             columnDefs: [
                 {

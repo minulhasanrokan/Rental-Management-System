@@ -81,10 +81,55 @@ class CommonController extends Controller
 
         foreach($user_right_data as $data){
 
-            $menu_data .='<button onclick="get_new_page(\''.route($data->r_route_name).'\',\''.$data->r_route_name.'\',\'\',\'\');" type="button" class="btn btn-primary" style="margin-right:10px;"><i class="fa '.$data->r_icon.'"></i>&nbsp;'.$data->r_name.'</button>';
+            $menu_data .='<button onclick="get_new_page(\''.route($data->r_route_name).'\',\''.$data->r_title.'\',\'\',\'\');" type="button" class="btn btn-primary" style="margin-right:10px;"><i class="fa '.$data->r_icon.'"></i>&nbsp;'.$data->r_name.'</button>';
         }
 
         return $menu_data;
+    }
+
+    public function get_page_menu_grid($route_name){
+
+        $action_name = request()->route()->getName();
+
+        $user_session_data = session()->all();
+
+        $user_right_data = array();
+        $user_right = array();
+
+        if($user_session_data[config('app.app_session_name')]['super_admin_status']==1){
+
+            $user_right_data = DB::table('right_details as a')
+                ->join('right_details as b', 'b.cat_id', '=', 'a.cat_id')
+                ->select('a.id  as r_id', 'a.cat_id', 'a.r_name', 'a.r_title', 'a.r_action_name', 'a.r_route_name', 'a.r_details', 'a.r_short_order', 'a.r_icon')
+                ->where('a.status',1)
+                ->where('b.r_route_name',$action_name)
+                ->where('a.r_route_name','!=' ,$route_name)
+                ->where('a.delete_status',0)
+                ->orderBy('a.r_short_order', 'ASC')
+                ->get();
+        }
+        else{
+
+        }
+
+        $sl = 0;
+
+        foreach($user_right_data as $right){
+
+            $user_right[$sl]['r_id'] = $right->r_id;
+            $user_right[$sl]['cat_id'] = $right->cat_id;
+            $user_right[$sl]['r_name'] = $right->r_name;
+            $user_right[$sl]['r_title'] = $right->r_title;
+            $user_right[$sl]['r_action_name'] = $right->r_action_name;
+            $user_right[$sl]['r_route_name'] = route($right->r_route_name);
+            $user_right[$sl]['r_details'] = $right->r_details;
+            $user_right[$sl]['r_short_order'] = $right->r_short_order;
+            $user_right[$sl]['r_icon'] = $right->r_icon;
+
+            $sl++;
+        }
+
+        return $user_right;
     }
 
     public function get_duplicate_value($field_name,$table_name, $value, $data_id){

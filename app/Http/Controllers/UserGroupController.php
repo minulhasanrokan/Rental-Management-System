@@ -160,6 +160,8 @@ class UserGroupController extends Controller
 
     public function user_group_grid(Request $request){
 
+        $menu_data = $this->common->get_page_menu_grid('user_management.user_group.add');
+
         $csrf_token = csrf_token();
 
         $draw = $request->draw;
@@ -192,7 +194,7 @@ class UserGroupController extends Controller
                 ->orWhere('group_title','like',"%".$search_value."%")
                 ->get();
 
-            $data = UserGroup::select('id','group_logo','group_icon','group_name','group_title','group_code','status','id as action')
+            $data = UserGroup::select('id','group_logo','group_icon','group_name','group_title','group_code','status')
                 ->where('delete_status',0)
                 ->where('group_name','like',"%".$search_value."%")
                 ->orWhere('group_code','like',"%".$search_value."%")
@@ -200,7 +202,7 @@ class UserGroupController extends Controller
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)
-                ->get()->toArray();
+                ->get();
         }
         else{
 
@@ -208,14 +210,31 @@ class UserGroupController extends Controller
                 ->where('delete_status',0)
                 ->get();
 
-            $data = UserGroup::select('id','group_logo','group_icon','group_name','group_title','group_code','status','id as action')
+            $data = UserGroup::select('id','group_logo','group_icon','group_name','group_title','group_code','status')
                 ->where('delete_status',0)
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)
-                ->get()->toArray();
+                ->get();
 
             $total_data = $filter_data;
+        }
+
+        $sl = 0;
+
+        foreach($data as $value){
+
+            $record_data[$sl]['id'] = $value->id;
+            $record_data[$sl]['group_logo'] = $value->group_logo;
+            $record_data[$sl]['group_icon'] = $value->group_icon;
+            $record_data[$sl]['group_name'] = $value->group_name;
+            $record_data[$sl]['group_title'] = $value->group_title;
+            $record_data[$sl]['group_code'] = $value->group_code;
+            $record_data[$sl]['status'] = $value->status;
+            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['menu_data'] = $menu_data;
+
+            $sl++;
         }
 
         $total_records = count($total_data);
@@ -224,7 +243,7 @@ class UserGroupController extends Controller
         $response['draw'] = $draw;
         $response['iTotalRecords'] = $total_records;
         $response['iTotalDisplayRecords'] = $total_records_with_filer;
-        $response['aaData'] = $data;
+        $response['aaData'] = $record_data;
         $response['csrf_token'] = $csrf_token;
 
         echo json_encode($response);
