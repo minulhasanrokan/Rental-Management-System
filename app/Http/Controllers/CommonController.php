@@ -70,7 +70,7 @@ class CommonController extends Controller
                 ->select('a.id  as r_id', 'a.cat_id', 'a.r_name', 'a.r_title', 'a.r_action_name', 'a.r_route_name', 'a.r_details', 'a.r_short_order', 'a.r_icon')
                 ->where('a.status',1)
                 ->where('b.r_route_name',$action_name)
-                ->where('a.r_route_name','!=' ,$action_name)
+                //->where('a.r_route_name','!=' ,$action_name)
                 ->where('a.delete_status',0)
                 ->orderBy('a.r_short_order', 'ASC')
                 ->get()->toArray();

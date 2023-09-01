@@ -253,4 +253,15 @@ class UserGroupController extends Controller
         echo json_encode($response);
 
     }
+
+    public function user_group_single_view_page($id){
+
+        $group_data = UserGroup::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.user_group.group_single_view',compact('menu_data','group_data'));
+    }
 }

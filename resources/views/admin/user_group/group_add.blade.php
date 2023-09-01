@@ -194,6 +194,8 @@
                     $('input[name="_token"]').attr('value', data.csrf_token);
                 }
             }
+
+            document.getElementById("user_group_form").reset();
         }
     }
 
