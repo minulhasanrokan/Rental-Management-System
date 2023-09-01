@@ -1,17 +1,17 @@
-<div class="container-fluid" style="padding-top: 20px !important;">
+<div class="container-fluid" style="padding-top: 5px !important;">
     <div class="row">
         <!-- left column -->
         <div class="col-md-12">
             <!-- general form elements -->
-            <div class="card card-primary">
+            <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
                     <h3 class="card-title">View All User Group Information</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
                 </div>
-                <div class="card">
-                    <div class="card-body">
+                <div class="card" style="margin: 0px !important;">
+                    <div class="card-body" style="padding-bottom:5px !important; padding-top: 10px !important; margin: 0px !important;">
                         <table id="group_data_table" class="table table-bordered table-striped" style="text-align: center !important; vertical-align: middle !important;" rules="all">
                             <thead>
                                 <tr>
@@ -25,19 +25,6 @@
                                     <th width="200">Action</th>
                                 </tr>
                             </thead>
-
-                            <tfoot>
-                                <tr>
-                                    <th width="50">Sl</th>
-                                    <th width="50">Image</th>
-                                    <th width="50">Icon</th>
-                                    <th width="150">Name</th>
-                                    <th>Title</th>
-                                    <th width="80">Code</th>
-                                    <th width="50">Status</th>
-                                    <th width="200">Action</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -54,9 +41,11 @@
         var token = $('meta[name="csrf-token"]').attr('content');
 
         $('#group_data_table').DataTable({
-            "lengthMenu": [2,5,10, 20, 50, 100,200],
+            "lengthMenu": [5,10, 20, 50, 100,200],
             "pageLength": 5,
             "serverSide": true,
+            "responsive": true,
+            "colReorder": true,
             "processing": true,
             "ajax":{
                 "url": "{{route('user_management.user_group.view')}}",

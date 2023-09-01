@@ -1,9 +1,9 @@
-<div class="container-fluid" style="padding-top: 20px !important;">
+<div class="container-fluid" style="padding-top: 5px !important;">
     <div class="row">
         <!-- left column -->
         <div class="col-md-12">
             <!-- general form elements -->
-            <div class="card card-primary">
+            <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
                     <h3 class="card-title">Add User Group Information</h3>
                 </div>
@@ -14,7 +14,7 @@
                 <!-- form start -->
                 <form id="user_group_form" method="post" autocomplete="off">
                     @csrf
-                    <div class="card-body">
+                    <div class="card-body" style="padding-bottom:5px !important; padding-top: 10px !important; margin: 0px !important;">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
