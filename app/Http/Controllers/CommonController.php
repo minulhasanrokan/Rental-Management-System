@@ -132,6 +132,35 @@ class CommonController extends Controller
         return $user_right;
     }
 
+    public function get_page_menu_single_view($route_name){
+
+        $route_name_arr = explode("****",$route_name);
+
+        $action_name = request()->route()->getName();
+
+        $user_session_data = session()->all();
+
+        $user_right_data = array();
+
+        if($user_session_data[config('app.app_session_name')]['super_admin_status']==1){
+
+            $user_right_data = DB::table('right_details as a')
+                ->join('right_details as b', 'b.cat_id', '=', 'a.cat_id')
+                ->select('a.id  as r_id', 'a.cat_id', 'a.r_name', 'a.r_title', 'a.r_action_name', 'a.r_route_name', 'a.r_details', 'a.r_short_order', 'a.r_icon')
+                ->where('a.status',1)
+                ->where('b.r_route_name',$action_name)
+                ->whereNotIn('a.r_route_name',$route_name_arr)
+                ->where('a.delete_status',0)
+                ->orderBy('a.r_short_order', 'ASC')
+                ->get()->toArray();
+        }
+        else{
+
+        }
+
+        return $user_right_data;
+    }
+
     public function get_duplicate_value($field_name,$table_name, $value, $data_id){
 
         $field_name = trim($field_name);
