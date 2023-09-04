@@ -16,13 +16,49 @@
                     @csrf
                     <div class="card-body" style="padding-bottom:5px !important; padding-top: 10px !important; margin: 0px !important;">
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="group_name">User Group Name</label>
-                                    <input type="text" class="form-control" id="group_name" name="group_name" placeholder="Enter User Group Name" onkeyup="check_duplicate_value('group_name','user_groups',this.value,'{{$group_data->id}}');" value="{{$group_data->group_name}}" required>
-                                    <div class="input-error" style="display:none; color: red;" id="group_name_error" style="display: inline-block; width:100%; color: red;"></div>
-                                </div>
-                            </div>
+                            @php
+                                if(isset($all_right_data['right_group_arr']) && !empty($all_right_data['right_group_arr'])){
+
+                                    foreach($all_right_data['right_group_arr'] as $right_group){
+                            @endphp
+                                        <div class="col-md-12">
+                                            <fieldset class="scheduler-border">
+                                                <legend class="scheduler-border">{{$right_group['g_name']}}</legend>
+                                                @php
+                                                    if(isset($all_right_data['right_cat_arr'][$right_group['g_id']]) && !empty($all_right_data['right_cat_arr'][$right_group['g_id']])){
+
+                                                        foreach($all_right_data['right_cat_arr'][$right_group['g_id']] as $right_cat){
+                                                @endphp     <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <h4>{{$right_cat['c_name']}}</h5>
+                                                                        @php
+                                                                            if(isset($all_right_data['right_arr'][$right_group['g_id']][$right_cat['c_id']]) && !empty($all_right_data['right_arr'][$right_group['g_id']][$right_cat['c_id']])){
+
+                                                                                foreach($all_right_data['right_arr'][$right_group['g_id']][$right_cat['c_id']] as $right){
+
+                                                                        @endphp
+                                                                                    <input type="checkbox" class="datetime" id="startTime" name="startTime" placeholder="Start Time" />
+                                                                                    <label class="control-label input-label" for="startTime">{{$right['r_name']}} <i class="fa {{$right['r_icon']}}"></i></label>
+                                                                                    <br>
+                                                                        @php
+                                                                                }
+                                                                            }
+                                                                        @endphp
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                @php
+                                                        }
+                                                    }
+                                                @endphp
+                                            </fieldset>
+                                        </div>
+                            @php
+                                    }
+                                }
+                            @endphp
+                  
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -30,7 +66,7 @@
                         @foreach($user_right_data as $data)
                             <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$group_data->id}}','{{$group_data->group_name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
                         @endforeach
-                        <button type="button" style="float:right" onclick="save_user_group_info_data();" class="btn btn-primary">Update User Group</button>
+                        <button type="button" style="float:right" onclick="save_user_group_info_data();" class="btn btn-primary">Set User Group Right</button>
                     </div>
                 </form>
             </div>
@@ -40,6 +76,21 @@
     </div>
     <!-- /.row -->
 </div>
+<style type="text/css">
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow:  0px 0px 0px 0px #000;
+        box-shadow:  0px 0px 0px 0px #000;
+    }
+
+    legend.scheduler-border {
+        width:inherit; /* Or auto */
+        padding:0 10px; /* To give a bit of padding on the left and right */
+        border-bottom:none;
+    }
+</style>
 
 <script>
     $(function () {

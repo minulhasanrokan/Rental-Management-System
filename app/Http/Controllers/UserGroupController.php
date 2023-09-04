@@ -514,8 +514,10 @@ class UserGroupController extends Controller
     
         $menu_data = $this->common->get_page_menu();
 
+        $all_right_data = $this->common->get_all_right();
+
         $user_right_data = $this->common->get_page_menu_single_view('user_management.user_group.add****user_management.user_group.right');
 
-        return view('admin.user_group.group_right_setup',compact('menu_data','group_data','user_right_data'));
+        return view('admin.user_group.group_right_setup',compact('menu_data','group_data','user_right_data','all_right_data'));
     }
 }
