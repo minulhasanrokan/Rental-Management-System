@@ -36,7 +36,6 @@
                                                                             if(isset($all_right_data['right_arr'][$right_group['g_id']][$right_cat['c_id']]) && !empty($all_right_data['right_arr'][$right_group['g_id']][$right_cat['c_id']])){
 
                                                                                 foreach($all_right_data['right_arr'][$right_group['g_id']][$right_cat['c_id']] as $right){
-
                                                                         @endphp
                                                                                     <input type="checkbox" class="datetime" id="startTime" name="startTime" placeholder="Start Time" />
                                                                                     <label class="control-label input-label" for="startTime">{{$right['r_name']}} <i class="fa {{$right['r_icon']}}"></i></label>
