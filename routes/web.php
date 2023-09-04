@@ -78,16 +78,28 @@ Route::controller(UserGroupController::class)->group(function(){
     // for single view user group route........
     Route::get('/dashboard/user-group-view/{id?}','user_group_single_view_page')->name('user_management.user_group.view')->middleware(['checkroute']);
 
+    // for all edit view user group route........
+    Route::get('/dashboard/user-group-edit','user_group_edit_page')->name('user_management.user_group.edit')->middleware(['checkroute']);
+    // for edit grid user group route........
+    Route::post('/dashboard/user-group-edit','user_group_grid')->name('user_management.user_group.edit')->middleware(['checkroute']);
+    // for single edit view user group route........
+    Route::get('/dashboard/user-group-edit/{id?}','user_group_single_edit_page')->name('user_management.user_group.edit')->middleware(['checkroute']);
+    // for update user group route........
+    Route::post('/dashboard/user-group-edit/{id?}','user_group_update')->name('user_management.user_group.edit')->middleware(['checkroute']);
 
+    // for all delete view user group route........
+    Route::get('/dashboard/user-group-delete','user_group_delete_page')->name('user_management.user_group.delete')->middleware(['checkroute']);
+    // for delete grid user group route........
+    Route::post('/dashboard/user-group-delete','user_group_grid')->name('user_management.user_group.delete')->middleware(['checkroute']);
+    // for single edit view user group route........
+    Route::get('/dashboard/user-group-delete/{id?}','user_group_delete')->name('user_management.user_group.delete')->middleware(['checkroute']);
 
-
-    Route::get('/dashboard/user-group-edit/{id?}','system_setting_page')->name('user_management.user_group.edit')->middleware(['checkroute']);
-    Route::post('/dashboard/user-group-edit/{id?}','system_information_update')->name('user_management.user_group.edit')->middleware(['checkroute']);
-
-    Route::get('/dashboard/user-group-delete/{id?}','system_setting_page')->name('user_management.user_group.delete')->middleware(['checkroute']);
-
-    Route::get('/dashboard/user-group-right/{id?}','system_setting_page')->name('user_management.user_group.right')->middleware(['checkroute']);
-    Route::post('/dashboard/user-group-right/{id?}','system_setting_page')->name('user_management.user_group.right')->middleware(['checkroute']);
+    // for all group set right view user group route........
+    Route::get('/dashboard/user-group-right','user_group_right_page')->name('user_management.user_group.right')->middleware(['checkroute']);
+    // for group set right grid user group route........
+    Route::post('/dashboard/user-group-right','user_group_grid')->name('user_management.user_group.right')->middleware(['checkroute']);
+    // for all group set right setup page user group route........
+    Route::get('/dashboard/user-group-right/{id?}','user_group_right_setup_page')->name('user_management.user_group.right')->middleware(['checkroute']);
 
 });
 

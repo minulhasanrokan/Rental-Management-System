@@ -654,6 +654,24 @@
     
     function get_new_page(route_name,r_title,data,name) {
 
+        var find_value = "DELETE";
+
+        var to_find = r_title.toUpperCase();
+
+        const regex = new RegExp('\\b' + find_value + '\\b', 'gi');
+        const matches = to_find.match(regex);
+
+        if (matches && name!=''){
+
+            const result = window.confirm("Do You Want To Delete This ("+name+")?");
+
+            if(!result){
+
+                return false;
+            }
+        }
+
+
         var name_details = '';
 
         if(name!=''){
