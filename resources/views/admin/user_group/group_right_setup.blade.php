@@ -5,43 +5,70 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Set User Group Right</h3>
+                    <h3 class="card-title">Set User Group Right - {{$group_data->group_name}}</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form id="user_group_form" method="post" autocomplete="off">
+                <form id="user_group_right_form" method="post" autocomplete="off">
                     @csrf
+                    <input type="hidden" id="group_id" name="group_id" value="{{$group_data->id}}" />
                     <div class="card-body" style="padding-bottom:5px !important; padding-top: 10px !important; margin: 0px !important;">
                         <div class="row">
                             @php
                                 if(isset($all_right_data['right_group_arr']) && !empty($all_right_data['right_group_arr'])){
 
+                                    $i=0;
+
                                     foreach($all_right_data['right_group_arr'] as $right_group){
+
+                                        $i++;
                             @endphp
                                         <div class="col-md-12">
                                             <fieldset class="scheduler-border">
-                                                <legend class="scheduler-border">{{$right_group['g_name']}}</legend>
+                                                <legend class="scheduler-border">
+                                                    {{$right_group['g_name']}} 
+                                                    <input type="checkbox" value="0" id="g_id_checkbox_{{$i}}" name="g_id_checkbox_{{$i}}" onclick="select_all_group_right({{$i}});" />
+                                                    <input type="hidden" id="g_id_{{$i}}" name="g_id_{{$i}}" value="{{$right_group['g_id']}}" />
+                                                </legend>
                                                 @php
                                                     if(isset($all_right_data['right_cat_arr'][$right_group['g_id']]) && !empty($all_right_data['right_cat_arr'][$right_group['g_id']])){
 
+                                                        $j = 0;
+
                                                         foreach($all_right_data['right_cat_arr'][$right_group['g_id']] as $right_cat){
+
+                                                            $j++;
+
                                                 @endphp     <div class="row">
                                                                 <div class="col-md-3">
                                                                     <div class="form-group">
-                                                                        <h4>{{$right_cat['c_name']}}</h5>
+                                                                        <h4>
+                                                                            {{$right_cat['c_name']}} 
+                                                                            <input type="checkbox" value="0" id="c_id_checkbox_{{$i}}_{{$j}}" name="c_id_checkbox_{{$i}}_{{$j}}" onclick="select_all_cat_right({{$i}},{{$j}});" />
+                                                                            <input type="hidden" id="c_id_{{$i}}_{{$j}}" name="c_id_{{$i}}_{{$j}}" value="{{$right_cat['c_id']}}" />
+                                                                        </h5>
                                                                         @php
                                                                             if(isset($all_right_data['right_arr'][$right_group['g_id']][$right_cat['c_id']]) && !empty($all_right_data['right_arr'][$right_group['g_id']][$right_cat['c_id']])){
 
+                                                                                $k=0;
                                                                                 foreach($all_right_data['right_arr'][$right_group['g_id']][$right_cat['c_id']] as $right){
+
+                                                                                    $k++;
                                                                         @endphp
-                                                                                    <input type="checkbox" class="datetime" id="startTime" name="startTime" placeholder="Start Time" />
+                                                                                    <input type="checkbox" value="0" id="r_id_checkbox_{{$i}}_{{$j}}_{{$k}}" name="r_id_checkbox_{{$i}}_{{$j}}_{{$k}}" onclick="select_right({{$i}},{{$j}},{{$k}});" />
+                                                                                    <input type="hidden" id="r_id_{{$i}}_{{$j}}_{{$k}}" name="r_id_{{$i}}_{{$j}}_{{$k}}" value="{{$right['r_id']}}" />
                                                                                     <label class="control-label input-label" for="startTime">{{$right['r_name']}} <i class="fa {{$right['r_icon']}}"></i></label>
                                                                                     <br>
                                                                         @php
                                                                                 }
+
+                                                                                @endphp
+
+                                                                                    <input type="hidden" id="r_id_max_{{$i}}_{{$j}}" name="r_id_max_{{$i}}_{{$j}}" value="{{$k}}" />
+                                                                                @php
                                                                             }
                                                                         @endphp
                                                                     </div>
@@ -49,12 +76,22 @@
                                                             </div>
                                                 @php
                                                         }
+
+                                                        @endphp
+
+                                                            <input type="hidden" id="c_id_max_{{$i}}" name="c_id_max_{{$i}}" value="{{$j}}" />
+                                                        @php
                                                     }
                                                 @endphp
                                             </fieldset>
                                         </div>
                             @php
                                     }
+
+                                    @endphp
+
+                                        <input type="hidden" id="g_id_max" name="g_id_max" value="{{$i}}" />
+                                    @php
                                 }
                             @endphp
                   
@@ -65,7 +102,7 @@
                         @foreach($user_right_data as $data)
                             <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$group_data->id}}','{{$group_data->group_name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
                         @endforeach
-                        <button type="button" style="float:right" onclick="save_user_group_info_data();" class="btn btn-primary">Set User Group Right</button>
+                        <button type="button" style="float:right" onclick="save_user_group_right();" class="btn btn-primary">Set User Group Right</button>
                     </div>
                 </form>
             </div>
@@ -92,84 +129,221 @@
 </style>
 
 <script>
-    $(function () {
 
-        $('#group_deatils').summernote({
-            height: 64,
-            focus: true
-        })
-    });
+    function select_all_group_right(id){
 
-    function readUrl(input,view_id){
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e){
-                $('#'+view_id).attr('src', e.target.result).width(80).height(80);
-            };
-            reader.readAsDataURL(input.files[0]);
+        var status = false;
+
+        if ($('#g_id_checkbox_'+id).prop('checked')) {
+            
+            status = true;
+            $('#g_id_checkbox_'+id).val(1);
+        }
+        else{
+
+            $('#g_id_checkbox_'+id).val(0);
+        }
+
+        var max_c_id_sl = $("#c_id_max_"+id).val();
+
+        for(var i=1; i<=max_c_id_sl; i++){
+
+            var max_r_id_sl = $("#r_id_max_"+id+"_"+i).val();
+
+            if(status==true){
+
+                $('#c_id_checkbox_'+id+"_"+i).prop('checked', true);
+                $('#c_id_checkbox_'+id+"_"+i).val(1);
+            }
+            else{
+
+                $('#c_id_checkbox_'+id+"_"+i).prop('checked', false);
+                $('#c_id_checkbox_'+id+"_"+i).val(0);
+            }
+
+            for(var j=1; j<=max_r_id_sl; j++){
+
+                if(status==true){
+
+                    $('#r_id_checkbox_'+id+"_"+i+"_"+j).prop('checked', true);
+                    $('#r_id_checkbox_'+id+"_"+i+"_"+j).val(1);
+                }
+                else{
+
+                    $('#r_id_checkbox_'+id+"_"+i+"_"+j).prop('checked', false);
+                    $('#r_id_checkbox_'+id+"_"+i+"_"+j).val(0);
+                }
+            }
         }
     }
 
-    function save_user_group_info_data(){
+    function select_all_cat_right(g_id,cat_id){
 
-        if( form_validation('group_name*group_code*group_title','User Group Name*User Group Code*User Group Title')==false ){
+        var status = false;
 
-            return false;
+        if ($('#c_id_checkbox_'+g_id+"_"+cat_id).prop('checked')) {
+            
+            status = true;
+
+            $('#c_id_checkbox_'+g_id+"_"+cat_id).val(1);
+        }
+        else{
+
+            $('#g_id_checkbox_'+g_id).prop('checked', false);
+            $('#g_id_checkbox_'+g_id).val(0);
+            $('#c_id_checkbox_'+g_id+"_"+cat_id).val(0);
         }
 
-        var hidden_group_logo  = $("#hidden_group_logo").val();
-        var hidden_group_icon  = $("#hidden_group_icon").val();
+        var max_r_id_sl = $("#r_id_max_"+g_id+"_"+cat_id).val();
 
-        if(hidden_group_logo==''){
+        for(var j=1; j<=max_r_id_sl; j++){
 
-            if( form_validation('group_logo','User Group Photo')==false ){
+            if(status==true){
 
-                return false;
+                $('#r_id_checkbox_'+g_id+"_"+cat_id+"_"+j).prop('checked', true);
+                $('#r_id_checkbox_'+g_id+"_"+cat_id+"_"+j).val(1);
+            }
+            else{
+
+                $('#r_id_checkbox_'+g_id+"_"+cat_id+"_"+j).prop('checked', false);
+                $('#r_id_checkbox_'+g_id+"_"+cat_id+"_"+j).val(0);
             }
         }
 
-        if(hidden_group_icon==''){
+        check_group(g_id);
+    }
 
-            if( form_validation('group_icon','User Group Icon')==false ){
+    function select_right(g_id,cat_id,r_id){
 
-                return false;
+        if ($('#r_id_checkbox_'+g_id+"_"+cat_id+"_"+r_id).prop('checked')) {
+
+            $('#r_id_checkbox_'+g_id+"_"+cat_id+"_"+r_id).val(1);
+
+            var max_r_id_sl = $("#r_id_max_"+g_id+"_"+cat_id).val();
+
+            var status = false;
+
+            for(var j=1; j<=max_r_id_sl; j++){
+
+                if ($('#r_id_checkbox_'+g_id+"_"+cat_id+"_"+j).prop('checked')) {
+
+                    $('#r_id_checkbox_'+g_id+"_"+cat_id+"_"+j).val(1);
+
+                    status = true;
+                }
+                else{
+
+                    $('#r_id_checkbox_'+g_id+"_"+cat_id+"_"+j).val(0);
+
+                    status = false;
+                    break;
+                }
+            }
+
+            if(status==true){
+
+                $('#c_id_checkbox_'+g_id+"_"+cat_id).prop('checked', true);
+                $('#c_id_checkbox_'+g_id+"_"+cat_id).val(1);
+
+                check_group(g_id);
+            }
+            else{
+
+                $('#c_id_checkbox_'+g_id+"_"+cat_id).prop('checked', false);
+                $('#c_id_checkbox_'+g_id+"_"+cat_id).val(0);
+
+                check_group(g_id);
+            }
+        }
+        else{
+
+            $('#c_id_checkbox_'+g_id+"_"+cat_id).prop('checked', false);
+            $('#c_id_checkbox_'+g_id+"_"+cat_id).val(0);
+            $('#g_id_checkbox_'+g_id).prop('checked', false);
+            $('#g_id_checkbox_'+g_id).val(0);
+             $('#r_id_checkbox_'+g_id+"_"+cat_id+"_"+r_id).val(0);
+        }
+    }
+
+    function check_group(g_id){
+
+        var max_c_id_sl = $("#c_id_max_"+g_id).val();
+
+        var status = false;
+
+        for(var i=1; i<=max_c_id_sl; i++){
+
+            if ($('#c_id_checkbox_'+g_id+"_"+i).prop('checked')) {
+
+                status = true;
+                $('#c_id_checkbox_'+g_id+"_"+i).val(1);
+            }
+            else{
+
+                $('#c_id_checkbox_'+g_id+"_"+i).val(0);
+
+                status = false;
+                break;
             }
         }
 
-        var group_name = $("#group_name").val();
-        var group_code = $("#group_code").val();
-        var group_title = $("#group_title").val();
-        var group_deatils = $("#group_deatils").val();
+        if(status==true){
 
-        //check_duplicate_value('group_name','user_groups',group_name,0);
-        //check_duplicate_value('group_code','user_groups',group_code,0);
+            $('#g_id_checkbox_'+g_id).prop('checked', true);
+            $('#g_id_checkbox_'+g_id).val(1);
+        }
+        else{
+
+            $('#g_id_checkbox_'+g_id).prop('checked', false);
+            $('#g_id_checkbox_'+g_id).val(0);
+        }
+    }
+
+    function save_user_group_right(){
 
         var token = $('meta[name="csrf-token"]').attr('content');
 
         var form_data = new FormData();
 
-        var group_logo = $('#group_logo')[0].files;
-        var group_icon = $('#group_icon')[0].files;
+        var max_g = $("#g_id_max").val();
+        var group_id = $("#group_id").val();
 
-        form_data.append('group_logo',group_logo[0]);
-        form_data.append('group_icon',group_icon[0]);
+        form_data.append("g_id_max", max_g);
 
-        form_data.append("group_name", group_name);
-        form_data.append("group_code", group_code);
-        form_data.append("group_title", group_title);
-        form_data.append("group_deatils", group_deatils);
-        form_data.append("hidden_group_logo", hidden_group_logo);
-        form_data.append("hidden_group_icon", hidden_group_icon);
-        form_data.append("update_id", '{{$group_data->id}}');
+        for(var i=1; i<=max_g; i++){
+
+            form_data.append("g_id_checkbox_"+i, $("#g_id_checkbox_"+i).val());
+            form_data.append("g_id_"+i, $("#g_id_"+i).val());
+            form_data.append("c_id_max_"+i, $("#c_id_max_"+i).val());
+
+            var c_id_max = $("#c_id_max_"+i).val();
+
+            for(var j=1; j<=c_id_max; j++){
+
+                form_data.append("c_id_checkbox_"+i+"_"+j, $("#c_id_checkbox_"+i+"_"+j).val());
+                form_data.append("c_id_"+i+"_"+j, $("#c_id_"+i+"_"+j).val());
+                form_data.append("r_id_max_"+i+"_"+j, $("#r_id_max_"+i+"_"+j).val());
+
+                var r_id_max = $("#r_id_max_"+i+"_"+j).val();
+
+                for(var k=1; k<=r_id_max; k++){
+
+                    form_data.append("r_id_checkbox_"+i+"_"+j+"_"+k, $("#r_id_checkbox_"+i+"_"+j+"_"+k).val());
+                    form_data.append("r_id_"+i+"_"+j+"_"+k, $("#r_id_"+i+"_"+j+"_"+k).val());
+                }
+            }
+        }
+
         form_data.append("_token", token);
+        form_data.append("group_id", group_id);
 
-        http.open("POST","{{route('user_management.user_group.edit',$group_data->id)}}",true);
+        http.open("POST","{{route('user_management.user_group.right',$group_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
-        http.onreadystatechange = save_user_group_info_data_response;
+        http.onreadystatechange = save_user_group_right_response;
     }
 
-    function save_user_group_info_data_response(){
+    function save_user_group_right_response(){
 
         if(http.readyState == 4)
         {
@@ -222,8 +396,6 @@
                     $('input[name="_token"]').attr('value', data.csrf_token);
                 }
             }
-
-            document.getElementById("user_group_form").reset();
         }
     }
 
