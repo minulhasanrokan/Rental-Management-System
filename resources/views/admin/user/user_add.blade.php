@@ -47,7 +47,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="sex">User Gender</label>
-                                    <input type="text" class="form-control" id="sex" name="sex" placeholder="Enter User Gender" required>
+                                    <div id="sex_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="sex_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -156,7 +156,7 @@
 
     function save_user_info_data(){
 
-        if( form_validation('name*email*mobile*date_of_birth','User Name*User E-mail*User Mobile*User Date Of Birth')==false ){
+        if( form_validation('name*email*mobile*date_of_birth*sex','User Name*User E-mail*User Mobile*User Date Of Birth*User Gender')==false ){
 
             return false;
         }
@@ -272,8 +272,6 @@
         }
     }
 
-    var gender_reponse = get_parameter_data('genders','id,gender_name');
-
-    alert(gender_reponse);
+    load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender');
 
 </script>****{{csrf_token()}}

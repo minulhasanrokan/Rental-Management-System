@@ -103,7 +103,7 @@ function form_validation(control,msg_text)
         else if (type == 'select-one' || type=='select' )
         {
             //alert(control[i]);
-            if ( trim(document.getElementById(control[i]).value)==0)
+            if ( trim(document.getElementById(control[i]).value)=='')
             {
                 document.getElementById(control[i]).focus();
                 document.getElementById(control[i]).style.backgroundImage=bgcolor;

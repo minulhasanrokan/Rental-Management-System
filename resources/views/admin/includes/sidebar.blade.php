@@ -800,24 +800,80 @@
         http.open("GET","{{route('admin.get.parameter.data')}}"+"/"+table_name+"/"+field_name,true);
         http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         http.send(data);
-        http.onreadystatechange = get_parameter_data_reponse;
+
+
+        http.onreadystatechange = function() {
+
+            if( http.readyState == 4 ){
+
+                if( http.status == 200 ){
+
+                    $(container).html(http.responseText);set_all_onclick();
+                }
+            }
+        }
     }
 
     function get_parameter_data_reponse(){
 
         if(http.readyState == 4)
         {
-
             var reponse=trim(http.responseText).split("****");
 
             if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
 
                 location.replace('<?php echo url('/login');?>');
             }
-            else{
+        }
+    }
 
-                return reponse;
+    function load_drop_down(table_name, field_name, id, container, title) {
+
+
+        var http = createObject();
+
+        var data="&table_name="+table_name+"&field_name="+field_name;
+
+        if( http ) {
+            
+            http.onreadystatechange = function() {
+
+                if( http.readyState == 4 ) {
+
+                    if( http.status == 200 ){
+
+                        var reponse=trim(http.responseText).split("****");
+
+                        if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+
+                            location.replace('<?php echo url('/login');?>');
+                        }
+                        else{
+
+                            var data ='<select class="form-control" style="width: 100%;" name="'+id+'" id="'+id+'"><option value="">'+title+'</option>';
+
+                            var json_data = JSON.parse(reponse[0]);
+
+                            var data_length = Object.keys(json_data).length;
+
+                            var field_name_arr = field_name.split(',');
+
+                            for(var i=0; i<data_length; i++){
+
+                                data +='<option value="'+json_data[i][field_name_arr[0]]+'">'+json_data[i][field_name_arr[1]]+'</option>';
+                            }
+
+                            data +='</select>';
+
+                            document.getElementById(container).innerHTML = data;
+                        }
+                    }
+                }
             }
+
+            http.open("GET","{{route('admin.get.parameter.data')}}"+"/"+table_name+"/"+field_name,true);
+            http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            http.send(data);
         }
     }
 </script>
