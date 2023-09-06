@@ -68,7 +68,11 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="user_type">User Type</label>
-                                    <input type="text" class="form-control" id="user_type" name="user_type" placeholder="Enter User Type" required>
+                                    <select class="form-control" style="width: 100%;" name="user_type" id="user_type" required>
+                                        <option value="">Select User Type</option>
+                                        <option value="0">Normal User</option>
+                                        <option value="1">Tenant User</option>
+                                    </select>
                                     <div class="input-error" style="display:none; color: red;" id="user_type_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -156,7 +160,7 @@
 
     function save_user_info_data(){
 
-        if( form_validation('name*email*mobile*date_of_birth*sex','User Name*User E-mail*User Mobile*User Date Of Birth*User Gender')==false ){
+        if( form_validation('name*email*mobile*date_of_birth*sex*blood_group*group*user_type*designation*department*assign_department*address','User Name*User E-mail*User Mobile*User Date Of Birth*User Gender*User Blood Group*User Group*User Type*User Designation*User Department*User Assign Department*User Address')==false ){
 
             return false;
         }
@@ -187,25 +191,41 @@
             return false;
         }
 
-        var group_name = $("#group_name").val();
-        var group_code = $("#group_code").val();
-        var group_title = $("#group_title").val();
-        var group_deatils = $("#group_deatils").val();
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var mobile = $("#mobile").val();
+        var date_of_birth = $("#date_of_birth").val();
+        var sex = $("#sex").val();
+        var blood_group = $("#blood_group").val();
+        var group = $("#group").val();
+        var user_type = $("#user_type").val();
+        var designation = $("#designation").val();
+        var department = $("#department").val();
+        var assign_department = $("#assign_department").val();
+        var address = $("#address").val();
+        var details = $("#details").val();
 
         var token = $('meta[name="csrf-token"]').attr('content');
 
         var form_data = new FormData();
 
         var user_photo = $('#user_photo')[0].files;
-        var group_icon = $('#group_icon')[0].files;
 
         form_data.append('user_photo',user_photo[0]);
-        form_data.append('group_icon',group_icon[0]);
 
-        form_data.append("group_name", group_name);
-        form_data.append("group_code", group_code);
-        form_data.append("group_title", group_title);
-        form_data.append("group_deatils", group_deatils);
+        form_data.append("name", name);
+        form_data.append("email", email);
+        form_data.append("mobile", mobile);
+        form_data.append("date_of_birth", date_of_birth);
+        form_data.append("sex", sex);
+        form_data.append("blood_group", blood_group);
+        form_data.append("group", group);
+        form_data.append("user_type", user_type);
+        form_data.append("designation", designation);
+        form_data.append("department", department);
+        form_data.append("assign_department", assign_department);
+        form_data.append("address", address);
+        form_data.append("details", details);
         form_data.append("_token", token);
 
         http.open("POST","{{route('user_management.user.add')}}",true);
@@ -267,7 +287,6 @@
 
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);
-
                 }
             }
         }
