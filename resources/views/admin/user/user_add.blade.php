@@ -46,13 +46,6 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="group">User Group</label>
-                                    <input type="text" class="form-control" id="group" name="group" placeholder="Enter User Group" required>
-                                    <div class="input-error" style="display:none; color: red;" id="group_error" style="display: inline-block; width:100%; color: red;"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
                                     <label for="sex">User Gender</label>
                                     <input type="text" class="form-control" id="sex" name="sex" placeholder="Enter User Gender" required>
                                     <div class="input-error" style="display:none; color: red;" id="sex_error" style="display: inline-block; width:100%; color: red;"></div>
@@ -63,6 +56,13 @@
                                     <label for="blood_group">User Blood Group</label>
                                     <input type="text" class="form-control" id="blood_group" name="blood_group" placeholder="Enter User Blood Group" required>
                                     <div class="input-error" style="display:none; color: red;" id="blood_group_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="group">User Group</label>
+                                    <input type="text" class="form-control" id="group" name="group" placeholder="Enter User Group" required>
+                                    <div class="input-error" style="display:none; color: red;" id="group_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -156,7 +156,33 @@
 
     function save_user_info_data(){
 
-        if( form_validation('group_name*group_code*group_title*user_photo*group_icon','User Group Name*User Group Code*User Group Title*User Group Photo*User Group Icon')==false ){
+        if( form_validation('name*email*mobile*date_of_birth','User Name*User E-mail*User Mobile*User Date Of Birth')==false ){
+
+            return false;
+        }
+
+        var mobile = $("#mobile").val();
+
+        var status = check_mobile_number(mobile);
+
+        if(status==false){
+
+            alert("Please Input Valied Mobile Number");
+
+             $("#mobile").focus();
+
+            return false;
+        }
+
+        var date_of_birth = $("#date_of_birth").val();
+
+        var status = check_date_of_birth(date_of_birth,18);
+
+        if(status==false){
+
+            alert("Please Input Valied Date Of Birth");
+
+             $("#mobile").focus();
 
             return false;
         }

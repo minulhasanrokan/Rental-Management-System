@@ -142,6 +142,19 @@
             return false;
         }
 
+        var mobile_number = $("#system_mobile").val();
+
+        var status = check_mobile_number(mobile_number);
+
+        if(status==false){
+
+            alert("Please Input Valied Mobile Number");
+
+            $("#system_mobile").focus();
+
+            return false;
+        }
+
         var hidden_system_logo = $("#hidden_system_logo").val();
         var hidden_system_favicon = $("#hidden_system_favicon").val();
 

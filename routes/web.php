@@ -7,7 +7,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SystemSettingController;
 use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\CommonController;
-use App\Http\Controllers\User;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\GenderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,9 +113,20 @@ Route::controller(UserGroupController::class)->group(function(){
 
 
 // user route..............
-Route::controller(User::class)->group(function(){
+Route::controller(UserController::class)->group(function(){
 
     Route::get('/dashboard/user-add','user_add_page')->name('user_management.user.add')->middleware(['checkroute']);
     Route::post('/dashboard/user-add','user_group_store')->name('user_management.user.add')->middleware(['checkroute']);
+
+});
+
+
+// all refarence route.......
+
+// Gender route..............
+Route::controller(GenderController::class)->group(function(){
+
+    Route::get('/dashboard/gender-add','gender_add_page')->name('reference_data.gender.add')->middleware(['checkroute']);
+    Route::post('/dashboard/gender-add','gender_add_store')->name('reference_data.gender.add')->middleware(['checkroute']);
 
 });

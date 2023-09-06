@@ -750,4 +750,46 @@
             }
         }
     }
+
+    function check_mobile_number(value){
+
+        const bdMobileNumberRegex = /^(01[3-9]\d{8})$/;
+
+        const isValid = bdMobileNumberRegex.test(value);
+
+        if (isValid) 
+        {
+
+            return true;
+        } 
+        else{
+
+            return false;
+        }
+    }
+
+    function check_date_of_birth(date_of_birth,year){
+
+        const dobDate = new Date(date_of_birth);
+
+        const currentDate = new Date();
+
+        const age = currentDate.getFullYear() - dobDate.getFullYear();
+
+        if (currentDate.getMonth() < dobDate.getMonth() || (currentDate.getMonth() === dobDate.getMonth() && currentDate.getDate() < dobDate.getDate())){
+
+            age--;
+        }
+
+        // Check if the age is at least 18
+        if (age >= 18) {
+
+            return true;
+            
+        } else {
+
+            return false;
+        }
+
+    }
 </script>

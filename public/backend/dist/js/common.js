@@ -72,7 +72,7 @@ function form_validation(control,msg_text)
             }
         }
 
-        if ( type == 'text' || type == 'password' || type == 'textarea' || type == 'file' || type == 'email' )
+        if ( type == 'text' || type == 'password' || type == 'textarea' || type == 'file' || type == 'email' || type == 'date' )
         {
             if (trim(document.getElementById(control[i]).value)=="")
             {
