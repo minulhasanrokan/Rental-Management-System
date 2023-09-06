@@ -81,32 +81,23 @@ Route::controller(UserGroupController::class)->group(function(){
 
     // for all view user group route........
     Route::get('/dashboard/user-group-view','user_group_view_page')->name('user_management.user_group.view')->middleware(['checkroute']);
-    // for grid user group route........
     Route::post('/dashboard/user-group-view','user_group_grid')->name('user_management.user_group.view')->middleware(['checkroute']);
-    // for single view user group route........
     Route::get('/dashboard/user-group-view/{id?}','user_group_single_view_page')->name('user_management.user_group.view')->middleware(['checkroute']);
 
     // for all edit view user group route........
     Route::get('/dashboard/user-group-edit','user_group_edit_page')->name('user_management.user_group.edit')->middleware(['checkroute']);
-    // for edit grid user group route........
     Route::post('/dashboard/user-group-edit','user_group_grid')->name('user_management.user_group.edit')->middleware(['checkroute']);
-    // for single edit view user group route........
     Route::get('/dashboard/user-group-edit/{id?}','user_group_single_edit_page')->name('user_management.user_group.edit')->middleware(['checkroute']);
-    // for update user group route........
     Route::post('/dashboard/user-group-edit/{id?}','user_group_update')->name('user_management.user_group.edit')->middleware(['checkroute']);
 
     // for all delete view user group route........
     Route::get('/dashboard/user-group-delete','user_group_delete_page')->name('user_management.user_group.delete')->middleware(['checkroute']);
-    // for delete grid user group route........
     Route::post('/dashboard/user-group-delete','user_group_grid')->name('user_management.user_group.delete')->middleware(['checkroute']);
-    // for single edit view user group route........
     Route::get('/dashboard/user-group-delete/{id?}','user_group_delete')->name('user_management.user_group.delete')->middleware(['checkroute']);
 
     // for all group set right view user group route........
     Route::get('/dashboard/user-group-right','user_group_right_page')->name('user_management.user_group.right')->middleware(['checkroute']);
-    // for group set right grid user group route........
     Route::post('/dashboard/user-group-right','user_group_grid')->name('user_management.user_group.right')->middleware(['checkroute']);
-    // for all group set right setup page user group route........
     Route::get('/dashboard/user-group-right/{id?}','user_group_right_setup_page')->name('user_management.user_group.right')->middleware(['checkroute']);
     Route::post('/dashboard/user-group-right/{id?}','user_group_right_store')->name('user_management.user_group.right')->middleware(['checkroute']);
 });
@@ -128,5 +119,21 @@ Route::controller(GenderController::class)->group(function(){
 
     Route::get('/dashboard/gender-add','gender_add_page')->name('reference_data.gender.add')->middleware(['checkroute']);
     Route::post('/dashboard/gender-add','gender_add_store')->name('reference_data.gender.add')->middleware(['checkroute']);
+
+    // for all edit view Gender route........
+    Route::get('/dashboard/gender-edit','gender_edit_page')->name('reference_data.gender.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/gender-edit','gender_grid')->name('reference_data.gender.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/gender-edit/{id?}','gender_single_edit_page')->name('reference_data.gender.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/gender-edit/{id?}','gender_update')->name('reference_data.gender.edit')->middleware(['checkroute']);
+
+    // for all view gender route........
+    Route::get('/dashboard/gender-view','gender_view_page')->name('reference_data.gender.view')->middleware(['checkroute']);
+    Route::post('/dashboard/gender-view','gender_grid')->name('reference_data.gender.view')->middleware(['checkroute']);
+    Route::get('/dashboard/gender-view/{id?}','gender_single_view_page')->name('reference_data.gender.view')->middleware(['checkroute']);
+
+    // for all delete view gender route........
+    Route::get('/dashboard/gender-delete','gender_delete_page')->name('reference_data.gender.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/gender-delete','gender_grid')->name('reference_data.gender.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/gender-delete/{id?}','gender_delete')->name('reference_data.gender.delete')->middleware(['checkroute']);
 
 });
