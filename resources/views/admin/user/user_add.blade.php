@@ -61,7 +61,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="group">User Group</label>
-                                    <input type="text" class="form-control" id="group" name="group" placeholder="Enter User Group" required>
+                                    <div id="group_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="group_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -263,15 +263,17 @@
                         break; 
                     }
 
+                    document.getElementById("user_form").reset();
+
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);
+
                 }
             }
-
-            document.getElementById("user_form").reset();
         }
     }
 
     load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender');
+    load_drop_down('user_groups','id,group_name','group','group_container','Select Group');
 
 </script>****{{csrf_token()}}

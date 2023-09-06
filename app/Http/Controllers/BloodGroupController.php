@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Gender;
+use App\Models\BloodGroup;
 use DB;
 
-class GenderController extends Controller
+class BloodGroupController extends Controller
 {
-    public $common; 
+    public $common;
 
     public $app_session_name ='';
 
@@ -20,19 +20,19 @@ class GenderController extends Controller
         $this->app_session_name = config('app.app_session_name');
     }
 
-    public function gender_add_page(){
+    public function blood_group_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.gender.gender_add',compact('menu_data'));
+        return view('admin.reference.blood_group.blood_group_add',compact('menu_data'));
     }
 
-    public function gender_add_store(Request $request){
+    public function blood_group_store (Request $request){
 
         $validator = Validator::make($request->all(), [
-            'gender_name' => 'required|string|max:250',
-            'gender_code' => 'required|string|max:20',
-            'gender_title' => 'required|string|max:250'
+            'blood_group_name' => 'required|string|max:250',
+            'blood_group_code' => 'required|string|max:20',
+            'blood_group_title' => 'required|string|max:250'
         ]);
 
         if ($validator->fails()) {
@@ -51,12 +51,12 @@ class GenderController extends Controller
             ]);
         }
 
-        $duplicate_status_1 = $this->common->get_duplicate_value('gender_name','genders', $request->gender_name, 0);
+        $duplicate_status_1 = $this->common->get_duplicate_value('blood_group_name','blood_groups', $request->blood_group_name, 0);
 
         if($duplicate_status_1>0){
 
             $notification = array(
-                'message'=> "Duplicate Gender Name Found",
+                'message'=> "Duplicate Blood Group Name Found",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );
@@ -64,12 +64,12 @@ class GenderController extends Controller
             return response()->json($notification);
         }
 
-        $duplicate_status_2 = $this->common->get_duplicate_value('gender_code','genders', $request->gender_code, 0);
+        $duplicate_status_2 = $this->common->get_duplicate_value('blood_group_code','blood_groups', $request->blood_group_code, 0);
 
         if($duplicate_status_2>0){
 
             $notification = array(
-                'message'=> "Duplicate Gender Code Found",
+                'message'=> "Duplicate Blood Group Code Found",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );
@@ -83,12 +83,12 @@ class GenderController extends Controller
 
         DB::beginTransaction();
 
-        $data = new Gender;
+        $data = new BloodGroup;
 
-        $data->gender_name = $request->gender_name;
-        $data->gender_code = $request->gender_code;
-        $data->gender_title = $request->gender_title;
-        $data->gender_deatils = $request->gender_deatils;
+        $data->blood_group_name = $request->blood_group_name;
+        $data->blood_group_code = $request->blood_group_code;
+        $data->blood_group_title = $request->blood_group_title;
+        $data->blood_group_deatils = $request->blood_group_deatils;
         $data->add_by = $user_id;
         $data->created_at = now();
 
@@ -99,7 +99,7 @@ class GenderController extends Controller
             DB::commit();
 
             $notification = array(
-                'message'=> "Gender Details Created Successfully",
+                'message'=> "Blood Group Details Created Successfully",
                 'alert_type'=>'info',
                 'csrf_token' => csrf_token()
             );
@@ -109,7 +109,7 @@ class GenderController extends Controller
             DB::rollBack();
 
             $notification = array(
-                'message'=> "Gender Details Does Not Created Successfully",
+                'message'=> "Blood Group Details Does Not Created Successfully",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );
@@ -118,16 +118,16 @@ class GenderController extends Controller
         return response()->json($notification);
     }
 
-    public function gender_edit_page(){
+    public function blood_group_edit_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.gender.gender_edit',compact('menu_data'));
+        return view('admin.reference.blood_group.blood_group_edit',compact('menu_data'));
     }
 
-    public function gender_grid(Request $request){
+    public function blood_group_grid(Request $request){
 
-        $menu_data = $this->common->get_page_menu_grid('reference_data.gender.add');
+        $menu_data = $this->common->get_page_menu_grid('reference_data.blood_group.add');
 
         $csrf_token = csrf_token();
 
@@ -150,22 +150,22 @@ class GenderController extends Controller
 
         if($search_value!=''){
 
-            $total_data = Gender::select('id')
+            $total_data = BloodGroup::select('id')
                 ->where('delete_status',0)
                 ->get();
 
-            $filter_data = Gender::select('id')
+            $filter_data = BloodGroup::select('id')
                 ->where('delete_status',0)
-                ->where('gender_name','like',"%".$search_value."%")
-                ->orWhere('gender_code','like',"%".$search_value."%")
-                ->orWhere('gender_title','like',"%".$search_value."%")
+                ->where('blood_group_name','like',"%".$search_value."%")
+                ->orWhere('blood_group_code','like',"%".$search_value."%")
+                ->orWhere('blood_group_title','like',"%".$search_value."%")
                 ->get();
 
-            $data = Gender::select('id','gender_name','gender_code','gender_title','gender_deatils','add_by','edit_by','status')
+            $data = BloodGroup::select('id','blood_group_name','blood_group_code','blood_group_title','blood_group_deatils','add_by','edit_by','status')
                 ->where('delete_status',0)
-                ->where('gender_name','like',"%".$search_value."%")
-                ->orWhere('gender_code','like',"%".$search_value."%")
-                ->orWhere('gender_title','like',"%".$search_value."%")
+                ->where('blood_group_name','like',"%".$search_value."%")
+                ->orWhere('blood_group_code','like',"%".$search_value."%")
+                ->orWhere('blood_group_title','like',"%".$search_value."%")
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)
@@ -173,11 +173,11 @@ class GenderController extends Controller
         }
         else{
 
-            $filter_data = Gender::select('id')
+            $filter_data = BloodGroup::select('id')
                 ->where('delete_status',0)
                 ->get();
 
-            $data = Gender::select('id','gender_name','gender_code','gender_title','gender_deatils','add_by','edit_by','status')
+            $data = BloodGroup::select('id','blood_group_name','blood_group_code','blood_group_title','blood_group_deatils','add_by','edit_by','status')
                 ->where('delete_status',0)
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
@@ -195,10 +195,10 @@ class GenderController extends Controller
 
             $record_data[$sl]['id'] = $value->id;
             $record_data[$sl]['sl'] = $sl_start;
-            $record_data[$sl]['gender_name'] = $value->gender_name;
-            $record_data[$sl]['gender_code'] = $value->gender_code;
-            $record_data[$sl]['gender_title'] = $value->gender_title;
-            $record_data[$sl]['gender_deatils'] = $value->gender_deatils;
+            $record_data[$sl]['blood_group_name'] = $value->blood_group_name;
+            $record_data[$sl]['blood_group_code'] = $value->blood_group_code;
+            $record_data[$sl]['blood_group_title'] = $value->blood_group_title;
+            $record_data[$sl]['blood_group_deatils'] = $value->blood_group_deatils;
             $record_data[$sl]['add_by'] = $value->add_by;
             $record_data[$sl]['edit_by'] = $value->edit_by;
             $record_data[$sl]['status'] = $value->status;
@@ -221,25 +221,25 @@ class GenderController extends Controller
         echo json_encode($response);
     }
 
-    public function gender_single_edit_page($id){
+    public function blood_group_single_edit_page($id){
 
-        $gender_data = Gender::where('delete_status',0)
+        $blood_group_data = BloodGroup::where('delete_status',0)
             ->where('id',$id)
             ->first();
     
         $menu_data = $this->common->get_page_menu();
 
-        $user_right_data = $this->common->get_page_menu_single_view('reference_data.gender.add****reference_data.gender.edit');
+        $user_right_data = $this->common->get_page_menu_single_view('reference_data.blood_group.add****reference_data.blood_group.edit');
 
-        return view('admin.reference.gender.gender_edit_view',compact('menu_data','gender_data','user_right_data'));
+        return view('admin.reference.blood_group.blood_group_edit_view',compact('menu_data','blood_group_data','user_right_data'));
     }
 
-    public function gender_update($id, Request $request){
+    public function blood_group_update($id, Request $request){
 
         $validator = Validator::make($request->all(), [
-            'gender_name' => 'required|string|max:250',
-            'gender_code' => 'required|string|max:20',
-            'gender_title' => 'required|string|max:250'
+            'blood_group_name' => 'required|string|max:250',
+            'blood_group_code' => 'required|string|max:20',
+            'blood_group_title' => 'required|string|max:250'
         ]);
 
         if ($validator->fails()) {
@@ -258,12 +258,12 @@ class GenderController extends Controller
             ]);
         }
 
-        $duplicate_status_1 = $this->common->get_duplicate_value('gender_name','genders', $request->gender_name, $request->update_id);
+        $duplicate_status_1 = $this->common->get_duplicate_value('blood_group_name','blood_groups', $request->blood_group_name, $request->update_id);
 
         if($duplicate_status_1>0){
 
             $notification = array(
-                'message'=> "Duplicate Gender Name Found",
+                'message'=> "Duplicate Blood Group Name Found",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );
@@ -271,12 +271,12 @@ class GenderController extends Controller
             return response()->json($notification);
         }
 
-        $duplicate_status_2 = $this->common->get_duplicate_value('gender_code','genders', $request->gender_code, $request->update_id);
+        $duplicate_status_2 = $this->common->get_duplicate_value('blood_group_code','blood_groups', $request->blood_group_code, $request->update_id);
 
         if($duplicate_status_2>0){
 
             $notification = array(
-                'message'=> "Duplicate Gender Code Found",
+                'message'=> "Duplicate Blood Group Code Found",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );
@@ -290,14 +290,14 @@ class GenderController extends Controller
 
         DB::beginTransaction();
 
-        $data = Gender::where('delete_status',0)
+        $data = BloodGroup::where('delete_status',0)
             ->where('id',$request->update_id)
             ->first();
 
-        $data->gender_name = $request->gender_name;
-        $data->gender_code = $request->gender_code;
-        $data->gender_title = $request->gender_title;
-        $data->gender_deatils = $request->gender_deatils;
+        $data->blood_group_name = $request->blood_group_name;
+        $data->blood_group_code = $request->blood_group_code;
+        $data->blood_group_title = $request->blood_group_title;
+        $data->blood_group_deatils = $request->blood_group_deatils;
         $data->edit_by = $user_id;
         $data->updated_at = now();
         $data->edit_status = 1;
@@ -309,7 +309,7 @@ class GenderController extends Controller
             DB::commit();
 
             $notification = array(
-                'message'=> "Gender Details Updated Successfully",
+                'message'=> "Blood Group Details Updated Successfully",
                 'alert_type'=>'info',
                 'csrf_token' => csrf_token()
             );
@@ -319,7 +319,7 @@ class GenderController extends Controller
             DB::rollBack();
 
             $notification = array(
-                'message'=> "Gender Details Does Not Updated Successfully",
+                'message'=> "Blood Group Details Does Not Updated Successfully",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );
@@ -328,45 +328,45 @@ class GenderController extends Controller
         return response()->json($notification);
     }
 
-    public function gender_view_page(){
+    public function blood_group_view_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.gender.gender_view',compact('menu_data'));
+        return view('admin.reference.blood_group.blood_group_view',compact('menu_data'));
     }
 
-    public function gender_single_view_page($id){
+    public function blood_group_single_view_page($id){
 
-        $gender_data = Gender::where('delete_status',0)
+        $blood_group_data = BloodGroup::where('delete_status',0)
             ->where('id',$id)
             ->first();
     
         $menu_data = $this->common->get_page_menu();
 
-        $user_right_data = $this->common->get_page_menu_single_view('reference_data.gender.add****reference_data.gender.view');
+        $user_right_data = $this->common->get_page_menu_single_view('reference_data.blood_group.add****reference_data.blood_group.view');
 
-        return view('admin.reference.gender.gender_single_view',compact('menu_data','gender_data','user_right_data'));
+        return view('admin.reference.blood_group.blood_group_single_view',compact('menu_data','blood_group_data','user_right_data'));
     }
 
-    public function gender_delete_page(){
+    public function blood_group_delete_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.gender.gender_delete',compact('menu_data'));
+        return view('admin.reference.blood_group.blood_group_delete',compact('menu_data'));
     }
 
-    public function gender_delete($id){
+    public function blood_group_delete($id){
 
         $notification = array();
 
-        $data = Gender::where('delete_status',0)
+        $data = BloodGroup::where('delete_status',0)
             ->where('id',$id)
             ->first();
 
         if(empty($data)){
 
             $notification = array(
-                'message'=> "Gender Data Not Found!!!",
+                'message'=> "Blood Group Data Not Found!!!",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );
@@ -390,7 +390,7 @@ class GenderController extends Controller
                 DB::commit();
 
                 $notification = array(
-                    'message'=> "Gender Details Deleted Successfully",
+                    'message'=> "Blood Group Details Deleted Successfully",
                     'alert_type'=>'info',
                     'csrf_token' => csrf_token()
                 );
@@ -400,7 +400,7 @@ class GenderController extends Controller
                 DB::rollBack();
 
                 $notification = array(
-                    'message'=> "Gender Details Not Deleted Successfully",
+                    'message'=> "Blood Group Details Not Deleted Successfully",
                     'alert_type'=>'warning',
                     'csrf_token' => csrf_token()
                 );
@@ -409,6 +409,6 @@ class GenderController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.gender.gender_delete_alert',compact('menu_data','notification'));
+        return view('admin.reference.blood_group.blood_group_delete_alert',compact('menu_data','notification'));
     }
 }

@@ -190,12 +190,12 @@
                         break; 
                     }
 
+                    document.getElementById("user_group_form").reset();
+
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);
                 }
             }
-
-            document.getElementById("user_group_form").reset();
         }
     }
 

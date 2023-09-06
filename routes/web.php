@@ -9,6 +9,7 @@ use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GenderController;
+use App\Http\Controllers\BloodGroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -138,4 +139,27 @@ Route::controller(GenderController::class)->group(function(){
     Route::post('/dashboard/gender-delete','gender_grid')->name('reference_data.gender.delete')->middleware(['checkroute']);
     Route::get('/dashboard/gender-delete/{id?}','gender_delete')->name('reference_data.gender.delete')->middleware(['checkroute']);
 
+});
+
+
+Route::controller(BloodGroupController::class)->group(function(){
+
+    Route::get('/dashboard/blood-group-add','blood_group_add_page')->name('reference_data.blood_group.add')->middleware(['checkroute']);
+    Route::post('/dashboard/blood-group-add','blood_group_store')->name('reference_data.blood_group.add')->middleware(['checkroute']);
+
+    // for all edit view Blood Group route........
+    Route::get('/dashboard/blood-group-edit','blood_group_edit_page')->name('reference_data.blood_group.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/blood-group-edit','blood_group_grid')->name('reference_data.blood_group.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/blood-group-edit/{id?}','blood_group_single_edit_page')->name('reference_data.blood_group.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/blood-group-edit/{id?}','blood_group_update')->name('reference_data.blood_group.edit')->middleware(['checkroute']);
+
+    // for all view Blood Group route........
+    Route::get('/dashboard/blood-group-view','blood_group_view_page')->name('reference_data.blood_group.view')->middleware(['checkroute']);
+    Route::post('/dashboard/blood-group-view','blood_group_grid')->name('reference_data.blood_group.view')->middleware(['checkroute']);
+    Route::get('/dashboard/blood-group-view/{id?}','blood_group_single_view_page')->name('reference_data.blood_group.view')->middleware(['checkroute']);
+
+    // for all delete view Blood Group route........
+    Route::get('/dashboard/blood-group-delete','blood_group_delete_page')->name('reference_data.blood_group.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/blood-group-delete','blood_group_grid')->name('reference_data.blood_group.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/blood-group-delete/{id?}','blood_group_delete')->name('reference_data.blood_group.delete')->middleware(['checkroute']);
 });
