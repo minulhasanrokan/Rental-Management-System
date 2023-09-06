@@ -54,15 +54,40 @@
                                                                             if(isset($all_right_data['right_arr'][$right_group['g_id']][$right_cat['c_id']]) && !empty($all_right_data['right_arr'][$right_group['g_id']][$right_cat['c_id']])){
 
                                                                                 $k=0;
+                                                                                $status = 1;
+
                                                                                 foreach($all_right_data['right_arr'][$right_group['g_id']][$right_cat['c_id']] as $right){
+
+                                                                                    $checked= "";
+                                                                                    $value = 0;
+
+                                                                                    if(isset($group_right_data[$right_group['g_id']][$right_cat['c_id']][$right['r_id']]['r_id'])){
+
+                                                                                        $checked ="checked";
+
+                                                                                        $value = 1;
+                                                                                    }
+                                                                                    else{
+
+                                                                                        $status = 0;
+                                                                                    }
 
                                                                                     $k++;
                                                                         @endphp
-                                                                                    <input type="checkbox" value="0" id="r_id_checkbox_{{$i}}_{{$j}}_{{$k}}" name="r_id_checkbox_{{$i}}_{{$j}}_{{$k}}" onclick="select_right({{$i}},{{$j}},{{$k}});" />
+                                                                                    <input {{$checked}} type="checkbox" value="{{$value}}" id="r_id_checkbox_{{$i}}_{{$j}}_{{$k}}" name="r_id_checkbox_{{$i}}_{{$j}}_{{$k}}" onclick="select_right({{$i}},{{$j}},{{$k}});" />
                                                                                     <input type="hidden" id="r_id_{{$i}}_{{$j}}_{{$k}}" name="r_id_{{$i}}_{{$j}}_{{$k}}" value="{{$right['r_id']}}" />
                                                                                     <label class="control-label input-label" for="startTime">{{$right['r_name']}} <i class="fa {{$right['r_icon']}}"></i></label>
                                                                                     <br>
                                                                         @php
+                                                                                }
+
+                                                                                if($status==1){
+
+                                                                                    @endphp
+                                                                                        <script type="text/javascript">
+                                                                                            select_right({{$i}},{{$j}},{{$k}});
+                                                                                        </script>
+                                                                                    @php
                                                                                 }
 
                                                                                 @endphp
@@ -94,7 +119,6 @@
                                     @php
                                 }
                             @endphp
-                  
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -261,7 +285,7 @@
             $('#c_id_checkbox_'+g_id+"_"+cat_id).val(0);
             $('#g_id_checkbox_'+g_id).prop('checked', false);
             $('#g_id_checkbox_'+g_id).val(0);
-             $('#r_id_checkbox_'+g_id+"_"+cat_id+"_"+r_id).val(0);
+            $('#r_id_checkbox_'+g_id+"_"+cat_id+"_"+r_id).val(0);
         }
     }
 

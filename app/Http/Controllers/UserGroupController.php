@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use App\Models\UserGroup;
+use App\Models\UserGroupRight;
 use DB;
 
 class UserGroupController extends Controller
@@ -518,7 +519,9 @@ class UserGroupController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('user_management.user_group.add****user_management.user_group.right');
 
-        return view('admin.user_group.group_right_setup',compact('menu_data','group_data','user_right_data','all_right_data'));
+        $group_right_data = $this->common->get_group_right($group_data->id);
+
+        return view('admin.user_group.group_right_setup',compact('menu_data','group_data','user_right_data','all_right_data','group_right_data'));
     }
 
     public function user_group_right_store ($id, Request $request){
@@ -527,6 +530,14 @@ class UserGroupController extends Controller
         $sl=0;
 
         $max_group = $request->g_id_max;
+
+        $group_id = $request->group_id;
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        $now = now();
 
         for($i=1; $i<=$max_group; $i++){
 
@@ -559,14 +570,61 @@ class UserGroupController extends Controller
 
                         $r_id = $request->$r_id_name;
 
+                        $right_arr[$sl]['group_id'] = $group_id;
                         $right_arr[$sl]['g_id'] = $g_id;
                         $right_arr[$sl]['c_id'] = $c_id;
                         $right_arr[$sl]['r_id'] = $r_id;
+                        $right_arr[$sl]['add_by'] = $user_id;
+                        $right_arr[$sl]['created_at'] = $now;
 
                         $sl++;
                     }
                 }
             }
         }
+
+        $notification = array();
+
+        if(!empty($right_arr)){
+
+            DB::beginTransaction();
+
+            UserGroupRight::where('group_id', $group_id)->delete();
+
+            $status = UserGroupRight::insert($right_arr);
+
+            if($status==true){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "User Group Right Created Successfully",
+                    'alert_type'=>'info',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "User Group Right Not Created Successfully",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "Not Data Found!!!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
     }
 }
