@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SystemSettingController;
 use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\CommonController;
+use App\Http\Controllers\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,12 @@ use App\Http\Controllers\CommonController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+// common route..............
+Route::controller(CommonController::class)->group(function(){
+
+    Route::get('/dashboard/get-duplicate-value/{field_name?}/{table_name?}/{value?}/{data_id?}','get_duplicate_value')->name('admin.get.duplicate.value')->middleware(['checkroute']);
 });
 
 // registration route..................
@@ -101,12 +108,13 @@ Route::controller(UserGroupController::class)->group(function(){
     // for all group set right setup page user group route........
     Route::get('/dashboard/user-group-right/{id?}','user_group_right_setup_page')->name('user_management.user_group.right')->middleware(['checkroute']);
     Route::post('/dashboard/user-group-right/{id?}','user_group_right_store')->name('user_management.user_group.right')->middleware(['checkroute']);
-
 });
 
 
-// common route..............
-Route::controller(CommonController::class)->group(function(){
+// user route..............
+Route::controller(User::class)->group(function(){
 
-    Route::get('/dashboard/get-duplicate-value/{field_name?}/{table_name?}/{value?}/{data_id?}','get_duplicate_value')->name('admin.get.duplicate.value')->middleware(['checkroute']);
+    Route::get('/dashboard/user-add','user_add_page')->name('user_management.user.add')->middleware(['checkroute']);
+    Route::post('/dashboard/user-add','user_group_store')->name('user_management.user.add')->middleware(['checkroute']);
+
 });

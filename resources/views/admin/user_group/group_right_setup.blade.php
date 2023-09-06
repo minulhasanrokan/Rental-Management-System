@@ -29,24 +29,25 @@
                                         <div class="col-md-12">
                                             <fieldset class="scheduler-border">
                                                 <legend class="scheduler-border">
-                                                    {{$right_group['g_name']}} 
+                                                    <label class="control-label input-label" for="g_id_checkbox_{{$i}}">{{$right_group['g_name']}} </label>
                                                     <input type="checkbox" value="0" id="g_id_checkbox_{{$i}}" name="g_id_checkbox_{{$i}}" onclick="select_all_group_right({{$i}});" />
                                                     <input type="hidden" id="g_id_{{$i}}" name="g_id_{{$i}}" value="{{$right_group['g_id']}}" />
                                                 </legend>
-                                                @php
-                                                    if(isset($all_right_data['right_cat_arr'][$right_group['g_id']]) && !empty($all_right_data['right_cat_arr'][$right_group['g_id']])){
+                                                <div class="row">
+                                                    @php
+                                                        if(isset($all_right_data['right_cat_arr'][$right_group['g_id']]) && !empty($all_right_data['right_cat_arr'][$right_group['g_id']])){
 
-                                                        $j = 0;
+                                                            $j = 0;
 
-                                                        foreach($all_right_data['right_cat_arr'][$right_group['g_id']] as $right_cat){
+                                                            foreach($all_right_data['right_cat_arr'][$right_group['g_id']] as $right_cat){
 
-                                                            $j++;
+                                                                $j++;
 
-                                                @endphp     <div class="row">
+                                                    @endphp     
                                                                 <div class="col-md-3">
                                                                     <div class="form-group">
                                                                         <h4>
-                                                                            {{$right_cat['c_name']}} 
+                                                                            <label class="control-label input-label" for="c_id_checkbox_{{$i}}_{{$j}}">{{$right_cat['c_name']}} </label>
                                                                             <input type="checkbox" value="0" id="c_id_checkbox_{{$i}}_{{$j}}" name="c_id_checkbox_{{$i}}_{{$j}}" onclick="select_all_cat_right({{$i}},{{$j}});" />
                                                                             <input type="hidden" id="c_id_{{$i}}_{{$j}}" name="c_id_{{$i}}_{{$j}}" value="{{$right_cat['c_id']}}" />
                                                                         </h5>
@@ -76,7 +77,7 @@
                                                                         @endphp
                                                                                     <input {{$checked}} type="checkbox" value="{{$value}}" id="r_id_checkbox_{{$i}}_{{$j}}_{{$k}}" name="r_id_checkbox_{{$i}}_{{$j}}_{{$k}}" onclick="select_right({{$i}},{{$j}},{{$k}});" />
                                                                                     <input type="hidden" id="r_id_{{$i}}_{{$j}}_{{$k}}" name="r_id_{{$i}}_{{$j}}_{{$k}}" value="{{$right['r_id']}}" />
-                                                                                    <label class="control-label input-label" for="startTime">{{$right['r_name']}} <i class="fa {{$right['r_icon']}}"></i></label>
+                                                                                    <label class="control-label input-label" for="r_id_checkbox_{{$i}}_{{$j}}_{{$k}}">{{$right['r_name']}} <i class="fa {{$right['r_icon']}}"></i></label>
                                                                                     <br>
                                                                         @php
                                                                                 }
@@ -98,16 +99,17 @@
                                                                         @endphp
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                @php
+                                                                
+                                                    @php
+                                                            }
+
+                                                            @endphp
+
+                                                                <input type="hidden" id="c_id_max_{{$i}}" name="c_id_max_{{$i}}" value="{{$j}}" />
+                                                            @php
                                                         }
-
-                                                        @endphp
-
-                                                            <input type="hidden" id="c_id_max_{{$i}}" name="c_id_max_{{$i}}" value="{{$j}}" />
-                                                        @php
-                                                    }
-                                                @endphp
+                                                    @endphp
+                                                </div>
                                             </fieldset>
                                         </div>
                             @php
@@ -139,7 +141,7 @@
 <style type="text/css">
     fieldset.scheduler-border {
         border: 1px groove #ddd !important;
-        padding: 0 1.4em 1.4em 1.4em !important;
+        padding-left: 10px !important;
         margin: 0 0 1.5em 0 !important;
         -webkit-box-shadow:  0px 0px 0px 0px #000;
         box-shadow:  0px 0px 0px 0px #000;
@@ -147,7 +149,7 @@
 
     legend.scheduler-border {
         width:inherit; /* Or auto */
-        padding:0 10px; /* To give a bit of padding on the left and right */
+        padding:0 5px; /* To give a bit of padding on the left and right */
         border-bottom:none;
     }
 </style>

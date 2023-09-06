@@ -26,6 +26,7 @@ return new class extends Migration
             $table->date('date_of_birth')->nullable();
             $table->integer('sex')->nullable();
             $table->integer('blood_group')->nullable();
+            $table->string('user_photo')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('verify_status')->default(0);
             $table->integer('delete_status')->default(0);
