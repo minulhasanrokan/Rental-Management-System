@@ -272,4 +272,8 @@
         }
     }
 
+    var gender_reponse = get_parameter_data('genders','id,gender_name');
+
+    alert(gender_reponse);
+
 </script>****{{csrf_token()}}

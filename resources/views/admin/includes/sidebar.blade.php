@@ -786,10 +786,38 @@
 
             return true;
             
-        } else {
+        }
+        else{
 
             return false;
         }
+    }
 
+    function get_parameter_data(table_name,field_name){
+ 
+        var data="&table_name="+table_name+"&field_name="+field_name;
+
+        http.open("GET","{{route('admin.get.parameter.data')}}"+"/"+table_name+"/"+field_name,true);
+        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        http.send(data);
+        http.onreadystatechange = get_parameter_data_reponse;
+    }
+
+    function get_parameter_data_reponse(){
+
+        if(http.readyState == 4)
+        {
+
+            var reponse=trim(http.responseText).split("****");
+
+            if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+
+                location.replace('<?php echo url('/login');?>');
+            }
+            else{
+
+                return reponse;
+            }
+        }
     }
 </script>
