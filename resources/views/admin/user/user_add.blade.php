@@ -54,7 +54,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="blood_group">User Blood Group</label>
-                                    <input type="text" class="form-control" id="blood_group" name="blood_group" placeholder="Enter User Blood Group" required>
+                                    <div id="blood_group_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="blood_group_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -274,6 +274,7 @@
     }
 
     load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender');
+    load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group');
     load_drop_down('user_groups','id,group_name','group','group_container','Select Group');
 
 </script>****{{csrf_token()}}
