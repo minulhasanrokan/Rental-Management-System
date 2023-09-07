@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\GenderController;
 use App\Http\Controllers\BloodGroupController;
 use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -186,4 +187,26 @@ Route::controller(DesignationController::class)->group(function(){
     Route::get('/dashboard/designation-delete','designation_delete_page')->name('reference_data.designation.delete')->middleware(['checkroute']);
     Route::post('/dashboard/designation-delete','designation_grid')->name('reference_data.designation.delete')->middleware(['checkroute']);
     Route::get('/dashboard/designation-delete/{id?}','designation_delete')->name('reference_data.designation.delete')->middleware(['checkroute']);
+});
+
+Route::controller(DepartmentController::class)->group(function(){
+
+    Route::get('/dashboard/department-add','department_add_page')->name('reference_data.department.add')->middleware(['checkroute']);
+    Route::post('/dashboard/department-add','department_store')->name('reference_data.department.add')->middleware(['checkroute']);
+
+    // for all edit view department route........
+    Route::get('/dashboard/department-edit','department_edit_page')->name('reference_data.department.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/department-edit','department_grid')->name('reference_data.department.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/department-edit/{id?}','department_single_edit_page')->name('reference_data.department.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/department-edit/{id?}','department_update')->name('reference_data.department.edit')->middleware(['checkroute']);
+
+    // for all view department route........
+    Route::get('/dashboard/department-view','department_view_page')->name('reference_data.department.view')->middleware(['checkroute']);
+    Route::post('/dashboard/department-view','department_grid')->name('reference_data.department.view')->middleware(['checkroute']);
+    Route::get('/dashboard/department-view/{id?}','department_single_view_page')->name('reference_data.department.view')->middleware(['checkroute']);
+
+    // for all delete view department route........
+    Route::get('/dashboard/department-delete','department_delete_page')->name('reference_data.department.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/department-delete','department_grid')->name('reference_data.department.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/department-delete/{id?}','department_delete')->name('reference_data.department.delete')->middleware(['checkroute']);
 });
