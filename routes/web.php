@@ -10,6 +10,7 @@ use App\Http\Controllers\CommonController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GenderController;
 use App\Http\Controllers\BloodGroupController;
+use App\Http\Controllers\DesignationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -162,4 +163,27 @@ Route::controller(BloodGroupController::class)->group(function(){
     Route::get('/dashboard/blood-group-delete','blood_group_delete_page')->name('reference_data.blood_group.delete')->middleware(['checkroute']);
     Route::post('/dashboard/blood-group-delete','blood_group_grid')->name('reference_data.blood_group.delete')->middleware(['checkroute']);
     Route::get('/dashboard/blood-group-delete/{id?}','blood_group_delete')->name('reference_data.blood_group.delete')->middleware(['checkroute']);
+});
+
+
+Route::controller(DesignationController::class)->group(function(){
+
+    Route::get('/dashboard/designation-add','designation_add_page')->name('reference_data.designation.add')->middleware(['checkroute']);
+    Route::post('/dashboard/designation-add','designation_store')->name('reference_data.designation.add')->middleware(['checkroute']);
+
+    // for all edit view designation route........
+    Route::get('/dashboard/designation-edit','designation_edit_page')->name('reference_data.designation.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/designation-edit','designation_grid')->name('reference_data.designation.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/designation-edit/{id?}','designation_single_edit_page')->name('reference_data.designation.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/designation-edit/{id?}','designation_update')->name('reference_data.designation.edit')->middleware(['checkroute']);
+
+    // for all view designation route........
+    Route::get('/dashboard/designation-view','designation_view_page')->name('reference_data.designation.view')->middleware(['checkroute']);
+    Route::post('/dashboard/designation-view','designation_grid')->name('reference_data.designation.view')->middleware(['checkroute']);
+    Route::get('/dashboard/designation-view/{id?}','designation_single_view_page')->name('reference_data.designation.view')->middleware(['checkroute']);
+
+    // for all delete view designation route........
+    Route::get('/dashboard/designation-delete','designation_delete_page')->name('reference_data.designation.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/designation-delete','designation_grid')->name('reference_data.designation.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/designation-delete/{id?}','designation_delete')->name('reference_data.designation.delete')->middleware(['checkroute']);
 });

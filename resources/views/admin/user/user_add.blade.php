@@ -78,8 +78,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="designation">User Designnation</label>
-                                    <input type="text" class="form-control" id="designation" name="designation" placeholder="Enter User Designnation" required>
+                                    <label for="designation">User Designation</label>
+                                    <div id="designation_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="designation_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -295,5 +295,6 @@
     load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender');
     load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group');
     load_drop_down('user_groups','id,group_name','group','group_container','Select Group');
+    load_drop_down('designations','id,designation_name','designation','designation_container','Select Designation');
 
 </script>****{{csrf_token()}}
