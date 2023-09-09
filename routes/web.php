@@ -50,6 +50,9 @@ Route::controller(RegistrationController::class)->group(function(){
     Route::get('/resend-forgot-password/{email}','resend_forgot_password')->name('admin.forgot.resend.password')->middleware(['logincheck']);
     Route::get('/reset-password/{email}','reset_password_page')->name('admin.reset.password');
     Route::post('/reset-password/{email}','reset_password_store')->name('admin.reset.password');
+
+    Route::get('/change-password','change_password_page')->name('admin.change.password')->middleware(['changepassword']);
+    Route::post('/change-password','change_password_store')->name('admin.change.password')->middleware(['changepassword']);
 });
 
 // login route..................
@@ -65,7 +68,6 @@ Route::controller(DashboardController::class)->group(function(){
     Route::get('/dashboard','dashboard')->name('admin.dashboard')->middleware(['dashboardcheck']);
     Route::get('/dashboard/logout','logout')->name('admin.logout')->middleware(['dashboardcheck']);
 });
-
 
 // dashboard route..............
 Route::controller(SystemSettingController::class)->group(function(){
@@ -112,7 +114,7 @@ Route::controller(UserGroupController::class)->group(function(){
 Route::controller(UserController::class)->group(function(){
 
     Route::get('/dashboard/user-add','user_add_page')->name('user_management.user.add')->middleware(['checkroute']);
-    Route::post('/dashboard/user-add','user_group_store')->name('user_management.user.add')->middleware(['checkroute']);
+    Route::post('/dashboard/user-add','user_store')->name('user_management.user.add')->middleware(['checkroute']);
 
 });
 

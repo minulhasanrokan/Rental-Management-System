@@ -147,6 +147,8 @@
 
                     document.getElementById("department_form").reset();
 
+                    $('#department_deatils').summernote('reset');
+
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);
                 }

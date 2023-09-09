@@ -17,7 +17,7 @@ class CheckRoute
     {
         $user_session_data = session()->all();
 
-        if(!isset($user_session_data[config('app.app_session_name')])){
+        if(!isset($user_session_data[config('app.app_session_name')]) || $user_session_data[config('app.app_session_name')]['password_change_status']==0){
 
             session()->flush();
             session()->regenerate();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmail;
+use App\Mail\VerifyMailWithPassword;
 use App\Mail\ResetPasswordMail;
 
 class MailController extends Controller
@@ -28,6 +29,17 @@ class MailController extends Controller
         $url = $base_url."/reset-password/".$encrypt_data;
 
         $status = Mail::to($email)->send(new ResetPasswordMail($user_name, $url,$token));
+
+        return $status;
+    }
+
+    public function sent_email_verify_email_with_password($email,$encrypt_data,$user_name,$password){
+
+        $base_url = config('app.url');
+
+        $url = $base_url."/verify-email/".$encrypt_data;
+
+        $status = Mail::to($email)->send(new VerifyMailWithPassword($user_name,$password, $url));
 
         return $status;
     }

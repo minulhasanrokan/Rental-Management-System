@@ -827,7 +827,7 @@
         }
     }
 
-    function load_drop_down(table_name, field_name, id, container, title) {
+    function load_drop_down(table_name, field_name, id, container, title, select_status) {
 
 
         var http = createObject();
@@ -850,7 +850,16 @@
                         }
                         else{
 
-                            var data ='<select class="form-control" style="width: 100%;" name="'+id+'" id="'+id+'"><option value="">'+title+'</option>';
+                            var data = '';
+
+                            if(select_status==1){
+
+                                data ='<select class="select2 form-control" multiple="" data-placeholder="'+title+'" style="width: 100%;" name="'+id+'" id="'+id+'"><option value="">'+title+'</option>';
+                            }
+                            else{
+
+                                data ='<select class="form-control select" style="width: 100%;" name="'+id+'" id="'+id+'"><option value="">'+title+'</option>';
+                            }
 
                             var json_data = JSON.parse(reponse[0]);
 
@@ -866,6 +875,11 @@
                             data +='</select>';
 
                             document.getElementById(container).innerHTML = data;
+
+                            if(select_status==1){
+
+                                $('.select2').select2();
+                            }
                         }
                     }
                 }
@@ -877,3 +891,7 @@
         }
     }
 </script>
+
+
+
+                

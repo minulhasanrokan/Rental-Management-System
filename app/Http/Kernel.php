@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'logincheck' => \App\Http\Middleware\LoginCheck::class,
         'dashboardcheck' => \App\Http\Middleware\DashboardCheck::class,
         'checkroute' => \App\Http\Middleware\CheckRoute::class,
+        'changepassword' => \App\Http\Middleware\ChangePassword::class,
     ];
 }

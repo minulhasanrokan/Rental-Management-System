@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DashboardCheck
+class ChangePassword
 {
     /**
      * Handle an incoming request.
@@ -17,18 +17,13 @@ class DashboardCheck
     {
         $user_session_data = session()->all();
 
-        if(!isset($user_session_data[config('app.app_session_name')])){
+        if(isset($user_session_data[config('app.app_session_name')]) && $user_session_data[config('app.app_session_name')]['password_change_status']==0){
 
-            session()->flush();
-            session()->regenerate();
-
-            return redirect('/login');
+            return $next($request);
         }
-        else if($user_session_data[config('app.app_session_name')]['password_change_status']==0){
+        else{
 
-            return redirect('/change-password');
+            return redirect('/dashboard');
         }
-
-        return $next($request);
     }
 }

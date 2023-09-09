@@ -35,6 +35,7 @@ return new class extends Migration
             $table->integer('super_admin_status')->default(0);
             $table->integer('user_type')->default(0);
             $table->string('password');
+            $table->integer('password_change_status')->default(1);
             $table->integer('add_by')->nullable();
             $table->integer('edit_by')->nullable();
             $table->integer('delete_by')->nullable();

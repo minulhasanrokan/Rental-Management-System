@@ -68,12 +68,26 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="user_type">User Type</label>
-                                    <select class="form-control" style="width: 100%;" name="user_type" id="user_type" required>
+                                    <select disabled class="form-control" style="width: 100%;" name="user_type" id="user_type" required>
                                         <option value="">Select User Type</option>
                                         <option value="0">Normal User</option>
-                                        <option value="1">Tenant User</option>
+                                        <option selected value="1">Tenant User</option>
                                     </select>
                                     <div class="input-error" style="display:none; color: red;" id="user_type_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="department">User Depertment</label>
+                                    <div id="department_container"></div>
+                                    <div class="input-error" style="display:none; color: red;" id="department_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="assign_department">User Assign Depertment</label>
+                                    <div id="assign_department_container"></div>
+                                    <div class="input-error" style="display:none; color: red;" id="assign_department_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -81,20 +95,6 @@
                                     <label for="designation">User Designation</label>
                                     <div id="designation_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="designation_error" style="display: inline-block; width:100%; color: red;"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="department">User Depertment</label>
-                                    <input type="text" class="form-control" id="department" name="department" placeholder="Enter User Depertment" required>
-                                    <div class="input-error" style="display:none; color: red;" id="department_error" style="display: inline-block; width:100%; color: red;"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="assign_department">User Assign Depertment</label>
-                                    <input type="text" class="form-control" id="assign_department" name="assign_department" placeholder="Enter User Assign Depertment" required>
-                                    <div class="input-error" style="display:none; color: red;" id="assign_department_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -160,7 +160,7 @@
 
     function save_user_info_data(){
 
-        if( form_validation('name*email*mobile*date_of_birth*sex*blood_group*group*user_type*designation*department*assign_department*address','User Name*User E-mail*User Mobile*User Date Of Birth*User Gender*User Blood Group*User Group*User Type*User Designation*User Department*User Assign Department*User Address')==false ){
+        if( form_validation('name*email*mobile*date_of_birth*sex*blood_group*group*user_type*department*assign_department*designation*address*user_photo','User Name*User E-mail*User Mobile*User Date Of Birth*User Gender*User Blood Group*User Group*User Type*User Department*User Assign Department*User Designation*User Address*User Photo')==false ){
 
             return false;
         }
@@ -173,7 +173,7 @@
 
             alert("Please Input Valied Mobile Number");
 
-             $("#mobile").focus();
+            $("#mobile").focus();
 
             return false;
         }
@@ -186,7 +186,7 @@
 
             alert("Please Input Valied Date Of Birth");
 
-             $("#mobile").focus();
+            $("#mobile").focus();
 
             return false;
         }
@@ -204,6 +204,12 @@
         var assign_department = $("#assign_department").val();
         var address = $("#address").val();
         var details = $("#details").val();
+
+        if(assign_department==''){
+
+            alert('Assign Department Is Mandatory');
+            return false;
+        }
 
         var token = $('meta[name="csrf-token"]').attr('content');
 
@@ -285,6 +291,8 @@
 
                     document.getElementById("user_form").reset();
 
+                    $('#details').summernote('reset');
+
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);
                 }
@@ -292,9 +300,11 @@
         }
     }
 
-    load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender');
-    load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group');
-    load_drop_down('user_groups','id,group_name','group','group_container','Select Group');
-    load_drop_down('designations','id,designation_name','designation','designation_container','Select Designation');
+    load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender',0);
+    load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group',0);
+    load_drop_down('user_groups','id,group_name','group','group_container','Select Group',0);
+    load_drop_down('departments','id,department_name','department','department_container','Select Department',0);
+    load_drop_down('departments','id,department_name','assign_department','assign_department_container','Select Assign Department',1);
+    load_drop_down('designations','id,designation_name','designation','designation_container','Select Designation',0);
 
 </script>****{{csrf_token()}}

@@ -798,6 +798,9 @@
     <!-- DataTables -->
     <link rel="stylesheet" href="{{asset('backend/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{asset('backend/plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{asset('backend/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
     <!-- Theme style -->
@@ -814,12 +817,12 @@
     <script src="{{asset('backend/plugins/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap -->
     <script src="{{asset('backend/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- Select2 -->
+    <script src="{{asset('backend/plugins/select2/js/select2.full.min.js')}}"></script>
     <!-- overlayScrollbars -->
     <script src="{{asset('backend/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('backend/dist/js/adminlte.js')}}"></script>
-
-    <!-- PAGE PLUGINS -->
     <!-- jQuery Mapael -->
     <script src="{{asset('backend/plugins/jquery-mousewheel/jquery.mousewheel.js')}}"></script>
     <script src="{{asset('backend/plugins/raphael/raphael.min.js')}}"></script>
@@ -840,6 +843,5 @@
     <script src="{{asset('backend/plugins/summernote/summernote-bs4.min.js')}}"></script>
     <!--common js-->
     <script src="{{asset('backend/dist/js/common.js')}}"></script>
-
 
 @endsection
