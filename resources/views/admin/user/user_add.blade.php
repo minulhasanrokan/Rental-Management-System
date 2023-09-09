@@ -70,8 +70,8 @@
                                     <label for="user_type">User Type</label>
                                     <select disabled class="form-control" style="width: 100%;" name="user_type" id="user_type" required>
                                         <option value="">Select User Type</option>
-                                        <option value="0">Normal User</option>
-                                        <option selected value="1">Tenant User</option>
+                                        <option selected value="0">Normal User</option>
+                                        <option value="1">Tenant User</option>
                                     </select>
                                     <div class="input-error" style="display:none; color: red;" id="user_type_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
