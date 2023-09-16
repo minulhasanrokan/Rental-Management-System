@@ -248,7 +248,7 @@ class CommonController extends Controller
 
         $group_right_data = DB::table('user_group_rights')
             ->select('group_id','g_id','c_id','r_id','add_by','edit_by')
-            ->where('status',1)
+            //->where('status',1)
             ->where('delete_status',0)
             ->where('group_id',$group_id)
             ->get()

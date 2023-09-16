@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\UserGroup;
 use DB;
 
 class UserController extends Controller
@@ -183,5 +184,124 @@ class UserController extends Controller
         }
 
         return response()->json($notification);
+    }
+
+    public function user_edit_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.user.user_edit',compact('menu_data'));
+    }
+
+    public function user_grid(Request $request){
+
+        $menu_data = $this->common->get_page_menu_grid('user_management.user.add');
+
+        $csrf_token = csrf_token();
+
+        $draw = $request->draw;
+        $row = $request->start;
+        $row_per_page  = $request->length;
+
+        $column_index  = $request->order[0]['column'];
+        $column_name = $request->columns[$column_index]['data'];
+
+        $column_ort_order = $request->order[0]['dir'];
+
+        $search_value  = trim($request->search['value']);
+
+        $total_data = array();
+        $filter_data = array();
+        $data = array();
+        $record_data = array();
+        $response = array();
+
+        if($search_value!=''){
+
+            $total_data = DB::table('users as a')
+                ->join('user_groups as b', 'b.id', '=', 'a.group')
+                ->select('a.id')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->get();
+
+            $filter_data = DB::table('users as a')
+                ->join('user_groups as b', 'b.id', '=', 'a.group')
+                ->select('a.id')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->where('a.name','like',"%".$search_value."%")
+                ->orWhere('b.group_name','like',"%".$search_value."%")
+                ->orWhere('a.email','like',"%".$search_value."%")
+                ->orWhere('a.mobile','like',"%".$search_value."%")
+                ->get();
+
+            $data = DB::table('users as a')
+                ->join('user_groups as b', 'b.id', '=', 'a.group')
+                ->select('a.id  as user_id', 'a.name', 'a.user_photo', 'b.group_name', 'a.email', 'a.mobile', 'a.status')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->where('a.name','like',"%".$search_value."%")
+                ->orWhere('b.group_name','like',"%".$search_value."%")
+                ->orWhere('a.email','like',"%".$search_value."%")
+                ->orWhere('a.mobile','like',"%".$search_value."%")
+                ->orderBy($column_name,$column_ort_order)
+                ->offset($row)
+                ->limit($row_per_page)
+                ->get();
+        }
+        else{
+
+            $filter_data = DB::table('users as a')
+                ->join('user_groups as b', 'b.id', '=', 'a.group')
+                ->select('a.id')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->get();
+
+            $data = DB::table('users as a')
+                ->join('user_groups as b', 'b.id', '=', 'a.group')
+                ->select('a.id  as user_id', 'a.name', 'a.user_photo', 'b.group_name', 'a.email', 'a.mobile', 'a.status')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->orderBy($column_name,$column_ort_order)
+                ->offset($row)
+                ->limit($row_per_page)
+                ->get();
+
+            $total_data = $filter_data;
+        }
+
+        $sl = 0;
+
+        $sl_start = $row+1;
+
+        foreach($data as $value){
+
+            $record_data[$sl]['user_id'] = $value->user_id;
+            $record_data[$sl]['sl'] = $sl_start;
+            $record_data[$sl]['user_photo'] = $value->user_photo;
+            $record_data[$sl]['name'] = $value->name;
+            $record_data[$sl]['group_name'] = $value->group_name;
+            $record_data[$sl]['email'] = $value->email;
+            $record_data[$sl]['mobile'] = $value->mobile;
+            $record_data[$sl]['status'] = $value->status;
+            $record_data[$sl]['action'] = $value->user_id;
+            $record_data[$sl]['menu_data'] = $menu_data;
+
+            $sl++;
+            $sl_start++;
+        }
+
+        $total_records = count($total_data);
+        $total_records_with_filer = count($filter_data);
+
+        $response['draw'] = $draw;
+        $response['iTotalRecords'] = $total_records;
+        $response['iTotalDisplayRecords'] = $total_records_with_filer;
+        $response['aaData'] = $record_data;
+        $response['csrf_token'] = $csrf_token;
+
+        echo json_encode($response);
     }
 }

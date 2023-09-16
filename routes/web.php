@@ -116,6 +116,12 @@ Route::controller(UserController::class)->group(function(){
     Route::get('/dashboard/user-add','user_add_page')->name('user_management.user.add')->middleware(['checkroute']);
     Route::post('/dashboard/user-add','user_store')->name('user_management.user.add')->middleware(['checkroute']);
 
+    // for all edit view user route........
+    Route::get('/dashboard/user-edit','user_edit_page')->name('user_management.user.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/user-edit','user_grid')->name('user_management.user.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/user-edit/{id?}','user_single_edit_page')->name('user_management.user.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/user-edit/{id?}','user_update')->name('user_management.user.edit')->middleware(['checkroute']);
+
 });
 
 
