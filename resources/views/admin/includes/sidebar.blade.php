@@ -793,7 +793,7 @@
         }
     }
 
-    function load_drop_down(table_name, field_name, id, container, title, select_status,status) {
+    function load_drop_down(table_name, field_name, id, container, title, select_status,status, selected_value) {
 
         var http = createObject();
 
@@ -844,6 +844,14 @@
                             if(select_status==1){
 
                                 $('.select2').select2();
+
+                                var data_arr = selected_value.split(",");
+
+                                $("#"+id).val(data_arr).trigger("change");
+                            }
+                            else{
+
+                                $("#"+id).val(selected_value);
                             }
                         }
                     }
@@ -853,6 +861,16 @@
             http.open("GET","{{route('admin.get.parameter.data')}}"+"/"+table_name+"/"+field_name+"/"+status,true);
             http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             http.send(data);
+        }
+    }
+
+    function readUrl(input,view_id){
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e){
+                $('#'+view_id).attr('src', e.target.result).width(80).height(80);
+            };
+            reader.readAsDataURL(input.files[0]);
         }
     }
 </script>

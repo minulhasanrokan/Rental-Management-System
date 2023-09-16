@@ -5,7 +5,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Add User Information</h3>
+                    <h3 class="card-title">Edit User Information - {{$user_data->name}}</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -19,28 +19,28 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">User Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter User Name" onkeyup="check_duplicate_value('name','users',this.value,0);" required>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter User Name" value="{{$user_data->name}}" onkeyup="check_duplicate_value('name','users',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="email">User E-mail</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter User E-mail" onkeyup="check_duplicate_value('email','users',this.value,0);" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter User E-mail" value="{{$user_data->email}}" onkeyup="check_duplicate_value('email','users',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="email_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="mobile">User Mobile</label>
-                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter User Mobile" onkeyup="check_duplicate_value('mobile','users',this.value,0);" required>
+                                    <input type="text" value="{{$user_data->mobile}}" class="form-control" id="mobile" name="mobile" placeholder="Enter User Mobile" onkeyup="check_duplicate_value('mobile','users',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="mobile_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="date_of_birth">User Date Of Birth</label>
-                                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Enter User Date Of Birth" required>
+                                    <input type="date" value="{{$user_data->date_of_birth}}" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Enter User Date Of Birth" required>
                                     <div class="input-error" style="display:none; color: red;" id="date_of_birth_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -70,8 +70,8 @@
                                     <label for="user_type">User Type</label>
                                     <select disabled class="form-control" style="width: 100%;" name="user_type" id="user_type" required>
                                         <option value="">Select User Type</option>
-                                        <option selected value="0">Normal User</option>
-                                        <option value="1">Tenant User</option>
+                                        <option {{$user_data->user_type==0?'selected':''}} value="0">Normal User</option>
+                                        <option {{$user_data->user_type==1?'selected':''}} value="1">Tenant User</option>
                                     </select>
                                     <div class="input-error" style="display:none; color: red;" id="user_type_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
@@ -100,14 +100,14 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="address">User Address</label>
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="Enter User Address" required>
+                                    <input value="{{$user_data->address}}" type="text" class="form-control" id="address" name="address" placeholder="Enter User Address" required>
                                     <div class="input-error" style="display:none; color: red;" id="address_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="details">User Details</label>
-                                    <textarea class="form-control" id="details" name="details"></textarea>
+                                    <textarea class="form-control" id="details" name="details">{{$user_data->details}}</textarea>
                                     <div class="input-error" style="display:none; color: red;" id="details_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -115,13 +115,13 @@
                                 <div class="form-group">
                                     <label for="user_photo">User Photo</label>
                                     <input onchange="readUrl(this,'user_photo_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="user_photo" name="user_photo" placeholder="Enter User Photo" required>
-                                    <input type="hidden" name="hidden_user_photo" id="hidden_user_photo" value="">
+                                    <input type="hidden" name="hidden_user_photo" id="hidden_user_photo" value="{{$user_data->user_photo}}">
                                     <div class="input-error" style="display:none; color: red;" id="user_photo_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <img class="rounded avatar-lg" width="80" height="80" id="user_photo_photo" src="{{asset('uploads/user/user.png')}}"/>
+                                    <img class="rounded avatar-lg" width="80" height="80" id="user_photo_photo" src="{{asset('uploads/user')}}/{{!empty($user_data->user_photo)?$user_data->user_photo:'user.png'}}"/>
                                 </div>
                             </div>
                         </div>
@@ -290,11 +290,11 @@
         }
     }
 
-    load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender',0,1);
-    load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group',0,1);
-    load_drop_down('user_groups','id,group_name','group','group_container','Select Group',0,1);
-    load_drop_down('departments','id,department_name','department','department_container','Select Department',0,1);
-    load_drop_down('departments','id,department_name','assign_department','assign_department_container','Select Assign Department',1,0);
-    load_drop_down('designations','id,designation_name','designation','designation_container','Select Designation',0,1);
+    load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender',0,0,'{{$user_data->sex}}');
+    load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group',0,0,'{{$user_data->blood_group}}');
+    load_drop_down('user_groups','id,group_name','group','group_container','Select Group',0,0,'{{$user_data->group}}');
+    load_drop_down('departments','id,department_name','department','department_container','Select Department',0,0,'{{$user_data->department}}');
+    load_drop_down('departments','id,department_name','assign_department','assign_department_container','Select Assign Department',1,0,'{{$user_data->assign_department}}');
+    load_drop_down('designations','id,designation_name','designation','designation_container','Select Designation',0,0,'{{$user_data->designation}}');
 
 </script>****{{csrf_token()}}

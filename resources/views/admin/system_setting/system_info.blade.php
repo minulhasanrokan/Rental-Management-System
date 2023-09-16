@@ -125,16 +125,6 @@
         })
     });
 
-    function readUrl(input,view_id){
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e){
-                $('#'+view_id).attr('src', e.target.result).width(80).height(80);
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
     function save_system_info_data(){
 
         if( form_validation('system_name*system_email*system_mobile*system_title*system_copy_right','System Name*System E-mail*System Mobile*System Title*Copyright Text')==false ){

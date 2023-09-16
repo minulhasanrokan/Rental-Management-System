@@ -120,13 +120,13 @@
                     "render": function(data, type, full, meta) {
 
                         var menu = full.menu_data;
-                        var group_name = full.group_name;
+                        var name = full.name;
 
                         var menu_data = '';
 
                         menu.forEach(function(item) {
                             
-                            menu_data +='<button onclick="get_new_page(\''+item.r_route_name+'\',\''+item.r_title+'\',\''+data+'\',\''+group_name+'\');" class="btn btn-primary" style="margin-right:5px;"><i class="fa '+item.r_icon+'"></i></button>'
+                            menu_data +='<button onclick="get_new_page(\''+item.r_route_name+'\',\''+item.r_title+'\',\''+data+'\',\''+name+'\');" class="btn btn-primary" style="margin-right:5px;"><i class="fa '+item.r_icon+'"></i></button>'
                         });
 
                         return menu_data;

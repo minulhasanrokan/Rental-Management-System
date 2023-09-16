@@ -94,16 +94,6 @@
         })
     });
 
-    function readUrl(input,view_id){
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e){
-                $('#'+view_id).attr('src', e.target.result).width(80).height(80);
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
     function save_user_group_info_data(){
 
         if( form_validation('group_name*group_code*group_title*group_logo*group_icon','User Group Name*User Group Code*User Group Title*User Group Photo*User Group Icon')==false ){
