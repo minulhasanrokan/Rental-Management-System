@@ -19,21 +19,21 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">User Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter User Name" value="{{$user_data->name}}" onkeyup="check_duplicate_value('name','users',this.value,0);" required>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter User Name" value="{{$user_data->name}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="email">User E-mail</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter User E-mail" value="{{$user_data->email}}" onkeyup="check_duplicate_value('email','users',this.value,0);" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter User E-mail" value="{{$user_data->email}}" onkeyup="check_duplicate_value('email','users',this.value,'{{$user_data->id}}');" required>
                                     <div class="input-error" style="display:none; color: red;" id="email_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="mobile">User Mobile</label>
-                                    <input type="text" value="{{$user_data->mobile}}" class="form-control" id="mobile" name="mobile" placeholder="Enter User Mobile" onkeyup="check_duplicate_value('mobile','users',this.value,0);" required>
+                                    <input type="text" value="{{$user_data->mobile}}" class="form-control" id="mobile" name="mobile" placeholder="Enter User Mobile" onkeyup="check_duplicate_value('mobile','users',this.value,'{{$user_data->id}}');" required>
                                     <div class="input-error" style="display:none; color: red;" id="mobile_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>

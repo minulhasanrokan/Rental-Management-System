@@ -19,7 +19,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">User Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter User Name" onkeyup="check_duplicate_value('name','users',this.value,0);" required>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter User Name" required>
                                     <div class="input-error" style="display:none; color: red;" id="name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
