@@ -845,13 +845,19 @@
 
                                 $('.select2').select2();
 
-                                var data_arr = selected_value.split(",");
+                                if(selected_value!=''){
 
-                                $("#"+id).val(data_arr).trigger("change");
+                                    var data_arr = selected_value.split(",");
+
+                                    $("#"+id).val(data_arr).trigger("change");
+                                }
                             }
                             else{
 
-                                $("#"+id).val(selected_value);
+                                if(selected_value!=''){
+
+                                    $("#"+id).val(selected_value);
+                                }
                             }
                         }
                     }
