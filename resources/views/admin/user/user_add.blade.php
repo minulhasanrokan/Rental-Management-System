@@ -300,11 +300,11 @@
         }
     }
 
-    load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender',0);
-    load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group',0);
-    load_drop_down('user_groups','id,group_name','group','group_container','Select Group',0);
-    load_drop_down('departments','id,department_name','department','department_container','Select Department',0);
-    load_drop_down('departments','id,department_name','assign_department','assign_department_container','Select Assign Department',1);
-    load_drop_down('designations','id,designation_name','designation','designation_container','Select Designation',0);
+    load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender',0,0);
+    load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group',0,0);
+    load_drop_down('user_groups','id,group_name','group','group_container','Select Group',0,0);
+    load_drop_down('departments','id,department_name','department','department_container','Select Department',0,0);
+    load_drop_down('departments','id,department_name','assign_department','assign_department_container','Select Assign Department',1,0);
+    load_drop_down('designations','id,designation_name','designation','designation_container','Select Designation',0,0);
 
 </script>****{{csrf_token()}}

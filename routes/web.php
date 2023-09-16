@@ -33,7 +33,7 @@ Route::controller(CommonController::class)->group(function(){
 
     Route::get('/dashboard/get-duplicate-value/{field_name?}/{table_name?}/{value?}/{data_id?}','get_duplicate_value')->name('admin.get.duplicate.value');
 
-    Route::get('/dashboard/get-parameter-data/{table_name?}/{field_name?}/{id?}','get_parameter_data')->name('admin.get.parameter.data');
+    Route::get('/dashboard/get-parameter-data/{table_name?}/{field_name?}/{data_status?}','get_parameter_data')->name('admin.get.parameter.data');
 });
 
 // registration route..................

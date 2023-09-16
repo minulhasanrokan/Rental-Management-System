@@ -793,42 +793,7 @@
         }
     }
 
-    function get_parameter_data(table_name,field_name){
- 
-        var data="&table_name="+table_name+"&field_name="+field_name;
-
-        http.open("GET","{{route('admin.get.parameter.data')}}"+"/"+table_name+"/"+field_name,true);
-        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        http.send(data);
-
-
-        http.onreadystatechange = function() {
-
-            if( http.readyState == 4 ){
-
-                if( http.status == 200 ){
-
-                    $(container).html(http.responseText);set_all_onclick();
-                }
-            }
-        }
-    }
-
-    function get_parameter_data_reponse(){
-
-        if(http.readyState == 4)
-        {
-            var reponse=trim(http.responseText).split("****");
-
-            if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
-
-                location.replace('<?php echo url('/login');?>');
-            }
-        }
-    }
-
-    function load_drop_down(table_name, field_name, id, container, title, select_status) {
-
+    function load_drop_down(table_name, field_name, id, container, title, select_status,status) {
 
         var http = createObject();
 
@@ -885,7 +850,7 @@
                 }
             }
 
-            http.open("GET","{{route('admin.get.parameter.data')}}"+"/"+table_name+"/"+field_name,true);
+            http.open("GET","{{route('admin.get.parameter.data')}}"+"/"+table_name+"/"+field_name+"/"+status,true);
             http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             http.send(data);
         }
