@@ -26,7 +26,7 @@ class DashboardController extends Controller
 
         $notification = array(
             'message'=> "User Account Logout Successfully!",
-            'alert-type'=>'info'
+            'alert_type'=>'info'
         );
 
         return redirect('/login')->with($notification);

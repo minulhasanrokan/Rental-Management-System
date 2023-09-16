@@ -110,7 +110,7 @@ class RegistrationController extends Controller
 
                 $notification = array(
                     'message'=> "User Account Created Successfully",
-                    'alert-type'=>'info',
+                    'alert_type'=>'info',
                     'create_status'=>1,
                     'user_id' =>$encrypt_data,
                 );
@@ -121,7 +121,7 @@ class RegistrationController extends Controller
 
                 $notification = array(
                     'message'=> "User Account Does Not Created Successfully",
-                    'alert-type'=>'warning',
+                    'alert_type'=>'warning',
                     'create_status'=>0,
                     'user_id' =>'',
                 );
@@ -133,7 +133,7 @@ class RegistrationController extends Controller
 
             $notification = array(
                 'message'=> "User Account Does Not Created Successfully",
-                'alert-type'=>'warning',
+                'alert_type'=>'warning',
                 'create_status'=>0,
                 'user_id' =>'',
             );
@@ -180,7 +180,7 @@ class RegistrationController extends Controller
 
                 $notification = array(
                     'message'=> "A Verification Link Sent To Your E-mail Account",
-                    'alert-type'=>'info',
+                    'alert_type'=>'info',
                     'create_status'=>1,
                     'verify_mail'=>1,
                     'user_id' =>$token,
@@ -190,7 +190,7 @@ class RegistrationController extends Controller
 
                 $notification = array(
                     'message'=> "Something Went Wrong",
-                    'alert-type'=>'warning',
+                    'alert_type'=>'warning',
                     'create_status'=>0,
                     'verify_mail' =>0,
                     'user_id' =>'',

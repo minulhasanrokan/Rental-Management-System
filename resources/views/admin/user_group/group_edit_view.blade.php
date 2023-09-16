@@ -5,7 +5,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Add User Group Information</h3>
+                    <h3 class="card-title">Edit User Group Information - {{$group_data->group_name}}</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -182,7 +182,7 @@
                     $('input[name="_token"]').attr('value', data.csrf_token);
 
                     // hide all input error.............
-                    $(".input-error").delay(3000).fadeOut(800);
+                    //$(".input-error").delay(3000).fadeOut(800);
                 }
                 else{
 

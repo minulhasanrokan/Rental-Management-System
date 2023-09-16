@@ -127,7 +127,7 @@
         </script>
         <script type="text/javascript">
             // hide all input error.............
-            $(".input-error").delay(3000).fadeOut(800); 
+            //$(".input-error").delay(3000).fadeOut(800); 
         </script>
     </body>
 </html>

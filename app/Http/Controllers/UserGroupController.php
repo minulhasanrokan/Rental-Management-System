@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 use App\Models\UserGroup;
 use App\Models\UserGroupRight;

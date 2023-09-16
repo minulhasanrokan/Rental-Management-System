@@ -12,7 +12,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form id="user_form" method="post" autocomplete="off">
+                <form id="update_user_form" method="post" autocomplete="off">
                     @csrf
                     <div class="card-body" style="padding-bottom:5px !important; padding-top: 10px !important; margin: 0px !important;">
                         <div class="row">
@@ -128,7 +128,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" style="float:right" onclick="save_user_info_data();" class="btn btn-primary">Add User Group</button>
+                        <button type="button" style="float:right" onclick="update_user_info_data();" class="btn btn-primary">Update User Group</button>
                     </div>
                 </form>
             </div>
@@ -148,9 +148,9 @@
         })
     });
 
-    function save_user_info_data(){
+    function update_user_info_data(){
 
-        if( form_validation('name*email*mobile*date_of_birth*sex*blood_group*group*user_type*department*assign_department*designation*address*user_photo','User Name*User E-mail*User Mobile*User Date Of Birth*User Gender*User Blood Group*User Group*User Type*User Department*User Assign Department*User Designation*User Address*User Photo')==false ){
+        if( form_validation('name*email*mobile*date_of_birth*sex*blood_group*group*user_type*department*assign_department*designation*address','User Name*User E-mail*User Mobile*User Date Of Birth*User Gender*User Blood Group*User Group*User Type*User Department*User Assign Department*User Designation*User Address')==false ){
 
             return false;
         }
@@ -181,6 +181,16 @@
             return false;
         }
 
+        var hidden_user_photo  = $("#hidden_user_photo").val();
+
+        if(hidden_user_photo==''){
+
+            if( form_validation('user_photo','User Photo')==false ){
+
+                return false;
+            }
+        }
+
         var name = $("#name").val();
         var email = $("#email").val();
         var mobile = $("#mobile").val();
@@ -194,6 +204,7 @@
         var assign_department = $("#assign_department").val();
         var address = $("#address").val();
         var details = $("#details").val();
+        var hidden_user_photo = $("#hidden_user_photo").val();
 
         if(assign_department==''){
 
@@ -222,15 +233,17 @@
         form_data.append("assign_department", assign_department);
         form_data.append("address", address);
         form_data.append("details", details);
+        form_data.append("hidden_user_photo", hidden_user_photo);
+        form_data.append("update_id", '{{$user_data->id}}');
         form_data.append("_token", token);
 
-        http.open("POST","{{route('user_management.user.add')}}",true);
+        http.open("POST","{{route('user_management.user.edit',$user_data->id)}}",true); 
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
-        http.onreadystatechange = save_user_info_data_response;
+        http.onreadystatechange = update_user_info_data_response;
     }
 
-    function save_user_info_data_response(){
+    function update_user_info_data_response(){
 
         if(http.readyState == 4)
         {
@@ -256,7 +269,7 @@
                     $('input[name="_token"]').attr('value', data.csrf_token);
 
                     // hide all input error.............
-                    $(".input-error").delay(3000).fadeOut(800);
+                    //$(".input-error").delay(3000).fadeOut(800);
                 }
                 else{
 
@@ -278,10 +291,6 @@
                         toastr.error(data.message);
                         break; 
                     }
-
-                    document.getElementById("user_form").reset();
-
-                    $('#details').summernote('reset');
 
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);

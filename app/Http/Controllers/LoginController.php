@@ -95,7 +95,7 @@ class LoginController extends Controller
 
                 $notification = array(
                     'message'=> "User E-mail Or Password Does Not Matched!",
-                    'alert-type'=>'warning'
+                    'alert_type'=>'warning'
                 );
 
                 return redirect()->back()->with($notification);
@@ -106,7 +106,7 @@ class LoginController extends Controller
 
                     $notification = array(
                         'message'=> "Your Account Was Deactivated, Please Contact With Adminstrator",
-                        'alert-type'=>'warning'
+                        'alert_type'=>'warning'
                     );
 
                     return redirect()->back()->with($notification);
@@ -117,7 +117,7 @@ class LoginController extends Controller
 
                     $notification = array(
                         'message'=> "Please Verify Your Account First",
-                        'alert-type'=>'info',
+                        'alert_type'=>'info',
                         'create_status'=>1,
                         'user_id' =>$encrypt_data,
                     );
@@ -132,7 +132,7 @@ class LoginController extends Controller
 
                     $notification = array(
                         'message'=> "User Account Login Successfully!",
-                        'alert-type'=>'warning'
+                        'alert_type'=>'warning'
                     );
 
                     return redirect('/dashboard')->with($notification);
@@ -144,7 +144,7 @@ class LoginController extends Controller
 
             $notification = array(
                 'message'=> "User E-mail Or Password Does Not Matched!",
-                'alert-type'=>'warning'
+                'alert_type'=>'warning'
             );
 
             return redirect()->back()->with($notification);

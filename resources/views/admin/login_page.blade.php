@@ -85,7 +85,7 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script>
             @if(Session::has('message'))
-                var type = "{{ Session::get('alert-type','info') }}"
+                var type = "{{ Session::get('alert_type','info') }}"
                 switch(type){
                     case 'info':
                     toastr.info(" {{ Session::get('message') }} ");
@@ -108,7 +108,7 @@
         <script type="text/javascript">
             
             // hide all input error.............
-            $(".input-error").delay(3000).fadeOut(800); 
+            //$(".input-error").delay(3000).fadeOut(800); 
         </script>
     </body>
 </html>

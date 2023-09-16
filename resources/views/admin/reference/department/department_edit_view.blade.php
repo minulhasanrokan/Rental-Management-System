@@ -126,7 +126,7 @@
                     $('input[name="_token"]').attr('value', data.csrf_token);
 
                     // hide all input error.............
-                    $(".input-error").delay(3000).fadeOut(800);
+                    //$(".input-error").delay(3000).fadeOut(800);
                 }
                 else{
 
