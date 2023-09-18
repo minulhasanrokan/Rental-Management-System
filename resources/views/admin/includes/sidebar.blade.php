@@ -870,6 +870,47 @@
         }
     }
 
+    function get_data_by_id(div_id, data_id, field_name, table_name) {
+
+        var http = createObject();
+
+        var data="&data_id="+data_id+"&field_name="+field_name+"&table_name="+table_name;
+
+        if( http ) {
+            
+            http.onreadystatechange = function() {
+
+                if( http.readyState == 4 ) {
+
+                    if( http.status == 200 ){
+
+                        var reponse=trim(http.responseText).split("****");
+
+                        if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+
+                            location.replace('<?php echo url('/login');?>');
+                        }
+                        else{
+
+                            if(reponse[0]!=''){
+
+                                var json_data = JSON.parse(reponse[0]);
+
+                                var value = $("#"+div_id).text();
+
+                                var data = $("#"+div_id).text(value+json_data[0][field_name]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            http.open("GET","{{route('admin.get.data.by.id')}}"+"/"+table_name+"/"+data_id+"/"+field_name,true);
+            http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            http.send(data);
+        }
+    }
+
     function readUrl(input,view_id){
         if (input.files && input.files[0]) {
             var reader = new FileReader();

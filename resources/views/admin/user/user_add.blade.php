@@ -128,7 +128,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" style="float:right" onclick="save_user_info_data();" class="btn btn-primary">Add User Group</button>
+                        <button type="button" style="float:right" onclick="save_user_info_data();" class="btn btn-primary">Add User</button>
                     </div>
                 </form>
             </div>

@@ -128,7 +128,10 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" style="float:right" onclick="update_user_info_data();" class="btn btn-primary">Update User Group</button>
+                        @foreach($user_right_data as $data)
+                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$user_data->id}}','{{$user_data->name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
+                        @endforeach
+                        <button type="button" style="float:right" onclick="update_user_info_data();" class="btn btn-primary">Update User</button>
                     </div>
                 </form>
             </div>

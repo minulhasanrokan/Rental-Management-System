@@ -34,6 +34,8 @@ Route::controller(CommonController::class)->group(function(){
     Route::get('/dashboard/get-duplicate-value/{field_name?}/{table_name?}/{value?}/{data_id?}','get_duplicate_value')->name('admin.get.duplicate.value');
 
     Route::get('/dashboard/get-parameter-data/{table_name?}/{field_name?}/{data_status?}','get_parameter_data')->name('admin.get.parameter.data');
+
+    Route::get('/dashboard/get-data-by-id/{table_name?}/{data_id?}/{field_name?}','get_data_by_id')->name('admin.get.data.by.id');
 });
 
 // registration route..................
@@ -119,6 +121,10 @@ Route::controller(UserController::class)->group(function(){
     Route::get('/dashboard/user-delete','user_delete_page')->name('user_management.user.delete')->middleware(['checkroute']);
     Route::post('/dashboard/user-delete','user_grid')->name('user_management.user.delete')->middleware(['checkroute']);
     Route::get('/dashboard/user-delete/{id?}','user_delete')->name('user_management.user.delete')->middleware(['checkroute']);
+
+    Route::get('/dashboard/user-view','user_view_page')->name('user_management.user.view')->middleware(['checkroute']);
+    Route::post('/dashboard/user-view','user_grid')->name('user_management.user.view')->middleware(['checkroute']);
+    Route::get('/dashboard/user-view/{id?}','user_single_view_page')->name('user_management.user.view')->middleware(['checkroute']);
 
 
 });

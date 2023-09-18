@@ -529,4 +529,24 @@ class UserController extends Controller
 
         return view('admin.user.user_delete_alert',compact('menu_data','notification'));
     }
+
+    public function user_view_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.user.user_view',compact('menu_data'));
+    }
+
+    public function user_single_view_page($id){
+
+        $user_data = User::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('user_management.user.add****user_management.user.view');
+
+        return view('admin.user.user_single_view',compact('menu_data','user_data','user_right_data'));
+    }
 }

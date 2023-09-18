@@ -270,6 +270,40 @@ class CommonController extends Controller
         return $group_right_data_arr;
     }
 
+    public function get_data_by_id($table_name,$data_id,$field_name){
+
+        $table_name = trim($table_name);
+        $field_name = trim($field_name);
+        $data_id = trim($data_id);
+
+        if($field_name=='' || $field_name==null || $field_name==0){
+
+            $select = "*";
+        }
+        else{
+
+            $field_name_arr = explode(",",$field_name);
+
+            $sl =0;
+
+            foreach($field_name_arr as $data){
+
+                $select[$sl] = $data;
+
+                $sl++;
+            }
+        }
+
+        $parameter_data = DB::table($table_name)
+            ->select($select)
+            ->where('delete_status',0)
+            ->where('id',$data_id)
+            ->get()
+            ->toArray();
+
+        return $parameter_data;
+    }
+
     public function get_parameter_data($table_name,$field_name,$status){
 
         $table_name = trim($table_name);
