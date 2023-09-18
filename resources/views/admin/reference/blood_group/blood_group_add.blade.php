@@ -18,21 +18,21 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="blood_group_name">Blood Group Name</label>
+                                    <label for="blood_group_name">Blood Group Name <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="blood_group_name" name="blood_group_name" placeholder="Enter Blood Group Name" onkeyup="check_duplicate_value('blood_group_name','blood_groups',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="blood_group_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="blood_group_code">Blood Group Code</label>
+                                    <label for="blood_group_code">Blood Group Code <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="blood_group_code" name="blood_group_code" placeholder="Enter Blood Group Code" onkeyup="check_duplicate_value('blood_group_code','blood_groups',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="blood_group_code_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="blood_group_title">Blood Group Title</label>
+                                    <label for="blood_group_title">Blood Group Title <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="blood_group_title" name="blood_group_title" placeholder="Enter Blood Group Title" required>
                                     <div class="input-error" style="display:none; color: red;" id="blood_group_title_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>

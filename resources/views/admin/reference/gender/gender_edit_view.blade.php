@@ -18,21 +18,21 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="gender_name">Gender Name</label>
+                                    <label for="gender_name">Gender Name <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="gender_name" name="gender_name" placeholder="Enter Gender Name" value="{{$gender_data->gender_name}}" onkeyup="check_duplicate_value('gender_name','genders',this.value,'{{$gender_data->id}}');" required>
                                     <div class="input-error" style="display:none; color: red;" id="gender_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="gender_code">Gender Code</label>
+                                    <label for="gender_code">Gender Code <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="gender_code" name="gender_code" placeholder="Enter Gender Code" value="{{$gender_data->gender_code}}" onkeyup="check_duplicate_value('gender_code','genders',this.value,'{{$gender_data->id}}');" required>
                                     <div class="input-error" style="display:none; color: red;" id="gender_code_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="gender_title">Gender Title</label>
+                                    <label for="gender_title">Gender Title <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="gender_title" name="gender_title" placeholder="Enter Gender Title" value="{{$gender_data->gender_title}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="gender_title_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>

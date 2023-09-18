@@ -18,21 +18,21 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="gender_name">Gender Name</label>
+                                    <label for="gender_name">Gender Name <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="gender_name" name="gender_name" placeholder="Enter Gender Name" onkeyup="check_duplicate_value('gender_name','genders',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="gender_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="gender_code">Gender Code</label>
+                                    <label for="gender_code">Gender Code <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="gender_code" name="gender_code" placeholder="Enter Gender Code" onkeyup="check_duplicate_value('gender_code','genders',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="gender_code_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="gender_title">Gender Title</label>
+                                    <label for="gender_title">Gender Title <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="gender_title" name="gender_title" placeholder="Enter Gender Title" required>
                                     <div class="input-error" style="display:none; color: red;" id="gender_title_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>

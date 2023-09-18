@@ -18,56 +18,56 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">User Name</label>
+                                    <label for="name">User Name <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter User Name" required>
                                     <div class="input-error" style="display:none; color: red;" id="name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="email">User E-mail</label>
+                                    <label for="email">User E-mail <span style="color:red;">*</span></label>
                                     <input type="email" class="form-control" id="email" name="email" placeholder="Enter User E-mail" onkeyup="check_duplicate_value('email','users',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="email_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="mobile">User Mobile</label>
+                                    <label for="mobile">User Mobile <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter User Mobile" onkeyup="check_duplicate_value('mobile','users',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="mobile_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="date_of_birth">User Date Of Birth</label>
+                                    <label for="date_of_birth">User Date Of Birth <span style="color:red;">*</span></label>
                                     <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Enter User Date Of Birth" required>
                                     <div class="input-error" style="display:none; color: red;" id="date_of_birth_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="sex">User Gender</label>
+                                    <label for="sex">User Gender <span style="color:red;">*</span></label>
                                     <div id="sex_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="sex_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="blood_group">User Blood Group</label>
+                                    <label for="blood_group">User Blood Group <span style="color:red;">*</span></label>
                                     <div id="blood_group_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="blood_group_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="group">User Group</label>
+                                    <label for="group">User Group <span style="color:red;">*</span></label>
                                     <div id="group_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="group_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="user_type">User Type</label>
+                                    <label for="user_type">User Type <span style="color:red;">*</span></label>
                                     <select disabled class="form-control" style="width: 100%;" name="user_type" id="user_type" required>
                                         <option value="">Select User Type</option>
                                         <option selected value="0">Normal User</option>
@@ -78,28 +78,28 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="department">User Depertment</label>
+                                    <label for="department">User Depertment <span style="color:red;">*</span></label>
                                     <div id="department_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="department_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="assign_department">User Assign Depertment</label>
+                                    <label for="assign_department">User Assign Depertment <span style="color:red;">*</span></label>
                                     <div id="assign_department_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="assign_department_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="designation">User Designation</label>
+                                    <label for="designation">User Designation <span style="color:red;">*</span></label>
                                     <div id="designation_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="designation_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="address">User Address</label>
+                                    <label for="address">User Address <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="address" name="address" placeholder="Enter User Address" required>
                                     <div class="input-error" style="display:none; color: red;" id="address_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
@@ -113,7 +113,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="user_photo">User Photo</label>
+                                    <label for="user_photo">User Photo <span style="color:red;">*</span></label>
                                     <input onchange="readUrl(this,'user_photo_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="user_photo" name="user_photo" placeholder="Enter User Photo" required>
                                     <input type="hidden" name="hidden_user_photo" id="hidden_user_photo" value="">
                                     <div class="input-error" style="display:none; color: red;" id="user_photo_error" style="display: inline-block; width:100%; color: red;"></div>

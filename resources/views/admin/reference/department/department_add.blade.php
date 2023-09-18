@@ -18,21 +18,21 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="department_name">Department Name</label>
+                                    <label for="department_name">Department Name <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Enter Department Name" onkeyup="check_duplicate_value('department_name','departments',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="department_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="department_code">Department Code</label>
+                                    <label for="department_code">Department Code <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="department_code" name="department_code" placeholder="Enter Department Code" onkeyup="check_duplicate_value('department_code','departments',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="department_code_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="department_title">Department Title</label>
+                                    <label for="department_title">Department Title <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="department_title" name="department_title" placeholder="Enter Department Title" required>
                                     <div class="input-error" style="display:none; color: red;" id="department_title_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>

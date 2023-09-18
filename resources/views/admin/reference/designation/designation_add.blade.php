@@ -18,21 +18,21 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="designation_name">Designation Name</label>
+                                    <label for="designation_name">Designation Name <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="designation_name" name="designation_name" placeholder="Enter Designation Name" onkeyup="check_duplicate_value('designation_name','designations',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="designation_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="designation_code">Designation Code</label>
+                                    <label for="designation_code">Designation Code <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="designation_code" name="designation_code" placeholder="Enter Designation Code" onkeyup="check_duplicate_value('designation_code','designations',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="designation_code_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="designation_title">Designation Title</label>
+                                    <label for="designation_title">Designation Title <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="designation_title" name="designation_title" placeholder="Enter Designation Title" required>
                                     <div class="input-error" style="display:none; color: red;" id="designation_title_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>

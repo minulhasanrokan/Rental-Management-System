@@ -15,42 +15,42 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="system_name">System Name</label>
+                                    <label for="system_name">System Name <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="system_name" name="system_name" placeholder="Enter System Name" value="{{$system_data['system_name']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="system_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="system_email">System E-mail</label>
+                                    <label for="system_email">System E-mail <span style="color:red;">*</span></label>
                                     <input type="email" class="form-control" id="system_email" name="system_email" placeholder="Enter System E-mail" value="{{$system_data['system_email']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="system_email_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="system_mobile">System Mobile Number</label>
+                                    <label for="system_mobile">System Mobile Number <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="system_mobile" name="system_mobile" placeholder="Enter System Mobile Number" value="{{$system_data['system_mobile']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="system_mobile_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="system_title">System Title</label>
+                                    <label for="system_title">System Title <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="system_title" name="system_title" placeholder="Enter System Title" value="{{$system_data['system_title']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="system_title_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="system_address">System Address</label>
+                                    <label for="system_address">System Address <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="system_address" name="system_address" placeholder="Enter System Address" value="{{$system_data['system_address']}}">
                                     <div class="input-error" style="display:none; color: red;" id="system_address_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="system_copy_right">System Copy Right Text</label>
+                                    <label for="system_copy_right">System Copy Right Text <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="system_copy_right" name="system_copy_right" placeholder="Enter System Copy Right Text" value="{{$system_data['system_copy_right']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="system_copy_right_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
@@ -64,7 +64,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label for="system_logo">System Logo</label>
+                                    <label for="system_logo">System Logo <span style="color:red;">*</span></label>
                                     <input onchange="readUrl(this,'system_logo_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="system_logo" name="system_logo" placeholder="Enter System Logo" required>
                                     <input type="hidden" name="hidden_system_logo" id="hidden_system_logo" value="{{$system_data['system_logo']}}">
                                     <div class="input-error" style="display:none; color: red;" id="system_logo_error" style="display: inline-block; width:100%; color: red;"></div>
@@ -77,7 +77,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label for="system_bg_image">System Backgroup</label>
+                                    <label for="system_bg_image">System Backgroup <span style="color:red;">*</span></label>
                                     <input onchange="readUrl(this,'system_bg_image_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="system_bg_image" name="system_bg_image" placeholder="Enter System Backgroup" required>
                                     <input type="hidden" name="hidden_system_bg_image" id="hidden_system_bg_image" value="{{$system_data['system_bg_image']}}">
                                     <div class="input-error" style="display:none; color: red;" id="system_logo_error" style="display: inline-block; width:100%; color: red;"></div>
@@ -90,7 +90,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label for="system_favicon">System Favicon</label>
+                                    <label for="system_favicon">System Favicon <span style="color:red;">*</span></label>
                                     <input onchange="readUrl(this,'system_favicon_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="system_favicon" name="system_favicon" placeholder="Enter System Favicon" required>
                                     <input type="hidden" name="hidden_system_favicon" id="hidden_system_favicon" value="{{$system_data['system_favicon']}}">
                                     <div class="input-error" style="display:none; color: red;" id="system_favicon_error" style="display: inline-block; width:100%; color: red;"></div>
@@ -127,7 +127,7 @@
 
     function save_system_info_data(){
 
-        if( form_validation('system_name*system_email*system_mobile*system_title*system_copy_right','System Name*System E-mail*System Mobile*System Title*Copyright Text')==false ){
+        if( form_validation('system_name*system_email*system_mobile*system_title*system_address*system_copy_right','System Name*System E-mail*System Mobile*System Title*System Address*Copyright Text')==false ){
 
             return false;
         }
@@ -146,11 +146,19 @@
         }
 
         var hidden_system_logo = $("#hidden_system_logo").val();
+        var hidden_system_bg_image = $("#hidden_system_bg_image").val();
         var hidden_system_favicon = $("#hidden_system_favicon").val();
 
         if(hidden_system_logo==''){
 
             if( form_validation('system_logo','System Logo')==false ){
+                return false;
+            }
+        }
+
+        if(hidden_system_bg_image==''){
+
+            if( form_validation('system_bg_image','System Background')==false ){
                 return false;
             }
         }

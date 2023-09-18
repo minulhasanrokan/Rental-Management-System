@@ -436,7 +436,7 @@ class UserGroupController extends Controller
         return response()->json($notification);
 
     }
-
+ 
     public function user_group_delete_page(){
 
         $menu_data = $this->common->get_page_menu();
@@ -455,7 +455,7 @@ class UserGroupController extends Controller
         if(empty($data)){
 
             $notification = array(
-                'message'=> "User Data Not Found!!!",
+                'message'=> "User Group Data Not Found!!!",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );

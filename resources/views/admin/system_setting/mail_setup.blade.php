@@ -15,42 +15,42 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="email_id">System E-mail Address</label>
+                                    <label for="email_id">System E-mail Address <span style="color:red;">*</span></label>
                                     <input type="email" class="form-control" id="email_id" name="email_id" placeholder="Enter System E-mail Address" value="{{$mail_data['email_id']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="email_id_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="email_host">System E-mail Host</label>
+                                    <label for="email_host">System E-mail Host <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="email_host" name="email_host" placeholder="Enter System E-mail Host" value="{{$mail_data['email_host']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="email_host_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="email_mailer">System E-mail Mailer</label>
+                                    <label for="email_mailer">System E-mail Mailer <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="email_mailer" name="email_mailer" placeholder="Enter System E-mail Mailer" value="{{$mail_data['email_mailer']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="email_mailer_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="email_port">System E-mail Port</label>
+                                    <label for="email_port">System E-mail Port <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="email_port" name="email_port" placeholder="Enter System E-mail Port" value="{{$mail_data['email_port']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="email_port_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="email_username">System E-mail User Name</label>
+                                    <label for="email_username">System E-mail User Name <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="email_username" name="email_username" placeholder="Enter System E-mail User Name" value="{{$mail_data['email_username']}}">
                                     <div class="input-error" style="display:none; color: red;" id="email_username_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="email_password">System E-mail Password</label>
+                                    <label for="email_password">System E-mail Password <span style="color:red;">*</span></label>
                                     <input type="password" class="form-control" id="email_password" name="email_password" placeholder="Enter System E-mail Password" value="{{$mail_data['email_password']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="email_password_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
@@ -64,7 +64,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="email_name">System E-mail Name</label>
+                                    <label for="email_name">System E-mail Name <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="email_name" name="email_name" placeholder="Enter System E-mail Name" value="{{$mail_data['email_name']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="email_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>

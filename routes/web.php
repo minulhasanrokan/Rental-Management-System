@@ -75,7 +75,6 @@ Route::controller(SystemSettingController::class)->group(function(){
     Route::get('/dashboard/system-setting-information','system_setting_page')->name('system_setting.information.add')->middleware(['checkroute']);
     Route::post('/dashboard/system-setting-information','system_information_update')->name('system_setting.information.add')->middleware(['checkroute']);
 
-    // mail setup ............
     Route::get('/dashboard/system-setting-mail','system_mail_page')->name('system_setting.mail')->middleware(['checkroute']);
     Route::post('/dashboard/system-setting-mail','system_mail_update')->name('system_setting.mail')->middleware(['checkroute']);
 });
@@ -86,23 +85,19 @@ Route::controller(UserGroupController::class)->group(function(){
     Route::get('/dashboard/user-group-add','user_group_add_page')->name('user_management.user_group.add')->middleware(['checkroute']);
     Route::post('/dashboard/user-group-add','user_group_store')->name('user_management.user_group.add')->middleware(['checkroute']);
 
-    // for all view user group route........
     Route::get('/dashboard/user-group-view','user_group_view_page')->name('user_management.user_group.view')->middleware(['checkroute']);
     Route::post('/dashboard/user-group-view','user_group_grid')->name('user_management.user_group.view')->middleware(['checkroute']);
     Route::get('/dashboard/user-group-view/{id?}','user_group_single_view_page')->name('user_management.user_group.view')->middleware(['checkroute']);
 
-    // for all edit view user group route........
     Route::get('/dashboard/user-group-edit','user_group_edit_page')->name('user_management.user_group.edit')->middleware(['checkroute']);
     Route::post('/dashboard/user-group-edit','user_group_grid')->name('user_management.user_group.edit')->middleware(['checkroute']);
     Route::get('/dashboard/user-group-edit/{id?}','user_group_single_edit_page')->name('user_management.user_group.edit')->middleware(['checkroute']);
     Route::post('/dashboard/user-group-edit/{id?}','user_group_update')->name('user_management.user_group.edit')->middleware(['checkroute']);
 
-    // for all delete view user group route........
     Route::get('/dashboard/user-group-delete','user_group_delete_page')->name('user_management.user_group.delete')->middleware(['checkroute']);
     Route::post('/dashboard/user-group-delete','user_group_grid')->name('user_management.user_group.delete')->middleware(['checkroute']);
     Route::get('/dashboard/user-group-delete/{id?}','user_group_delete')->name('user_management.user_group.delete')->middleware(['checkroute']);
 
-    // for all group set right view user group route........
     Route::get('/dashboard/user-group-right','user_group_right_page')->name('user_management.user_group.right')->middleware(['checkroute']);
     Route::post('/dashboard/user-group-right','user_group_grid')->name('user_management.user_group.right')->middleware(['checkroute']);
     Route::get('/dashboard/user-group-right/{id?}','user_group_right_setup_page')->name('user_management.user_group.right')->middleware(['checkroute']);
@@ -116,11 +111,15 @@ Route::controller(UserController::class)->group(function(){
     Route::get('/dashboard/user-add','user_add_page')->name('user_management.user.add')->middleware(['checkroute']);
     Route::post('/dashboard/user-add','user_store')->name('user_management.user.add')->middleware(['checkroute']);
 
-    // for all edit view user route........
     Route::get('/dashboard/user-edit','user_edit_page')->name('user_management.user.edit')->middleware(['checkroute']);
     Route::post('/dashboard/user-edit','user_grid')->name('user_management.user.edit')->middleware(['checkroute']);
     Route::get('/dashboard/user-edit/{id?}','user_single_edit_page')->name('user_management.user.edit')->middleware(['checkroute']);
     Route::post('/dashboard/user-edit/{id?}','user_update')->name('user_management.user.edit')->middleware(['checkroute']);
+
+    Route::get('/dashboard/user-delete','user_delete_page')->name('user_management.user.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/user-delete','user_grid')->name('user_management.user.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/user-delete/{id?}','user_delete')->name('user_management.user.delete')->middleware(['checkroute']);
+
 
 });
 
@@ -133,18 +132,15 @@ Route::controller(GenderController::class)->group(function(){
     Route::get('/dashboard/gender-add','gender_add_page')->name('reference_data.gender.add')->middleware(['checkroute']);
     Route::post('/dashboard/gender-add','gender_add_store')->name('reference_data.gender.add')->middleware(['checkroute']);
 
-    // for all edit view Gender route........
     Route::get('/dashboard/gender-edit','gender_edit_page')->name('reference_data.gender.edit')->middleware(['checkroute']);
     Route::post('/dashboard/gender-edit','gender_grid')->name('reference_data.gender.edit')->middleware(['checkroute']);
     Route::get('/dashboard/gender-edit/{id?}','gender_single_edit_page')->name('reference_data.gender.edit')->middleware(['checkroute']);
     Route::post('/dashboard/gender-edit/{id?}','gender_update')->name('reference_data.gender.edit')->middleware(['checkroute']);
 
-    // for all view gender route........
     Route::get('/dashboard/gender-view','gender_view_page')->name('reference_data.gender.view')->middleware(['checkroute']);
     Route::post('/dashboard/gender-view','gender_grid')->name('reference_data.gender.view')->middleware(['checkroute']);
     Route::get('/dashboard/gender-view/{id?}','gender_single_view_page')->name('reference_data.gender.view')->middleware(['checkroute']);
 
-    // for all delete view gender route........
     Route::get('/dashboard/gender-delete','gender_delete_page')->name('reference_data.gender.delete')->middleware(['checkroute']);
     Route::post('/dashboard/gender-delete','gender_grid')->name('reference_data.gender.delete')->middleware(['checkroute']);
     Route::get('/dashboard/gender-delete/{id?}','gender_delete')->name('reference_data.gender.delete')->middleware(['checkroute']);
@@ -157,18 +153,15 @@ Route::controller(BloodGroupController::class)->group(function(){
     Route::get('/dashboard/blood-group-add','blood_group_add_page')->name('reference_data.blood_group.add')->middleware(['checkroute']);
     Route::post('/dashboard/blood-group-add','blood_group_store')->name('reference_data.blood_group.add')->middleware(['checkroute']);
 
-    // for all edit view Blood Group route........
     Route::get('/dashboard/blood-group-edit','blood_group_edit_page')->name('reference_data.blood_group.edit')->middleware(['checkroute']);
     Route::post('/dashboard/blood-group-edit','blood_group_grid')->name('reference_data.blood_group.edit')->middleware(['checkroute']);
     Route::get('/dashboard/blood-group-edit/{id?}','blood_group_single_edit_page')->name('reference_data.blood_group.edit')->middleware(['checkroute']);
     Route::post('/dashboard/blood-group-edit/{id?}','blood_group_update')->name('reference_data.blood_group.edit')->middleware(['checkroute']);
 
-    // for all view Blood Group route........
     Route::get('/dashboard/blood-group-view','blood_group_view_page')->name('reference_data.blood_group.view')->middleware(['checkroute']);
     Route::post('/dashboard/blood-group-view','blood_group_grid')->name('reference_data.blood_group.view')->middleware(['checkroute']);
     Route::get('/dashboard/blood-group-view/{id?}','blood_group_single_view_page')->name('reference_data.blood_group.view')->middleware(['checkroute']);
 
-    // for all delete view Blood Group route........
     Route::get('/dashboard/blood-group-delete','blood_group_delete_page')->name('reference_data.blood_group.delete')->middleware(['checkroute']);
     Route::post('/dashboard/blood-group-delete','blood_group_grid')->name('reference_data.blood_group.delete')->middleware(['checkroute']);
     Route::get('/dashboard/blood-group-delete/{id?}','blood_group_delete')->name('reference_data.blood_group.delete')->middleware(['checkroute']);
@@ -180,18 +173,15 @@ Route::controller(DesignationController::class)->group(function(){
     Route::get('/dashboard/designation-add','designation_add_page')->name('reference_data.designation.add')->middleware(['checkroute']);
     Route::post('/dashboard/designation-add','designation_store')->name('reference_data.designation.add')->middleware(['checkroute']);
 
-    // for all edit view designation route........
     Route::get('/dashboard/designation-edit','designation_edit_page')->name('reference_data.designation.edit')->middleware(['checkroute']);
     Route::post('/dashboard/designation-edit','designation_grid')->name('reference_data.designation.edit')->middleware(['checkroute']);
     Route::get('/dashboard/designation-edit/{id?}','designation_single_edit_page')->name('reference_data.designation.edit')->middleware(['checkroute']);
     Route::post('/dashboard/designation-edit/{id?}','designation_update')->name('reference_data.designation.edit')->middleware(['checkroute']);
 
-    // for all view designation route........
     Route::get('/dashboard/designation-view','designation_view_page')->name('reference_data.designation.view')->middleware(['checkroute']);
     Route::post('/dashboard/designation-view','designation_grid')->name('reference_data.designation.view')->middleware(['checkroute']);
     Route::get('/dashboard/designation-view/{id?}','designation_single_view_page')->name('reference_data.designation.view')->middleware(['checkroute']);
 
-    // for all delete view designation route........
     Route::get('/dashboard/designation-delete','designation_delete_page')->name('reference_data.designation.delete')->middleware(['checkroute']);
     Route::post('/dashboard/designation-delete','designation_grid')->name('reference_data.designation.delete')->middleware(['checkroute']);
     Route::get('/dashboard/designation-delete/{id?}','designation_delete')->name('reference_data.designation.delete')->middleware(['checkroute']);
@@ -202,18 +192,15 @@ Route::controller(DepartmentController::class)->group(function(){
     Route::get('/dashboard/department-add','department_add_page')->name('reference_data.department.add')->middleware(['checkroute']);
     Route::post('/dashboard/department-add','department_store')->name('reference_data.department.add')->middleware(['checkroute']);
 
-    // for all edit view department route........
     Route::get('/dashboard/department-edit','department_edit_page')->name('reference_data.department.edit')->middleware(['checkroute']);
     Route::post('/dashboard/department-edit','department_grid')->name('reference_data.department.edit')->middleware(['checkroute']);
     Route::get('/dashboard/department-edit/{id?}','department_single_edit_page')->name('reference_data.department.edit')->middleware(['checkroute']);
     Route::post('/dashboard/department-edit/{id?}','department_update')->name('reference_data.department.edit')->middleware(['checkroute']);
 
-    // for all view department route........
     Route::get('/dashboard/department-view','department_view_page')->name('reference_data.department.view')->middleware(['checkroute']);
     Route::post('/dashboard/department-view','department_grid')->name('reference_data.department.view')->middleware(['checkroute']);
     Route::get('/dashboard/department-view/{id?}','department_single_view_page')->name('reference_data.department.view')->middleware(['checkroute']);
 
-    // for all delete view department route........
     Route::get('/dashboard/department-delete','department_delete_page')->name('reference_data.department.delete')->middleware(['checkroute']);
     Route::post('/dashboard/department-delete','department_grid')->name('reference_data.department.delete')->middleware(['checkroute']);
     Route::get('/dashboard/department-delete/{id?}','department_delete')->name('reference_data.department.delete')->middleware(['checkroute']);
