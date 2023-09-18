@@ -294,10 +294,12 @@ class CommonController extends Controller
             }
         }
 
+        $data_id_arr = explode(",",$data_id);
+
         $parameter_data = DB::table($table_name)
             ->select($select)
             ->where('delete_status',0)
-            ->where('id',$data_id)
+            ->whereIn('id',$data_id_arr)
             ->get()
             ->toArray();
 
