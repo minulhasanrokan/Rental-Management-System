@@ -793,7 +793,7 @@
         }
     }
 
-    function load_drop_down(table_name, field_name, id, container, title, select_status,status, selected_value) {
+    function load_drop_down(table_name, field_name, id, container, title, select_status,status, selected_value, disabale_status) {
 
         var http = createObject();
 
@@ -858,6 +858,11 @@
 
                                     $("#"+id).val(selected_value);
                                 }
+                            }
+
+                            if(disabale_status==1){
+
+                                $("#"+id).attr('disabled','disabled ');
                             }
                         }
                     }

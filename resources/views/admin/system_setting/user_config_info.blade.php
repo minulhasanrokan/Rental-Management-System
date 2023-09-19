@@ -62,6 +62,33 @@
         var owner_user_type = $("#owner_user_type").val();
         var tenant_user_type = $("#tenant_user_type").val();
 
+        if(normal_user_type==owner_user_type){
+
+            alert("Normal User Type And Owner User Type Can Not Be Same");
+
+            $("#normal_user_type").val('');
+
+            return false;
+        }
+
+        if(normal_user_type==tenant_user_type){
+
+            alert("Normal User Type And Tenant User Type Can Not Be Same");
+
+            $("#normal_user_type").val('');
+
+            return false;
+        }
+
+        if(owner_user_type==tenant_user_type){
+
+            alert("Owner User Type And Tenant User Type Can Not Be Same");
+
+            $("#owner_user_type").val('');
+            
+            return false;
+        }
+
         var token = $('meta[name="csrf-token"]').attr('content');
 
         var form_data = new FormData();
@@ -137,8 +164,8 @@
         }
     }
 
-    load_drop_down('user_types','id,user_type_name','normal_user_type','normal_user_type_container','Select Normal User Type',0,1,'{{$user_config_data['normal_user_type']}}');
-    load_drop_down('user_types','id,user_type_name','owner_user_type','owner_user_type_container','Select Owner User Type',0,1,'{{$user_config_data['owner_user_type']}}');
-    load_drop_down('user_types','id,user_type_name','tenant_user_type','tenant_user_type_container','Tenant Normal User Type',0,1,'{{$user_config_data['tenant_user_type']}}');
+    load_drop_down('user_types','id,user_type_name','normal_user_type','normal_user_type_container','Select Normal User Type',0,1,'{{$user_config_data['normal_user_type']}}',1);
+    load_drop_down('user_types','id,user_type_name','owner_user_type','owner_user_type_container','Select Owner User Type',0,1,'{{$user_config_data['owner_user_type']}}',1);
+    load_drop_down('user_types','id,user_type_name','tenant_user_type','tenant_user_type_container','Tenant Normal User Type',0,1,'{{$user_config_data['tenant_user_type']}}',1);
 
 </script>****{{csrf_token()}}

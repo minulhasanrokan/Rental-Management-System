@@ -68,11 +68,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="user_type">User Type <span style="color:red;">*</span></label>
-                                    <select disabled class="form-control" style="width: 100%;" name="user_type" id="user_type" required>
-                                        <option value="">Select User Type</option>
-                                        <option {{$user_data->user_type==0?'selected':''}} value="0">Normal User</option>
-                                        <option {{$user_data->user_type==1?'selected':''}} value="1">Tenant User</option>
-                                    </select>
+                                    <div id="user_type_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="user_type_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -302,11 +298,12 @@
         }
     }
 
-    load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender',0,0,'{{$user_data->sex}}');
-    load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group',0,0,'{{$user_data->blood_group}}');
-    load_drop_down('user_groups','id,group_name','group','group_container','Select Group',0,0,'{{$user_data->group}}');
-    load_drop_down('departments','id,department_name','department','department_container','Select Department',0,0,'{{$user_data->department}}');
-    load_drop_down('departments','id,department_name','assign_department','assign_department_container','Select Assign Department',1,0,'{{$user_data->assign_department}}');
-    load_drop_down('designations','id,designation_name','designation','designation_container','Select Designation',0,0,'{{$user_data->designation}}');
+    load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender',0,0,'{{$user_data->sex}}',0);
+    load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group',0,0,'{{$user_data->blood_group}}',0);
+    load_drop_down('user_groups','id,group_name','group','group_container','Select Group',0,0,'{{$user_data->group}}',0);
+    load_drop_down('user_types','id,user_type_name','user_type','user_type_container','Select User Type',0,1,'{{$user_data->user_type}}',1);
+    load_drop_down('departments','id,department_name','department','department_container','Select Department',0,0,'{{$user_data->department}}',0);
+    load_drop_down('departments','id,department_name','assign_department','assign_department_container','Select Assign Department',1,0,'{{$user_data->assign_department}}',0);
+    load_drop_down('designations','id,designation_name','designation','designation_container','Select Designation',0,0,'{{$user_data->designation}}',0);
 
 </script>****{{csrf_token()}}
