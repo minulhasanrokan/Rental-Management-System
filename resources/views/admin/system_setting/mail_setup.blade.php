@@ -151,7 +151,7 @@
         form_data.append("system_url", system_url);
         form_data.append("_token", token);
 
-        http.open("POST","{{route('system_setting.mail')}}",true);
+        http.open("POST","{{route('system_setting.mail.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
         http.onreadystatechange = save_system_mail_data_response;

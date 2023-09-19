@@ -13,6 +13,7 @@ use App\Http\Controllers\BloodGroupController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\UserTypeController;
+use App\Http\Controllers\UserConfigController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// common route..............
 Route::controller(CommonController::class)->group(function(){
 
     Route::get('/dashboard/get-duplicate-value/{field_name?}/{table_name?}/{value?}/{data_id?}','get_duplicate_value')->name('admin.get.duplicate.value');
@@ -39,7 +39,6 @@ Route::controller(CommonController::class)->group(function(){
     Route::get('/dashboard/get-data-by-id/{table_name?}/{data_id?}/{field_name?}','get_data_by_id')->name('admin.get.data.by.id');
 });
 
-// registration route..................
 Route::controller(RegistrationController::class)->group(function(){
 
     Route::get('/registration','registration_page')->name('admin.registration')->middleware(['logincheck']);
@@ -58,31 +57,33 @@ Route::controller(RegistrationController::class)->group(function(){
     Route::post('/change-password','change_password_store')->name('admin.change.password')->middleware(['changepassword']);
 });
 
-// login route..................
 Route::controller(LoginController::class)->group(function(){
 
     Route::get('/login','login_page')->name('admin.login')->middleware(['logincheck']);
     Route::post('/login-store','login_store')->name('admin.login.store');
 });
 
-// dashboard route..............
 Route::controller(DashboardController::class)->group(function(){
 
     Route::get('/dashboard','dashboard')->name('admin.dashboard')->middleware(['dashboardcheck']);
     Route::get('/dashboard/logout','logout')->name('admin.logout')->middleware(['dashboardcheck']);
 });
 
-// dashboard route..............
 Route::controller(SystemSettingController::class)->group(function(){
 
     Route::get('/dashboard/system-setting-information','system_setting_page')->name('system_setting.information.add')->middleware(['checkroute']);
     Route::post('/dashboard/system-setting-information','system_information_update')->name('system_setting.information.add')->middleware(['checkroute']);
 
-    Route::get('/dashboard/system-setting-mail','system_mail_page')->name('system_setting.mail')->middleware(['checkroute']);
-    Route::post('/dashboard/system-setting-mail','system_mail_update')->name('system_setting.mail')->middleware(['checkroute']);
+    Route::get('/dashboard/system-setting-mail','system_mail_page')->name('system_setting.mail.add')->middleware(['checkroute']);
+    Route::post('/dashboard/system-setting-mail','system_mail_update')->name('system_setting.mail.add')->middleware(['checkroute']);
 });
 
-// user group route..............
+Route::controller(UserConfigController::class)->group(function(){
+
+    Route::get('/dashboard/user-config','user_config_page')->name('system_setting.user_config.add')->middleware(['checkroute']);
+    Route::post('/dashboard/user-config','user_config_update')->name('system_setting.user_config.add')->middleware(['checkroute']);
+});
+
 Route::controller(UserGroupController::class)->group(function(){
 
     Route::get('/dashboard/user-group-add','user_group_add_page')->name('user_management.user_group.add')->middleware(['checkroute']);
@@ -107,8 +108,6 @@ Route::controller(UserGroupController::class)->group(function(){
     Route::post('/dashboard/user-group-right/{id?}','user_group_right_store')->name('user_management.user_group.right')->middleware(['checkroute']);
 });
 
-
-// user route..............
 Route::controller(UserController::class)->group(function(){
 
     Route::get('/dashboard/user-add','user_add_page')->name('user_management.user.add')->middleware(['checkroute']);
@@ -126,14 +125,8 @@ Route::controller(UserController::class)->group(function(){
     Route::get('/dashboard/user-view','user_view_page')->name('user_management.user.view')->middleware(['checkroute']);
     Route::post('/dashboard/user-view','user_grid')->name('user_management.user.view')->middleware(['checkroute']);
     Route::get('/dashboard/user-view/{id?}','user_single_view_page')->name('user_management.user.view')->middleware(['checkroute']);
-
-
 });
 
-
-// all refarence route.......
-
-// Gender route..............
 Route::controller(GenderController::class)->group(function(){
 
     Route::get('/dashboard/gender-add','gender_add_page')->name('reference_data.gender.add')->middleware(['checkroute']);
@@ -151,9 +144,7 @@ Route::controller(GenderController::class)->group(function(){
     Route::get('/dashboard/gender-delete','gender_delete_page')->name('reference_data.gender.delete')->middleware(['checkroute']);
     Route::post('/dashboard/gender-delete','gender_grid')->name('reference_data.gender.delete')->middleware(['checkroute']);
     Route::get('/dashboard/gender-delete/{id?}','gender_delete')->name('reference_data.gender.delete')->middleware(['checkroute']);
-
 });
-
 
 Route::controller(BloodGroupController::class)->group(function(){
 
@@ -173,7 +164,6 @@ Route::controller(BloodGroupController::class)->group(function(){
     Route::post('/dashboard/blood-group-delete','blood_group_grid')->name('reference_data.blood_group.delete')->middleware(['checkroute']);
     Route::get('/dashboard/blood-group-delete/{id?}','blood_group_delete')->name('reference_data.blood_group.delete')->middleware(['checkroute']);
 });
-
 
 Route::controller(DesignationController::class)->group(function(){
 

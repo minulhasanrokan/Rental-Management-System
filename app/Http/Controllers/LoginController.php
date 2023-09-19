@@ -26,7 +26,7 @@ class LoginController extends Controller
 
         $data = SystemDetails::where('delete_status',0)
             ->where('status',1)
-            ->where('id',1)
+            //->where('id',1)
             ->first();
 
         $system_data = array();

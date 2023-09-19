@@ -26,7 +26,7 @@ class SystemSettingController extends Controller
 
         $data = SystemDetails::where('delete_status',0)
             ->where('status',1)
-            ->where('id',1)
+            //->where('id',1)
             ->first();
 
         $system_data = array();
@@ -106,7 +106,7 @@ class SystemSettingController extends Controller
 
         $data = SystemDetails::where('delete_status',0)
             ->where('status',1)
-            ->where('id',1)
+            //->where('id',1)
             ->first();
 
         $user_session_data = session()->all();
@@ -239,7 +239,7 @@ class SystemSettingController extends Controller
 
         $data = MailSetup::where('delete_status',0)
             ->where('status',1)
-            ->where('id',1)
+            //->where('id',1)
             ->first();
 
         $mail_data = array();
@@ -321,7 +321,7 @@ class SystemSettingController extends Controller
 
         $data = MailSetup::where('delete_status',0)
             ->where('status',1)
-            ->where('id',1)
+            //->where('id',1)
             ->first();
 
         $user_session_data = session()->all();
