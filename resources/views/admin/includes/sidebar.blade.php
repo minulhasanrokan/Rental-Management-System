@@ -903,7 +903,19 @@
 
                                 var value = $("#"+div_id).text();
 
-                                var data = $("#"+div_id).text(value+json_data[0][field_name]);
+                                var value_data = ''
+
+                                json_data.forEach(function(item) {
+
+                                    if(value_data!=''){
+
+                                        value_data +=", ";
+                                    }
+
+                                    value_data += item[field_name];
+                                });
+
+                                $("#"+div_id).text(value+value_data);
                             }
                         }
                     }
