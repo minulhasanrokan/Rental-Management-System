@@ -12,6 +12,7 @@ use App\Http\Controllers\GenderController;
 use App\Http\Controllers\BloodGroupController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\UserTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -210,4 +211,23 @@ Route::controller(DepartmentController::class)->group(function(){
     Route::get('/dashboard/department-delete','department_delete_page')->name('reference_data.department.delete')->middleware(['checkroute']);
     Route::post('/dashboard/department-delete','department_grid')->name('reference_data.department.delete')->middleware(['checkroute']);
     Route::get('/dashboard/department-delete/{id?}','department_delete')->name('reference_data.department.delete')->middleware(['checkroute']);
+});
+
+Route::controller(UserTypeController::class)->group(function(){
+
+    Route::get('/dashboard/user-type-add','user_type_add_page')->name('reference_data.user.type.add')->middleware(['checkroute']);
+    Route::post('/dashboard/user-type-add','user_type_store')->name('reference_data.user.type.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/user-type-edit','user_type_edit_page')->name('reference_data.user.type.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/user-type-edit','user_type_grid')->name('reference_data.user.type.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/user-type-edit/{id?}','user_type_single_edit_page')->name('reference_data.user.type.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/user-type-edit/{id?}','user_type_update')->name('reference_data.user.type.edit')->middleware(['checkroute']);
+
+    Route::get('/dashboard/user-type-view','user_type_view_page')->name('reference_data.user.type.view')->middleware(['checkroute']);
+    Route::post('/dashboard/user-type-view','user_type_grid')->name('reference_data.user.type.view')->middleware(['checkroute']);
+    Route::get('/dashboard/user-type-view/{id?}','user_type_single_view_page')->name('reference_data.user.type.view')->middleware(['checkroute']);
+
+    Route::get('/dashboard/user-type-delete','user_type_delete_page')->name('reference_data.user.type.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/user-type-delete','user_type_grid')->name('reference_data.user.type.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/user-type-delete/{id?}','user_type_delete')->name('reference_data.user.type.delete')->middleware(['checkroute']);
 });
