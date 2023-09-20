@@ -5,7 +5,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Edit View All User Group Information</h3>
+                    <h3 class="card-title">Edit View All User Information</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -84,10 +84,10 @@
                     "data": "user_photo",
                     "render": function(data, type, full, meta) {
 
-                        var titleValue = full.group_name;
+                        var name = full.name;
 
                         if (type === 'display') {
-                            return '<img src="{{url('uploads/user')}}/' + data + '" alt="'+titleValue+'" width="35" height="35">';
+                            return '<img src="{{url('uploads/user')}}/' + data + '" alt="'+name+'" width="35" height="35">';
                         }
                         return data;
                     }

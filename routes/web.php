@@ -14,6 +14,7 @@ use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\UserConfigController;
+use App\Http\Controllers\TenantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,6 +131,22 @@ Route::controller(UserController::class)->group(function(){
     Route::post('/dashboard/user-right','user_grid')->name('user_management.user.right')->middleware(['checkroute']);
     Route::get('/dashboard/user-right/{id?}','user_right_setup_page')->name('user_management.user.right')->middleware(['checkroute']);
     Route::post('/dashboard/user-right/{id?}','user_right_store')->name('user_management.user.right')->middleware(['checkroute']);
+});
+
+Route::controller(TenantController::class)->group(function(){
+
+    Route::get('/dashboard/tenant-add','tenant_add_page')->name('user_management.tenant.add')->middleware(['checkroute']);
+    Route::post('/dashboard/tenant-add','tenant_store')->name('user_management.tenant.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/tenant-edit','tenant_edit_page')->name('user_management.tenant.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/tenant-edit','tenant_grid')->name('user_management.tenant.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/tenant-edit/{id?}','tenant_single_edit_page')->name('user_management.tenant.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/tenant-edit/{id?}','tenant_update')->name('user_management.tenant.edit')->middleware(['checkroute']);
+
+    Route::get('/dashboard/tenant-delete','tenant_delete_page')->name('user_management.tenant.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/tenant-delete','tenant_grid')->name('user_management.tenant.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/tenant-delete/{id?}','tenant_delete')->name('user_management.tenant.delete')->middleware(['checkroute']);
+
 });
 
 Route::controller(GenderController::class)->group(function(){
