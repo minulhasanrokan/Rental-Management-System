@@ -96,6 +96,8 @@ class UserController extends Controller
 
         $user_id = $user_session_data[config('app.app_session_name')]['id'];
 
+        $user_config_data = $this->common->get_user_config_data();
+
         DB::beginTransaction();
 
         $token = rand(1000,9999);
@@ -115,7 +117,7 @@ class UserController extends Controller
         $data->sex = $request->sex;
         $data->blood_group = $request->blood_group;
         $data->group = $request->group;
-        $data->user_type = $request->user_type;
+        $data->user_type = $user_config_data['normal_user_type'];
         $data->department = $request->department;
         $data->assign_department = $request->assign_department;
         $data->designation = $request->designation;
@@ -235,6 +237,8 @@ class UserController extends Controller
 
         $menu_data = $this->common->get_page_menu_grid('user_management.user.add');
 
+        $user_config_data = $this->common->get_user_config_data();
+
         $csrf_token = csrf_token();
 
         $draw = $request->draw;
@@ -259,6 +263,7 @@ class UserController extends Controller
             $total_data = DB::table('users as a')
                 ->join('user_groups as b', 'b.id', '=', 'a.group')
                 ->select('a.id')
+                ->where('a.user_type',$user_config_data['normal_user_type'])
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
                 ->get();
@@ -266,6 +271,7 @@ class UserController extends Controller
             $filter_data = DB::table('users as a')
                 ->join('user_groups as b', 'b.id', '=', 'a.group')
                 ->select('a.id')
+                ->where('a.user_type',$user_config_data['normal_user_type'])
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
                 ->where('a.name','like',"%".$search_value."%")
@@ -277,6 +283,7 @@ class UserController extends Controller
             $data = DB::table('users as a')
                 ->join('user_groups as b', 'b.id', '=', 'a.group')
                 ->select('a.id  as user_id', 'a.name', 'a.user_photo', 'b.group_name', 'a.email', 'a.mobile', 'a.status')
+                ->where('a.user_type',$user_config_data['normal_user_type'])
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
                 ->where('a.name','like',"%".$search_value."%")
@@ -293,6 +300,7 @@ class UserController extends Controller
             $filter_data = DB::table('users as a')
                 ->join('user_groups as b', 'b.id', '=', 'a.group')
                 ->select('a.id')
+                ->where('a.user_type',$user_config_data['normal_user_type'])
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
                 ->get();
@@ -300,6 +308,7 @@ class UserController extends Controller
             $data = DB::table('users as a')
                 ->join('user_groups as b', 'b.id', '=', 'a.group')
                 ->select('a.id  as user_id', 'a.name', 'a.user_photo', 'b.group_name', 'a.email', 'a.mobile', 'a.status')
+                ->where('a.user_type',$user_config_data['normal_user_type'])
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
                 ->orderBy($column_name,$column_ort_order)
@@ -420,6 +429,8 @@ class UserController extends Controller
 
         $user_id = $user_session_data[config('app.app_session_name')]['id'];
 
+        $user_config_data = $this->common->get_user_config_data();
+
         $now = now();
 
         DB::beginTransaction();
@@ -435,7 +446,7 @@ class UserController extends Controller
         $data->sex = $request->sex;
         $data->blood_group = $request->blood_group;
         $data->group = $request->group;
-        $data->user_type = $request->user_type;
+        $data->user_type = $user_config_data['normal_user_type'];
         $data->department = $request->department;
         $data->assign_department = $request->assign_department;
         $data->designation = $request->designation;
