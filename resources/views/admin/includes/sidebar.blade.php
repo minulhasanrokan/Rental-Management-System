@@ -23,6 +23,24 @@
                 ->orderBy('right_details.r_short_order', 'ASC')
                 ->get()->toArray();
     }
+    else{
+
+        $user_right_data = DB::table('right_details')
+                ->join('user_rights', 'right_details.id', '=', 'user_rights.r_id')
+                ->join('right_categories', 'right_categories.id', '=', 'right_details.cat_id')
+                ->join('right_groups', 'right_groups.id', '=', 'right_categories.group_id')
+                ->select('right_groups.id as g_id', 'right_groups.name as g_name', 'right_groups.action_name as g_action_name', 'right_groups.details as g_details', 'right_groups.title as g_title', 'right_groups.short_order as g_short_order', 'right_groups.icon as g_icon', 'right_categories.id as c_id', 'right_categories.group_id as group_id', 'right_categories.c_name', 'right_categories.c_title', 'right_categories.c_action_name', 'right_categories.c_details', 'right_categories.short_order as c_short_order', 'right_categories.c_icon as c_icon', 'right_details.id  as r_id', 'right_details.cat_id', 'right_details.r_name', 'right_details.r_title', 'right_details.r_action_name', 'right_details.r_route_name', 'right_details.r_details', 'right_details.r_short_order', 'right_details.r_icon')
+                ->where('right_groups.status',1)
+                ->where('right_categories.status',1)
+                ->where('right_details.status',1)
+                ->where('right_groups.delete_status',0)
+                ->where('right_categories.delete_status',0)
+                ->where('right_details.delete_status',0)
+                ->orderBy('right_groups.short_order', 'ASC')
+                ->orderBy('right_categories.short_order', 'ASC')
+                ->orderBy('right_details.r_short_order', 'ASC')
+                ->get()->toArray();
+    }
 
     $right_group_arr = array();
     $right_cat_arr = array();

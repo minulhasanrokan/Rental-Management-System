@@ -77,6 +77,19 @@ class CommonController extends Controller
         }
         else{
 
+            $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+            $user_right_data = DB::table('right_details as a')
+                ->join('right_details as b', 'b.cat_id', '=', 'a.cat_id')
+                ->join('user_rights as c', 'c.r_id', '=', 'a.id')
+                ->select('a.id  as r_id', 'a.cat_id', 'a.r_name', 'a.r_title', 'a.r_action_name', 'a.r_route_name', 'a.r_details', 'a.r_short_order', 'a.r_icon')
+                ->where('a.status',1)
+                ->where('c.user_id',$user_id)
+                ->where('b.r_route_name',$action_name)
+                //->where('a.r_route_name','!=' ,$action_name)
+                ->where('a.delete_status',0)
+                ->orderBy('a.r_short_order', 'ASC')
+                ->get()->toArray();
         }
 
         foreach($user_right_data as $data){
@@ -110,6 +123,19 @@ class CommonController extends Controller
         }
         else{
 
+            $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+            $user_right_data = DB::table('right_details as a')
+                ->join('right_details as b', 'b.cat_id', '=', 'a.cat_id')
+                ->join('user_rights as c', 'c.r_id', '=', 'a.id')
+                ->select('a.id  as r_id', 'a.cat_id', 'a.r_name', 'a.r_title', 'a.r_action_name', 'a.r_route_name', 'a.r_details', 'a.r_short_order', 'a.r_icon')
+                ->where('a.status',1)
+                ->where('c.user_id',$user_id)
+                ->where('b.r_route_name',$action_name)
+                ->where('a.r_route_name','!=' ,$route_name)
+                ->where('a.delete_status',0)
+                ->orderBy('a.r_short_order', 'ASC')
+                ->get();
         }
 
         $sl = 0;
@@ -156,6 +182,19 @@ class CommonController extends Controller
         }
         else{
 
+            $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+            $user_right_data = DB::table('right_details as a')
+                ->join('right_details as b', 'b.cat_id', '=', 'a.cat_id')
+                ->join('user_rights as c', 'c.r_id', '=', 'a.id')
+                ->select('a.id  as r_id', 'a.cat_id', 'a.r_name', 'a.r_title', 'a.r_action_name', 'a.r_route_name', 'a.r_details', 'a.r_short_order', 'a.r_icon')
+                ->where('a.status',1)
+                ->where('c.user_id',$user_id)
+                ->where('b.r_route_name',$action_name)
+                ->whereNotIn('a.r_route_name',$route_name_arr)
+                ->where('a.delete_status',0)
+                ->orderBy('a.r_short_order', 'ASC')
+                ->get()->toArray();
         }
 
         return $user_right_data;

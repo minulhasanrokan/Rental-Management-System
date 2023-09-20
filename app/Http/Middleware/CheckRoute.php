@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use DB;
 
 class CheckRoute
 {
@@ -30,7 +31,23 @@ class CheckRoute
 
             $route_name = request()->route()->getName();
 
-            //echo 'Right Not Found';
+            $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+            $user_right_data = DB::table('right_details as a')
+                ->join('user_rights as b', 'b.r_id', '=', 'a.id')
+                ->select('a.id  as r_id')
+                ->where('a.status',1)
+                ->where('b.user_id',$user_id)
+                ->where('a.r_route_name',$route_name)
+                ->where('a.delete_status',0)
+                ->get()->toArray();
+
+            if(empty($user_right_data)){
+
+                echo 'Right Not Found';
+
+                die;
+            }
         }
 
         return $next($request);
