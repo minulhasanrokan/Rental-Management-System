@@ -201,7 +201,7 @@
 
                 alert(http.responseText);
 
-                location.replace('<?php echo url('/login');?>');
+                location.replace('<?php echo url('/dashboard/logout');?>');
             }
             else{
 
@@ -233,7 +233,7 @@
 
             if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
 
-                location.replace('<?php echo url('/login');?>');
+                location.replace('<?php echo url('/dashboard/logout');?>');
             }
             else{
 
@@ -315,7 +315,7 @@
 
                         if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
 
-                            location.replace('<?php echo url('/login');?>');
+                            location.replace('<?php echo url('/dashboard/logout');?>');
                         }
                         else{
 
@@ -397,7 +397,7 @@
 
                         if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
 
-                            location.replace('<?php echo url('/login');?>');
+                            location.replace('<?php echo url('/dashboard/logout');?>');
                         }
                         else{
 

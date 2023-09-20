@@ -54,7 +54,7 @@
                     
                     alert(xhr.responseText);
 
-                    location.replace('<?php echo url('/login');?>');
+                    location.replace('<?php echo url('/dashboard/logout');?>');
                 },
                 "dataSrc": function ( json ) {
                         

@@ -108,7 +108,7 @@
 
                 alert('Session Expire');
 
-                location.replace('<?php echo url('/login');?>');
+                location.replace('<?php echo url('/dashboard/logout');?>');
             }
             else{
                 var data = JSON.parse(http.responseText);
