@@ -270,6 +270,32 @@ class CommonController extends Controller
         return $group_right_data_arr;
     }
 
+    public function get_user_right($user_id){
+
+        $group_right_data = DB::table('user_rights')
+            ->select('user_id','g_id','c_id','r_id','add_by','edit_by')
+            //->where('status',1)
+            ->where('delete_status',0)
+            ->where('user_id',$user_id)
+            ->get()
+            ->toArray();
+
+        $group_right_data_arr = array();
+
+        if(!empty($group_right_data)){
+
+            foreach($group_right_data as $data){
+
+                $group_right_data_arr[$data->g_id][$data->c_id][$data->r_id]['r_id'] = $data->r_id;
+                $group_right_data_arr[$data->g_id][$data->c_id][$data->r_id]['add_by'] = $data->add_by;
+                $group_right_data_arr[$data->g_id][$data->c_id][$data->r_id]['edit_by'] = $data->edit_by;
+                $group_right_data_arr[$data->g_id][$data->c_id][$data->r_id]['user_id'] = $data->user_id;
+            }
+        }
+
+        return $group_right_data_arr;
+    }
+
     public function get_data_by_id($table_name,$data_id,$field_name){
 
         $table_name = trim($table_name);

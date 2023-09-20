@@ -65,7 +65,7 @@
     <!-- Brand Logo -->
     <a href="{{route('admin.dashboard')}}" class="brand-link">
         <img src="{{asset('uploads/logo')}}/{{!empty($system_data['system_logo'])?$system_data['system_logo']:'rental_logo.png'}}" alt="{{!empty($system_data['system_name'])?$system_data['system_name']:'Rental Management System'}}" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">{{!empty($system_data['system_name'])?$system_data['system_name']:'Rental Management System'}}</span>
     </a>
     <!-- Sidebar -->
     <div class="sidebar">

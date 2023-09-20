@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{!empty($system_data['system_name'])?$system_data['system_name']:'Rental Management System'}} | Dashboard</title>
+        <title>{{!empty($system_data['title'])?$system_data['title']:'Rental Management System'}} | Dashboard</title>
         <link rel="icon" type="image/x-icon" href="{{asset('uploads/icon')}}/{{!empty($system_data['system_favicon'])?$system_data['system_favicon']:'rental_icon.png'}}">
         <!-- css -->
             @yield('css')

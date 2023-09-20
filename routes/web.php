@@ -125,6 +125,11 @@ Route::controller(UserController::class)->group(function(){
     Route::get('/dashboard/user-view','user_view_page')->name('user_management.user.view')->middleware(['checkroute']);
     Route::post('/dashboard/user-view','user_grid')->name('user_management.user.view')->middleware(['checkroute']);
     Route::get('/dashboard/user-view/{id?}','user_single_view_page')->name('user_management.user.view')->middleware(['checkroute']);
+
+    Route::get('/dashboard/user-right','user_right_page')->name('user_management.user.right')->middleware(['checkroute']);
+    Route::post('/dashboard/user-right','user_grid')->name('user_management.user.right')->middleware(['checkroute']);
+    Route::get('/dashboard/user-right/{id?}','user_right_setup_page')->name('user_management.user.right')->middleware(['checkroute']);
+    Route::post('/dashboard/user-right/{id?}','user_right_store')->name('user_management.user.right')->middleware(['checkroute']);
 });
 
 Route::controller(GenderController::class)->group(function(){
