@@ -26,10 +26,10 @@
                 <div class="card-body">
                     @if(Session::has('message') && Session::has('create_status') && Session::get('create_status')==1 && Session::get('verify_mail')==0)
                         <h5 class="text-center">A Reset Password Link Has Been Sent To The E-mail Address You Provided During Registration.</h5>
-                        <button type="button" class="btn btn-block btn-primary"><a style="text-decoration: none; color:white;" href="{{route('admin.forgot.resend.password',Session::get('user_id'))}}">Resend Reset Password Email</a></button>
+                        <a class="btn btn-primary btn-block" style="text-decoration: none; color:white;" href="{{route('admin.forgot.resend.password',Session::get('user_id'))}}">Resend Reset Password Email</a>
                     @elseif(Session::has('message') && Session::has('create_status') && Session::get('create_status')==1 && Session::get('verify_mail')==1)
                         <h5 class="text-center">{{Session::get('message')}}</h5>
-                        <button type="button" class="btn btn-block btn-primary"><a style="text-decoration: none; color:white;" href="{{route('admin.resend.verify.email',Session::get('user_id'))}}">Send Verification E-mail</a></button>
+                        <a class="btn btn-primary btn-block" style="text-decoration: none; color:white;" href="{{route('admin.resend.verify.email',Session::get('user_id'))}}">Send Verification E-mail</a>
                     @else
                     <p class="login-box-msg">Reset Password</p>
                     @if(Session::has('message'))

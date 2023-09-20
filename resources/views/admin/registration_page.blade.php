@@ -26,7 +26,7 @@
                 <div class="card-body">
                     @if(Session::has('message') && Session::has('create_status') && Session::get('create_status')==1)
                         <h5 class="text-center">A Verification Link Has Been Sent To The E-mail Address You Provided During Registration.</h5>
-                        <button type="button" class="btn btn-block btn-primary"><a style="text-decoration: none; color:white;" href="{{route('admin.resend.verify.email',Session::get('user_id'))}}">Resend Verification Email</a></button>
+                        <a class="btn btn-primary btn-block" style="text-decoration: none; color:white;" href="{{route('admin.resend.verify.email',Session::get('user_id'))}}">Resend Verification Email</a>
                     @else
                     <p class="login-box-msg">Register A New Account</p>
                     <form action="{{route('admin.registration.store')}}" method="post">

@@ -28,7 +28,7 @@
                         <h5 class="text-center">{{$notification['message']}}</h5>
                     @endif
                     @if(isset($notification['message']) && isset($notification['create_status']) && $notification['create_status']==2)
-                        <button type="button" class="btn btn-block btn-primary"><a style="text-decoration: none; color:white;" href="{{route('admin.login')}}">Login Your Account</a></button>
+                        <a class="btn btn-primary btn-block" style="text-decoration: none; color:white;" href="{{route('admin.login')}}">Login Your Account</a>
                     @endif
                     @if(isset($notification['message']) && isset($notification['create_status']) && $notification['create_status']==0)
                     <p class="login-box-msg">Reset Your Password</p>

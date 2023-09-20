@@ -26,7 +26,7 @@
                     @if(isset($notification['message']) && $notification['create_status']==1)
                         <p class="text-center">{{$notification['message']}}</p>
                         <div class="input-group mb-3">
-                            <button type="submit" class="btn btn-primary btn-block"><a style="text-decoration:none; color:white;" href="{{route('admin.login')}}">Sign In</a></button>
+                            <a class="btn btn-primary btn-block" style="text-decoration:none; color:white;" href="{{route('admin.login')}}">Sign In</a>
                         </div>
                     @else
                         <p class="text-center">{{$notification['message']}}</p>
