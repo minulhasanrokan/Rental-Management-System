@@ -34,6 +34,7 @@ class UserConfigController extends Controller
             $user_config_data['normal_user_type']=$data->normal_user_type;
             $user_config_data['owner_user_type']=$data->owner_user_type;
             $user_config_data['tenant_user_type']=$data->tenant_user_type;
+            $user_config_data['tenant_user_group']=$data->tenant_user_group;
             $user_config_data['add_by']=$data->add_by;
             $user_config_data['edit_by']=$data->edit_by;
             $user_config_data['delete_by']=$data->delete_by;
@@ -46,6 +47,7 @@ class UserConfigController extends Controller
             $user_config_data['normal_user_type']='';
             $user_config_data['owner_user_type']='';
             $user_config_data['tenant_user_type']='';
+            $user_config_data['tenant_user_group']='';
             $user_config_data['add_by']='';
             $user_config_data['edit_by']='';
             $user_config_data['delete_by']='';
@@ -109,6 +111,7 @@ class UserConfigController extends Controller
         $data->normal_user_type = $request->normal_user_type;
         $data->owner_user_type = $request->owner_user_type;
         $data->tenant_user_type = $request->tenant_user_type;
+        $data->tenant_user_group = $request->tenant_user_group;
 
         $data->save();
 
@@ -117,7 +120,7 @@ class UserConfigController extends Controller
             DB::commit();
 
             $notification = array(
-                'message'=> "user Confgi Data Created Successfully",
+                'message'=> "user Config Data Created Successfully",
                 'alert_type'=>'info',
                 'csrf_token' => csrf_token()
             );
@@ -127,7 +130,7 @@ class UserConfigController extends Controller
             DB::rollBack();
 
             $notification = array(
-                'message'=> "user Confgi Data Does Not Created Successfully",
+                'message'=> "user Config Data Does Not Created Successfully",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );

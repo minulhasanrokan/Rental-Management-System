@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\SystemDetails;
+use App\Models\UserRight;
 use Illuminate\Support\Facades\Hash;
 use DB;
 
@@ -85,6 +86,13 @@ class RegistrationController extends Controller
 
         $token = rand(1000,9999);
 
+        $user_config_data = $this->common->get_user_config_data();
+
+        $user_group_id = $user_config_data['tenant_user_group'];
+        $user_type = $user_config_data['tenant_user_type'];
+
+        $now = now();
+
         DB::beginTransaction();
 
         $user = User::create([
@@ -92,11 +100,47 @@ class RegistrationController extends Controller
             'email' => $request->email,
             'mobile' => $request->mobile,
             'password' => Hash::make($request->password),
-            'group' => '1',
+            'group' => $user_group_id,
+            'user_type' => $user_type,
             'remember_token' => $token,
+            'created_at' => $now,
         ]);
 
         if($user==true){
+
+            $group_right_data = $this->common->get_group_right($user->group);
+
+            if(!empty($group_right_data)){
+
+                $right_arr = array();
+
+                $sl = 0;
+
+                foreach($group_right_data as $right_g_id=>$right_group){
+
+                    foreach($right_group as $right_c_id=>$right_cat){
+
+                        foreach($right_cat as $right_id=>$right){
+
+                            $right_arr[$sl]['user_id'] = $user->id;
+                            $right_arr[$sl]['g_id'] = $right_g_id;
+                            $right_arr[$sl]['c_id'] = $right_c_id;
+                            $right_arr[$sl]['r_id'] = $right_id;
+                            $right_arr[$sl]['add_by'] = $user->id;
+                            $right_arr[$sl]['created_at'] = $now;
+
+                            $sl++;
+                        }
+                    }
+                }
+
+                if(!empty($right_arr)){
+
+                    UserRight::where('user_id', $user->id)->delete();
+
+                    UserRight::insert($right_arr);
+                }
+            }
 
             $encrypt_data = $this->common->encrypt_data($user->id);
 

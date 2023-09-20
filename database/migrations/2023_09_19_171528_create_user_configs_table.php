@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('normal_user_name')->nullable();
             $table->integer('owner_user_type')->nullable();
             $table->integer('tenant_user_type')->nullable();
+            $table->integer('tenant_user_group')->nullable();
             $table->integer('add_by')->nullable();
             $table->integer('edit_by')->nullable();
             $table->integer('delete_by')->nullable();

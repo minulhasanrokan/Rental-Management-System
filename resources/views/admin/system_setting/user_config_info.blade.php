@@ -34,6 +34,13 @@
                                     <div class="input-error" style="display:none; color: red;" id="tenant_user_type_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="tenant_user_group">Tenant User Group <span style="color:red;">*</span></label>
+                                    <div id="tenant_user_group_container"></div>
+                                    <div class="input-error" style="display:none; color: red;" id="tenant_user_group_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -53,7 +60,7 @@
     
     function save_system_info_data(){
 
-        if( form_validation('normal_user_type*owner_user_type*tenant_user_type','Normal User Type*Owner User Type*Tenant User Type')==false ){
+        if( form_validation('normal_user_type*owner_user_type*tenant_user_type*tenant_user_group','Normal User Type*Owner User Type*Tenant User Type*Tenant User Group')==false ){
 
             return false;
         }
@@ -61,6 +68,7 @@
         var normal_user_type = $("#normal_user_type").val();
         var owner_user_type = $("#owner_user_type").val();
         var tenant_user_type = $("#tenant_user_type").val();
+        var tenant_user_group = $("#tenant_user_group").val();
 
         if(normal_user_type==owner_user_type){
 
@@ -96,6 +104,7 @@
         form_data.append("normal_user_type", normal_user_type);
         form_data.append("owner_user_type", owner_user_type);
         form_data.append("tenant_user_type", tenant_user_type);
+        form_data.append("tenant_user_group", tenant_user_group);
 
         form_data.append("_token", token);
 
@@ -166,6 +175,7 @@
 
     load_drop_down('user_types','id,user_type_name','normal_user_type','normal_user_type_container','Select Normal User Type',0,1,'{{$user_config_data['normal_user_type']}}',1);
     load_drop_down('user_types','id,user_type_name','owner_user_type','owner_user_type_container','Select Owner User Type',0,1,'{{$user_config_data['owner_user_type']}}',1);
-    load_drop_down('user_types','id,user_type_name','tenant_user_type','tenant_user_type_container','Tenant Normal User Type',0,1,'{{$user_config_data['tenant_user_type']}}',1);
+    load_drop_down('user_types','id,user_type_name','tenant_user_type','tenant_user_type_container','Select Tenant User Type',0,1,'{{$user_config_data['tenant_user_type']}}',1);
+    load_drop_down('user_groups','id,group_name','tenant_user_group','tenant_user_group_container','Select Tenant User Group',0,1,'{{$user_config_data['tenant_user_group']}}',0);
 
 </script>****{{csrf_token()}}
