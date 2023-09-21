@@ -284,4 +284,9 @@ Route::controller(BuildingController::class)->group(function(){
 
     Route::get('/dashboard/building-add','building_add_page')->name('floor_management.building.add')->middleware(['checkroute']);
     Route::post('/dashboard/building-add','building_store')->name('floor_management.building.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/building-edit','building_edit_page')->name('floor_management.building.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/building-edit','building_grid')->name('floor_management.building.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/building-edit/{id?}','building_single_edit_page')->name('floor_management.building.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/building-edit/{id?}','building_update')->name('floor_management.building.edit')->middleware(['checkroute']);
 });
