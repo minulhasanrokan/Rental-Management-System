@@ -102,19 +102,27 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 @php
+                    $group_menu_sl= 0;
+
                     foreach($right_group_arr as $group_data){
+
+                        $group_menu_sl++;
                 @endphp
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item" id="menu_group{{$group_menu_sl}}" onclick="group_menu_open('{{$group_menu_sl}}');">
+                        <a href="" class="nav-link" id="menu_group_link{{$group_menu_sl}}">
                             <i class="nav-icon {{$group_data['g_icon']}}"></i>
                             <p>{{$group_data['g_name']}}<i class="fas fa-angle-left right"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
                             @php
+                                $group_cat_sl= 0;
+
                                 foreach($right_cat_arr[$group_data['g_id']] as $cat_data){
+
+                                    $group_cat_sl++;
                             @endphp
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                <li class="nav-item" id="menu_cat{{$group_menu_sl}}{{$group_cat_sl}}" onclick="group_menu_cat_open('{{$group_menu_sl}}','{{$group_cat_sl}}');">
+                                    <a href="" class="nav-link" id="menu_cat_link{{$group_menu_sl}}{{$group_cat_sl}}">
                                         <i class="nav-icon {{$cat_data['c_icon']}}"></i>
                                         <p>{{$cat_data['c_name']}}<i class="fas fa-angle-left right"></i></p>
                                      </a>
@@ -135,6 +143,12 @@
                                 </li>
                             @php
                                 }
+
+                                @endphp
+
+                                <input type="hidden" id="total_sub_menu{{$group_menu_sl}}" name="total_sub_menu{{$group_menu_sl}}" value="{{$group_cat_sl}}">
+
+                                @php
                             @endphp
                         </ul>
                     </li>
@@ -153,6 +167,15 @@
     </div>
 <!-- /.sidebar -->
 </aside>
+
+<style type="text/css">
+    .menu-bg-color{
+        background-color: #3f6791 !important;
+    }
+    .sub-menu-bg-color{
+        background-color: #dc3545 !important;
+    }
+</style>
 
 <script type="text/javascript">
 
@@ -441,6 +464,52 @@
                 $('#'+view_id).attr('src', e.target.result).width(80).height(80);
             };
             reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function group_menu_open(id){
+
+        var total_group = '{{$group_menu_sl}}';
+
+        for(var i=1; i<=total_group; i++){
+
+            if (i!=id){
+
+                $("#menu_group"+i).removeClass("nav-item menu-is-opening menu-open").addClass("nav-item");
+
+                $("#menu_group_link"+i).removeClass("menu-bg-color nav-link").addClass("nav-link");
+
+                var menu_list = $("#menu_group"+i+" ul");
+
+                menu_list.css("display", "none");
+            }
+            else{
+
+                $("#menu_group_link"+i).removeClass("nav-link").addClass("menu-bg-color nav-link");
+            }
+        }
+    }
+
+    function group_menu_cat_open(group_id,cat_id){
+
+        var total_sub_menu = $("#total_sub_menu"+group_id).val();
+
+        for(var i=1; i<=total_sub_menu; i++){
+
+            if (i!=cat_id){
+
+                $("#menu_cat"+group_id+i).removeClass("nav-item menu-is-opening menu-open").addClass("nav-item");
+
+                $("#menu_cat_link"+group_id+i).removeClass("sub-menu-bg-color nav-link").addClass("nav-link");
+
+                var menu_list = $("#menu_cat"+group_id+i+" ul");
+
+                menu_list.css("display", "none");
+            }
+            else{
+
+                $("#menu_cat_link"+group_id+i).removeClass("nav-link").addClass("sub-menu-bg-color nav-link");
+            }
         }
     }
 </script>
