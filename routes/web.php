@@ -15,6 +15,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\UserConfigController;
 use App\Http\Controllers\TenantController;
+use App\Http\Controllers\OwnerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,6 +132,31 @@ Route::controller(UserController::class)->group(function(){
     Route::post('/dashboard/user-right','user_grid')->name('user_management.user.right')->middleware(['checkroute']);
     Route::get('/dashboard/user-right/{id?}','user_right_setup_page')->name('user_management.user.right')->middleware(['checkroute']);
     Route::post('/dashboard/user-right/{id?}','user_right_store')->name('user_management.user.right')->middleware(['checkroute']);
+});
+
+Route::controller(OwnerController::class)->group(function(){
+
+    Route::get('/dashboard/owner-add','owner_add_page')->name('user_management.owner.add')->middleware(['checkroute']);
+    Route::post('/dashboard/owner-add','owner_store')->name('user_management.owner.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/owner-edit','owner_edit_page')->name('user_management.owner.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/owner-edit','owner_grid')->name('user_management.owner.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/owner-edit/{id?}','owner_single_edit_page')->name('user_management.owner.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/owner-edit/{id?}','owner_update')->name('user_management.owner.edit')->middleware(['checkroute']);
+
+    Route::get('/dashboard/owner-delete','owner_delete_page')->name('user_management.owner.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/owner-delete','owner_grid')->name('user_management.owner.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/owner-delete/{id?}','owner_delete')->name('user_management.owner.delete')->middleware(['checkroute']);
+
+    Route::get('/dashboard/owner-view','owner_view_page')->name('user_management.owner.view')->middleware(['checkroute']);
+    Route::post('/dashboard/owner-view','owner_grid')->name('user_management.owner.view')->middleware(['checkroute']);
+    Route::get('/dashboard/owner-view/{id?}','owner_single_view_page')->name('user_management.owner.view')->middleware(['checkroute']);
+
+    Route::get('/dashboard/owner-right','owner_right_page')->name('user_management.owner.right')->middleware(['checkroute']);
+    Route::post('/dashboard/owner-right','owner_grid')->name('user_management.owner.right')->middleware(['checkroute']);
+    Route::get('/dashboard/owner-right/{id?}','owner_right_setup_page')->name('user_management.owner.right')->middleware(['checkroute']);
+    Route::post('/dashboard/owner-right/{id?}','owner_right_store')->name('user_management.owner.right')->middleware(['checkroute']);
+
 });
 
 Route::controller(TenantController::class)->group(function(){

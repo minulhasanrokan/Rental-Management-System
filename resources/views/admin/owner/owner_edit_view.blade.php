@@ -5,7 +5,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Edit User Information - {{$user_data->name}}</h3>
+                    <h3 class="card-title">Edit Owner Information - {{$user_data->name}}</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -18,99 +18,99 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">User Name <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter User Name" value="{{$user_data->name}}" required>
+                                    <label for="name">Owner Name <span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Owner Name" value="{{$user_data->name}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="email">User E-mail <span style="color:red;">*</span></label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter User E-mail" value="{{$user_data->email}}" onkeyup="check_duplicate_value('email','users',this.value,'{{$user_data->id}}');" required>
+                                    <label for="email">Owner E-mail <span style="color:red;">*</span></label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Owner E-mail" value="{{$user_data->email}}" onkeyup="check_duplicate_value('email','users',this.value,'{{$user_data->id}}');" required>
                                     <div class="input-error" style="display:none; color: red;" id="email_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="mobile">User Mobile <span style="color:red;">*</span></label>
-                                    <input type="text" value="{{$user_data->mobile}}" class="form-control" id="mobile" name="mobile" placeholder="Enter User Mobile" onkeyup="check_duplicate_value('mobile','users',this.value,'{{$user_data->id}}');" required>
+                                    <label for="mobile">Owner Mobile <span style="color:red;">*</span></label>
+                                    <input type="text" value="{{$user_data->mobile}}" class="form-control" id="mobile" name="mobile" placeholder="Enter Owner Mobile" onkeyup="check_duplicate_value('mobile','users',this.value,'{{$user_data->id}}');" required>
                                     <div class="input-error" style="display:none; color: red;" id="mobile_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="date_of_birth">User Date Of Birth <span style="color:red;">*</span></label>
-                                    <input type="date" value="{{$user_data->date_of_birth}}" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Enter User Date Of Birth" required>
+                                    <label for="date_of_birth">Owner Date Of Birth <span style="color:red;">*</span></label>
+                                    <input type="date" value="{{$user_data->date_of_birth}}" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Enter Owner Date Of Birth" required>
                                     <div class="input-error" style="display:none; color: red;" id="date_of_birth_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="sex">User Gender <span style="color:red;">*</span></label>
+                                    <label for="sex">Owner Gender <span style="color:red;">*</span></label>
                                     <div id="sex_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="sex_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="blood_group">User Blood Group <span style="color:red;">*</span></label>
+                                    <label for="blood_group">Owner Blood Group <span style="color:red;">*</span></label>
                                     <div id="blood_group_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="blood_group_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="group">User Group <span style="color:red;">*</span></label>
+                                    <label for="group">Owner Group <span style="color:red;">*</span></label>
                                     <div id="group_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="group_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="user_type">User Type <span style="color:red;">*</span></label>
+                                    <label for="user_type">Owner Type <span style="color:red;">*</span></label>
                                     <div id="user_type_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="user_type_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="department">User Depertment <span style="color:red;">*</span></label>
+                                    <label for="department">Owner Depertment <span style="color:red;">*</span></label>
                                     <div id="department_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="department_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="assign_department">User Assign Depertment <span style="color:red;">*</span></label>
+                                    <label for="assign_department">Owner Assign Depertment <span style="color:red;">*</span></label>
                                     <div id="assign_department_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="assign_department_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="designation">User Designation <span style="color:red;">*</span></label>
+                                    <label for="designation">Owner Designation <span style="color:red;">*</span></label>
                                     <div id="designation_container"></div>
                                     <div class="input-error" style="display:none; color: red;" id="designation_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="address">User Address <span style="color:red;">*</span></label>
-                                    <input value="{{$user_data->address}}" type="text" class="form-control" id="address" name="address" placeholder="Enter User Address" required>
+                                    <label for="address">Owner Address <span style="color:red;">*</span></label>
+                                    <input value="{{$user_data->address}}" type="text" class="form-control" id="address" name="address" placeholder="Enter Owner Address" required>
                                     <div class="input-error" style="display:none; color: red;" id="address_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="details">User Details</label>
+                                    <label for="details">Owner Details</label>
                                     <textarea class="form-control" id="details" name="details">{{$user_data->details}}</textarea>
                                     <div class="input-error" style="display:none; color: red;" id="details_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="user_photo">User Photo <span style="color:red;">*</span></label>
-                                    <input onchange="readUrl(this,'user_photo_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="user_photo" name="user_photo" placeholder="Enter User Photo" required>
+                                    <label for="user_photo">Owner Photo <span style="color:red;">*</span></label>
+                                    <input onchange="readUrl(this,'user_photo_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="user_photo" name="user_photo" placeholder="Enter Owner Photo" required>
                                     <input type="hidden" name="hidden_user_photo" id="hidden_user_photo" value="{{$user_data->user_photo}}">
                                     <div class="input-error" style="display:none; color: red;" id="user_photo_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
@@ -127,7 +127,7 @@
                         @foreach($user_right_data as $data)
                             <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$user_data->id}}','{{$user_data->name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
                         @endforeach
-                        <button type="button" style="float:right" onclick="update_user_info_data();" class="btn btn-primary">Update User</button>
+                        <button type="button" style="float:right" onclick="update_user_info_data();" class="btn btn-primary">Update Owner</button>
                     </div>
                 </form>
             </div>
@@ -149,7 +149,7 @@
 
     function update_user_info_data(){
 
-        if( form_validation('name*email*mobile*date_of_birth*sex*blood_group*group*user_type*department*assign_department*designation*address','User Name*User E-mail*User Mobile*User Date Of Birth*User Gender*User Blood Group*User Group*User Type*User Department*User Assign Department*User Designation*User Address')==false ){
+        if( form_validation('name*email*mobile*date_of_birth*sex*blood_group*group*user_type*department*assign_department*designation*address','Owner Name*Owner E-mail*Owner Mobile*Owner Date Of Birth*Owner Gender*Owner Blood Group*Owner Group*Owner Type*Owner Department*Owner Assign Department*Owner Designation*Owner Address')==false ){
 
             return false;
         }
@@ -184,7 +184,7 @@
 
         if(hidden_user_photo==''){
 
-            if( form_validation('user_photo','User Photo')==false ){
+            if( form_validation('user_photo','Owner Photo')==false ){
 
                 return false;
             }
@@ -236,7 +236,7 @@
         form_data.append("update_id", '{{$user_data->id}}');
         form_data.append("_token", token);
 
-        http.open("POST","{{route('user_management.user.edit',$user_data->id)}}",true); 
+        http.open("POST","{{route('user_management.owner.edit',$user_data->id)}}",true); 
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
         http.onreadystatechange = update_user_info_data_response;
@@ -301,7 +301,7 @@
     load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender',0,0,'{{$user_data->sex}}',0);
     load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group',0,0,'{{$user_data->blood_group}}',0);
     load_drop_down('user_groups','id,group_name','group','group_container','Select Group',0,0,'{{$user_data->group}}',0);
-    load_drop_down('user_types','id,user_type_name','user_type','user_type_container','Select User Type',0,1,'{{$user_config_data['normal_user_type']}}',1);
+    load_drop_down('user_types','id,user_type_name','user_type','user_type_container','Select Owner Type',0,1,'{{$user_config_data['owner_user_type']}}',1);
     load_drop_down('departments','id,department_name','department','department_container','Select Department',0,0,'{{$user_data->department}}',0);
     load_drop_down('departments','id,department_name','assign_department','assign_department_container','Select Assign Department',1,0,'{{$user_data->assign_department}}',0);
     load_drop_down('designations','id,designation_name','designation','designation_container','Select Designation',0,0,'{{$user_data->designation}}',0);
