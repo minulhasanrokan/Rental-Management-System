@@ -16,6 +16,7 @@ use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\UserConfigController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\BuildingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -277,4 +278,10 @@ Route::controller(UserTypeController::class)->group(function(){
     Route::get('/dashboard/user-type-delete','user_type_delete_page')->name('reference_data.user.type.delete')->middleware(['checkroute']);
     Route::post('/dashboard/user-type-delete','user_type_grid')->name('reference_data.user.type.delete')->middleware(['checkroute']);
     Route::get('/dashboard/user-type-delete/{id?}','user_type_delete')->name('reference_data.user.type.delete')->middleware(['checkroute']);
+});
+
+Route::controller(BuildingController::class)->group(function(){
+
+    Route::get('/dashboard/building-add','building_add_page')->name('floor_management.building.add')->middleware(['checkroute']);
+    Route::post('/dashboard/building-add','building_store')->name('floor_management.building.add')->middleware(['checkroute']);
 });
