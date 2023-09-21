@@ -275,9 +275,14 @@
                         break; 
                     }
 
-                    document.getElementById("user_form").reset();
+                    if(data.alert_type=='success'){
 
-                    $('#details').summernote('reset');
+                        document.getElementById("user_form").reset();
+
+                        $('#details').summernote('reset');
+
+                        $("#user_photo_photo").attr("src","{{asset('uploads/user/user.png')}}");
+                    }
 
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);

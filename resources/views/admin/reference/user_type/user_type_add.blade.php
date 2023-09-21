@@ -145,9 +145,12 @@
                         break; 
                     }
 
-                    document.getElementById("user_type_form").reset();
+                    if(data.alert_type=='success'){
 
-                    $('#user_type_deatils').summernote('reset');
+                        document.getElementById("user_type_form").reset();
+
+                        $('#user_type_deatils').summernote('reset');
+                    }
 
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);

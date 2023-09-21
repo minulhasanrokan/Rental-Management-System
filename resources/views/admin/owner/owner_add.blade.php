@@ -12,7 +12,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form id="user_form" method="post" autocomplete="off">
+                <form id="owner_form" method="post" autocomplete="off">
                     @csrf
                     <div class="card-body" style="padding-bottom:5px !important; padding-top: 10px !important; margin: 0px !important;">
                         <div class="row">
@@ -275,9 +275,14 @@
                         break; 
                     }
 
-                    document.getElementById("user_form").reset();
+                    if(data.alert_type=='success'){
 
-                    $('#details').summernote('reset');
+                        document.getElementById("owner_form").reset();
+
+                        $('#details').summernote('reset');
+
+                        $("#user_photo_photo").attr("src","{{asset('uploads/user/user.png')}}");
+                    }
 
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);

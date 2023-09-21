@@ -180,9 +180,15 @@
                         break; 
                     }
 
-                    document.getElementById("user_group_form").reset();
+                    if(data.alert_type=='success'){
 
-                    $('#group_deatils').summernote('reset');
+                        document.getElementById("user_group_form").reset();
+
+                        $('#group_deatils').summernote('reset');
+
+                        $("#group_logo_photo").attr("src","{{asset('uploads/user_group/user_group.png')}}");
+                        $("#group_icon_photo").attr("src","{{asset('uploads/user_group/user_group_icon.png')}}");
+                    }
 
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);

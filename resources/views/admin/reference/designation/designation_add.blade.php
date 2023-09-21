@@ -145,9 +145,12 @@
                         break; 
                     }
 
-                    document.getElementById("designation_form").reset();
+                    if(data.alert_type=='success'){
 
-                    $('#designation_deatils').summernote('reset');
+                        document.getElementById("designation_form").reset();
+
+                        $('#designation_deatils').summernote('reset');
+                    }
 
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);
