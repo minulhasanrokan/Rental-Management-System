@@ -482,6 +482,13 @@
                 var menu_list = $("#menu_group"+i+" ul");
 
                 menu_list.css("display", "none");
+
+                var total_sub_menu = $("#total_sub_menu"+i).val();
+
+                for(var j=1; j<=total_sub_menu; j++){
+
+                    $("#menu_cat_link"+i+j).removeClass("sub-menu-bg-color nav-link").addClass("nav-link");
+                }
             }
             else{
 
