@@ -358,4 +358,407 @@ class TenantController extends Controller
 
         return view('admin.tenant.tenant_delete',compact('menu_data'));
     }
+
+    public function tenant_single_edit_page($id){
+
+        $tenant_data = User::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('user_management.tenant.add****user_management.tenant.edit');
+
+        return view('admin.tenant.tenant_edit_view',compact('menu_data','tenant_data','user_right_data'));
+    }
+
+    public function tenant_update($update_id, Request $request){
+
+          $validator = Validator::make($request->all(), [
+            'name'              => 'required|string|max:30',
+            'email'             => 'required|email',Rule::unique('users')->ignore($request->update_id),
+            'mobile'            => 'required|string',Rule::unique('users')->ignore($request->update_id),
+            'date_of_birth'     => 'required|string|max:10',
+            'sex'               => 'required',
+            'blood_group'       => 'required',
+            'group'             => 'required|string|max:250',
+            'user_type'         => 'required',
+            'department'        => 'required',
+            'assign_department' => 'required',
+            'designation'       => 'required',
+            'address'           => 'required|string|max:250',
+            'user_photo' => $request->input('hidden_user_photo') === '' ? 'required' : ''
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
+        $duplicate_status_1 = $this->common->get_duplicate_value('email','users', $request->email,$request->update_id);
+
+        if($duplicate_status_1>0){
+
+            $notification = array(
+                'message'=> "Duplicate E-mail Address Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
+
+        $duplicate_status_2 = $this->common->get_duplicate_value('mobile','users', $request->mobile,$request->update_id);
+
+        if($duplicate_status_2>0){
+
+            $notification = array(
+                'message'=> "Duplicate Mobile Number Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        $user_config_data = $this->common->get_user_config_data();
+
+        $now = now();
+
+        DB::beginTransaction();
+
+        $data = User::where('delete_status',0)
+            ->where('id',$request->update_id)
+            ->first();
+
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->mobile = $request->mobile;
+        $data->date_of_birth = $request->date_of_birth;
+        $data->sex = $request->sex;
+        $data->blood_group = $request->blood_group;
+        $data->group = $user_config_data['tenant_user_group'];
+        $data->user_type = $user_config_data['tenant_user_type'];
+        $data->department = $request->department;
+        $data->assign_department = $request->assign_department;
+        $data->designation = $request->designation;
+        $data->address = $request->address;
+        $data->details = $request->details;
+        $data->edit_by = $user_id;
+        $data->updated_at = $now;
+
+        if ($request->hasFile('user_photo')) {
+
+            $file = $request->file('user_photo');
+
+            $extension = $file->getClientOriginalExtension();
+
+            $title_name = str_replace(' ','_',$request->name);
+
+            $fileName = $title_name.'_tenant_'.time().'.'.$extension;
+
+            Image::make($file)->resize(500,500)->save('uploads/user/'.$fileName);
+
+            if($data->user_photo!='')
+            {
+                $deletePhoto = "uploads/user/".$data->user_photo;
+                
+                if(file_exists($deletePhoto)){
+
+                    unlink($deletePhoto);
+                }
+            }
+
+            $data->user_photo = $fileName;
+        }
+
+        $data->save();
+
+        if($data==true){
+
+            $group_right_data = $this->common->get_group_right($data->group);
+
+            if(!empty($group_right_data)){
+
+                $right_arr = array();
+
+                $sl = 0;
+
+                foreach($group_right_data as $right_g_id=>$right_group){
+
+                    foreach($right_group as $right_c_id=>$right_cat){
+
+                        foreach($right_cat as $right_id=>$right){
+
+                            $right_arr[$sl]['user_id'] = $data->id;
+                            $right_arr[$sl]['g_id'] = $right_g_id;
+                            $right_arr[$sl]['c_id'] = $right_c_id;
+                            $right_arr[$sl]['r_id'] = $right_id;
+                            $right_arr[$sl]['add_by'] = $user_id;
+                            $right_arr[$sl]['created_at'] = $now;
+
+                            $sl++;
+                        }
+                    }
+                }
+
+                if(!empty($right_arr)){
+
+                    UserRight::where('user_id', $data->id)->delete();
+
+                    UserRight::insert($right_arr);
+                }
+            }
+
+            DB::commit();
+
+            $notification = array(
+                'message'=> "Tenant Details Updated Successfully",
+                'alert_type'=>'info',
+                'create_status'=>1,
+                'user_id' =>$request->update_id,
+            );;
+            
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "Tenant Details Does Not Updated Successfully",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
+    }
+
+    public function tenant_delete($id){
+
+        $notification = array();
+
+        $data = User::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        if(empty($data)){
+
+            $notification = array(
+                'message'=> "Tenant Data Not Found!!!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else if($data->id==$user_id){
+
+            $notification = array(
+                'message'=> "You Can Not Delete Your Own Data!!!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            DB::beginTransaction();
+
+            $data->delete_by = $user_id;
+            $data->delete_status = 1;
+            $data->deleted_at = now();
+
+            $data->save();
+
+            if($data==true){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Tenant Details Deleted Successfully",
+                    'alert_type'=>'info',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Tenant Details Not Deleted Successfully",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.tenant.tenant_delete_alert',compact('menu_data','notification'));
+    }
+
+    public function tenant_view_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.tenant.tenant_view',compact('menu_data'));
+    }
+
+    public function tenant_single_view_page($id){
+
+        $user_data = User::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('user_management.tenant.add****user_management.tenant.view');
+
+        return view('admin.tenant.tenant_single_view',compact('menu_data','user_data','user_right_data'));
+    }
+
+    public function tenant_right_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.tenant.tenant_right',compact('menu_data'));
+    }
+
+    public function tenant_right_setup_page($id){
+
+        $user_data = User::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+
+        $menu_data = $this->common->get_page_menu();
+
+        $all_right_data = $this->common->get_all_right();
+
+        $user_right_data = $this->common->get_page_menu_single_view('user_management.tenant.add****user_management.tenant.right');
+
+        $right_data = $this->common->get_user_right($user_data->id);
+
+        return view('admin.tenant.tenant_right_setup',compact('menu_data','user_data','user_right_data','all_right_data','right_data'));
+    }
+
+    public function tenant_right_store ($id, Request $request){
+
+        $right_arr = array();
+        $sl=0;
+
+        $max_group = $request->g_id_max;
+
+        $user_id = $request->user_id;
+
+        $user_session_data = session()->all();
+
+        $add_by = $user_session_data[config('app.app_session_name')]['id'];
+
+        $now = now();
+
+        for($i=1; $i<=$max_group; $i++){
+
+            $g_id_name = 'g_id_'.$i;
+
+            $g_id = $request->$g_id_name;
+
+            $cat_id = 'c_id_max_'.$i;
+
+            $max_cat = $request->$cat_id;
+
+            for($j=1; $j<=$max_cat; $j++){
+
+                $c_id_name = 'c_id_'.$i."_".$j;
+
+                $c_id = $request->$c_id_name;
+
+                $r_id = 'r_id_max_'.$i."_".$j;
+
+                $max_r_id = $request->$r_id;
+
+                for($k=1; $k<=$max_r_id; $k++){
+
+                    $r_status_name = 'r_id_checkbox_'.$i."_".$j."_".$k;
+                    $r_status = $request->$r_status_name;
+
+                    if($r_status==1){
+
+                        $r_id_name = 'r_id_'.$i."_".$j."_".$k;
+
+                        $r_id = $request->$r_id_name;
+
+                        $right_arr[$sl]['user_id'] = $user_id;
+                        $right_arr[$sl]['g_id'] = $g_id;
+                        $right_arr[$sl]['c_id'] = $c_id;
+                        $right_arr[$sl]['r_id'] = $r_id;
+                        $right_arr[$sl]['add_by'] = $add_by;
+                        $right_arr[$sl]['created_at'] = $now;
+
+                        $sl++;
+                    }
+                }
+            }
+        }
+
+        $notification = array();
+
+        if(!empty($right_arr)){
+
+            DB::beginTransaction();
+
+            UserRight::where('user_id', $user_id)->delete();
+
+            $status = UserRight::insert($right_arr);
+
+            if($status==true){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Tenant Right Created Successfully",
+                    'alert_type'=>'info',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Tenant Right Not Created Successfully",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "Not Data Found!!!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
+    }
 }

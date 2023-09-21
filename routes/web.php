@@ -147,6 +147,15 @@ Route::controller(TenantController::class)->group(function(){
     Route::post('/dashboard/tenant-delete','tenant_grid')->name('user_management.tenant.delete')->middleware(['checkroute']);
     Route::get('/dashboard/tenant-delete/{id?}','tenant_delete')->name('user_management.tenant.delete')->middleware(['checkroute']);
 
+    Route::get('/dashboard/tenant-view','tenant_view_page')->name('user_management.tenant.view')->middleware(['checkroute']);
+    Route::post('/dashboard/tenant-view','tenant_grid')->name('user_management.tenant.view')->middleware(['checkroute']);
+    Route::get('/dashboard/tenant-view/{id?}','tenant_single_view_page')->name('user_management.tenant.view')->middleware(['checkroute']);
+
+    Route::get('/dashboard/tenant-right','tenant_right_page')->name('user_management.tenant.right')->middleware(['checkroute']);
+    Route::post('/dashboard/tenant-right','tenant_grid')->name('user_management.tenant.right')->middleware(['checkroute']);
+    Route::get('/dashboard/tenant-right/{id?}','tenant_right_setup_page')->name('user_management.tenant.right')->middleware(['checkroute']);
+    Route::post('/dashboard/tenant-right/{id?}','tenant_right_store')->name('user_management.tenant.right')->middleware(['checkroute']);
+
 });
 
 Route::controller(GenderController::class)->group(function(){

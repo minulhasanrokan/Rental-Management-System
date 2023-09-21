@@ -5,42 +5,42 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Add Tenant Information</h3>
+                    <h3 class="card-title">Edit Tenant Information - {{$tenant_data->name}}</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form id="tenant_form" method="post" autocomplete="off">
+                <form id="update_user_form" method="post" autocomplete="off">
                     @csrf
                     <div class="card-body" style="padding-bottom:5px !important; padding-top: 10px !important; margin: 0px !important;">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Tenant Name <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Tenant Name" required>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Tenant Name" value="{{$tenant_data->name}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="email">Tenant E-mail <span style="color:red;">*</span></label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Tenant E-mail" onkeyup="check_duplicate_value('email','users',this.value,0);" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Tenant E-mail" value="{{$tenant_data->email}}" onkeyup="check_duplicate_value('email','users',this.value,'{{$tenant_data->id}}');" required>
                                     <div class="input-error" style="display:none; color: red;" id="email_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="mobile">Tenant Mobile <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter Tenant Mobile" onkeyup="check_duplicate_value('mobile','users',this.value,0);" required>
+                                    <input type="text" value="{{$tenant_data->mobile}}" class="form-control" id="mobile" name="mobile" placeholder="Enter Tenant Mobile" onkeyup="check_duplicate_value('mobile','users',this.value,'{{$tenant_data->id}}');" required>
                                     <div class="input-error" style="display:none; color: red;" id="mobile_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="date_of_birth">Tenant Date Of Birth <span style="color:red;">*</span></label>
-                                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Enter Tenant Date Of Birth" required>
+                                    <input type="date" value="{{$tenant_data->date_of_birth}}" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Enter Tenant Date Of Birth" required>
                                     <div class="input-error" style="display:none; color: red;" id="date_of_birth_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -96,14 +96,14 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="address">Tenant Address <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="Enter Tenant Address" required>
+                                    <input value="{{$tenant_data->address}}" type="text" class="form-control" id="address" name="address" placeholder="Enter Tenant Address" required>
                                     <div class="input-error" style="display:none; color: red;" id="address_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="details">Tenant Details</label>
-                                    <textarea class="form-control" id="details" name="details"></textarea>
+                                    <textarea class="form-control" id="details" name="details">{{$tenant_data->details}}</textarea>
                                     <div class="input-error" style="display:none; color: red;" id="details_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -111,20 +111,23 @@
                                 <div class="form-group">
                                     <label for="user_photo">Tenant Photo <span style="color:red;">*</span></label>
                                     <input onchange="readUrl(this,'user_photo_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="user_photo" name="user_photo" placeholder="Enter Tenant Photo" required>
-                                    <input type="hidden" name="hidden_user_photo" id="hidden_user_photo" value="">
+                                    <input type="hidden" name="hidden_user_photo" id="hidden_user_photo" value="{{$tenant_data->user_photo}}">
                                     <div class="input-error" style="display:none; color: red;" id="user_photo_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <img class="rounded avatar-lg" width="80" height="80" id="user_photo_photo" src="{{asset('uploads/user/user.png')}}"/>
+                                    <img class="rounded avatar-lg" width="80" height="80" id="user_photo_photo" src="{{asset('uploads/user')}}/{{!empty($tenant_data->user_photo)?$tenant_data->user_photo:'user.png'}}"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" style="float:right" onclick="save_user_info_data();" class="btn btn-primary">Add Tenant</button>
+                        @foreach($user_right_data as $data)
+                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$tenant_data->id}}','{{$tenant_data->name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
+                        @endforeach
+                        <button type="button" style="float:right" onclick="update_user_info_data();" class="btn btn-primary">Update Tenant</button>
                     </div>
                 </form>
             </div>
@@ -144,9 +147,9 @@
         })
     });
 
-    function save_user_info_data(){
+    function update_user_info_data(){
 
-        if( form_validation('name*email*mobile*date_of_birth*sex*blood_group*group*user_type*department*assign_department*designation*address*user_photo','Tenant Name*Tenant E-mail*Tenant Mobile*Tenant Date Of Birth*Tenant Gender*Tenant Blood Group*Tenant Group*Tenant Type*Tenant Department*Tenant Assign Department*Tenant Designation*Tenant Address*Tenant Photo')==false ){
+        if( form_validation('name*email*mobile*date_of_birth*sex*blood_group*group*user_type*department*assign_department*designation*address','Tenant Name*Tenant E-mail*Tenant Mobile*Tenant Date Of Birth*Tenant Gender*Tenant Blood Group*Tenant Group*Tenant Type*Tenant Department*Tenant Assign Department*Tenant Designation*Tenant Address')==false ){
 
             return false;
         }
@@ -177,6 +180,16 @@
             return false;
         }
 
+        var hidden_user_photo  = $("#hidden_user_photo").val();
+
+        if(hidden_user_photo==''){
+
+            if( form_validation('user_photo','Tenant Photo')==false ){
+
+                return false;
+            }
+        }
+
         var name = $("#name").val();
         var email = $("#email").val();
         var mobile = $("#mobile").val();
@@ -190,6 +203,7 @@
         var assign_department = $("#assign_department").val();
         var address = $("#address").val();
         var details = $("#details").val();
+        var hidden_user_photo = $("#hidden_user_photo").val();
 
         if(assign_department==''){
 
@@ -218,15 +232,17 @@
         form_data.append("assign_department", assign_department);
         form_data.append("address", address);
         form_data.append("details", details);
+        form_data.append("hidden_user_photo", hidden_user_photo);
+        form_data.append("update_id", '{{$tenant_data->id}}');
         form_data.append("_token", token);
 
-        http.open("POST","{{route('user_management.tenant.add')}}",true);
+        http.open("POST","{{route('user_management.tenant.edit',$tenant_data->id)}}",true); 
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
-        http.onreadystatechange = save_user_info_data_response;
+        http.onreadystatechange = update_user_info_data_response;
     }
 
-    function save_user_info_data_response(){
+    function update_user_info_data_response(){
 
         if(http.readyState == 4)
         {
@@ -275,10 +291,6 @@
                         break; 
                     }
 
-                    document.getElementById("tenant_form").reset();
-
-                    $('#details').summernote('reset');
-
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);
                 }
@@ -286,12 +298,12 @@
         }
     }
 
-    load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender',0,1,'',0);
-    load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group',0,1,'',0);
-    load_drop_down('user_groups','id,group_name','group','group_container','Select Group',0,1,'{{$user_config_data['tenant_user_group']}}',1);
-    load_drop_down('user_types','id,user_type_name','user_type','user_type_container','Select User Type',0,1,'{{$user_config_data['tenant_user_type']}}',1);
-    load_drop_down('departments','id,department_name','department','department_container','Select Department',0,1,'',0);
-    load_drop_down('departments','id,department_name','assign_department','assign_department_container','Select Assign Department',1,0,'',0);
-    load_drop_down('designations','id,designation_name','designation','designation_container','Select Designation',0,1,'',0);
+    load_drop_down('genders','id,gender_name','sex','sex_container','Select Gender',0,0,'{{$tenant_data->sex}}',0);
+    load_drop_down('blood_groups','id,blood_group_name','blood_group','blood_group_container','Select Blood Group',0,0,'{{$tenant_data->blood_group}}',0);
+    load_drop_down('user_groups','id,group_name','group','group_container','Select Group',0,0,'{{$user_config_data['tenant_user_group']}}',1);
+    load_drop_down('user_types','id,user_type_name','user_type','user_type_container','Select Tenant Type',0,1,'{{$user_config_data['tenant_user_type']}}',1);
+    load_drop_down('departments','id,department_name','department','department_container','Select Department',0,0,'{{$tenant_data->department}}',0);
+    load_drop_down('departments','id,department_name','assign_department','assign_department_container','Select Assign Department',1,0,'{{$tenant_data->assign_department}}',0);
+    load_drop_down('designations','id,designation_name','designation','designation_container','Select Designation',0,0,'{{$tenant_data->designation}}',0);
 
 </script>****{{csrf_token()}}
