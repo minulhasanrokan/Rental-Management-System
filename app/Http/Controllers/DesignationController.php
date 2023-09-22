@@ -100,7 +100,7 @@ class DesignationController extends Controller
 
             $notification = array(
                 'message'=> "Designation Details Created Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'csrf_token' => csrf_token()
             );
         }
@@ -310,7 +310,7 @@ class DesignationController extends Controller
 
             $notification = array(
                 'message'=> "Designation Details Updated Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'csrf_token' => csrf_token()
             );
         }
@@ -391,7 +391,7 @@ class DesignationController extends Controller
 
                 $notification = array(
                     'message'=> "Designation Details Deleted Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'success',
                     'csrf_token' => csrf_token()
                 );
             }

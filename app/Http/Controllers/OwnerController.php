@@ -194,7 +194,7 @@ class OwnerController extends Controller
 
                 $notification = array(
                     'message'=> "Owner Details Created Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'success',
                     'create_status'=>1,
                     'user_id' =>$encrypt_data,
                 );
@@ -522,7 +522,7 @@ class OwnerController extends Controller
 
             $notification = array(
                 'message'=> "Owner Details Updated Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'create_status'=>1,
                 'user_id' =>$request->update_id,
             );;
@@ -593,7 +593,7 @@ class OwnerController extends Controller
 
                 $notification = array(
                     'message'=> "Owner Details Deleted Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'success',
                     'csrf_token' => csrf_token()
                 );
             }
@@ -733,7 +733,7 @@ class OwnerController extends Controller
 
                 $notification = array(
                     'message'=> "Owner Right Created Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'success',
                     'csrf_token' => csrf_token()
                 );
             }

@@ -154,7 +154,7 @@ class RegistrationController extends Controller
 
                 $notification = array(
                     'message'=> "User Account Created Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'successs',
                     'create_status'=>1,
                     'user_id' =>$encrypt_data,
                 );
@@ -224,7 +224,7 @@ class RegistrationController extends Controller
 
                 $notification = array(
                     'message'=> "A Verification Link Sent To Your E-mail Account",
-                    'alert_type'=>'info',
+                    'alert_type'=>'successs',
                     'create_status'=>1,
                     'verify_mail'=>1,
                     'user_id' =>$token,
@@ -299,7 +299,7 @@ class RegistrationController extends Controller
 
                     $notification = array(
                         'message'=> "Your Account Successfully Verified. Please Login To Access your Account",
-                        'alert_type'=>'info',
+                        'alert_type'=>'successs',
                         'create_status'=>1,
                         'user_id' =>'',
                     );
@@ -495,7 +495,7 @@ class RegistrationController extends Controller
 
                     $notification = array(
                         'message'=> "A Password Reset Link Sent To Your E-mail Account",
-                        'alert_type'=>'info',
+                        'alert_type'=>'successs',
                         'create_status'=>1,
                         'user_id' =>$email,
                     );
@@ -576,7 +576,7 @@ class RegistrationController extends Controller
 
                     $notification = array(
                         'message'=> "A Password Reset Link Sent To Your E-mail Account",
-                        'alert_type'=>'info',
+                        'alert_type'=>'successs',
                         'create_status'=>1,
                         'user_id' =>$email,
                     );
@@ -667,7 +667,7 @@ class RegistrationController extends Controller
 
                 $notification = array(
                     'message'=> "Reset Your Password",
-                    'alert_type'=>'info',
+                    'alert_type'=>'successs',
                     'create_status'=>0,
                     'user_id' =>$token,
                 );
@@ -749,7 +749,7 @@ class RegistrationController extends Controller
 
             $notification = array(
                 'message'=> "Reset Your Password",
-                'alert_type'=>'info',
+                'alert_type'=>'successs',
                 'create_status'=>0,
                 'user_id' =>$token,
             );
@@ -807,7 +807,7 @@ class RegistrationController extends Controller
 
                 $notification = array(
                     'message'=> "Successfully Changed Your Password!",
-                    'alert_type'=>'info',
+                    'alert_type'=>'successs',
                     'create_status'=>2,
                     'user_id' =>'',
                 );
@@ -947,7 +947,7 @@ class RegistrationController extends Controller
 
                     $notification = array(
                         'message'=> "Successfully Changed Your Password!",
-                        'alert_type'=>'info',
+                        'alert_type'=>'successs',
                         'create_status'=>2,
                         'user_id' =>'',
                     );

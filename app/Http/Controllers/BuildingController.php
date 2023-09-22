@@ -148,7 +148,7 @@ class BuildingController extends Controller
 
             $notification = array(
                 'message'=> "Building Details Created Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'csrf_token' => csrf_token()
             );
         }
@@ -426,7 +426,7 @@ class BuildingController extends Controller
 
             $notification = array(
                 'message'=> "Building Details Updated Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'csrf_token' => csrf_token()
             );
         }
@@ -487,7 +487,7 @@ class BuildingController extends Controller
 
                 $notification = array(
                     'message'=> "Building Details Deleted Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'success',
                     'csrf_token' => csrf_token()
                 );
             }

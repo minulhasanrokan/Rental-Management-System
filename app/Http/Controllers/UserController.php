@@ -194,7 +194,7 @@ class UserController extends Controller
 
                 $notification = array(
                     'message'=> "User Details Created Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'success',
                     'create_status'=>1,
                     'user_id' =>$encrypt_data,
                 );
@@ -522,7 +522,7 @@ class UserController extends Controller
 
             $notification = array(
                 'message'=> "User Details Updated Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'create_status'=>1,
                 'user_id' =>$request->update_id,
             );;
@@ -593,7 +593,7 @@ class UserController extends Controller
 
                 $notification = array(
                     'message'=> "User Details Deleted Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'success',
                     'csrf_token' => csrf_token()
                 );
             }
@@ -733,7 +733,7 @@ class UserController extends Controller
 
                 $notification = array(
                     'message'=> "User Right Created Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'success',
                     'csrf_token' => csrf_token()
                 );
             }

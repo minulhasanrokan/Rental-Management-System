@@ -121,7 +121,7 @@ class UserConfigController extends Controller
 
             $notification = array(
                 'message'=> "user Config Data Created Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'csrf_token' => csrf_token()
             );
         }

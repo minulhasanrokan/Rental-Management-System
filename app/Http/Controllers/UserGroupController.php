@@ -135,7 +135,7 @@ class UserGroupController extends Controller
 
             $notification = array(
                 'message'=> "User Group Details Created Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'csrf_token' => csrf_token()
             );
         }
@@ -418,7 +418,7 @@ class UserGroupController extends Controller
 
             $notification = array(
                 'message'=> "User Group Details Updated Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'csrf_token' => csrf_token()
             );
         }
@@ -480,7 +480,7 @@ class UserGroupController extends Controller
 
                 $notification = array(
                     'message'=> "User Group Details Deleted Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'success',
                     'csrf_token' => csrf_token()
                 );
             }
@@ -600,7 +600,7 @@ class UserGroupController extends Controller
 
                 $notification = array(
                     'message'=> "User Group Right Created Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'success',
                     'csrf_token' => csrf_token()
                 );
             }

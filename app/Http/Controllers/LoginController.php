@@ -117,7 +117,7 @@ class LoginController extends Controller
 
                     $notification = array(
                         'message'=> "Please Verify Your Account First",
-                        'alert_type'=>'info',
+                        'alert_type'=>'success',
                         'create_status'=>1,
                         'user_id' =>$encrypt_data,
                     );
@@ -132,7 +132,7 @@ class LoginController extends Controller
 
                     $notification = array(
                         'message'=> "User Account Login Successfully!",
-                        'alert_type'=>'warning'
+                        'alert_type'=>'success'
                     );
 
                     return redirect('/dashboard')->with($notification);

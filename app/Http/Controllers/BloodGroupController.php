@@ -100,7 +100,7 @@ class BloodGroupController extends Controller
 
             $notification = array(
                 'message'=> "Blood Group Details Created Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'csrf_token' => csrf_token()
             );
         }
@@ -310,7 +310,7 @@ class BloodGroupController extends Controller
 
             $notification = array(
                 'message'=> "Blood Group Details Updated Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'csrf_token' => csrf_token()
             );
         }
@@ -391,7 +391,7 @@ class BloodGroupController extends Controller
 
                 $notification = array(
                     'message'=> "Blood Group Details Deleted Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'success',
                     'csrf_token' => csrf_token()
                 );
             }

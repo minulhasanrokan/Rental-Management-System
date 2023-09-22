@@ -100,7 +100,7 @@ class GenderController extends Controller
 
             $notification = array(
                 'message'=> "Gender Details Created Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'csrf_token' => csrf_token()
             );
         }
@@ -310,7 +310,7 @@ class GenderController extends Controller
 
             $notification = array(
                 'message'=> "Gender Details Updated Successfully",
-                'alert_type'=>'info',
+                'alert_type'=>'success',
                 'csrf_token' => csrf_token()
             );
         }
@@ -391,7 +391,7 @@ class GenderController extends Controller
 
                 $notification = array(
                     'message'=> "Gender Details Deleted Successfully",
-                    'alert_type'=>'info',
+                    'alert_type'=>'success',
                     'csrf_token' => csrf_token()
                 );
             }
