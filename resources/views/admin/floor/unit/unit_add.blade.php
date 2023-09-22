@@ -79,7 +79,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <img class="rounded avatar-lg" width="80" height="80" id="unit_photo_photo" src="{{asset('uploads/building/unit_logo.png')}}"/>
+                                    <img class="rounded avatar-lg" width="80" height="80" id="unit_photo_photo" src="{{asset('uploads/unit/unit_photo.png')}}"/>
                                 </div>
                             </div>
                         </div>
