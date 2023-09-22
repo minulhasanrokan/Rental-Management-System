@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use App\Models\Building;
-use DB;
+use DB; 
 
 class BuildingController extends Controller
 {
@@ -25,7 +25,7 @@ class BuildingController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.building.building_add',compact('menu_data'));
+        return view('admin.floor.building.building_add',compact('menu_data'));
     }
 
     public function building_store (Request $request){
@@ -170,7 +170,7 @@ class BuildingController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.building.building_edit',compact('menu_data'));
+        return view('admin.floor.building.building_edit',compact('menu_data'));
     }
 
     public function building_grid(Request $request){
@@ -278,7 +278,7 @@ class BuildingController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('floor_management.building.add****floor_management.building.edit');
 
-        return view('admin.building.building_edit_view',compact('menu_data','building_data','user_right_data'));
+        return view('admin.floor.building.building_edit_view',compact('menu_data','building_data','user_right_data'));
     }
 
     public function building_update($update_id, Request $request){
@@ -448,7 +448,7 @@ class BuildingController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.building.building_delete',compact('menu_data'));
+        return view('admin.floor.building.building_delete',compact('menu_data'));
     }
 
     public function building_delete($id){
@@ -505,14 +505,14 @@ class BuildingController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.building.building_delete_alert',compact('menu_data','notification'));
+        return view('admin.floor.building.building_delete_alert',compact('menu_data','notification'));
     }
 
     public function building_view_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.building.building_view',compact('menu_data'));
+        return view('admin.floor.building.building_view',compact('menu_data'));
     }
 
     public function building_single_view_page($id){
@@ -525,6 +525,6 @@ class BuildingController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('floor_management.building.add****floor_management.building.view');
 
-        return view('admin.building.building_single_view',compact('menu_data','building_data','user_right_data'));
+        return view('admin.floor.building.building_single_view',compact('menu_data','building_data','user_right_data'));
     }
 }

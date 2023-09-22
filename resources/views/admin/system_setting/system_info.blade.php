@@ -80,7 +80,7 @@
                                     <label for="system_bg_image">System Backgroup <span style="color:red;">*</span></label>
                                     <input onchange="readUrl(this,'system_bg_image_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="system_bg_image" name="system_bg_image" placeholder="Enter System Backgroup" required>
                                     <input type="hidden" name="hidden_system_bg_image" id="hidden_system_bg_image" value="{{$system_data['system_bg_image']}}">
-                                    <div class="input-error" style="display:none; color: red;" id="system_logo_error" style="display: inline-block; width:100%; color: red;"></div>
+                                    <div class="input-error" style="display:none; color: red;" id="system_bg_image_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-2">

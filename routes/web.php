@@ -17,6 +17,7 @@ use App\Http\Controllers\UserConfigController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\UnitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -297,4 +298,10 @@ Route::controller(BuildingController::class)->group(function(){
     Route::get('/dashboard/building-view','building_view_page')->name('floor_management.building.view')->middleware(['checkroute']);
     Route::post('/dashboard/building-view','building_grid')->name('floor_management.building.view')->middleware(['checkroute']);
     Route::get('/dashboard/building-view/{id?}','building_single_view_page')->name('floor_management.building.view')->middleware(['checkroute']);
+});
+
+Route::controller(UnitController::class)->group(function(){
+
+    Route::get('/dashboard/unit-add','unit_add_page')->name('floor_management.unit.add')->middleware(['checkroute']);
+    Route::post('/dashboard/unit-add','unit_store')->name('floor_management.unit.add')->middleware(['checkroute']);
 });

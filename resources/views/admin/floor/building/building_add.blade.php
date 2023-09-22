@@ -69,7 +69,7 @@
                                     <label for="building_photo">Building Image <span style="color:red;">*</span></label>
                                     <input onchange="readUrl(this,'building_photo_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="building_photo" name="building_photo" placeholder="Enter Building Image" required>
                                     <input type="hidden" name="hidden_building_photo" id="hidden_building_photo" value="">
-                                    <div class="input-error" style="display:none; color: red;" id="building_logo_error" style="display: inline-block; width:100%; color: red;"></div>
+                                    <div class="input-error" style="display:none; color: red;" id="building_photo_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-2">
