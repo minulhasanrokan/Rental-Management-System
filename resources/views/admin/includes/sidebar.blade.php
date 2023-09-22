@@ -324,9 +324,16 @@
 
     function load_drop_down(table_name, field_name, id, container, title, select_status,status, selected_value, disabale_status) {
 
+        var value = 0;
+
+        if(selected_value!=''){
+
+            value = selected_value;
+        }
+
         var http = createObject();
 
-        var data="&table_name="+table_name+"&field_name="+field_name;
+        var data="&table_name="+table_name+"&field_name="+field_name+"&selected_value="+selected_value;
 
         if( http ) {
             
@@ -398,7 +405,7 @@
                 }
             }
 
-            http.open("GET","{{route('admin.get.parameter.data')}}"+"/"+table_name+"/"+field_name+"/"+status,true);
+            http.open("GET","{{route('admin.get.parameter.data')}}"+"/"+table_name+"/"+field_name+"/"+value,true);
             http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             http.send(data);
         }

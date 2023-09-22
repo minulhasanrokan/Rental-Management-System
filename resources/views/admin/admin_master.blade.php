@@ -15,7 +15,7 @@
         <div class="wrapper">
             <!-- Preloader -->
             <div class="preloader flex-column justify-content-center align-items-center">
-                <img class="animation__wobble" src="{{asset('backend/dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60" width="60">
+                <img class="animation__wobble" src="{{asset('uploads/logo')}}/{{!empty($system_data['system_logo'])?$system_data['system_logo']:'rental_logo.png'}}" alt="{{!empty($system_data['title'])?$system_data['title']:'Rental Management System'}}" height="60" width="60">
             </div>
             <!-- Navbar -->
                 @include('admin.includes.header')

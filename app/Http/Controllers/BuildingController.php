@@ -443,4 +443,88 @@ class BuildingController extends Controller
 
         return response()->json($notification);
     }
+
+    public function building_delete_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.building.building_delete',compact('menu_data'));
+    }
+
+    public function building_delete($id){
+
+        $notification = array();
+
+        $data = Building::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+
+        if(empty($data)){
+
+            $notification = array(
+                'message'=> "Building Data Not Found!!!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            $user_session_data = session()->all();
+
+            $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+            DB::beginTransaction();
+
+            $data->delete_by = $user_id;
+            $data->delete_status = 1;
+            $data->deleted_at = now();
+
+            $data->save();
+
+            if($data==true){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Building Details Deleted Successfully",
+                    'alert_type'=>'info',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Building Details Not Deleted Successfully",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.building.building_delete_alert',compact('menu_data','notification'));
+    }
+
+    public function building_view_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.building.building_view',compact('menu_data'));
+    }
+
+    public function building_single_view_page($id){
+
+        $building_data = Building::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('floor_management.building.add****floor_management.building.view');
+
+        return view('admin.building.building_single_view',compact('menu_data','building_data','user_right_data'));
+    }
 }

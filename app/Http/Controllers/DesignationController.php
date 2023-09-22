@@ -346,7 +346,7 @@ class DesignationController extends Controller
         $user_right_data = $this->common->get_page_menu_single_view('reference_data.designation.add****reference_data.designation.view');
 
         return view('admin.reference.designation.designation_single_view',compact('menu_data','designation_data','user_right_data'));
-    }
+    } 
 
     public function designation_delete_page(){
 
@@ -366,7 +366,7 @@ class DesignationController extends Controller
         if(empty($data)){
 
             $notification = array(
-                'message'=> "Blood Group Data Not Found!!!",
+                'message'=> "Designation Data Not Found!!!",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );
@@ -390,7 +390,7 @@ class DesignationController extends Controller
                 DB::commit();
 
                 $notification = array(
-                    'message'=> "Blood Group Details Deleted Successfully",
+                    'message'=> "Designation Details Deleted Successfully",
                     'alert_type'=>'info',
                     'csrf_token' => csrf_token()
                 );
@@ -400,7 +400,7 @@ class DesignationController extends Controller
                 DB::rollBack();
 
                 $notification = array(
-                    'message'=> "Blood Group Details Not Deleted Successfully",
+                    'message'=> "Designation Details Not Deleted Successfully",
                     'alert_type'=>'warning',
                     'csrf_token' => csrf_token()
                 );

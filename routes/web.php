@@ -37,7 +37,7 @@ Route::controller(CommonController::class)->group(function(){
 
     Route::get('/dashboard/get-duplicate-value/{field_name?}/{table_name?}/{value?}/{data_id?}','get_duplicate_value')->name('admin.get.duplicate.value');
 
-    Route::get('/dashboard/get-parameter-data/{table_name?}/{field_name?}/{data_status?}','get_parameter_data')->name('admin.get.parameter.data');
+    Route::get('/dashboard/get-parameter-data/{table_name?}/{field_name?}/{value?}','get_parameter_data')->name('admin.get.parameter.data');
 
     Route::get('/dashboard/get-data-by-id/{table_name?}/{data_id?}/{field_name?}','get_data_by_id')->name('admin.get.data.by.id');
 });
@@ -289,4 +289,12 @@ Route::controller(BuildingController::class)->group(function(){
     Route::post('/dashboard/building-edit','building_grid')->name('floor_management.building.edit')->middleware(['checkroute']);
     Route::get('/dashboard/building-edit/{id?}','building_single_edit_page')->name('floor_management.building.edit')->middleware(['checkroute']);
     Route::post('/dashboard/building-edit/{id?}','building_update')->name('floor_management.building.edit')->middleware(['checkroute']);
+
+    Route::get('/dashboard/building-delete','building_delete_page')->name('floor_management.building.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/building-delete','building_grid')->name('floor_management.building.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/building-delete/{id?}','building_delete')->name('floor_management.building.delete')->middleware(['checkroute']);
+
+    Route::get('/dashboard/building-view','building_view_page')->name('floor_management.building.view')->middleware(['checkroute']);
+    Route::post('/dashboard/building-view','building_grid')->name('floor_management.building.view')->middleware(['checkroute']);
+    Route::get('/dashboard/building-view/{id?}','building_single_view_page')->name('floor_management.building.view')->middleware(['checkroute']);
 });

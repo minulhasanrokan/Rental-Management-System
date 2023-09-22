@@ -372,7 +372,7 @@ class CommonController extends Controller
         return $parameter_data;
     }
 
-    public function get_parameter_data($table_name,$field_name,$status){
+    public function get_parameter_data($table_name,$field_name,$value){
 
         $table_name = trim($table_name);
         $field_name = trim($field_name);
@@ -397,12 +397,17 @@ class CommonController extends Controller
 
         $parameter_data = array();
 
-        if($status==1){
+        if($value!='' && $value!=0){
+
+            $where_arr = array(
+                'delete_status' =>0,
+                'status' => 1
+            );
 
             $parameter_data = DB::table($table_name)
                 ->select($select)
-                ->where('delete_status',0)
-                ->where('status',$status)
+                ->where($where_arr)
+                ->orWhere('id',$value)
                 ->get()
                 ->toArray();
         }
@@ -411,6 +416,7 @@ class CommonController extends Controller
             $parameter_data = DB::table($table_name)
                 ->select($select)
                 ->where('delete_status',0)
+                ->where('status',1)
                 ->get()
                 ->toArray();
         }
