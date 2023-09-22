@@ -18,6 +18,7 @@ use App\Http\Controllers\TenantController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\LevelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,8 @@ Route::get('/', function () {
 Route::controller(CommonController::class)->group(function(){
 
     Route::get('/dashboard/get-duplicate-value/{field_name?}/{table_name?}/{value?}/{data_id?}','get_duplicate_value')->name('admin.get.duplicate.value');
+
+    Route::get('/dashboard/get-duplicate-value-two/{field_name?}/{field_name2?}/{table_name?}/{value?}/{value2?}/{data_id?}','get_duplicate_value_two')->name('admin.get.duplicate.value.two');
 
     Route::get('/dashboard/get-parameter-data/{table_name?}/{field_name?}/{value?}','get_parameter_data')->name('admin.get.parameter.data');
 
@@ -304,4 +307,10 @@ Route::controller(UnitController::class)->group(function(){
 
     Route::get('/dashboard/unit-add','unit_add_page')->name('floor_management.unit.add')->middleware(['checkroute']);
     Route::post('/dashboard/unit-add','unit_store')->name('floor_management.unit.add')->middleware(['checkroute']);
+});
+
+Route::controller(LevelController::class)->group(function(){
+
+    Route::get('/dashboard/level-add','level_add_page')->name('floor_management.level.add')->middleware(['checkroute']);
+    Route::post('/dashboard/level-add','level_store')->name('floor_management.level.add')->middleware(['checkroute']);
 });

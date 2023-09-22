@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
-use App\Models\Building;
+use App\Models\Unit;
 use DB;
 
 class UnitController extends Controller

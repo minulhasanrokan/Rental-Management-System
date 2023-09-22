@@ -280,6 +280,58 @@
         }
     }
 
+    function check_duplicate_value_with_two_filed(field_name,field_name2,table_name,value,data_id){
+
+        var value2 = 0;
+
+        var field_name2_value = $("#"+field_name2).val();
+
+        if(field_name2_value!=''){
+
+            value2 = field_name2_value;
+        }
+
+        input_field_name = field_name;
+ 
+        var data="&field_name="+field_name+"&table_name="+table_name+"&value="+value+"&data_id="+data_id+"&value2="+value2+"&field_name2="+field_name2;
+ 
+        http.open("GET","{{route('admin.get.duplicate.value.two')}}"+"/"+field_name+"/"+field_name2+"/"+table_name+"/"+value+"/"+value2+"/"+data_id,true);
+        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        http.send(data);
+        http.onreadystatechange = check_duplicate_value_with_two_filed_reponse;
+    }
+
+    function check_duplicate_value_with_two_filed_reponse(){
+
+        if(http.readyState == 4)
+        {
+
+            var reponse=trim(http.responseText).split("****");
+
+            if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+
+                location.replace('<?php echo url('/dashboard/logout');?>');
+            }
+            else{
+
+                if(reponse[0]*1>0){
+
+                    var field_name_arr = input_field_name.split("_");
+
+                    $("#"+input_field_name).val('');
+
+                    alert('Duplicate '+field_name_arr[0]+' '+field_name_arr[1]+' found');
+
+                    return false;
+                }
+                else{
+
+                    return true;
+                }
+            }
+        }
+    }
+
     function check_mobile_number(value){
 
         const bdMobileNumberRegex = /^(01[3-9]\d{8})$/;

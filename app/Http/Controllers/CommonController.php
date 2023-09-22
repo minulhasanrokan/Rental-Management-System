@@ -205,13 +205,38 @@ class CommonController extends Controller
 
         $field_name = trim($field_name);
         $table_name = trim($table_name);
-        $value = trim($value);
+        $value = urldecode(trim($value));
         $data_id = trim($data_id);
 
         $user_right_data = DB::table($table_name)
                 ->select('id')
                 ->where('delete_status',0)
                 ->where($field_name,$value);
+
+        if($data_id!=0 && $data_id!='' && $data_id>0){
+                
+            $user_right_data->where('id','!=',$data_id);
+        }
+
+        $data = $user_right_data->count();
+
+        return $data;
+    }
+
+    public function get_duplicate_value_two($field_name, $field_name2, $table_name, $value, $value2, $data_id){
+
+        $field_name = trim($field_name);
+        $field_name2 = trim($field_name2);
+        $table_name = trim($table_name);
+        $value = urldecode(trim($value));
+        $value2 = urldecode(trim($value2));
+        $data_id = trim($data_id);
+
+        $user_right_data = DB::table($table_name)
+                ->select('id')
+                ->where('delete_status',0)
+                ->where($field_name,$value)
+                ->where($field_name2,$value2);
 
         if($data_id!=0 && $data_id!='' && $data_id>0){
                 
