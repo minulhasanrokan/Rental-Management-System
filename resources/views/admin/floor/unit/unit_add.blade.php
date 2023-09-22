@@ -25,6 +25,17 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
+                                    <label for="level_id">Unit Level <span style="color:red;">*</span></label>
+                                    <div id="level_id_container">
+                                        <select class="form-control select" style="width: 100%;" name="level_id" id="level_id">
+                                            <option value="">Select Level</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-error" style="display:none; color: red;" id="level_id_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
                                     <label for="unit_name">Unit Name <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="Enter Unit Name" onkeyup="check_duplicate_value('unit_name','buildings',this.value,0);" required>
                                     <div class="input-error" style="display:none; color: red;" id="unit_name_error" style="display: inline-block; width:100%; color: red;"></div>
@@ -44,7 +55,7 @@
                                     <div class="input-error" style="display:none; color: red;" id="unit_title_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="unit_address">Unit Address <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="unit_address" name="unit_address" placeholder="Enter Unit Address" required>
@@ -97,13 +108,14 @@
 
     function save_unit_info_data(){
 
-        if( form_validation('building_id*unit_name*unit_code*unit_title*unit_address*unit_photo','Unit Building*Unit Name*Unit Code*Unit Title*Unit Address* Unit Image')==false ){
+        if( form_validation('building_id*level_id*unit_name*unit_code*unit_title*unit_address*unit_photo','Unit Building*Unit Level*Unit Name*Unit Code*Unit Title*Unit Address* Unit Image')==false ){
 
             return false;
         }
 
         var unit_name = $("#unit_name").val();
         var building_id = $("#building_id").val();
+        var level_id = $("#level_id").val();
         var unit_code = $("#unit_code").val();
         var unit_title = $("#unit_title").val();
         var unit_address = $("#unit_address").val();
@@ -118,6 +130,7 @@
         form_data.append('unit_photo',unit_photo[0]);
 
         form_data.append("building_id", building_id);
+        form_data.append("level_id", level_id);
         form_data.append("unit_name", unit_name);
         form_data.append("unit_code", unit_code);
         form_data.append("unit_title", unit_title);
@@ -198,6 +211,6 @@
         }
     }
 
-    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'',0);
+    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'',0,"onchange=\"load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'',0,this.value,'building_id')\"");
 
 </script>****{{csrf_token()}}

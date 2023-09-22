@@ -449,6 +449,63 @@ class CommonController extends Controller
         return $parameter_data;
     }
 
+    public function get_parameter_data_by_id($table_name,$field_name,$value,$data_value,$data_name){
+
+        $table_name = trim($table_name);
+        $field_name = trim($field_name);
+
+        $data_value = trim($data_value);
+        $data_name = trim($data_name);
+
+        if($field_name=='' || $field_name==null || $field_name==0){
+
+            $select = "*";
+        }
+        else{
+
+            $field_name_arr = explode(",",$field_name);
+
+            $sl =0;
+
+            foreach($field_name_arr as $data){
+
+                $select[$sl] = $data;
+
+                $sl++;
+            }
+        }
+
+        $parameter_data = array();
+
+        if($value!='' && $value!=0){
+
+            $where_arr = array(
+                'delete_status' =>0,
+                'status' => 1
+            );
+
+            $parameter_data = DB::table($table_name)
+                ->select($select)
+                ->where($where_arr)
+                ->where($data_name,$data_value)
+                ->orWhere('id',$value)
+                ->get()
+                ->toArray();
+        }
+        else{
+
+            $parameter_data = DB::table($table_name)
+                ->select($select)
+                ->where($data_name,$data_value)
+                ->where('delete_status',0)
+                ->where('status',1)
+                ->get()
+                ->toArray();
+        }
+
+        return $parameter_data;
+    }
+
     public function get_user_config_data(){
 
         $data = UserConfig::where('delete_status',0)

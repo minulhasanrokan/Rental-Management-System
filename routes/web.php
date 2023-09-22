@@ -42,6 +42,7 @@ Route::controller(CommonController::class)->group(function(){
     Route::get('/dashboard/get-duplicate-value-two/{field_name?}/{field_name2?}/{table_name?}/{value?}/{value2?}/{data_id?}','get_duplicate_value_two')->name('admin.get.duplicate.value.two');
 
     Route::get('/dashboard/get-parameter-data/{table_name?}/{field_name?}/{value?}','get_parameter_data')->name('admin.get.parameter.data');
+    Route::get('/dashboard/get-parameter-data-by-id/{table_name?}/{field_name?}/{value?}/{data_value?}/{data_name?}','get_parameter_data_by_id')->name('admin.get.parameter.data.by.id');
 
     Route::get('/dashboard/get-data-by-id/{table_name?}/{data_id?}/{field_name?}','get_data_by_id')->name('admin.get.data.by.id');
 });

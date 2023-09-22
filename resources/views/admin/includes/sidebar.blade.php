@@ -374,7 +374,7 @@
         }
     }
 
-    function load_drop_down(table_name, field_name, id, container, title, select_status,status, selected_value, disabale_status) {
+    function load_drop_down(table_name, field_name, id, container, title, select_status,status, selected_value, disabale_status,on_change) {
 
         var value = 0;
 
@@ -386,6 +386,100 @@
         var http = createObject();
 
         var data="&table_name="+table_name+"&field_name="+field_name+"&selected_value="+selected_value;
+
+        if( http ) {
+            
+            http.onreadystatechange = function() {
+
+                if( http.readyState == 4 ) {
+
+                    if( http.status == 200 ){
+
+                        var reponse=trim(http.responseText).split("****");
+
+                        if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+
+                            location.replace('<?php echo url('/dashboard/logout');?>');
+                        }
+                        else{
+
+                            var data = '';
+
+                            if(select_status==1){
+
+                                data ='<select '+on_change+' class="select2 form-control" multiple="" data-placeholder="'+title+'" style="width: 100%;" name="'+id+'" id="'+id+'"><option value="">'+title+'</option>';
+                            }
+                            else{
+
+                                data ='<select '+on_change+' class="form-control select" style="width: 100%;" name="'+id+'" id="'+id+'"><option value="">'+title+'</option>';
+                            }
+
+                            var json_data = JSON.parse(reponse[0]);
+
+                            var data_length = Object.keys(json_data).length;
+
+                            var field_name_arr = field_name.split(',');
+
+                            for(var i=0; i<data_length; i++){
+
+                                data +='<option value="'+json_data[i][field_name_arr[0]]+'">'+json_data[i][field_name_arr[1]]+'</option>';
+                            }
+
+                            data +='</select>';
+
+                            document.getElementById(container).innerHTML = data;
+
+                            if(select_status==1){
+
+                                $('.select2').select2();
+
+                                if(selected_value!=''){
+
+                                    var data_arr = selected_value.split(",");
+
+                                    $("#"+id).val(data_arr).trigger("change");
+                                }
+                            }
+                            else{
+
+                                if(selected_value!=''){
+
+                                    $("#"+id).val(selected_value);
+                                }
+                            }
+
+                            if(disabale_status==1){
+
+                                $("#"+id).attr('disabled','disabled ');
+                            }
+                        }
+                    }
+                }
+            }
+
+            http.open("GET","{{route('admin.get.parameter.data')}}"+"/"+table_name+"/"+field_name+"/"+value,true);
+            http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            http.send(data);
+        }
+    }
+
+    function load_drop_down_by_id(table_name, field_name, id, container, title, select_status,status, selected_value, disabale_status,data_value,data_name) {
+
+        var value = 0;
+
+        if(selected_value!=''){
+
+            value = selected_value;
+        }
+
+        if(data_value==''){
+
+            data_value = 0;
+        }
+
+        var http = createObject();
+
+        var data="&table_name="+table_name+"&field_name="+field_name+"&selected_value="+selected_value+"&data_value="+data_value+"&data_name="+data_name;
 
         if( http ) {
             
@@ -457,7 +551,7 @@
                 }
             }
 
-            http.open("GET","{{route('admin.get.parameter.data')}}"+"/"+table_name+"/"+field_name+"/"+value,true);
+            http.open("GET","{{route('admin.get.parameter.data.by.id')}}"+"/"+table_name+"/"+field_name+"/"+value+"/"+data_value+"/"+data_name,true);
             http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             http.send(data);
         }
