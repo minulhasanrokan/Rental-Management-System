@@ -168,6 +168,6 @@
         }
     }
 
-    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'',0);
+    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'',0,'');
 
 </script>****{{csrf_token()}}

@@ -173,9 +173,9 @@
         }
     }
 
-    load_drop_down('user_types','id,user_type_name','normal_user_type','normal_user_type_container','Select Normal User Type',0,1,'{{$user_config_data['normal_user_type']}}',1);
-    load_drop_down('user_types','id,user_type_name','owner_user_type','owner_user_type_container','Select Owner User Type',0,1,'{{$user_config_data['owner_user_type']}}',1);
-    load_drop_down('user_types','id,user_type_name','tenant_user_type','tenant_user_type_container','Select Tenant User Type',0,1,'{{$user_config_data['tenant_user_type']}}',1);
-    load_drop_down('user_groups','id,group_name','tenant_user_group','tenant_user_group_container','Select Tenant User Group',0,1,'{{$user_config_data['tenant_user_group']}}',0);
+    load_drop_down('user_types','id,user_type_name','normal_user_type','normal_user_type_container','Select Normal User Type',0,1,'{{$user_config_data['normal_user_type']}}',1,'');
+    load_drop_down('user_types','id,user_type_name','owner_user_type','owner_user_type_container','Select Owner User Type',0,1,'{{$user_config_data['owner_user_type']}}',1,'');
+    load_drop_down('user_types','id,user_type_name','tenant_user_type','tenant_user_type_container','Select Tenant User Type',0,1,'{{$user_config_data['tenant_user_type']}}',1,'');
+    load_drop_down('user_groups','id,group_name','tenant_user_group','tenant_user_group_container','Select Tenant User Group',0,1,'{{$user_config_data['tenant_user_group']}}',0,'');
 
 </script>****{{csrf_token()}}
