@@ -303,14 +303,20 @@ Route::controller(BuildingController::class)->group(function(){
     Route::get('/dashboard/building-view/{id?}','building_single_view_page')->name('floor_management.building.view')->middleware(['checkroute']);
 });
 
+Route::controller(LevelController::class)->group(function(){
+
+    Route::get('/dashboard/level-add','level_add_page')->name('floor_management.level.add')->middleware(['checkroute']);
+    Route::post('/dashboard/level-add','level_store')->name('floor_management.level.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/level-edit','level_edit_page')->name('floor_management.level.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/level-edit','level_grid')->name('floor_management.level.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/level-edit/{id?}','level_single_edit_page')->name('floor_management.level.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/level-edit/{id?}','level_update')->name('floor_management.level.edit')->middleware(['checkroute']);
+});
+
 Route::controller(UnitController::class)->group(function(){
 
     Route::get('/dashboard/unit-add','unit_add_page')->name('floor_management.unit.add')->middleware(['checkroute']);
     Route::post('/dashboard/unit-add','unit_store')->name('floor_management.unit.add')->middleware(['checkroute']);
 });
 
-Route::controller(LevelController::class)->group(function(){
-
-    Route::get('/dashboard/level-add','level_add_page')->name('floor_management.level.add')->middleware(['checkroute']);
-    Route::post('/dashboard/level-add','level_store')->name('floor_management.level.add')->middleware(['checkroute']);
-});
