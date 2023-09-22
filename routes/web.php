@@ -312,6 +312,14 @@ Route::controller(LevelController::class)->group(function(){
     Route::post('/dashboard/level-edit','level_grid')->name('floor_management.level.edit')->middleware(['checkroute']);
     Route::get('/dashboard/level-edit/{id?}','level_single_edit_page')->name('floor_management.level.edit')->middleware(['checkroute']);
     Route::post('/dashboard/level-edit/{id?}','level_update')->name('floor_management.level.edit')->middleware(['checkroute']);
+
+    Route::get('/dashboard/level-delete','level_delete_page')->name('floor_management.level.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/level-delete','level_grid')->name('floor_management.level.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/level-delete/{id?}','level_delete')->name('floor_management.level.delete')->middleware(['checkroute']);
+
+    Route::get('/dashboard/level-view','level_view_page')->name('floor_management.level.view')->middleware(['checkroute']);
+    Route::post('/dashboard/level-view','level_grid')->name('floor_management.level.view')->middleware(['checkroute']);
+    Route::get('/dashboard/level-view/{id?}','level_single_view_page')->name('floor_management.level.view')->middleware(['checkroute']);
 });
 
 Route::controller(UnitController::class)->group(function(){

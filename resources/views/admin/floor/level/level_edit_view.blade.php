@@ -5,14 +5,14 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Add Level Information</h3>
+                    <h3 class="card-title">Edit Level Information - {{$level_data->level_name}}</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form id="level_form" method="post" autocomplete="off">
+                <form id="level_edit_form" method="post" autocomplete="off">
                     @csrf
                     <div class="card-body" style="padding-bottom:5px !important; padding-top: 10px !important; margin: 0px !important;">
                         <div class="row">
@@ -26,28 +26,28 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="level_name">Level Name <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="level_name" name="level_name" placeholder="Enter Level Name" onkeyup="check_duplicate_value_with_two_filed('level_name','building_id','Levels',this.value,0);" required>
+                                    <input type="text" class="form-control" id="level_name" name="level_name" placeholder="Enter Level Name" value="{{$level_data->level_name}}" onkeyup="check_duplicate_value_with_two_filed('level_name','building_id','Levels',this.value,'{{$level_data->id}}');" required>
                                     <div class="input-error" style="display:none; color: red;" id="level_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="level_code">Level Code <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="level_code" name="level_code" placeholder="Enter Level Code" onkeyup="check_duplicate_value_with_two_filed('level_code','building_id','Levels',this.value,0);" required>
+                                    <input type="text" class="form-control" id="level_code" name="level_code" placeholder="Enter Level Code" value="{{$level_data->level_code}}" onkeyup="check_duplicate_value_with_two_filed('level_code','building_id','Levels',this.value,'{{$level_data->id}}');" required>
                                     <div class="input-error" style="display:none; color: red;" id="level_code_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="level_title">Level Title <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="level_title" name="level_title" placeholder="Enter Level Title" required>
+                                    <input type="text" class="form-control" id="level_title" name="level_title" placeholder="Enter Level Title" value="{{$level_data->level_title}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="level_title_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="level_deatils">Level Details</label>
-                                    <textarea class="form-control" id="level_deatils" name="level_deatils"></textarea>
+                                    <textarea class="form-control" id="level_deatils" name="level_deatils">{{$level_data->level_deatils}}</textarea>
                                     <div class="input-error" style="display:none; color: red;" id="level_deatils_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -55,7 +55,10 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" style="float:right" onclick="save_level_info_data();" class="btn btn-primary">Add Level Information</button>
+                        @foreach($user_right_data as $data)
+                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$level_data->id}}','{{$level_data->level_name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
+                        @endforeach
+                        <button type="button" style="float:right" onclick="save_level_info_data();" class="btn btn-primary">Update Level Information</button>
                     </div>
                 </form>
             </div>
@@ -97,9 +100,10 @@
         form_data.append("level_code", level_code);
         form_data.append("level_title", level_title);
         form_data.append("level_deatils", level_deatils);
-        form_data.append("_token", token);
+        form_data.append("update_id", '{{$level_data->id}}');
+        form_data.append("_token", token)
 
-        http.open("POST","{{route('floor_management.level.add')}}",true);
+        http.open("POST","{{route('floor_management.level.edit',$level_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
         http.onreadystatechange = save_level_info_data_response;
@@ -154,13 +158,6 @@
                         break; 
                     }
 
-                    if(data.alert_type=='success'){
-
-                        document.getElementById("level_form").reset();
-
-                        $('#level_deatils').summernote('reset');
-                    }
-
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);
                 }
@@ -168,6 +165,6 @@
         }
     }
 
-    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'',0);
+    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$level_data->building_id}}',0);
 
 </script>****{{csrf_token()}}
