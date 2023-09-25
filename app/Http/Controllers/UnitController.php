@@ -35,7 +35,8 @@ class UnitController extends Controller
             'level_id' => 'required',
             'unit_name' => 'required|string|max:250',
             'unit_code' => 'required|string|max:20',
-            'unit_title' => 'required|string|max:250'
+            'unit_title' => 'required|string|max:250',
+            'unit_photo'  => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -159,7 +160,8 @@ class UnitController extends Controller
     }
 
     public function unit_grid(Request $request){
-DB::enableQueryLog();
+        
+        DB::enableQueryLog();
 
         $menu_data = $this->common->get_page_menu_grid('floor_management.unit.add');
 
@@ -293,5 +295,140 @@ DB::enableQueryLog();
         $response['csrf_token'] = $csrf_token;
 
         echo json_encode($response);
+    }
+
+    public function unit_single_edit_page($id){
+
+        $unit_data = Unit::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('floor_management.unit.add****floor_management.unit.edit');
+
+        return view('admin.floor.unit.unit_edit_view',compact('menu_data','unit_data','user_right_data'));
+    }
+
+    public function unit_update($id, Request $request){
+
+
+        $validator = Validator::make($request->all(), [
+            'building_id' => 'required',
+            'level_id' => 'required',
+            'unit_name' => 'required|string|max:250',
+            'unit_code' => 'required|string|max:20',
+            'unit_title' => 'required|string|max:250',
+            'unit_photo' => $request->input('hidden_unit_photo') === '' ? 'required' : '',
+        ]);
+
+        $duplicate_status_1 = $this->common->get_duplicate_value_two('unit_name','building_id,level_id','units', $request->level_name, $request->building_id.','.$request->level_id, $request->update_id);
+
+        if($duplicate_status_1>0){
+
+            $notification = array(
+                'message'=> "Duplicate Unit Name Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
+
+        $duplicate_status_2 = $this->common->get_duplicate_value_two('unit_code','building_id,level_id','units', $request->level_code, $request->building_id.','.$request->level_id, $request->update_id);
+
+        if($duplicate_status_2>0){
+
+            $notification = array(
+                'message'=> "Duplicate Unit Code Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
+
+        $duplicate_status_3 = $this->common->get_duplicate_value_two('unit_title','building_id,level_id','units', $request->unit_title, $request->building_id.','.$request->level_id, $request->update_id);
+
+        if($duplicate_status_2>0){
+
+            $notification = array(
+                'message'=> "Duplicate Unit Title Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        DB::beginTransaction();
+
+        $data = Unit::where('delete_status',0)
+            ->where('id',$request->update_id)
+            ->first();
+
+        if ($request->hasFile('unit_photo')) {
+
+            $file = $request->file('unit_photo');
+
+            $extension = $file->getClientOriginalExtension();
+
+            $title_name = str_replace(' ','_',$request->unit_name);
+
+            $fileName = $title_name.'_unit_'.time().'.'.$extension;
+
+            Image::make($file)->resize(500,500)->save('uploads/unit/'.$fileName);
+
+            if($data->unit_photo!='')
+            {
+                $deletePhoto = "uploads/unit/".$data->unit_photo;
+                
+                if(file_exists($deletePhoto)){
+
+                    unlink($deletePhoto);
+                }
+            }
+
+            $data->unit_photo = $fileName;
+        }
+
+        $data->building_id = $request->building_id;
+        $data->level_id = $request->level_id;
+        $data->unit_name = $request->unit_name;
+        $data->unit_code = $request->unit_code;
+        $data->unit_title = $request->unit_title;
+        $data->unit_deatils = $request->unit_deatils;
+        $data->edit_by = $user_id;
+        $data->updated_at = now();
+        $data->edit_status = 1;
+
+        $data->save();
+
+        if($data==true){
+
+            DB::commit();
+
+            $notification = array(
+                'message'=> "Unit Details Updated Successfully",
+                'alert_type'=>'success',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "Unit Details Does Not Updated Successfully",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
     }
 }

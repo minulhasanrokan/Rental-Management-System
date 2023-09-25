@@ -5,7 +5,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Add Unit Information</h3>
+                    <h3 class="card-title">Edit Unit Information - {{$unit_data->unit_name}}</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -37,28 +37,28 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="unit_name">Unit Name <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="Enter Unit Name" onkeyup="check_duplicate_value_with_two_filed('unit_name','building_id,level_id','units',this.value,0);" required>
+                                    <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="Enter Unit Name" onkeyup="check_duplicate_value_with_two_filed('unit_name','building_id,level_id','units',this.value,'{{$unit_data->id}}');" value="{{$unit_data->unit_name}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="unit_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="unit_code">Unit Code <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="unit_code" name="unit_code" placeholder="Enter Unit Code" onkeyup="check_duplicate_value_with_two_filed('unit_code','building_id,level_id','units',this.value,0);" required>
+                                    <input type="text" class="form-control" id="unit_code" name="unit_code" placeholder="Enter Unit Code" onkeyup="check_duplicate_value_with_two_filed('unit_code','building_id,level_id','units',this.value,'{{$unit_data->id}}');" value="{{$unit_data->unit_code}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="unit_code_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="unit_title">Unit Title <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="unit_title" name="unit_title" placeholder="Enter Unit Title" onkeyup="check_duplicate_value_with_two_filed('unit_title','building_id,level_id','units',this.value,0);" required>
+                                    <input type="text" class="form-control" id="unit_title" name="unit_title" placeholder="Enter Unit Title" onkeyup="check_duplicate_value_with_two_filed('unit_title','building_id,level_id','units',this.value,'{{$unit_data->id}}');" value="{{$unit_data->unit_title}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="unit_title_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="unit_deatils">Unit Details</label>
-                                    <textarea class="form-control" id="unit_deatils" name="unit_deatils"></textarea>
+                                    <textarea class="form-control" id="unit_deatils" name="unit_deatils">{{$unit_data->unit_deatils}}</textarea>
                                     <div class="input-error" style="display:none; color: red;" id="unit_deatils_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -66,20 +66,20 @@
                                 <div class="form-group">
                                     <label for="unit_photo">Unit Image <span style="color:red;">*</span></label>
                                     <input onchange="readUrl(this,'unit_photo_photo');" type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="unit_photo" name="unit_photo" placeholder="Enter Unit Image" required>
-                                    <input type="hidden" name="hidden_unit_photo" id="hidden_unit_photo" value="">
+                                    <input type="hidden" name="hidden_unit_photo" id="hidden_unit_photo" value="{{$unit_data->unit_photo}}">
                                     <div class="input-error" style="display:none; color: red;" id="unit_photo_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <img class="rounded avatar-lg" width="80" height="80" id="unit_photo_photo" src="{{asset('uploads/unit/unit_photo.png')}}"/>
+                                    <img class="rounded avatar-lg" width="80" height="80" id="unit_photo_photo" src="{{asset('uploads/unit')}}/{{!empty($unit_data->unit_photo)?$unit_data->unit_photo:'unit_photo.png'}}"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" style="float:right" onclick="save_unit_info_data();" class="btn btn-primary">Add Unit Information</button>
+                        <button type="button" style="float:right" onclick="save_unit_info_data();" class="btn btn-primary">Update Unit Information</button>
                     </div>
                 </form>
             </div>
@@ -101,9 +101,19 @@
 
     function save_unit_info_data(){
 
-        if( form_validation('building_id*level_id*unit_name*unit_code*unit_title*unit_photo','Unit Building*Unit Level*Unit Name*Unit Code*Unit Title* Unit Image')==false ){
+        if( form_validation('building_id*level_id*unit_name*unit_code*unit_title','Unit Building*Unit Level*Unit Name*Unit Code*Unit Title')==false ){
 
             return false;
+        }
+
+        var hidden_unit_photo  = $("#hidden_unit_photo").val();
+
+        if(hidden_unit_photo==''){
+
+            if( form_validation('unit_photo','Unit Photo')==false ){
+
+                return false;
+            }
         }
 
         var unit_name = $("#unit_name").val();
@@ -130,9 +140,10 @@
         form_data.append("unit_address", unit_address);
         form_data.append("unit_deatils", unit_deatils);
         form_data.append("hidden_unit_photo", hidden_unit_photo);
+        form_data.append("update_id", '{{$unit_data->id}}');
         form_data.append("_token", token);
 
-        http.open("POST","{{route('floor_management.unit.add')}}",true);
+        http.open("POST","{{route('floor_management.unit.edit',$unit_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
         http.onreadystatechange = save_unit_info_data_response;
@@ -187,16 +198,6 @@
                         break; 
                     }
 
-                    if(data.alert_type=='success'){
-
-                        document.getElementById("unit_form").reset();
-
-                        $('#unit_deatils').summernote('reset');
-
-                        $("#unit_logo_photo").attr("src","{{asset('uploads/unit/unit_logo.png')}}");
-                        $("#unit_photo_photo").attr("src","{{asset('uploads/unit/unit_logo.png')}}");
-                    }
-
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);
                 }
@@ -204,6 +205,8 @@
         }
     }
 
-    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'',0,"onchange=\"load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'',0,this.value,'building_id')\"");
+    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$unit_data->building_id}}',0,"onchange=\"load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'',0,this.value,'building_id')\"");
+
+    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$unit_data->level_id}}',0,'{{$unit_data->building_id}}','building_id');
 
 </script>****{{csrf_token()}}
