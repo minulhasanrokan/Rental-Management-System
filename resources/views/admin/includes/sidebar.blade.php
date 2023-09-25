@@ -284,7 +284,28 @@
 
         var value2 = 0;
 
-        var field_name2_value = $("#"+field_name2).val();
+        var field_name2_arr = field_name2.split(",");
+
+        var field_name2_value = '';
+
+        for(var i=0; i<field_name2_arr.length; i++){
+
+            if(field_name2_value!=''){
+
+                field_name2_value +=",";
+            }
+
+            var data_value = $("#"+field_name2_arr[i]).val();
+
+            if(data_value==''){
+
+                field_name2_value += '0';
+            }
+            else{
+
+                field_name2_value += data_value;
+            }
+        }
 
         if(field_name2_value!=''){
 

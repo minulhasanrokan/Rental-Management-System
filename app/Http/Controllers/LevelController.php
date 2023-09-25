@@ -65,7 +65,7 @@ class LevelController extends Controller
             return response()->json($notification);
         }
 
-        $duplicate_status_2 = $this->common->get_duplicate_value_two('level_name','building_id','levels', $request->level_code, $request->building_id, 0);
+        $duplicate_status_2 = $this->common->get_duplicate_value_two('level_code','building_id','levels', $request->level_code, $request->building_id, 0);
 
         if($duplicate_status_2>0){
 
@@ -291,7 +291,7 @@ class LevelController extends Controller
             return response()->json($notification);
         }
 
-        $duplicate_status_2 = $this->common->get_duplicate_value_two('level_name','building_id','levels', $request->level_code, $request->building_id, $request->update_id);
+        $duplicate_status_2 = $this->common->get_duplicate_value_two('level_code','building_id','levels', $request->level_code, $request->building_id, $request->update_id);
 
         if($duplicate_status_2>0){
 

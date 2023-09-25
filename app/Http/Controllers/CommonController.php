@@ -232,11 +232,21 @@ class CommonController extends Controller
         $value2 = urldecode(trim($value2));
         $data_id = trim($data_id);
 
+        $field_name2_arr = explode(",",$field_name2);
+        $value2_arr = explode(",",$value2);
+
+        $where_arr = array();
+
+        foreach($field_name2_arr as $key=>$data){
+
+            $where_arr[$data] = $value2_arr[$key];
+        }
+
         $user_right_data = DB::table($table_name)
-                ->select('id')
-                ->where('delete_status',0)
-                ->where($field_name,$value)
-                ->where($field_name2,$value2);
+            ->select('id')
+            ->where('delete_status',0)
+            ->where($field_name,$value)
+            ->where($where_arr);
 
         if($data_id!=0 && $data_id!='' && $data_id>0){
                 
