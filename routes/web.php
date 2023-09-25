@@ -327,5 +327,10 @@ Route::controller(UnitController::class)->group(function(){
 
     Route::get('/dashboard/unit-add','unit_add_page')->name('floor_management.unit.add')->middleware(['checkroute']);
     Route::post('/dashboard/unit-add','unit_store')->name('floor_management.unit.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/unit-edit','unit_edit_page')->name('floor_management.unit.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/unit-edit','unit_grid')->name('floor_management.unit.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/unit-edit/{id?}','unit_single_edit_page')->name('floor_management.unit.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/unit-edit/{id?}','unit_update')->name('floor_management.unit.edit')->middleware(['checkroute']);
 });
 
