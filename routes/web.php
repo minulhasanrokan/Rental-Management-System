@@ -19,6 +19,7 @@ use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\UnitRentInformationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -340,5 +341,12 @@ Route::controller(UnitController::class)->group(function(){
     Route::get('/dashboard/unit-view','unit_view_page')->name('floor_management.unit.view')->middleware(['checkroute']);
     Route::post('/dashboard/unit-view','unit_grid')->name('floor_management.unit.view')->middleware(['checkroute']);
     Route::get('/dashboard/unit-view/{id?}','unit_single_view_page')->name('floor_management.unit.view')->middleware(['checkroute']);
+});
+
+Route::controller(UnitRentInformationController::class)->group(function(){
+
+    Route::get('/dashboard/unit-rent-information-add','unit_add_page')->name('floor_management.unit_rent.add')->middleware(['checkroute']);
+    Route::post('/dashboard/unit-rent-information-add','unit_store')->name('floor_management.unit_rent.add')->middleware(['checkroute']);
+
 });
 
