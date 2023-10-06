@@ -19,12 +19,13 @@
                                     <th width="150">Building Image</th>
                                     <th width="150">Building Name</th>
                                     <th width="150">Level Name</th>
-                                    <th width="100">Unit Image</th>
-                                    <th width="100">Unit Name</th>
-                                    <th width="100">Unit Code</th>
-                                    <th>Unit Title</th>
+                                    <th width="80">Image</th>
+                                    <th width="80">Name</th>
+                                    <th width="80">Code</th>
+                                    <th width="80">Size(sft.)</th>
+                                    <th>Title</th>
                                     <th width="50">Status</th>
-                                    <th width="180">Action</th>
+                                    <th width="210">Action</th>
                                 </tr>
                             </thead>
                         </table>
@@ -122,6 +123,7 @@
                 },
                 { data: "unit_name" },
                 { data: "unit_code" },
+                { data: "unit_size" },
                 {
                     "data": "unit_title",
                     "render": function(data, type, full, meta) {
@@ -162,7 +164,7 @@
             ],
             columnDefs: [
                 {
-                    targets: [0,1,4,8,9], 
+                    targets: [0,1,4,9,10], 
                     searchable: false,
                     orderable: false
                 }

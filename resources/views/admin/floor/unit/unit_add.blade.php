@@ -48,7 +48,14 @@
                                     <div class="input-error" style="display:none; color: red;" id="unit_code_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="unit_size">Unit Size (SFT) <span style="color:red;">*</span></label>
+                                    <input type="number" class="form-control" id="unit_size" name="unit_size" placeholder="Enter Unit Size" required>
+                                    <div class="input-error" style="display:none; color: red;" id="unit_size_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="unit_title">Unit Title <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="unit_title" name="unit_title" placeholder="Enter Unit Title" onkeyup="check_duplicate_value_with_two_filed('unit_title','building_id,level_id','units',this.value,0);" required>
@@ -101,7 +108,7 @@
 
     function save_unit_info_data(){
 
-        if( form_validation('building_id*level_id*unit_name*unit_code*unit_title*unit_photo','Unit Building*Unit Level*Unit Name*Unit Code*Unit Title* Unit Image')==false ){
+        if( form_validation('building_id*level_id*unit_name*unit_code*unit_title*unit_size*unit_photo','Unit Building*Unit Level*Unit Name*Unit Code*Unit Title* Unit Size*Unit Image')==false ){
 
             return false;
         }
@@ -111,6 +118,7 @@
         var level_id = $("#level_id").val();
         var unit_code = $("#unit_code").val();
         var unit_title = $("#unit_title").val();
+        var unit_size = $("#unit_size").val();
         var unit_address = $("#unit_address").val();
         var unit_deatils = $("#unit_deatils").val();
         var hidden_unit_photo = $("#hidden_unit_photo").val();
@@ -127,6 +135,7 @@
         form_data.append("unit_name", unit_name);
         form_data.append("unit_code", unit_code);
         form_data.append("unit_title", unit_title);
+        form_data.append("unit_size", unit_size);
         form_data.append("unit_address", unit_address);
         form_data.append("unit_deatils", unit_deatils);
         form_data.append("hidden_unit_photo", hidden_unit_photo);

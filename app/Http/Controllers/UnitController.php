@@ -36,6 +36,7 @@ class UnitController extends Controller
             'unit_name' => 'required|string|max:250',
             'unit_code' => 'required|string|max:20',
             'unit_title' => 'required|string|max:250',
+            'unit_size' => 'required',
             'unit_photo'  => 'required',
         ]);
 
@@ -107,6 +108,7 @@ class UnitController extends Controller
         $data->unit_name = $request->unit_name;
         $data->unit_code = $request->unit_code;
         $data->unit_title = $request->unit_title;
+        $data->unit_size = $request->unit_size;
         $data->unit_deatils = $request->unit_deatils;
         $data->add_by = $user_id;
         $data->created_at = now();
@@ -216,7 +218,7 @@ class UnitController extends Controller
             $data = DB::table('units as a')
                 ->join('buildings as b', 'b.id', '=', 'a.building_id')
                 ->join('levels as c', 'c.id', '=', 'a.level_id')
-                ->select('a.id', 'a.unit_name', 'a.unit_title', 'a.unit_code', 'b.building_name', 'b.building_logo', 'a.unit_photo', 'c.level_name', 'a.status')
+                ->select('a.id', 'a.unit_name', 'a.unit_title', 'a.unit_code', 'b.building_name', 'b.building_logo', 'a.unit_photo', 'c.level_name', 'a.status','a.unit_size')
                 ->where('a.delete_status',0)
                 //->where('b.id','c.building_id')
                 ->where('b.delete_status',0)
@@ -246,7 +248,7 @@ class UnitController extends Controller
             $data = DB::table('units as a')
                 ->join('buildings as b', 'b.id', '=', 'a.building_id')
                 ->join('levels as c', 'c.id', '=', 'a.level_id')
-                ->select('a.id', 'a.unit_name', 'a.unit_title', 'a.unit_code', 'b.building_name', 'b.building_logo', 'a.unit_photo', 'c.level_name', 'a.status')
+                ->select('a.id', 'a.unit_name', 'a.unit_title', 'a.unit_code', 'b.building_name', 'b.building_logo', 'a.unit_photo', 'c.level_name', 'a.status','a.unit_size')
                 ->where('a.delete_status',0)
                 //->where('b.id','c.building_id')
                 ->where('b.delete_status',0)
@@ -278,6 +280,7 @@ class UnitController extends Controller
             $record_data[$sl]['unit_photo'] = $value->unit_photo;
             $record_data[$sl]['level_name'] = $value->level_name;
             $record_data[$sl]['status'] = $value->status;
+            $record_data[$sl]['unit_size'] = $value->unit_size;
             $record_data[$sl]['action'] = $value->id;
             $record_data[$sl]['menu_data'] = $menu_data;
 
@@ -319,6 +322,7 @@ class UnitController extends Controller
             'unit_name' => 'required|string|max:250',
             'unit_code' => 'required|string|max:20',
             'unit_title' => 'required|string|max:250',
+            'unit_size' => 'required',
             'unit_photo' => $request->input('hidden_unit_photo') === '' ? 'required' : '',
         ]);
 
@@ -401,6 +405,7 @@ class UnitController extends Controller
         $data->unit_name = $request->unit_name;
         $data->unit_code = $request->unit_code;
         $data->unit_title = $request->unit_title;
+        $data->unit_size = $request->unit_size;
         $data->unit_deatils = $request->unit_deatils;
         $data->edit_by = $user_id;
         $data->updated_at = now();
