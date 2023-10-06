@@ -332,5 +332,13 @@ Route::controller(UnitController::class)->group(function(){
     Route::post('/dashboard/unit-edit','unit_grid')->name('floor_management.unit.edit')->middleware(['checkroute']);
     Route::get('/dashboard/unit-edit/{id?}','unit_single_edit_page')->name('floor_management.unit.edit')->middleware(['checkroute']);
     Route::post('/dashboard/unit-edit/{id?}','unit_update')->name('floor_management.unit.edit')->middleware(['checkroute']);
+
+    Route::get('/dashboard/unit-delete','unit_delete_page')->name('floor_management.unit.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/unit-delete','unit_grid')->name('floor_management.unit.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/unit-delete/{id?}','unit_delete')->name('floor_management.unit.delete')->middleware(['checkroute']);
+
+    Route::get('/dashboard/unit-view','unit_view_page')->name('floor_management.unit.view')->middleware(['checkroute']);
+    Route::post('/dashboard/unit-view','unit_grid')->name('floor_management.unit.view')->middleware(['checkroute']);
+    Route::get('/dashboard/unit-view/{id?}','unit_single_view_page')->name('floor_management.unit.view')->middleware(['checkroute']);
 });
 
