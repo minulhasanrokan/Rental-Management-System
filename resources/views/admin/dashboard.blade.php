@@ -808,13 +808,17 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('backend/plugins/summernote/summernote-bs4.min.css')}}">
 
+    <!-- common -->
+    <link rel="stylesheet" href="{{asset('backend/dist/css/common.css')}}">
+
+    <!-- jQuery -->
+    <script src="{{asset('backend/plugins/jquery/jquery.min.js')}}"></script>
+
 @endsection
 
 
 @section('js')
 
-    <!-- jQuery -->
-    <script src="{{asset('backend/plugins/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap -->
     <script src="{{asset('backend/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- Select2 -->

@@ -51,7 +51,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="unit_size">Unit Size (SFT) <span style="color:red;">*</span></label>
-                                    <input type="number" class="form-control" id="unit_size" name="unit_size" placeholder="Enter Unit Size" value="{{$unit_data->unit_size}}" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="unit_size" name="unit_size" placeholder="Enter Unit Size" value="{{$unit_data->unit_size}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="unit_size_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>

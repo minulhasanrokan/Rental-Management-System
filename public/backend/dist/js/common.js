@@ -58,17 +58,22 @@ function form_validation(control,msg_text)
         document.getElementById(control[i]).style.backgroundImage="";
         var cls=$('#'+control[i]).attr('class');
 
-        if( cls=="text_boxes_numeric" ) //if ( type == 'text' || type == 'password' || type == 'textarea' )
+        var cls_arr = cls.trim().split(" ");
+
+        for (var n=0; n<cls_arr.length; n++)
         {
-            if (trim(document.getElementById(control[i]).value)=="" || (trim(document.getElementById(control[i]).value)*1)==0)
+            if(cls_arr[n].trim()=="text_boxes_numeric") //if ( type == 'text' || type == 'password' || type == 'textarea' )
             {
-                document.getElementById(control[i]).focus();
-                document.getElementById(control[i]).style.backgroundImage=bgcolor;
-                /*$('#messagebox_main', window.parent.document).fadeTo(100,1,function() //start fading the messagebox
+                if (trim(document.getElementById(control[i]).value)=="" || (trim(document.getElementById(control[i]).value)*1)==0)
                 {
-                    $(this).html('Please Fill up '+msg_text[i]+' field Value').removeClass('messagebox').addClass('messagebox_error').fadeOut(2500);
-                });*/
-                return 0;
+                    document.getElementById(control[i]).focus();
+                    document.getElementById(control[i]).style.backgroundImage=bgcolor;
+                    /*$('#messagebox_main', window.parent.document).fadeTo(100,1,function() //start fading the messagebox
+                    {
+                        $(this).html('Please Fill up '+msg_text[i]+' field Value').removeClass('messagebox').addClass('messagebox_error').fadeOut(2500);
+                    });*/
+                    return 0;
+                }
             }
         }
 

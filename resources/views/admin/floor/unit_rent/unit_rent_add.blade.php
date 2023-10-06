@@ -48,63 +48,63 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="unit_rent">Rent <span style="color:red;">*</span></label>
-                                    <input type="number" class="form-control" id="unit_rent" name="unit_rent" placeholder="Enter Rent" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="unit_rent" name="unit_rent" placeholder="Enter Rent" required>
                                     <div class="input-error" style="display:none; color: red;" id="unit_rent_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="water_bill">Water Bill <span style="color:red;">*</span></label>
-                                    <input type="number" class="form-control" id="water_bill" name="water_bill" placeholder="Enter Water Bill" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="water_bill" name="water_bill" placeholder="Enter Water Bill" required>
                                     <div class="input-error" style="display:none; color: red;" id="water_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="electricity_bill">Electricity Bill <span style="color:red;">*</span></label>
-                                    <input type="number" class="form-control" id="electricity_bill" name="electricity_bill" placeholder="Enter Electricity Bill" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="electricity_bill" name="electricity_bill" placeholder="Enter Electricity Bill" required>
                                     <div class="input-error" style="display:none; color: red;" id="electricity_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="gas_bill">Gas Bill <span style="color:red;">*</span></label>
-                                    <input type="number" class="form-control" id="gas_bill" name="gas_bill" placeholder="Enter Gas Bill" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="gas_bill" name="gas_bill" placeholder="Enter Gas Bill" required>
                                     <div class="input-error" style="display:none; color: red;" id="gas_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="security_bill">Security Bill <span style="color:red;">*</span></label>
-                                    <input type="number" class="form-control" id="security_bill" name="security_bill" placeholder="Enter Security Bill" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="security_bill" name="security_bill" placeholder="Enter Security Bill" required>
                                     <div class="input-error" style="display:none; color: red;" id="security_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="maintenance_bill">Maintenance Bill <span style="color:red;">*</span></label>
-                                    <input type="number" class="form-control" id="maintenance_bill" name="maintenance_bill" placeholder="Enter Maintenance Bill" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="maintenance_bill" name="maintenance_bill" placeholder="Enter Maintenance Bill" required>
                                     <div class="input-error" style="display:none; color: red;" id="maintenance_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="service_bill">Service Charge <span style="color:red;">*</span></label>
-                                    <input type="number" class="form-control" id="service_bill" name="service_bill" placeholder="Enter Service Charge" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="service_bill" name="service_bill" placeholder="Enter Service Charge" required>
                                     <div class="input-error" style="display:none; color: red;" id="service_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="charity_bill">Charity Fund <span style="color:red;">*</span></label>
-                                    <input type="number" class="form-control" id="charity_bill" name="charity_bill" placeholder="Enter Charity Fund" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="charity_bill" name="charity_bill" placeholder="Enter Charity Fund" required>
                                     <div class="input-error" style="display:none; color: red;" id="charity_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="other_bill">Other Bill <span style="color:red;">*</span></label>
-                                    <input type="number" class="form-control" id="other_bill" name="other_bill" placeholder="Enter Other Bill" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="other_bill" name="other_bill" placeholder="Enter Other Bill" required>
                                     <div class="input-error" style="display:none; color: red;" id="other_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" style="float:right" onclick="save_unit_info_data();" class="btn btn-primary">Add Unit Bill Information</button>
+                        <button type="button" style="float:right" onclick="save_unit_rent_info_data();" class="btn btn-primary">Add Unit Bill Information</button>
                     </div>
                 </form>
             </div>
@@ -132,48 +132,52 @@
         })
     });
 
-    function save_unit_info_data(){
+    function save_unit_rent_info_data(){
 
-        if( form_validation('building_id*level_id*unit_name*unit_code*unit_title*unit_size*unit_photo','Unit Building*Unit Level*Unit Name*Unit Code*Unit Title* Unit Size*Unit Image')==false ){
+        if( form_validation('building_id*level_id*unit_id*unit_rent*water_bill*electricity_bill*gas_bill*security_bill*maintenance_bill*service_bill*charity_bill*other_bill','Building Name*Level Name*Unit Name*Unit Rent*Water Bill*Electricity Bill*Gas Bill*Security Bill*Maintenance Bill*Service Charge*Charity Found*Other Bill')==false ){
 
             return false;
         }
 
-        var unit_name = $("#unit_name").val();
         var building_id = $("#building_id").val();
         var level_id = $("#level_id").val();
-        var unit_code = $("#unit_code").val();
-        var unit_title = $("#unit_title").val();
-        var unit_size = $("#unit_size").val();
-        var unit_address = $("#unit_address").val();
-        var unit_deatils = $("#unit_deatils").val();
-        var hidden_unit_photo = $("#hidden_unit_photo").val();
+        var unit_id = $("#unit_id").val();
+        var unit_rent = $("#unit_rent").val();
+        var water_bill = $("#water_bill").val();
+        var electricity_bill = $("#electricity_bill").val();
+        var gas_bill = $("#gas_bill").val();
+        var security_bill = $("#security_bill").val();
+        var maintenance_bill = $("#maintenance_bill").val();
+        var service_bill = $("#service_bill").val();
+        var charity_bill = $("#charity_bill").val();
+        var other_bill = $("#other_bill").val();
 
         var token = $('meta[name="csrf-token"]').attr('content');
 
         var form_data = new FormData();
 
-        var unit_photo = $('#unit_photo')[0].files;
-        form_data.append('unit_photo',unit_photo[0]);
-
         form_data.append("building_id", building_id);
         form_data.append("level_id", level_id);
-        form_data.append("unit_name", unit_name);
-        form_data.append("unit_code", unit_code);
-        form_data.append("unit_title", unit_title);
-        form_data.append("unit_size", unit_size);
-        form_data.append("unit_address", unit_address);
-        form_data.append("unit_deatils", unit_deatils);
-        form_data.append("hidden_unit_photo", hidden_unit_photo);
+        form_data.append("unit_id", unit_id);
+        form_data.append("unit_rent", unit_rent);
+        form_data.append("water_bill", water_bill);
+        form_data.append("electricity_bill", electricity_bill);
+        form_data.append("gas_bill", gas_bill);
+        form_data.append("security_bill", security_bill);
+        form_data.append("maintenance_bill", maintenance_bill);
+        form_data.append("service_bill", service_bill);
+        form_data.append("charity_bill", charity_bill);
+        form_data.append("other_bill", other_bill);
+
         form_data.append("_token", token);
 
-        http.open("POST","{{route('floor_management.unit.add')}}",true);
+        http.open("POST","{{route('floor_management.unit_rent.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
-        http.onreadystatechange = save_unit_info_data_response;
+        http.onreadystatechange = save_unit_rent_info_data_response;
     }
 
-    function save_unit_info_data_response(){
+    function save_unit_rent_info_data_response(){
 
         if(http.readyState == 4)
         {
@@ -244,7 +248,6 @@
 
     function get_unit_load_drop_down_by_id(value)
     {
-        load_drop_down('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'',0,'');
 
         load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'',0,value,'level_id','');
     }
