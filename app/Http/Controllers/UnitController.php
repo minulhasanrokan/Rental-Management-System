@@ -326,6 +326,22 @@ class UnitController extends Controller
             'unit_photo' => $request->input('hidden_unit_photo') === '' ? 'required' : '',
         ]);
 
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
         $duplicate_status_1 = $this->common->get_duplicate_value_two('unit_name','building_id,level_id','units', $request->level_name, $request->building_id.','.$request->level_id, $request->update_id);
 
         if($duplicate_status_1>0){

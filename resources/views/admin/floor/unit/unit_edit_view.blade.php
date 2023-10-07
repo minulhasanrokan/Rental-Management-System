@@ -86,7 +86,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                         @foreach($user_right_data as $data)
+                        @foreach($user_right_data as $data)
                             <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$unit_data->id}}','{{$unit_data->unit_name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
                         @endforeach
                         <button type="button" style="float:right" onclick="save_unit_info_data();" class="btn btn-primary">Update Unit Information</button>
@@ -101,13 +101,6 @@
 </div>
 
 <script>
-    $(function () {
-
-        $('#unit_deatils').summernote({
-            height: 60,
-            focus: true
-        })
-    });
 
     function save_unit_info_data(){
 

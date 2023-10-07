@@ -5,7 +5,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Add Unit Rent Information</h3>
+                    <h3 class="card-title">Edit Unit Rent Information</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -48,63 +48,63 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="unit_rent">Rent <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control text_boxes_numeric" id="unit_rent" name="unit_rent" placeholder="Enter Rent" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="unit_rent" name="unit_rent" placeholder="Enter Rent" value="{{$unit_rent_data->unit_rent}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="unit_rent_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="water_bill">Water Bill <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control text_boxes_numeric" id="water_bill" name="water_bill" placeholder="Enter Water Bill" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="water_bill" name="water_bill" placeholder="Enter Water Bill" value="{{$unit_rent_data->water_bill}}"  required>
                                     <div class="input-error" style="display:none; color: red;" id="water_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="electricity_bill">Electricity Bill <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control text_boxes_numeric" id="electricity_bill" name="electricity_bill" placeholder="Enter Electricity Bill" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="electricity_bill" name="electricity_bill" placeholder="Enter Electricity Bill" value="{{$unit_rent_data->electricity_bill}}"  required>
                                     <div class="input-error" style="display:none; color: red;" id="electricity_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="gas_bill">Gas Bill <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control text_boxes_numeric" id="gas_bill" name="gas_bill" placeholder="Enter Gas Bill" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="gas_bill" name="gas_bill" placeholder="Enter Gas Bill" value="{{$unit_rent_data->gas_bill}}"  required>
                                     <div class="input-error" style="display:none; color: red;" id="gas_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="security_bill">Security Bill <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control text_boxes_numeric" id="security_bill" name="security_bill" placeholder="Enter Security Bill" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="security_bill" name="security_bill" placeholder="Enter Security Bill" value="{{$unit_rent_data->security_bill}}"  required>
                                     <div class="input-error" style="display:none; color: red;" id="security_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="maintenance_bill">Maintenance Bill <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control text_boxes_numeric" id="maintenance_bill" name="maintenance_bill" placeholder="Enter Maintenance Bill" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="maintenance_bill" name="maintenance_bill" placeholder="Enter Maintenance Bill" value="{{$unit_rent_data->maintenance_bill}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="maintenance_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="service_bill">Service Charge <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control text_boxes_numeric" id="service_bill" name="service_bill" placeholder="Enter Service Charge" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="service_bill" name="service_bill" placeholder="Enter Service Charge" value="{{$unit_rent_data->service_bill}}"  required>
                                     <div class="input-error" style="display:none; color: red;" id="service_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="charity_bill">Charity Fund <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control text_boxes_numeric" id="charity_bill" name="charity_bill" placeholder="Enter Charity Fund" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="charity_bill" name="charity_bill" placeholder="Enter Charity Fund" value="{{$unit_rent_data->charity_bill}}"  required>
                                     <div class="input-error" style="display:none; color: red;" id="charity_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="other_bill">Other Bill <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control text_boxes_numeric" id="other_bill" name="other_bill" placeholder="Enter Other Bill" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="other_bill" name="other_bill" placeholder="Enter Other Bill" value="{{$unit_rent_data->other_bill}}"  required>
                                     <div class="input-error" style="display:none; color: red;" id="other_bill_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -112,7 +112,10 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" style="float:right" onclick="save_unit_rent_info_data();" class="btn btn-primary">Add Unit Bill Information</button>
+                        @foreach($user_right_data as $data)
+                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$unit_rent_data->id}}','{{$unit_rent_data->unit_rent}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
+                        @endforeach
+                        <button type="button" style="float:right" onclick="update_unit_rent_info_data();" class="btn btn-primary">Update Unit Bill Information</button>
                     </div>
                 </form>
             </div>
@@ -124,8 +127,15 @@
 </div>
 
 <script>
+    $(function () {
 
-    function save_unit_rent_info_data(){
+        $('#unit_deatils').summernote({
+            height: 60,
+            focus: true
+        })
+    });
+
+    function update_unit_rent_info_data(){
 
         if( form_validation('building_id*level_id*unit_id*unit_rent*water_bill*electricity_bill*gas_bill*security_bill*maintenance_bill*service_bill*charity_bill*other_bill','Building Name*Level Name*Unit Name*Unit Rent*Water Bill*Electricity Bill*Gas Bill*Security Bill*Maintenance Bill*Service Charge*Charity Found*Other Bill')==false ){
 
@@ -161,16 +171,16 @@
         form_data.append("service_bill", service_bill);
         form_data.append("charity_bill", charity_bill);
         form_data.append("other_bill", other_bill);
-
+        form_data.append("update_id", '{{$unit_rent_data->id}}');
         form_data.append("_token", token);
 
-        http.open("POST","{{route('floor_management.unit_rent.add')}}",true);
+        http.open("POST","{{route('floor_management.unit_rent.edit',$unit_rent_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
-        http.onreadystatechange = save_unit_rent_info_data_response;
+        http.onreadystatechange = update_unit_rent_info_data_response;
     }
 
-    function save_unit_rent_info_data_response(){
+    function update_unit_rent_info_data_response(){
 
         if(http.readyState == 4)
         {
@@ -219,14 +229,6 @@
                         break; 
                     }
 
-                    if(data.alert_type=='success'){
-
-                        document.getElementById("unit_rent_form").reset();
-
-                        $("#unit_logo_photo").attr("src","{{asset('uploads/unit/unit_logo.png')}}");
-                        $("#unit_photo_photo").attr("src","{{asset('uploads/unit/unit_logo.png')}}");
-                    }
-
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);
                 }
@@ -235,7 +237,11 @@
     }
 
 
-    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'',0,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\')"');
+    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$unit_rent_data->building_id}}',1,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\')"');
+
+    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$unit_rent_data->level_id}}',1,'{{$unit_rent_data->building_id}}','building_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','unit_rent_information',this.value,0); get_unit_load_drop_down_by_id(this.value);\"");
+
+    load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'{{$unit_rent_data->unit_id}}',1,'{{$unit_rent_data->level_id}}','level_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','unit_rent_information',this.value,0);\"");
 
     function get_unit_load_drop_down_by_id(value)
     {
