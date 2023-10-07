@@ -464,4 +464,17 @@ class UnitRentInformationController extends Controller
 
         return view('admin.floor.unit_rent.unit_rent_view',compact('menu_data'));
     }
+
+    public function unit_rent_single_view_page($id){
+
+        $unit_rent_data = UnitRentInformation::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('floor_management.unit_rent.add****floor_management.unit_rent.view');
+
+        return view('admin.floor.unit_rent.unit_rent_single_view',compact('menu_data','unit_rent_data','user_right_data'));
+    }
 }
