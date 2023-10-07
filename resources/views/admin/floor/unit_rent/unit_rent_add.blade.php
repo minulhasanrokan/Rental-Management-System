@@ -222,9 +222,6 @@
                     if(data.alert_type=='success'){
 
                         document.getElementById("unit_rent_form").reset();
-
-                        $("#unit_logo_photo").attr("src","{{asset('uploads/unit/unit_logo.png')}}");
-                        $("#unit_photo_photo").attr("src","{{asset('uploads/unit/unit_logo.png')}}");
                     }
 
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);

@@ -202,8 +202,7 @@
 
                         $('#unit_deatils').summernote('reset');
 
-                        $("#unit_logo_photo").attr("src","{{asset('uploads/unit/unit_logo.png')}}");
-                        $("#unit_photo_photo").attr("src","{{asset('uploads/unit/unit_logo.png')}}");
+                        $("#unit_photo_photo").attr("src","{{asset('uploads/unit/unit_photo.png')}}");
                     }
 
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
