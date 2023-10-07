@@ -115,7 +115,7 @@
                         @foreach($user_right_data as $data)
                             <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$unit_rent_data->id}}','{{$unit_rent_data->unit_rent}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
                         @endforeach
-                        <button type="button" style="float:right" onclick="update_unit_rent_info_data();" class="btn btn-primary">Update Unit Bill Information</button>
+                        <button type="button" style="float:right" onclick="update_unit_rent_info_data();" class="btn btn-primary">Update Unit Rent Information</button>
                     </div>
                 </form>
             </div>

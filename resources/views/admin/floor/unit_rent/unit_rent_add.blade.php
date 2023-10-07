@@ -112,7 +112,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" style="float:right" onclick="save_unit_rent_info_data();" class="btn btn-primary">Add Unit Bill Information</button>
+                        <button type="button" style="float:right" onclick="save_unit_rent_info_data();" class="btn btn-primary">Add Unit Rent Information</button>
                     </div>
                 </form>
             </div>

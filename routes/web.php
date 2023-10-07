@@ -353,5 +353,13 @@ Route::controller(UnitRentInformationController::class)->group(function(){
     Route::get('/dashboard/unit-rent-information-edit/{id?}','unit_rent_single_edit_page')->name('floor_management.unit_rent.edit')->middleware(['checkroute']);
     Route::post('/dashboard/unit-rent-information-edit/{id?}','unit_rent_update')->name('floor_management.unit_rent.edit')->middleware(['checkroute']);
 
+    Route::get('/dashboard/unit-rent-information-delete','unit_rent_delete_page')->name('floor_management.unit_rent.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/unit-rent-information-delete','unit_rent_grid')->name('floor_management.unit_rent.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/unit-rent-information-delete/{id?}','unit_rent_delete')->name('floor_management.unit_rent.delete')->middleware(['checkroute']);
+
+    Route::get('/dashboard/unit-rent-information-view','unit_rent_view_page')->name('floor_management.unit_rent.view')->middleware(['checkroute']);
+    Route::post('/dashboard/unit-rent-information-view','unit_rent_grid')->name('floor_management.unit_rent.view')->middleware(['checkroute']);
+    Route::get('/dashboard/unit-rent-information-view/{id?}','unit_rent_single_view_page')->name('floor_management.unit_rent.view')->middleware(['checkroute']);
+
 });
 
