@@ -345,8 +345,8 @@ Route::controller(UnitController::class)->group(function(){
 
 Route::controller(UnitRentInformationController::class)->group(function(){
 
-    Route::get('/dashboard/unit-rent-information-add','unit_add_page')->name('floor_management.unit_rent.add')->middleware(['checkroute']);
-    Route::post('/dashboard/unit-rent-information-add','unit_store')->name('floor_management.unit_rent.add')->middleware(['checkroute']);
+    Route::get('/dashboard/unit-rent-information-add','unit_rent_add_page')->name('floor_management.unit_rent.add')->middleware(['checkroute']);
+    Route::post('/dashboard/unit-rent-information-add','unit_rent_store')->name('floor_management.unit_rent.add')->middleware(['checkroute']);
 
 });
 
