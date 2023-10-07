@@ -64,7 +64,10 @@ function form_validation(control,msg_text)
         {
             if(cls_arr[n].trim()=="text_boxes_numeric") //if ( type == 'text' || type == 'password' || type == 'textarea' )
             {
-                if (trim(document.getElementById(control[i]).value)=="" || (trim(document.getElementById(control[i]).value)*1)==0)
+
+                var numericOrFloatRegex = /^[+-]?\d+(\.\d+)?$/;
+
+                if (trim(document.getElementById(control[i]).value)=="" || (trim(document.getElementById(control[i]).value)*1)==0 || !numericOrFloatRegex.test(document.getElementById(control[i]).value))
                 {
                     document.getElementById(control[i]).focus();
                     document.getElementById(control[i]).style.backgroundImage=bgcolor;

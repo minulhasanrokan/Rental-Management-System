@@ -697,19 +697,6 @@
             }
         }
     }
-
-    $(document).ready(function() {
-        alert("ddddddd");
-  $(".text_boxes_numeric").click(function() {
-    alert("ddddddd");
-    var contentPanelId = jQuery(this).attr("id");
-    if(document.getElementById(contentPanelId).style.backgroundColor!="")
-        document.getElementById(contentPanelId).style.backgroundColor="";
-         
-});
-});
-
-    
 </script>
 
 
