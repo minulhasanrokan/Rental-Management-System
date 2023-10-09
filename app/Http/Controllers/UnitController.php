@@ -167,8 +167,6 @@ class UnitController extends Controller
 
         $menu_data = $this->common->get_page_menu_grid('floor_management.unit.add');
 
-        $user_config_data = $this->common->get_user_config_data();
-
         $csrf_token = csrf_token();
 
         $draw = $request->draw;

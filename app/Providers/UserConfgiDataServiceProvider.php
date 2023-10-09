@@ -33,7 +33,11 @@ class UserConfgiDataServiceProvider extends ServiceProvider
             $user_config_data['normal_user_type']=$data->normal_user_type;
             $user_config_data['owner_user_type']=$data->owner_user_type;
             $user_config_data['tenant_user_type']=$data->tenant_user_type;
+            $user_config_data['employee_user_type']=$data->employee_user_type;
             $user_config_data['tenant_user_group']=$data->tenant_user_group;
+            $user_config_data['normal_user_group']=$data->normal_user_group;
+            $user_config_data['owner_user_group']=$data->owner_user_group;
+            $user_config_data['employee_user_group']=$data->employee_user_group;
             $user_config_data['add_by']=$data->add_by;
             $user_config_data['edit_by']=$data->edit_by;
             $user_config_data['delete_by']=$data->delete_by;
@@ -47,7 +51,11 @@ class UserConfgiDataServiceProvider extends ServiceProvider
             $user_config_data['normal_user_type']='';
             $user_config_data['owner_user_type']='';
             $user_config_data['tenant_user_type']='';
+            $user_config_data['employee_user_type']='';
             $user_config_data['tenant_user_group']='';
+            $user_config_data['normal_user_group']='';
+            $user_config_data['owner_user_group']='';
+            $user_config_data['employee_user_group']='';
             $user_config_data['add_by']='';
             $user_config_data['edit_by']='';
             $user_config_data['delete_by']='';

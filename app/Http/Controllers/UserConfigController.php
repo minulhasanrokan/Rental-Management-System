@@ -34,7 +34,11 @@ class UserConfigController extends Controller
             $user_config_data['normal_user_type']=$data->normal_user_type;
             $user_config_data['owner_user_type']=$data->owner_user_type;
             $user_config_data['tenant_user_type']=$data->tenant_user_type;
+            $user_config_data['employee_user_type']=$data->employee_user_type;
             $user_config_data['tenant_user_group']=$data->tenant_user_group;
+            $user_config_data['normal_user_group']=$data->normal_user_group;
+            $user_config_data['owner_user_group']=$data->owner_user_group;
+            $user_config_data['employee_user_group']=$data->employee_user_group;
             $user_config_data['add_by']=$data->add_by;
             $user_config_data['edit_by']=$data->edit_by;
             $user_config_data['delete_by']=$data->delete_by;
@@ -47,7 +51,11 @@ class UserConfigController extends Controller
             $user_config_data['normal_user_type']='';
             $user_config_data['owner_user_type']='';
             $user_config_data['tenant_user_type']='';
+            $user_config_data['employee_user_type']='';
             $user_config_data['tenant_user_group']='';
+            $user_config_data['normal_user_group']='';
+            $user_config_data['owner_user_group']='';
+            $user_config_data['employee_user_group']='';
             $user_config_data['add_by']='';
             $user_config_data['edit_by']='';
             $user_config_data['delete_by']='';
@@ -65,7 +73,12 @@ class UserConfigController extends Controller
         $validator = Validator::make($request->all(), [
             'normal_user_type'  => 'required',
             'owner_user_type'   => 'required',
-            'tenant_user_type'  => 'required'
+            'tenant_user_type'  => 'required',
+            'employee_user_type'  => 'required',
+            'tenant_user_group'  => 'required',
+            'normal_user_group'  => 'required',
+            'owner_user_group'  => 'required',
+            'employee_user_group'  => 'required'
         ]);
   
         if ($validator->fails()) {
@@ -111,7 +124,11 @@ class UserConfigController extends Controller
         $data->normal_user_type = $request->normal_user_type;
         $data->owner_user_type = $request->owner_user_type;
         $data->tenant_user_type = $request->tenant_user_type;
+        $data->employee_user_type = $request->employee_user_type;
         $data->tenant_user_group = $request->tenant_user_group;
+        $data->normal_user_group = $request->normal_user_group;
+        $data->owner_user_group = $request->owner_user_group;
+        $data->employee_user_group = $request->employee_user_group;
 
         $data->save();
 

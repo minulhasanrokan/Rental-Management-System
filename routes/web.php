@@ -20,6 +20,7 @@ use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\UnitRentInformationController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -139,6 +140,31 @@ Route::controller(UserController::class)->group(function(){
     Route::post('/dashboard/user-right','user_grid')->name('user_management.user.right')->middleware(['checkroute']);
     Route::get('/dashboard/user-right/{id?}','user_right_setup_page')->name('user_management.user.right')->middleware(['checkroute']);
     Route::post('/dashboard/user-right/{id?}','user_right_store')->name('user_management.user.right')->middleware(['checkroute']);
+});
+
+Route::controller(EmployeeController::class)->group(function(){
+
+    Route::get('/dashboard/employee-add','employee_add_page')->name('user_management.employee.add')->middleware(['checkroute']);
+    Route::post('/dashboard/employee-add','employee_store')->name('user_management.employee.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/employee-edit','employee_edit_page')->name('user_management.employee.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/employee-edit','employee_grid')->name('user_management.employee.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/employee-edit/{id?}','employee_single_edit_page')->name('user_management.employee.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/employee-edit/{id?}','employee_update')->name('user_management.employee.edit')->middleware(['checkroute']);
+
+    Route::get('/dashboard/employee-delete','employee_delete_page')->name('user_management.employee.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/employee-delete','employee_grid')->name('user_management.employee.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/employee-delete/{id?}','employee_delete')->name('user_management.employee.delete')->middleware(['checkroute']);
+
+    Route::get('/dashboard/employee-view','employee_view_page')->name('user_management.employee.view')->middleware(['checkroute']);
+    Route::post('/dashboard/employee-view','employee_grid')->name('user_management.employee.view')->middleware(['checkroute']);
+    Route::get('/dashboard/employee-view/{id?}','employee_single_view_page')->name('user_management.employee.view')->middleware(['checkroute']);
+
+    Route::get('/dashboard/employee-right','employee_right_page')->name('user_management.employee.right')->middleware(['checkroute']);
+    Route::post('/dashboard/employee-right','employee_grid')->name('user_management.employee.right')->middleware(['checkroute']);
+    Route::get('/dashboard/employee-right/{id?}','employee_right_setup_page')->name('user_management.employee.right')->middleware(['checkroute']);
+    Route::post('/dashboard/employee-right/{id?}','employee_right_store')->name('user_management.employee.right')->middleware(['checkroute']);
+
 });
 
 Route::controller(OwnerController::class)->group(function(){
