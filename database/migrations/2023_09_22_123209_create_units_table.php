@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('unit_code')->nullable();
             $table->string('unit_title')->nullable();
             $table->decimal('unit_size', 10, 2);
+            $table->decimal('parking_size', 10, 2);
             $table->text('unit_address')->nullable();
             $table->text('unit_deatils')->nullable();
             $table->string('unit_logo')->nullable();

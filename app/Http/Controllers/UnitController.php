@@ -37,6 +37,7 @@ class UnitController extends Controller
             'unit_code' => 'required|string|max:20',
             'unit_title' => 'required|string|max:250',
             'unit_size' => 'required',
+            'parking_size' => 'required',
             'unit_photo'  => 'required',
         ]);
 
@@ -109,6 +110,7 @@ class UnitController extends Controller
         $data->unit_code = $request->unit_code;
         $data->unit_title = $request->unit_title;
         $data->unit_size = $request->unit_size;
+        $data->parking_size = $request->parking_size;
         $data->unit_deatils = $request->unit_deatils;
         $data->add_by = $user_id;
         $data->created_at = now();
@@ -321,6 +323,7 @@ class UnitController extends Controller
             'unit_code' => 'required|string|max:20',
             'unit_title' => 'required|string|max:250',
             'unit_size' => 'required',
+            'parking_size' => 'required',
             'unit_photo' => $request->input('hidden_unit_photo') === '' ? 'required' : '',
         ]);
 
@@ -420,6 +423,7 @@ class UnitController extends Controller
         $data->unit_code = $request->unit_code;
         $data->unit_title = $request->unit_title;
         $data->unit_size = $request->unit_size;
+        $data->parking_size = $request->parking_size;
         $data->unit_deatils = $request->unit_deatils;
         $data->edit_by = $user_id;
         $data->updated_at = now();

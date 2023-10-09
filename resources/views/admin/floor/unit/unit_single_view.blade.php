@@ -18,6 +18,7 @@
                             <div class="col-md-6"><p style="margin: 0px !important;">Unit Name: {{$unit_data->unit_name}}</p></div>
                             <div class="col-md-6"><p style="margin: 0px !important;">Unit Code: {{$unit_data->unit_code}}</p></div>
                             <div class="col-md-6"><p style="margin: 0px !important;">Unit Size(SFT): {{$unit_data->unit_size}}</p></div>
+                            <div class="col-md-6"><p style="margin: 0px !important;">Parking Size(SFT): {{$unit_data->parking_size}}</p></div>
                             <div class="col-md-6"><p style="margin: 0px !important;">Unit Title: {{$unit_data->unit_title}}</p></div>
                             <div class="col-md-6"><p style="margin: 0px !important;">unit Status: {{$unit_data->status==1?'Active':'Inactive'}}</p></div>
                             <div class="col-md-12"><h3>unit Details:</h3>{!!$unit_data->unit_deatils!!}</div>
