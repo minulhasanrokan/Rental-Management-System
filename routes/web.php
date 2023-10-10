@@ -21,6 +21,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\UnitRentInformationController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\TagOwnerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -386,6 +387,13 @@ Route::controller(UnitRentInformationController::class)->group(function(){
     Route::get('/dashboard/unit-rent-information-view','unit_rent_view_page')->name('floor_management.unit_rent.view')->middleware(['checkroute']);
     Route::post('/dashboard/unit-rent-information-view','unit_rent_grid')->name('floor_management.unit_rent.view')->middleware(['checkroute']);
     Route::get('/dashboard/unit-rent-information-view/{id?}','unit_rent_single_view_page')->name('floor_management.unit_rent.view')->middleware(['checkroute']);
+
+});
+
+Route::controller(TagOwnerController::class)->group(function(){
+
+    Route::get('/dashboard/tag-owner-unit-add','tag_owner_add_page')->name('floor_management.tag_unit_owner.add')->middleware(['checkroute']);
+    Route::post('/dashboard/tag-owner-unit-add','tag_owner_store')->name('floor_management.tag_unit_owner.add')->middleware(['checkroute']);
 
 });
 
