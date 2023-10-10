@@ -260,4 +260,183 @@ class TagOwnerController extends Controller
 
         echo json_encode($response);
     }
+
+    public function tag_owner_single_edit_page($id){
+
+        $tag_owner_data = TagOwner::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('floor_management.tag_unit_owner.add****floor_management.tag_unit_owner.edit');
+
+        return view('admin.floor.tag_owner.tag_owner_edit_view',compact('menu_data','tag_owner_data','user_right_data'));
+    }
+
+    public function tag_owner_update($id, Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'owner_id' => 'required',
+            'building_id' => 'required',
+            'level_id' => 'required',
+            'unit_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
+        $duplicate_status_1 = $this->common->get_duplicate_value('unit_id','tag_owners', $request->unit_id, $request->update_id);
+
+        if($duplicate_status_1>0){
+
+            $notification = array(
+                'message'=> "Duplicate Data Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        DB::beginTransaction();
+
+        $data = TagOwner::where('delete_status',0)
+            ->where('id',$request->update_id)
+            ->first();
+
+        $data->owner_id = $request->owner_id;
+        $data->building_id = $request->building_id;
+        $data->level_id = $request->level_id;
+        $data->unit_id = $request->unit_id;
+        $data->edit_by = $user_id;
+        $data->updated_at = now();
+        $data->edit_status = 1;
+
+        $data->save();
+
+        if($data==true){
+
+            DB::commit();
+
+            $notification = array(
+                'message'=> "Tag Owner Details Updated Successfully",
+                'alert_type'=>'success',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "Tag Owner Details Does Not Updated Successfully",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
+    }
+
+    public function tag_owner_delete_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.floor.tag_owner.tag_owner_delete',compact('menu_data'));
+    }
+
+    public function tag_owner_delete($id){
+
+        $notification = array();
+
+        $data = TagOwner::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+
+        if(empty($data)){
+
+            $notification = array(
+                'message'=> "Tag Owner Data Not Found!!!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            $user_session_data = session()->all();
+
+            $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+            DB::beginTransaction();
+
+            $data->delete_by = $user_id;
+            $data->delete_status = 1;
+            $data->deleted_at = now();
+
+            $data->save();
+
+            if($data==true){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Tag Owner Details Deleted Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Tag Owner Details Not Deleted Successfully",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.floor.tag_owner.tag_owner_delete_alert',compact('menu_data','notification'));
+    }
+
+    public function tag_owner_view_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.floor.tag_owner.tag_owner_view',compact('menu_data'));
+    }
+
+    public function tag_owner_single_view_page($id){
+
+        $tag_owner_data = TagOwner::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('floor_management.tag_unit_owner.add****floor_management.tag_unit_owner.view');
+
+        return view('admin.floor.tag_owner.tag_owner_single_view',compact('menu_data','tag_owner_data','user_right_data'));
+    }
 }

@@ -400,5 +400,13 @@ Route::controller(TagOwnerController::class)->group(function(){
     Route::get('/dashboard/tag-owner-unit-edit/{id?}','tag_owner_single_edit_page')->name('floor_management.tag_unit_owner.edit')->middleware(['checkroute']);
     Route::post('/dashboard/tag-owner-unit-edit/{id?}','tag_owner_update')->name('floor_management.tag_unit_owner.edit')->middleware(['checkroute']);
 
+    Route::get('/dashboard/tag-owner-unit-delete','tag_owner_delete_page')->name('floor_management.tag_unit_owner.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/tag-owner-unit-delete','tag_owner_grid')->name('floor_management.tag_unit_owner.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/tag-owner-unit-delete/{id?}','tag_owner_delete')->name('floor_management.tag_unit_owner.delete')->middleware(['checkroute']);
+
+    Route::get('/dashboard/tag-owner-unit-view','tag_owner_view_page')->name('floor_management.tag_unit_owner.view')->middleware(['checkroute']);
+    Route::post('/dashboard/tag-owner-unit-view','tag_owner_grid')->name('floor_management.tag_unit_owner.view')->middleware(['checkroute']);
+    Route::get('/dashboard/tag-owner-unit-view/{id?}','tag_owner_single_view_page')->name('floor_management.tag_unit_owner.view')->middleware(['checkroute']);
+
 });
 
