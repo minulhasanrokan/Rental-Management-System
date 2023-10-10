@@ -395,5 +395,10 @@ Route::controller(TagOwnerController::class)->group(function(){
     Route::get('/dashboard/tag-owner-unit-add','tag_owner_add_page')->name('floor_management.tag_unit_owner.add')->middleware(['checkroute']);
     Route::post('/dashboard/tag-owner-unit-add','tag_owner_store')->name('floor_management.tag_unit_owner.add')->middleware(['checkroute']);
 
+    Route::get('/dashboard/tag-owner-unit-edit','tag_owner_edit_page')->name('floor_management.tag_unit_owner.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/tag-owner-unit-edit','tag_owner_grid')->name('floor_management.tag_unit_owner.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/tag-owner-unit-edit/{id?}','tag_owner_single_edit_page')->name('floor_management.tag_unit_owner.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/tag-owner-unit-edit/{id?}','tag_owner_update')->name('floor_management.tag_unit_owner.edit')->middleware(['checkroute']);
+
 });
 

@@ -1,3 +1,15 @@
+@php
+    
+    $user_type = $user_config_data['owner_user_type'];
+
+    $owner_data = DB::table('users')
+        ->where('users.status',1)
+        ->where('users.user_type',$user_type)
+        ->where('users.delete_status',0)
+        ->orderBy('users.name', 'ASC')
+        ->get()->toArray();
+
+@endphp
 <div class="container-fluid" style="padding-top: 5px !important;">
     <div class="row">
         <!-- left column -->
@@ -19,7 +31,14 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="owner_id">Owner Name <span style="color:red;">*</span></label>
-                                    <div id="owner_id_container"></div>
+                                    <div id="owner_id_container">
+                                        <select class="form-control select" style="width: 100%;" name="owner_id" id="owner_id">
+                                            <option value="">Select Owner</option>
+                                            @foreach($owner_data as $data)
+                                            <option value="{{$data->id}}">{{$data->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="input-error" style="display:none; color: red;" id="owner_id_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -158,8 +177,6 @@
             }
         }
     }
-
-    load_drop_down('users','id,name','owner_id','owner_id_container','Select Owner',0,1,'',0,'');
 
     load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'',0,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\')"');
 
