@@ -439,4 +439,11 @@ class TagOwnerController extends Controller
 
         return view('admin.floor.tag_owner.tag_owner_single_view',compact('menu_data','tag_owner_data','user_right_data'));
     }
+
+    public function tag_owner_transfer_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.floor.tag_owner.tag_owner_transfer',compact('menu_data'));
+    }
 }
