@@ -411,6 +411,11 @@ Route::controller(TagOwnerController::class)->group(function(){
     Route::get('/dashboard/tag-owner-unit-transfer','tag_owner_transfer_page')->name('floor_management.tag_unit_owner.transfer')->middleware(['checkroute']);
     Route::post('/dashboard/tag-owner-unit-transfer','tag_owner_grid')->name('floor_management.tag_unit_owner.transfer')->middleware(['checkroute']);
     Route::get('/dashboard/tag-owner-unit-transfer/{id?}','tag_owner_transfer')->name('floor_management.tag_unit_owner.transfer')->middleware(['checkroute']);
+    Route::post('/dashboard/tag-owner-unit-transfer/{id?}','tag_owner_transfer_update')->name('floor_management.tag_unit_owner.transfer')->middleware(['checkroute']);
+
+    Route::get('/dashboard/tag-owner-transfer-view','tag_owner_transfer_view_page')->name('floor_management.tag_unit_owner.transfer_view')->middleware(['checkroute']);
+    Route::post('/dashboard/tag-owner-transfer-view','tag_owner_transfer_grid')->name('floor_management.tag_unit_owner.transfer_view')->middleware(['checkroute']);
+    Route::get('/dashboard/tag-owner-transfer-view/{id?}','tag_owner_transfer_single_view_page')->name('floor_management.tag_unit_owner.transfer_view')->middleware(['checkroute']);
 
 });
 

@@ -110,6 +110,8 @@ class CommonController extends Controller
         $user_right_data = array();
         $user_right = array();
 
+        $route_name_arr = explode("****",$route_name);
+
         if($user_session_data[config('app.app_session_name')]['super_admin_status']==1){
 
             $user_right_data = DB::table('right_details as a')
@@ -117,7 +119,7 @@ class CommonController extends Controller
                 ->select('a.id  as r_id', 'a.cat_id', 'a.r_name', 'a.r_title', 'a.r_action_name', 'a.r_route_name', 'a.r_details', 'a.r_short_order', 'a.r_icon')
                 ->where('a.status',1)
                 ->where('b.r_route_name',$action_name)
-                ->where('a.r_route_name','!=' ,$route_name)
+                ->whereNotIn('a.r_route_name',$route_name_arr)
                 ->where('a.delete_status',0)
                 ->orderBy('a.r_short_order', 'ASC')
                 ->get();
@@ -133,7 +135,7 @@ class CommonController extends Controller
                 ->where('a.status',1)
                 ->where('c.user_id',$user_id)
                 ->where('b.r_route_name',$action_name)
-                ->where('a.r_route_name','!=' ,$route_name)
+                ->whereNotIn('a.r_route_name',$route_name_arr)
                 ->where('a.delete_status',0)
                 ->orderBy('a.r_short_order', 'ASC')
                 ->get();
