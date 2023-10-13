@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('unit_deatils')->nullable();
             $table->string('unit_logo')->nullable();
             $table->string('unit_photo')->nullable();
+            $table->integer('rent_status')->default(0);
             $table->integer('add_by')->nullable();
             $table->integer('edit_by')->nullable();
             $table->integer('delete_by')->nullable();

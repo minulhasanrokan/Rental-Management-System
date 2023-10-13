@@ -22,6 +22,7 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\UnitRentInformationController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\TagOwnerController;
+use App\Http\Controllers\RentalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -419,3 +420,9 @@ Route::controller(TagOwnerController::class)->group(function(){
 
 });
 
+Route::controller(RentalController::class)->group(function(){
+
+    Route::get('/dashboard/rental-add','unit_rent_add_page')->name('rent_management.rental.add')->middleware(['checkroute']);
+    Route::post('/dashboard/rental-add','unit_rent_store')->name('rent_management.rental.add')->middleware(['checkroute']);
+
+});
