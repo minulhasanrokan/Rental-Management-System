@@ -43,7 +43,7 @@ Route::controller(CommonController::class)->group(function(){
 
     Route::get('/dashboard/get-duplicate-value/{field_name?}/{table_name?}/{value?}/{data_id?}','get_duplicate_value')->name('admin.get.duplicate.value');
 
-    Route::get('/dashboard/get-duplicate-value-two/{field_name?}/{field_name2?}/{table_name?}/{value?}/{value2?}/{data_id?}','get_duplicate_value_two')->name('admin.get.duplicate.value.two');
+    Route::get('/dashboard/get-duplicate-value-two/{field_name?}/{field_name2?}/{table_name?}/{value?}/{value2?}/{data_id?}/{other_status?}/{other_value?}','get_duplicate_value_two')->name('admin.get.duplicate.value.two');
 
     Route::get('/dashboard/get-parameter-data/{table_name?}/{field_name?}/{value?}','get_parameter_data')->name('admin.get.parameter.data');
     Route::get('/dashboard/get-parameter-data-by-id/{table_name?}/{field_name?}/{value?}/{data_value?}/{data_name?}','get_parameter_data_by_id')->name('admin.get.parameter.data.by.id');
@@ -424,5 +424,7 @@ Route::controller(RentalController::class)->group(function(){
 
     Route::get('/dashboard/rental-add','unit_rent_add_page')->name('rent_management.rental.add')->middleware(['checkroute']);
     Route::post('/dashboard/rental-add','unit_rent_store')->name('rent_management.rental.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/get-rent-info-value/{field_name?}','get_rent_info_value')->name('rent_management.get.rent_info.value');
 
 });

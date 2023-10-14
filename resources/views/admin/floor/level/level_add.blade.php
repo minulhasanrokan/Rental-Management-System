@@ -26,14 +26,14 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="level_name">Level Name <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="level_name" name="level_name" placeholder="Enter Level Name" onkeyup="check_duplicate_value_with_two_filed('level_name','building_id','Levels',this.value,0);" required>
+                                    <input type="text" class="form-control" id="level_name" name="level_name" placeholder="Enter Level Name" onkeyup="check_duplicate_value_with_two_filed('level_name','building_id','Levels',this.value,0,'','');" required>
                                     <div class="input-error" style="display:none; color: red;" id="level_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="level_code">Level Code <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="level_code" name="level_code" placeholder="Enter Level Code" onkeyup="check_duplicate_value_with_two_filed('level_code','building_id','Levels',this.value,0);" required>
+                                    <input type="text" class="form-control" id="level_code" name="level_code" placeholder="Enter Level Code" onkeyup="check_duplicate_value_with_two_filed('level_code','building_id','Levels',this.value,0,'','');" required>
                                     <div class="input-error" style="display:none; color: red;" id="level_code_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>

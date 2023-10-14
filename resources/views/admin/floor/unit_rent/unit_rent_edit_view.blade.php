@@ -239,14 +239,14 @@
 
     load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$unit_rent_data->building_id}}',1,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\')"');
 
-    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$unit_rent_data->level_id}}',1,'{{$unit_rent_data->building_id}}','building_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','unit_rent_information',this.value,0); get_unit_load_drop_down_by_id(this.value);\"");
+    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$unit_rent_data->level_id}}',1,'{{$unit_rent_data->building_id}}','building_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','unit_rent_information',this.value,0,'',''); get_unit_load_drop_down_by_id(this.value);\"");
 
-    load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'{{$unit_rent_data->unit_id}}',1,'{{$unit_rent_data->level_id}}','level_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','unit_rent_information',this.value,0);\"");
+    load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'{{$unit_rent_data->unit_id}}',1,'{{$unit_rent_data->level_id}}','level_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','unit_rent_information',this.value,0,'','');\"");
 
     function get_unit_load_drop_down_by_id(value)
     {
 
-        load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'',0,value,'level_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','unit_rent_information',this.value,0);\"");
+        load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'',0,value,'level_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','unit_rent_information',this.value,0,'','');\"");
     }
 
 </script>****{{csrf_token()}}

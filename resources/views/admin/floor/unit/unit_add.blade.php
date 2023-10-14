@@ -37,14 +37,14 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="unit_name">Unit Name <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="Enter Unit Name" onkeyup="check_duplicate_value_with_two_filed('unit_name','building_id,level_id','units',this.value,0);" required>
+                                    <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="Enter Unit Name" onkeyup="check_duplicate_value_with_two_filed('unit_name','building_id,level_id','units',this.value,0,'','');" required>
                                     <div class="input-error" style="display:none; color: red;" id="unit_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="unit_code">Unit Code <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="unit_code" name="unit_code" placeholder="Enter Unit Code" onkeyup="check_duplicate_value_with_two_filed('unit_code','building_id,level_id','units',this.value,0);" required>
+                                    <input type="text" class="form-control" id="unit_code" name="unit_code" placeholder="Enter Unit Code" onkeyup="check_duplicate_value_with_two_filed('unit_code','building_id,level_id','units',this.value,0,'','');" required>
                                     <div class="input-error" style="display:none; color: red;" id="unit_code_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="unit_title">Unit Title <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="unit_title" name="unit_title" placeholder="Enter Unit Title" onkeyup="check_duplicate_value_with_two_filed('unit_title','building_id,level_id','units',this.value,0);" required>
+                                    <input type="text" class="form-control" id="unit_title" name="unit_title" placeholder="Enter Unit Title" onkeyup="check_duplicate_value_with_two_filed('unit_title','building_id,level_id','units',this.value,0,'','');" required>
                                     <div class="input-error" style="display:none; color: red;" id="unit_title_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>

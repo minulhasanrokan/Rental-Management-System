@@ -237,7 +237,7 @@
     function get_unit_load_drop_down_by_id(value)
     {
 
-        load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'',0,value,'level_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','unit_rent_information',this.value,0);\"");
+        load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'',0,value,'level_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','unit_rent_information',this.value,0,'','');\"");
     }
 
 </script>****{{csrf_token()}}

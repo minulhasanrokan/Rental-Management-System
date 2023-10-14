@@ -280,7 +280,7 @@
         }
     }
 
-    function check_duplicate_value_with_two_filed(field_name,field_name2,table_name,value,data_id){
+    function check_duplicate_value_with_two_filed(field_name,field_name2,table_name,value,data_id,other_status,other_value){
 
         var value2 = 0;
 
@@ -313,10 +313,20 @@
         }
 
         input_field_name = field_name;
+
+        if(other_status=='')
+        {
+            other_status = 0;
+        }
+
+        if(other_value=='')
+        {
+            other_value = 0;
+        }
  
-        var data="&field_name="+field_name+"&table_name="+table_name+"&value="+value+"&data_id="+data_id+"&value2="+value2+"&field_name2="+field_name2;
+        var data="&field_name="+field_name+"&table_name="+table_name+"&value="+value+"&data_id="+data_id+"&value2="+value2+"&field_name2="+field_name2+"&other_status="+other_status+"&other_value="+other_value;
  
-        http.open("GET","{{route('admin.get.duplicate.value.two')}}"+"/"+field_name+"/"+field_name2+"/"+table_name+"/"+value+"/"+value2+"/"+data_id,true);
+        http.open("GET","{{route('admin.get.duplicate.value.two')}}"+"/"+field_name+"/"+field_name2+"/"+table_name+"/"+value+"/"+value2+"/"+data_id+"/"+other_status+"/"+other_value,true);
         http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         http.send(data);
         http.onreadystatechange = check_duplicate_value_with_two_filed_reponse;

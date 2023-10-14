@@ -225,7 +225,7 @@ class CommonController extends Controller
         return $data;
     }
 
-    public function get_duplicate_value_two($field_name, $field_name2, $table_name, $value, $value2, $data_id){
+    public function get_duplicate_value_two($field_name, $field_name2, $table_name, $value, $value2, $data_id,$other_status,$other_value){
 
         $field_name = trim($field_name);
         $field_name2 = trim($field_name2);
@@ -233,6 +233,22 @@ class CommonController extends Controller
         $value = urldecode(trim($value));
         $value2 = urldecode(trim($value2));
         $data_id = trim($data_id);
+
+        $other_status_arr = array();
+        $other_value_arr = array();
+
+        if($other_status!='' && $other_status!=0)
+        {
+            $other_status_arr = explode("****",$other_status);
+            $other_value_arr = explode("****",$other_value);
+        }
+
+        $where_other_arr = array();
+
+        foreach($other_status_arr as $key=>$other_data)
+        {
+            $where_other_arr[$other_data] = $other_value_arr[$key];
+        }
 
         $field_name2_arr = explode(",",$field_name2);
         $value2_arr = explode(",",$value2);
@@ -248,7 +264,8 @@ class CommonController extends Controller
             ->select('id')
             ->where('delete_status',0)
             ->where($field_name,$value)
-            ->where($where_arr);
+            ->where($where_arr)
+            ->where($where_other_arr);
 
         if($data_id!=0 && $data_id!='' && $data_id>0){
                 
