@@ -427,4 +427,22 @@ Route::controller(RentalController::class)->group(function(){
 
     Route::get('/dashboard/get-rent-info-value/{field_name?}','get_rent_info_value')->name('rent_management.get.rent_info.value');
 
+    Route::get('/dashboard/rental-view','rental_view_page')->name('rent_management.rental.view')->middleware(['checkroute']);
+    Route::post('/dashboard/rental-view','rental_grid')->name('rent_management.rental.view')->middleware(['checkroute']);
+    Route::get('/dashboard/rental-view/{id?}','rental_single_view_page')->name('rent_management.rental.view')->middleware(['checkroute']);
+
+    Route::get('/dashboard/rental-edit','rental_edit_page')->name('rent_management.rental.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/rental-edit','rental_grid')->name('rent_management.rental.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/rental-edit/{id?}','rental_single_edit_page')->name('rent_management.rental.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/rental-edit/{id?}','rental_update')->name('rent_management.rental.edit')->middleware(['checkroute']);
+
+    Route::get('/dashboard/rental-delete','rental_delete_page')->name('rent_management.rental.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/rental-delete','rental_grid')->name('rent_management.rental.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/rental-delete/{id?}','rental_delete')->name('rent_management.rental.delete')->middleware(['checkroute']);
+
+    Route::get('/dashboard/rental-change-rent','rental_change_page')->name('rent_management.rental.change')->middleware(['checkroute']);
+    Route::post('/dashboard/rental-change-rent','rental_grid')->name('rent_management.rental.change')->middleware(['checkroute']);
+    Route::get('/dashboard/rental-change-rent/{id?}','rental_single_change_page')->name('rent_management.rental.change')->middleware(['checkroute']);
+    Route::post('/dashboard/rental-change-rent/{id?}','rental_change')->name('rent_management.rental.change')->middleware(['checkroute']);
+
 });

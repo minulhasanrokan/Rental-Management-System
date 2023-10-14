@@ -30,7 +30,7 @@ return new class extends Migration
             $table->integer('edit_by')->nullable();
             $table->integer('delete_by')->nullable();
             $table->integer('status')->default(1);
-            $table->integer('close_status')->default(1);
+            $table->integer('close_status')->default(0);
             $table->date('start_date')->nullable();
             $table->date('close_date')->nullable();
             $table->integer('update_status')->default(0);
