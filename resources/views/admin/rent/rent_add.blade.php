@@ -49,7 +49,7 @@
                                     <div class="input-error" style="display:none; color: red;" id="building_id_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="level_id">Level <span style="color:red;">*</span></label>
                                     <div id="level_id_container">
@@ -60,15 +60,21 @@
                                     <div class="input-error" style="display:none; color: red;" id="level_id_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="unit_id">Unit <span style="color:red;">*</span></label>
                                     <div id="unit_id_container">
-                                        <select class="form-control select" style="width: 100%;" name="unit_id" id="unit_id">
+                                        <select class="form-control select" style="width: 100%; float: left;" name="unit_id" id="unit_id">
                                             <option value="">Select Unit</option>
                                         </select>
                                     </div>
                                     <div class="input-error" style="display:none; color: red;" id="unit_id_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="unit_id">&nbsp;</label>
+                                    <button type="button" style="float:right; width:100%; float:right;" onclick="get_rent_information();" class="btn btn-primary">Load Rent Info</button>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -269,16 +275,24 @@
     }
 
 
-    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'',0,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\')"');
+    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'',0,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\',\'\',\'\')"');
 
     function get_unit_load_drop_down_by_id(value)
     {
 
-        load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'',0,value,'level_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','rents',this.value,0,'close_status','0'); get_rent_information(this.value);\"");
+        load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'',0,value,'level_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','rents',this.value,0,'close_status','0');\"",'rent_status','0');
     }
 
-    function get_rent_information(value)
+    function get_rent_information()
     {
+        var value = $("#unit_id").val();
+
+        if(value=='' || value==0)
+        {
+            alert("Please Select Unit First");
+            return false;
+        }
+
         var data="&value="+value;
 
         if(value=='')
@@ -294,7 +308,32 @@
 
     function get_rent_information_reponse(){
 
-        
+
+        if(http.readyState == 4)
+        {
+            var reponse=trim(http.responseText).split("\*\*\*\*");
+
+            if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+
+                alert(http.responseText);
+
+                location.replace('<?php echo url('/dashboard/logout');?>');
+            }
+            else{
+
+                var data = JSON.parse(reponse[0]);
+
+                $("#unit_rent").val(data[0]['unit_rent']);
+                $("#water_bill").val(data[0]['water_bill']);
+                $("#electricity_bill").val(data[0]['electricity_bill']);
+                $("#gas_bill").val(data[0]['gas_bill']);
+                $("#security_bill").val(data[0]['security_bill']);
+                $("#maintenance_bill").val(data[0]['maintenance_bill']);
+                $("#service_bill").val(data[0]['service_bill']);
+                $("#charity_bill").val(data[0]['charity_bill']);
+                $("#other_bill").val(data[0]['other_bill']);
+            }           
+        }
     }
 
 </script>****{{csrf_token()}}

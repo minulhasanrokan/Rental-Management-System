@@ -478,7 +478,7 @@ class CommonController extends Controller
         return $parameter_data;
     }
 
-    public function get_parameter_data_by_id($table_name,$field_name,$value,$data_value,$data_name){
+    public function get_parameter_data_by_id($table_name,$field_name,$value,$data_value,$data_name,$other_status,$other_value){
 
         $table_name = trim($table_name);
         $field_name = trim($field_name);
@@ -504,6 +504,22 @@ class CommonController extends Controller
             }
         }
 
+        $other_status_arr = array();
+        $other_value_arr = array();
+
+        if($other_status!='' && $other_status!=0)
+        {
+            $other_status_arr = explode("****",$other_status);
+            $other_value_arr = explode("****",$other_value);
+        }
+
+        $where_other_arr = array();
+
+        foreach($other_status_arr as $key=>$other_data)
+        {
+            $where_other_arr[$other_data] = $other_value_arr[$key];
+        }
+
         $parameter_data = array();
 
         if($value!='' && $value!=0){
@@ -516,6 +532,7 @@ class CommonController extends Controller
             $parameter_data = DB::table($table_name)
                 ->select($select)
                 ->where($where_arr)
+                ->where($where_other_arr)
                 ->where($data_name,$data_value)
                 ->orWhere('id',$value)
                 ->get()
@@ -526,6 +543,7 @@ class CommonController extends Controller
             $parameter_data = DB::table($table_name)
                 ->select($select)
                 ->where($data_name,$data_value)
+                ->where($where_other_arr)
                 ->where('delete_status',0)
                 ->where('status',1)
                 ->get()

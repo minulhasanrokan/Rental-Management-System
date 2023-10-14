@@ -237,16 +237,16 @@
         }
     }
 
-    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$tag_owner_data->building_id}}',1,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\')"');
+    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$tag_owner_data->building_id}}',1,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\',\'\',\'\')"');
 
-    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$tag_owner_data->level_id}}',1,'{{$tag_owner_data->building_id}}','building_id','');
+    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$tag_owner_data->level_id}}',1,'{{$tag_owner_data->building_id}}','building_id','','','');
 
-    load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'{{$tag_owner_data->unit_id}}',1,'{{$tag_owner_data->level_id}}','level_id',"");
+    load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'{{$tag_owner_data->unit_id}}',1,'{{$tag_owner_data->level_id}}','level_id',"",'','');
 
     function get_unit_load_drop_down_by_id(value)
     {
 
-        load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'',0,value,'level_id',"");
+        load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'',0,value,'level_id',"",'','');
     }
 
 </script>****{{csrf_token()}}

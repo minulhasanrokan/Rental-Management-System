@@ -33,7 +33,7 @@ return new class extends Migration
             $table->integer('close_status')->default(1);
             $table->date('start_date')->nullable();
             $table->date('close_date')->nullable();
-            $table->integer('update_status')->default(1);
+            $table->integer('update_status')->default(0);
             $table->integer('edit_status')->default(0);
             $table->integer('delete_status')->default(0);
             $table->timestamps();

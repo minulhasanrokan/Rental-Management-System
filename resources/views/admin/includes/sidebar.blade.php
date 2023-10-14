@@ -496,7 +496,7 @@
         }
     }
 
-    function load_drop_down_by_id(table_name, field_name, id, container, title, select_status,status, selected_value, disabale_status,data_value,data_name,on_change) {
+    function load_drop_down_by_id(table_name, field_name, id, container, title, select_status,status, selected_value, disabale_status,data_value,data_name,on_change,other_status,other_value) {
 
         var value = 0;
 
@@ -510,9 +510,19 @@
             data_value = 0;
         }
 
+        if(other_status=='')
+        {
+            other_status = 0;
+        }
+
+        if(other_value=='')
+        {
+            other_value = 0;
+        }
+
         var http = createObject();
 
-        var data="&table_name="+table_name+"&field_name="+field_name+"&selected_value="+selected_value+"&data_value="+data_value+"&data_name="+data_name;
+        var data="&table_name="+table_name+"&field_name="+field_name+"&selected_value="+selected_value+"&data_value="+data_value+"&data_name="+data_name+"&other_status="+other_status+"&other_value="+other_value;
 
         if( http ) {
             
@@ -586,7 +596,7 @@
                 }
             }
 
-            http.open("GET","{{route('admin.get.parameter.data.by.id')}}"+"/"+table_name+"/"+field_name+"/"+value+"/"+data_value+"/"+data_name,true);
+            http.open("GET","{{route('admin.get.parameter.data.by.id')}}"+"/"+table_name+"/"+field_name+"/"+value+"/"+data_value+"/"+data_name+"/"+other_status+"/"+other_value,true);
             http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             http.send(data);
         }

@@ -227,8 +227,8 @@
         }
     }
 
-    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$unit_data->building_id}}',0,"onchange=\"load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'',0,this.value,'building_id','')\"");
+    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$unit_data->building_id}}',0,"onchange=\"load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'',0,this.value,'building_id','','','')\"");
 
-    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$unit_data->level_id}}',0,'{{$unit_data->building_id}}','building_id','');
+    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$unit_data->level_id}}',0,'{{$unit_data->building_id}}','building_id','','','');
 
 </script>****{{csrf_token()}}
