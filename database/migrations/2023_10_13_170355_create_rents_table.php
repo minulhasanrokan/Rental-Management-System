@@ -26,6 +26,7 @@ return new class extends Migration
             $table->decimal('service_bill', 10, 2);
             $table->decimal('charity_bill', 10, 2);
             $table->decimal('other_bill', 10, 2);
+            $table->decimal('discount', 10, 2)->default(0.00);
             $table->integer('add_by')->nullable();
             $table->integer('edit_by')->nullable();
             $table->integer('delete_by')->nullable();

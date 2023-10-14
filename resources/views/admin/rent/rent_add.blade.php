@@ -74,7 +74,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="unit_id">&nbsp;</label>
-                                    <button type="button" style="float:right; width:100%; float:right;" onclick="get_rent_information();" class="btn btn-primary">Load Rent Info</button>
+                                    <button type="button" id="load_rent_info_button" style="float:right; width:100%; float:right;" onclick="get_rent_information();" class="btn btn-primary">Load Rent Info</button>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -142,8 +142,15 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
+                                    <label for="discount">Discount</label>
+                                    <input type="text" class="form-control text_boxes_numeric" id="discount" name="discount" placeholder="Enter Discount">
+                                    <div class="input-error" style="display:none; color: red;" id="other_bill_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
                                     <label for="start_date">Rent Start Date <span style="color:red;">*</span></label>
-                                    <input type="date" class="form-control" id="start_date" name="start_date" placeholder="Enter Employee Date Of Birth" required>
+                                    <input type="date" class="form-control" id="start_date" name="start_date" placeholder="Enter Rent Start Date" required>
                                     <div class="input-error" style="display:none; color: red;" id="start_date_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -184,6 +191,7 @@
         var service_bill = $("#service_bill").val();
         var charity_bill = $("#charity_bill").val();
         var other_bill = $("#other_bill").val();
+        var discount = $("#discount").val();
         var start_date = $("#start_date").val();
 
         var token = $('meta[name="csrf-token"]').attr('content');
@@ -203,6 +211,7 @@
         form_data.append("service_bill", service_bill);
         form_data.append("charity_bill", charity_bill);
         form_data.append("other_bill", other_bill);
+        form_data.append("discount", discount);
         form_data.append("start_date", start_date);
 
         form_data.append("_token", token);

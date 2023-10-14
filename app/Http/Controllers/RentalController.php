@@ -109,6 +109,7 @@ class RentalController extends Controller
         $data->charity_bill = $request->charity_bill;
         $data->other_bill = $request->other_bill;
         $data->start_date = $request->start_date;
+        $data->discount = $request->discount;
         $data->add_by = $user_id;
         $data->created_at = now();
 
@@ -215,7 +216,7 @@ class RentalController extends Controller
                 ->join('levels as c', 'c.id', '=', 'a.level_id')
                 ->join('units as d', 'd.id', '=', 'a.unit_id')
                 ->join('users as e', 'e.id', '=', 'a.tenant_id')
-                ->select('a.id', 'a.unit_rent', 'a.water_bill', 'a.electricity_bill', 'a.gas_bill', 'a.security_bill', 'a.maintenance_bill', 'a.service_bill', 'a.charity_bill', 'a.other_bill', 'a.status', 'a.close_status', 'b.building_name', 'c.level_name', 'd.unit_name', 'e.name', 'a.start_date', 'a.close_date')
+                ->select('a.id', 'a.unit_rent', 'a.water_bill', 'a.electricity_bill', 'a.gas_bill', 'a.security_bill', 'a.maintenance_bill', 'a.service_bill', 'a.charity_bill', 'a.other_bill', 'a.status', 'a.close_status', 'b.building_name', 'c.level_name', 'd.unit_name', 'e.name', 'a.start_date', 'a.close_date', 'a.discount')
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
                 ->where('c.delete_status',0)
@@ -252,7 +253,7 @@ class RentalController extends Controller
                 ->join('levels as c', 'c.id', '=', 'a.level_id')
                 ->join('units as d', 'd.id', '=', 'a.unit_id')
                 ->join('users as e', 'e.id', '=', 'a.tenant_id')
-                ->select('a.id', 'a.unit_rent', 'a.water_bill', 'a.electricity_bill', 'a.gas_bill', 'a.security_bill', 'a.maintenance_bill', 'a.service_bill', 'a.charity_bill', 'a.other_bill', 'a.status', 'a.close_status', 'b.building_name', 'c.level_name', 'd.unit_name', 'e.name', 'a.start_date', 'a.close_date')
+                ->select('a.id', 'a.unit_rent', 'a.water_bill', 'a.electricity_bill', 'a.gas_bill', 'a.security_bill', 'a.maintenance_bill', 'a.service_bill', 'a.charity_bill', 'a.other_bill', 'a.status', 'a.close_status', 'b.building_name', 'c.level_name', 'd.unit_name', 'e.name', 'a.start_date', 'a.close_date', 'a.discount')
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
                 ->where('c.delete_status',0)
@@ -283,7 +284,7 @@ class RentalController extends Controller
             $record_data[$sl]['electricity_bill'] = $value->electricity_bill;
             $record_data[$sl]['gas_bill'] = $value->gas_bill;
             $record_data[$sl]['other'] = $value->security_bill+$value->maintenance_bill+$value->service_bill+$value->charity_bill+$value->other_bill;
-            $record_data[$sl]['total'] = $value->unit_rent+$value->water_bill+$value->electricity_bill+$value->gas_bill+$value->security_bill+$value->maintenance_bill+$value->service_bill+$value->charity_bill+$value->other_bill;
+            $record_data[$sl]['total'] = $value->unit_rent+$value->water_bill+$value->electricity_bill+$value->gas_bill+$value->security_bill+$value->maintenance_bill+$value->service_bill+$value->charity_bill+$value->other_bill-$value->discount;
             $record_data[$sl]['building_name'] = $value->building_name;
             $record_data[$sl]['level_name'] = $value->level_name;
             $record_data[$sl]['unit_name'] = $value->unit_name;
@@ -483,6 +484,7 @@ class RentalController extends Controller
         $data->charity_bill = $request->charity_bill;
         $data->other_bill = $request->other_bill;
         $data->start_date = $request->start_date;
+        $data->discount = $request->discount;
         $data->edit_by = $user_id;
         $data->updated_at = now();
         $data->edit_status = 1;
@@ -516,4 +518,18 @@ class RentalController extends Controller
 
         return response()->json($notification);
     }
+
+    public function rental_single_view_page($id){
+
+        $rent_data = Rent::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('rent_management.rental.add****rent_management.rental.view');
+
+        return view('admin.rent.rent_single_view',compact('menu_data','rent_data','user_right_data'));
+    }
+
 }

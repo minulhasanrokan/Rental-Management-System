@@ -18,7 +18,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Add Rent Information</h3>
+                    <h3 class="card-title">Edit Rent Information</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -75,7 +75,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="unit_id">&nbsp;</label>
-                                    <button type="button" style="float:right; width:100%; float:right;" onclick="get_rent_information();" class="btn btn-primary">Load Rent Info</button>
+                                    <button type="button" id="load_rent_info_button" style="float:right; width:100%; float:right;" onclick="get_rent_information();" class="btn btn-primary">Load Rent Info</button>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -143,8 +143,15 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
+                                    <label for="discount">Discount</label>
+                                    <input type="text" class="form-control text_boxes_numeric" id="discount" name="discount" placeholder="Enter Discount" value="{{$rent_data->discount}}">
+                                    <div class="input-error" style="display:none; color: red;" id="other_bill_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
                                     <label for="start_date">Rent Start Date <span style="color:red;">*</span></label>
-                                    <input type="date" class="form-control" id="start_date" name="start_date" placeholder="Enter Employee Date Of Birth" value="{{$rent_data->start_date}}" required>
+                                    <input type="date" class="form-control" id="start_date" name="start_date" placeholder="Enter Rent Start Date" readonly value="{{$rent_data->start_date}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="start_date_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -169,6 +176,8 @@
 <script>
 
     $("#tenant_id").val('{{$rent_data->tenant_id}}');
+    $("#tenant_id").attr('disabled','disabled');
+    $("#load_rent_info_button").attr('disabled','disabled');
 
     function save_unit_rent_info_data(){
 
@@ -190,6 +199,7 @@
         var service_bill = $("#service_bill").val();
         var charity_bill = $("#charity_bill").val();
         var other_bill = $("#other_bill").val();
+        var discount = $("#discount").val();
         var start_date = $("#start_date").val();
 
         var token = $('meta[name="csrf-token"]').attr('content');
@@ -210,6 +220,7 @@
         form_data.append("charity_bill", charity_bill);
         form_data.append("other_bill", other_bill);
         form_data.append("start_date", start_date);
+        form_data.append("discount", discount);
         form_data.append("update_id", '{{$rent_data->id}}');
 
         form_data.append("_token", token);
@@ -276,11 +287,11 @@
         }
     }
 
-    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$rent_data->building_id}}',0,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\',\'\',\'\')"');
+    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$rent_data->building_id}}',1,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\',\'\',\'\')"');
 
-    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$rent_data->level_id}}',0,'{{$rent_data->building_id}}','building_id','onchange=get_unit_load_drop_down_by_id(this.value)','','');
+    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$rent_data->level_id}}',1,'{{$rent_data->building_id}}','building_id','onchange=get_unit_load_drop_down_by_id(this.value)','','');
 
-    load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'{{$rent_data->unit_id}}',0,'{{$rent_data->level_id}}','level_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','rents',this.value,'{{$rent_data->id}}','close_status','0');empty_rent_info();\"",'','');
+    load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'{{$rent_data->unit_id}}',1,'{{$rent_data->level_id}}','level_id',"onchange=\"check_duplicate_value_with_two_filed('unit_id','building_id,level_id','rents',this.value,'{{$rent_data->id}}','close_status','0');empty_rent_info();\"",'','');
 
     function get_unit_load_drop_down_by_id(value){
 
