@@ -23,6 +23,7 @@ use App\Http\Controllers\UnitRentInformationController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\TagOwnerController;
 use App\Http\Controllers\RentalController;
+use App\Http\Controllers\RentProcessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -445,4 +446,14 @@ Route::controller(RentalController::class)->group(function(){
     Route::get('/dashboard/rental-change-rent/{id?}','rental_single_change_page')->name('rent_management.rental.change')->middleware(['checkroute']);
     Route::post('/dashboard/rental-change-rent/{id?}','rental_change')->name('rent_management.rental.change')->middleware(['checkroute']);
 
+});
+
+Route::controller(RentProcessController::class)->group(function(){
+
+    Route::get('/dashboard/rental-process-add','rent_process_add_page')->name('rent_management.process.add')->middleware(['checkroute']);
+    Route::post('/dashboard/rental-process-add','rent_process_store')->name('rent_management.process.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/rent-process-view','tag_owner_view_page')->name('rent_management.process.view')->middleware(['checkroute']);
+    Route::post('/dashboard/rent-process-view','tag_owner_grid')->name('rent_management.process.view')->middleware(['checkroute']);
+    Route::get('/dashboard/rent-process-view/{id?}','tag_owner_single_view_page')->name('rent_management.process.view')->middleware(['checkroute']);
 });
