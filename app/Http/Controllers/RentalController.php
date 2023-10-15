@@ -119,6 +119,28 @@ class RentalController extends Controller
             ->where('id', $request->unit_id)
             ->update(['rent_status' => 1]);
 
+        $data2 = DB::table('rent_histories')
+            ->insert([
+                'rent_id' => $data->id,
+                'tenant_id' => $data->tenant_id,
+                'building_id' => $data->building_id,
+                'level_id' => $data->level_id,
+                'unit_id' => $data->unit_id,
+                'unit_rent' => $data->unit_rent,
+                'water_bill' => $data->water_bill,
+                'electricity_bill' => $data->electricity_bill,
+                'gas_bill' => $data->gas_bill,
+                'security_bill' => $data->security_bill,
+                'maintenance_bill' => $data->maintenance_bill,
+                'service_bill' => $data->service_bill,
+                'charity_bill' => $data->charity_bill,
+                'other_bill' => $data->other_bill,
+                'start_date' => $data->start_date,
+                'discount' => $data->discount,
+                'add_by' => $data->add_by,
+                'created_at' => $data->created_at
+            ]);
+
         if($data==true && $data1==true){
 
             DB::commit();
@@ -495,6 +517,31 @@ class RentalController extends Controller
             ->where('id', $request->unit_id)
             ->update(['rent_status' => 1]);
 
+        $data3 = DB::table('rent_histories')
+            ->insert([
+                'rent_id' => $data->id,
+                'tenant_id' => $data->tenant_id,
+                'building_id' => $data->building_id,
+                'level_id' => $data->level_id,
+                'unit_id' => $data->unit_id,
+                'unit_rent' => $data->unit_rent,
+                'water_bill' => $data->water_bill,
+                'electricity_bill' => $data->electricity_bill,
+                'gas_bill' => $data->gas_bill,
+                'security_bill' => $data->security_bill,
+                'maintenance_bill' => $data->maintenance_bill,
+                'service_bill' => $data->service_bill,
+                'charity_bill' => $data->charity_bill,
+                'other_bill' => $data->other_bill,
+                'start_date' => $data->start_date,
+                'discount' => $data->discount,
+                'add_by' => $data->add_by,
+                'edit_by' => $data->edit_by,
+                'created_at' => $data->created_at,
+                'updated_at' => $data->updated_at,
+                'edit_status' => $data->edit_status
+            ]);
+
         if($data==true){
 
             DB::commit();
@@ -530,6 +577,158 @@ class RentalController extends Controller
         $user_right_data = $this->common->get_page_menu_single_view('rent_management.rental.add****rent_management.rental.view');
 
         return view('admin.rent.rent_single_view',compact('menu_data','rent_data','user_right_data'));
+    }
+
+    public function rental_single_change_page($id){
+
+        $rent_data = Rent::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('rent_management.rental.add****rent_management.rental.change');
+
+        return view('admin.rent.rent_single_change_page',compact('menu_data','rent_data','user_right_data'));
+    }
+
+    public function rental_change($id, Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'tenant_id' => 'required',
+            'building_id' => 'required',
+            'level_id' => 'required',
+            'unit_id' => 'required',
+            'unit_rent' => 'required',
+            'water_bill' => 'required',
+            'electricity_bill' => 'required',
+            'gas_bill' => 'required',
+            'security_bill' => 'required',
+            'maintenance_bill' => 'required',
+            'service_bill' => 'required',
+            'charity_bill' => 'required',
+            'other_bill' => 'required',
+            'start_date' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
+        $duplicate_status_1 = $this->common->get_duplicate_value_two('unit_id','building_id,level_id','rents', $request->unit_id, $request->building_id.','.$request->level_id, $request->update_id,'close_status','0');
+
+        if($duplicate_status_1>0){
+
+            $notification = array(
+                'message'=> "Duplicate Unit Rent Information Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        DB::beginTransaction();
+
+        $data = Rent::where('delete_status',0)
+            ->where('id',$request->update_id)
+            ->first();
+
+        if($request->unit_id!=$data->unit_id){
+
+            $data1 = DB::table('units')
+                ->where('id', $data->unit_id)
+                ->update(['rent_status' => 0]);
+        }
+
+        $data->tenant_id = $request->tenant_id;
+        $data->building_id = $request->building_id;
+        $data->level_id = $request->level_id;
+        $data->unit_id = $request->unit_id;
+        $data->unit_rent = $request->unit_rent;
+        $data->water_bill = $request->water_bill;
+        $data->electricity_bill = $request->electricity_bill;
+        $data->gas_bill = $request->gas_bill;
+        $data->security_bill = $request->security_bill;
+        $data->maintenance_bill = $request->maintenance_bill;
+        $data->service_bill = $request->service_bill;
+        $data->charity_bill = $request->charity_bill;
+        $data->other_bill = $request->other_bill;
+        $data->start_date = $request->start_date;
+        $data->discount = $request->discount;
+        $data->edit_by = $user_id;
+        $data->updated_at = now();
+        $data->edit_status = 1;
+
+        $data->save();
+
+        $data2 = DB::table('units')
+            ->where('id', $request->unit_id)
+            ->update(['rent_status' => 1]);
+
+        $data3 = DB::table('rent_histories')
+            ->insert([
+                'rent_id' => $data->id,
+                'tenant_id' => $data->tenant_id,
+                'building_id' => $data->building_id,
+                'level_id' => $data->level_id,
+                'unit_id' => $data->unit_id,
+                'unit_rent' => $data->unit_rent,
+                'water_bill' => $data->water_bill,
+                'electricity_bill' => $data->electricity_bill,
+                'gas_bill' => $data->gas_bill,
+                'security_bill' => $data->security_bill,
+                'maintenance_bill' => $data->maintenance_bill,
+                'service_bill' => $data->service_bill,
+                'charity_bill' => $data->charity_bill,
+                'other_bill' => $data->other_bill,
+                'start_date' => $data->start_date,
+                'discount' => $data->discount,
+                'add_by' => $data->add_by,
+                'edit_by' => $data->edit_by,
+                'created_at' => $data->created_at,
+                'updated_at' => $data->updated_at,
+                'edit_status' => $data->edit_status
+            ]);
+
+        if($data==true){
+
+            DB::commit();
+
+            $notification = array(
+                'message'=> "Rent Details Changed Successfully",
+                'alert_type'=>'success',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "Rent Details Does Not Changed Successfully",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
     }
 
 }
