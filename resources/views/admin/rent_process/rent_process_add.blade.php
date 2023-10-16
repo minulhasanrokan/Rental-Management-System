@@ -58,8 +58,50 @@
             return false;
         }
 
+        var today = new Date();
+        var firstDayOfCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
         var month_id = $("#month_id").val();
         var year_id = $("#year_id").val();
+
+        var month = parseInt(month_id);
+        var year = parseInt(year_id);
+
+        var today = new Date(); 
+        var currentYear = today.getFullYear();
+        var currentMonth = today.getMonth() + 1;
+
+        if(year>currentYear){
+
+            alert("You Can Not Process Advance Year Data");
+            
+            $("#year_id").val('');
+            $("#year_id").focus();
+            
+            return false;
+        }
+
+        var lastDayOfTheMonth = new Date(year, month, 0);
+
+        var last_date_of_month = lastDayOfTheMonth.toISOString().slice(0, 10);
+
+        var today = new Date();  // Get the current date
+
+        today.setDate(1);
+
+        var formattedFirstDay = today.toISOString().slice(0, 10);
+
+        if(last_date_of_month>formattedFirstDay){
+
+            alert("You Can Not Process Advance Month Data");
+
+            $("#month_id").val('');
+            $("#year_id").val('');
+
+            $("#month_id").focus();
+            
+            return false;
+        }
 
         var token = $('meta[name="csrf-token"]').attr('content');
 
