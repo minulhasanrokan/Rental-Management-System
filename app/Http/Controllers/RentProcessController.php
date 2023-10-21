@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\RentBill;
+use App\Models\VatTax;
 use DB;
 
 class RentProcessController extends Controller
@@ -52,6 +53,23 @@ class RentProcessController extends Controller
 
         $month = $request->month_id;
         $year = $request->year_id;
+
+        $tax_data = VatTax::where('delete_status',0)
+            ->where('month_id',$month)
+            ->where('year_id',$year)
+            ->where('status',1)
+            ->first();
+
+        if(empty($tax_data)){
+
+            $notification = array(
+                'message'=> "No Vat Tax Information Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
 
         $rent_bill_data = DB::table('rent_bills as a')
             ->select('a.*')
@@ -122,9 +140,19 @@ class RentProcessController extends Controller
 
         $i=0;
 
+        $total_amount = 0;
+        $vat_amount = 0;
+        $tax_amount = $tax_data->tax_amount;
+
         foreach($rent_data as $data){
 
             if (isset($owner_data_arr[$data->building_id][$data->level_id][$data->unit_id])){
+
+                $total_amount = ($data->unit_rent+$data->water_bill+$data->electricity_bill+$data->gas_bill+$data->security_bill+$data->maintenance_bill+$data->service_bill+$data->charity_bill+$data->other_bill-$data->discount);
+
+                $vat_amount = ($tax_amount / 100) * $total_amount;
+
+                $total_amount = $total_amount+$vat_amount;
 
                 $rent_data_arr[$i]['tenant_id'] = $data->tenant_id;
                 $rent_data_arr[$i]['building_id'] = $data->building_id;
@@ -140,6 +168,8 @@ class RentProcessController extends Controller
                 $rent_data_arr[$i]['charity_bill'] = $data->charity_bill;
                 $rent_data_arr[$i]['other_bill'] = $data->other_bill;
                 $rent_data_arr[$i]['discount'] = $data->discount;
+                $rent_data_arr[$i]['tax_amount'] = $tax_amount;
+                $rent_data_arr[$i]['total_amount'] = $total_amount;
                 $rent_data_arr[$i]['add_by'] = $user_id;
                 $rent_data_arr[$i]['month_id'] = $month;
                 $rent_data_arr[$i]['invoice_no'] = '';

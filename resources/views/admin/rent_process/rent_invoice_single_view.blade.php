@@ -10,7 +10,7 @@
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
                 </div>
-                <div class="invoice p-3 mb-3">
+                <div class="invoice p-3 mb-3" style="background-image: url({{asset('backend/dist/img')}}/{{$rent_bill_data->paid_status==1?'paid.png':'due.png'}}); background-repeat: no-repeat; background-position: center;">
                     <!-- info row -->
                     <div class="row invoice-info">
                         <div class="col-sm-4 invoice-col">
@@ -122,12 +122,20 @@
                                     <td>{{$rent_bill_data->unit_rent+$rent_bill_data->water_bill+$rent_bill_data->electricity_bill+$rent_bill_data->gas_bill+$rent_bill_data->security_bill+$rent_bill_data->maintenance_bill+$rent_bill_data->service_bill+$rent_bill_data->charity_bill+$rent_bill_data->other_bill-$rent_bill_data->discount}}</td>
                                 </tr>
                                 <tr>
-                                    <th>Tax (9.3%)</th>
-                                    <td>$10.34</td>
+                                    <th>Tax ({{$rent_bill_data->tax_amount}}%)</th>
+                                    <td>
+                                        @php
+
+                                            $total_amount = ($rent_bill_data->unit_rent+$rent_bill_data->water_bill+$rent_bill_data->electricity_bill+$rent_bill_data->gas_bill+$rent_bill_data->security_bill+$rent_bill_data->maintenance_bill+$rent_bill_data->service_bill+$rent_bill_data->charity_bill+$rent_bill_data->other_bill-$rent_bill_data->discount);
+
+                                            echo $vat_amount = ($rent_bill_data->tax_amount / 100) * $total_amount;
+
+                                        @endphp
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Total:</th>
-                                    <td>$265.24</td>
+                                    <td>{{$rent_bill_data->total_amount}}</td>
                                 </tr>
                             </table>
                         </div>

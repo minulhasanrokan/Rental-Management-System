@@ -55,9 +55,11 @@
                                     <tr>
                                         <td style="text-align:left;">Discount:</td>
                                         <td style="text-align:right;">{{$rent_bill_data->discount}}</td>
+                                         <td style="text-align:left;">Vat-Tax:</td>
+                                        <td style="text-align:right;">{{$rent_bill_data->tax_amount}}(%)</td>
                                         
                                         <td style="text-align:left;">Total Bill:</td>
-                                        <td style="text-align:right;">{{$rent_bill_data->unit_rent+$rent_bill_data->water_bill+$rent_bill_data->electricity_bill+$rent_bill_data->gas_bill+$rent_bill_data->security_bill+$rent_bill_data->maintenance_bill+$rent_bill_data->service_bill+$rent_bill_data->charity_bill+$rent_bill_data->other_bill-$rent_bill_data->discount}}</td>
+                                        <td style="text-align:right;">{{$rent_bill_data->total_amount}}</td>
                                     </tr>
                                 </table>
                             </div>
