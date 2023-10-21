@@ -24,7 +24,7 @@
                                     <th width="100">Total Bill</th>
                                     <th width="100">Paid</th>
                                     <th width="50">Status</th>
-                                    <th width="150">Action</th>
+                                    <th width="300">Action</th>
                                 </tr>
                             </thead>
                         </table>

@@ -34,8 +34,10 @@ return new class extends Migration
             $table->integer('month_id')->nullable();
             $table->integer('year_id')->nullable();
             $table->integer('add_by')->nullable();
+            $table->integer('receive_by')->nullable();
             $table->integer('edit_by')->nullable();
             $table->integer('delete_by')->nullable();
+            $table->date('payment_date')->nullable();
             $table->integer('status')->default(1);
             $table->integer('paid_status')->default(0);
             $table->integer('edit_status')->default(0);

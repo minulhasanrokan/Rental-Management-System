@@ -449,4 +449,94 @@ class RentProcessController extends Controller
 
         return view('admin.rent_process.rent_invoice_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
     }
+
+    public function rent_collection_add_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.rent_process.rent_collection_add',compact('menu_data'));
+    }
+
+    public function rent_collection_single_edit_page($id){
+
+        $rent_bill_data = RentBill::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $system_data = $this->common->get_system_data();
+        $user_data = $this->common->get_data_by_id('users',$rent_bill_data->tenant_id,'');
+        $month_data = $this->common->get_data_by_id('months',$rent_bill_data->month_id,'');
+
+        $building_data = $this->common->get_data_by_id('buildings',$rent_bill_data->building_id,'');
+        $level_data = $this->common->get_data_by_id('levels',$rent_bill_data->level_id,'');
+        $unit_data = $this->common->get_data_by_id('units',$rent_bill_data->unit_id,'');
+
+        $user_right_data = $this->common->get_page_menu_single_view('rent_management.process.add****rent_management.process.rent_collection');
+
+        return view('admin.rent_process.rent_collection_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
+    }
+
+    public function rent_collection_update ($id, Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'update_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        DB::beginTransaction();
+
+        $data = RentBill::where('delete_status',0)
+            ->where('id',$request->update_id)
+            ->first();
+
+        $data->paid_status = 1;
+        $data->receive_by = $user_id;
+        $data->payment_date = now();
+
+        $data->save();
+
+        if($data==true){
+
+            DB::commit();
+
+            $notification = array(
+                'message'=> "Rent Bill Paid Successfully",
+                'alert_type'=>'success',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "Rent Bill Does Not Paid Successfully",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
+    }
 }
