@@ -5,7 +5,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Add Rent Information</h3>
+                    <h3 class="card-title">Invoice Rent Information</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -126,10 +126,6 @@
                                     <td>$10.34</td>
                                 </tr>
                                 <tr>
-                                    <th>Shipping:</th>
-                                    <td>$5.80</td>
-                                </tr>
-                                <tr>
                                     <th>Total:</th>
                                     <td>$265.24</td>
                                 </tr>
@@ -137,25 +133,20 @@
                         </div>
                     </div>
                 </div>
-<!-- /.row -->
-
-<!-- this row will not appear when printing -->
-<div class="row no-print">
-    <div class="col-12">
-      <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-      <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-        Payment
-    </button>
-    <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-        <i class="fas fa-download"></i> Generate PDF
-    </button>
-</div>
-</div>
-</div>
+                <div class="row no-print">
+                    <div class="col-12">
+                        @foreach($user_right_data as $data)
+                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$rent_bill_data->id}}','{{$rent_bill_data->unit_rent}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
+                        @endforeach
+                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                            <i class="fas fa-download"></i> Generate PDF
+                        </button>
+                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
             </div>
-            <!-- /.card -->
         </div>
-        <!--/.col (left) -->
     </div>
-    <!-- /.row -->
 </div>****{{csrf_token()}}

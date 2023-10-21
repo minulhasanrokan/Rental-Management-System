@@ -24,6 +24,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\TagOwnerController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\RentProcessController;
+use App\Http\Controllers\VatTaxController;
 
 /*
 |--------------------------------------------------------------------------
@@ -460,4 +461,20 @@ Route::controller(RentProcessController::class)->group(function(){
     Route::get('/dashboard/rent-process-invoice','rent_invoice_view_page')->name('rent_management.process.invoice')->middleware(['checkroute']);
     Route::post('/dashboard/rent-process-invoice','rent_invoice_grid')->name('rent_management.process.invoice')->middleware(['checkroute']);
     Route::get('/dashboard/rent-process-invoice/{id?}','rent_invoice_single_view_page')->name('rent_management.process.invoice')->middleware(['checkroute']);
+});
+
+Route::controller(VatTaxController::class)->group(function(){
+
+    Route::get('/dashboard/tax-add','tax_add_page')->name('reference_data.tax.add')->middleware(['checkroute']);
+    Route::post('/dashboard/tax-add','tax_store')->name('reference_data.tax.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/tax-view','tax_view_page')->name('reference_data.tax.view')->middleware(['checkroute']);
+    Route::post('/dashboard/tax-view','tax_grid')->name('reference_data.tax.view')->middleware(['checkroute']);
+    Route::get('/dashboard/tax-view/{id?}','tax_single_view_page')->name('reference_data.tax.view')->middleware(['checkroute']);
+
+    Route::get('/dashboard/tax-edit','tax_edit_page')->name('reference_data.tax.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/tax-edit','tax_grid')->name('reference_data.tax.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/tax-edit/{id?}','tax_single_edit_page')->name('reference_data.tax.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/tax-edit/{id?}','tax_update')->name('reference_data.tax.edit')->middleware(['checkroute']);
+
 });
