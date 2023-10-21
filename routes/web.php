@@ -456,4 +456,8 @@ Route::controller(RentProcessController::class)->group(function(){
     Route::get('/dashboard/rent-process-view','rent_process_view_page')->name('rent_management.process.view')->middleware(['checkroute']);
     Route::post('/dashboard/rent-process-view','rent_process_grid')->name('rent_management.process.view')->middleware(['checkroute']);
     Route::get('/dashboard/rent-process-view/{id?}','rent_process_single_view_page')->name('rent_management.process.view')->middleware(['checkroute']);
+
+    Route::get('/dashboard/rent-process-invoice','rent_invoice_view_page')->name('rent_management.process.invoice')->middleware(['checkroute']);
+    Route::post('/dashboard/rent-process-invoice','rent_invoice_grid')->name('rent_management.process.invoice')->middleware(['checkroute']);
+    Route::get('/dashboard/rent-process-invoice/{id?}','rent_invoice_single_view_page')->name('rent_management.process.invoice')->middleware(['checkroute']);
 });

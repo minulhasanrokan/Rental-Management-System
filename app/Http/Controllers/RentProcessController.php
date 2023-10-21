@@ -141,9 +141,10 @@ class RentProcessController extends Controller
                 $rent_data_arr[$i]['other_bill'] = $data->other_bill;
                 $rent_data_arr[$i]['discount'] = $data->discount;
                 $rent_data_arr[$i]['add_by'] = $user_id;
-                $rent_data_arr[$i]['created_at'] = now();
                 $rent_data_arr[$i]['month_id'] = $month;
+                $rent_data_arr[$i]['invoice_no'] = '';
                 $rent_data_arr[$i]['year_id'] = $year;
+                $rent_data_arr[$i]['created_at'] = now();
 
                 $rent_data_arr[$i]['owner_id'] = $owner_data_arr[$data->building_id][$data->level_id][$data->unit_id];
 
@@ -389,5 +390,33 @@ class RentProcessController extends Controller
         $user_right_data = $this->common->get_page_menu_single_view('rent_management.process.add****rent_management.process.view');
 
         return view('admin.rent_process.rent_process_single_view',compact('menu_data','rent_bill_data','user_right_data'));
+    }
+
+    public function rent_invoice_view_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.rent_process.rent_invoice_view',compact('menu_data'));
+    }
+
+    public function rent_invoice_single_view_page($id){
+
+        $rent_bill_data = RentBill::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $system_data = $this->common->get_system_data();
+        $user_data = $this->common->get_data_by_id('users',$rent_bill_data->tenant_id,'');
+        $month_data = $this->common->get_data_by_id('months',$rent_bill_data->month_id,'');
+
+        $building_data = $this->common->get_data_by_id('buildings',$rent_bill_data->building_id,'');
+        $level_data = $this->common->get_data_by_id('levels',$rent_bill_data->level_id,'');
+        $unit_data = $this->common->get_data_by_id('units',$rent_bill_data->unit_id,'');
+
+        $user_right_data = $this->common->get_page_menu_single_view('rent_management.process.add****rent_management.process.invoice');
+
+        return view('admin.rent_process.rent_invoice_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
     }
 }

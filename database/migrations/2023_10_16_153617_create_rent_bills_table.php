@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('rent_bills', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_no')->nullable();
             $table->integer('owner_id')->nullable();
             $table->integer('tenant_id')->nullable();
             $table->integer('building_id')->nullable();

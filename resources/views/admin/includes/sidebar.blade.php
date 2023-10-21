@@ -188,6 +188,7 @@
         var to_find = r_title.toUpperCase();
 
         const regex = new RegExp('\\b' + find_value + '\\b', 'gi');
+
         const matches = to_find.match(regex);
 
         if (matches && name!=''){
@@ -200,6 +201,23 @@
             }
         }
 
+        var find_value1 = "INVOICE";
+
+        var to_find1 = r_title.toUpperCase();
+
+        const regex1 = new RegExp('\\b' + find_value1 + '\\b', 'gi');
+
+        const matches1 = to_find1.match(regex1);
+
+        if (matches1 && name!=''){
+
+            //const result = window.confirm("Do You Want To Delete This ("+name+")?");
+
+            /*if(!result){
+
+                return false;
+            }*/
+        }
 
         var name_details = '';
 
