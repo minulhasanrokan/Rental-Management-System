@@ -247,6 +247,13 @@ class VatTaxController extends Controller
         return view('admin.reference.tax.tax_edit',compact('menu_data'));
     }
 
+    public function tax_delete_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.reference.tax.tax_delete',compact('menu_data'));
+    }
+
     public function tax_single_edit_page($id){
 
         $tax_data = VatTax::where('delete_status',0)
@@ -352,5 +359,75 @@ class VatTaxController extends Controller
         }
 
         return response()->json($notification);
+    }
+
+    public function tax_single_view_page($id){
+
+        $tax_data = VatTax::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('reference_data.tax.add****reference_data.tax.view');
+
+        return view('admin.reference.tax.tax_single_view',compact('menu_data','tax_data','user_right_data'));
+    }
+
+    public function tax_delete($id){
+
+        $notification = array();
+
+        $data = VatTax::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+
+        if(empty($data)){
+
+            $notification = array(
+                'message'=> "Vat Tax Data Not Found!!!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            $user_session_data = session()->all();
+
+            $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+            DB::beginTransaction();
+
+            $data->delete_by = $user_id;
+            $data->delete_status = 1;
+            $data->deleted_at = now();
+
+            $data->save();
+
+            if($data==true){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Vat Tax Details Deleted Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Vat Tax Details Not Deleted Successfully",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.reference.tax.tax_delete_alert',compact('menu_data','notification'));
     }
 }

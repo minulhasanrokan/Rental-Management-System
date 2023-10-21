@@ -477,4 +477,8 @@ Route::controller(VatTaxController::class)->group(function(){
     Route::get('/dashboard/tax-edit/{id?}','tax_single_edit_page')->name('reference_data.tax.edit')->middleware(['checkroute']);
     Route::post('/dashboard/tax-edit/{id?}','tax_update')->name('reference_data.tax.edit')->middleware(['checkroute']);
 
+    Route::get('/dashboard/tax-delete','tax_delete_page')->name('reference_data.tax.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/tax-delete','tax_grid')->name('reference_data.tax.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/tax-delete/{id?}','tax_delete')->name('reference_data.tax.delete')->middleware(['checkroute']);
+
 });

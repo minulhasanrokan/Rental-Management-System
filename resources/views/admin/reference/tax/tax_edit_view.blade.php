@@ -37,7 +37,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="tax_amount">Vat Tax Amount(%) <span style="color:red;">*</span></label>
-                                    <input type="text" onchange="check_vat_amount()" class="form-control text_boxes_numeric" id="tax_amount" name="tax_amount" value="{{$tax_data->tax_amount}}" placeholder="Enter Vat Tax Amount" required>
+                                    <input type="text" onkeyup="check_vat_amount()" class="form-control text_boxes_numeric" id="tax_amount" name="tax_amount" value="{{$tax_data->tax_amount}}" placeholder="Enter Vat Tax Amount" required>
                                     <div class="input-error" style="display:none; color: red;" id="tax_amount_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -45,6 +45,9 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
+                         @foreach($user_right_data as $data)
+                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$tax_data->id}}','{{$tax_data->month_id}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
+                        @endforeach
                         <button type="button" style="float:right" onclick="save_vat_tax_info_data();" class="btn btn-primary">Update Vat Tax Information</button>
                     </div>
                 </form>
