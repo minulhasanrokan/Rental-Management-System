@@ -73,7 +73,7 @@
                 <td>{{$rent_bill_data->discount}}</td>
             </tr>
             <tr class="item">
-                <td>Tax</td>
+                <td>Tax ({{$rent_bill_data->tax_amount}}%)</td>
                 <td>
                     @php
 
