@@ -149,7 +149,7 @@
                         <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
                             <a style="text-decoration:none; color: white;" href="{{route('rent_management.process.print',$rent_bill_data->id)}}/1"><i class="fas fa-download"></i> Generate PDF</a>
                         </button>
-                        <button onclick="print_invoice({{$rent_bill_data->id}},1)" type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                        <button onclick="print_invoice({{$rent_bill_data->id}},0)" type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
                           <i class="fas fa-print"></i> Print
                         </button>
                     </div>

@@ -493,7 +493,7 @@ class RentProcessController extends Controller
         $level_data = $this->common->get_data_by_id('levels',$rent_bill_data->level_id,'');
         $unit_data = $this->common->get_data_by_id('units',$rent_bill_data->unit_id,'');
 
-        if($status==111111110){
+        if($status==0){
 
             return view('admin.rent_process.invoice_print',compact('rent_bill_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
         }
