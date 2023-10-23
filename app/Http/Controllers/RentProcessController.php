@@ -501,7 +501,7 @@ class RentProcessController extends Controller
 
             $pdf = PDF::loadView('admin.rent_process.invoice_print',compact('rent_bill_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
      
-            return $pdf->download('itsolutionstuff.pdf');
+            return $pdf->download($rent_bill_data->invoice_no.'.pdf');
         }
     }
 
