@@ -462,6 +462,8 @@ Route::controller(RentProcessController::class)->group(function(){
     Route::post('/dashboard/rent-process-invoice','rent_invoice_grid')->name('rent_management.process.invoice')->middleware(['checkroute']);
     Route::get('/dashboard/rent-process-invoice/{id?}','rent_invoice_single_view_page')->name('rent_management.process.invoice')->middleware(['checkroute']);
 
+    Route::get('/dashboard/rent-process-print/{id?}/{status?}','rent_invoice_single_print')->name('rent_management.process.print');
+
     Route::get('/dashboard/rent-collection-add','rent_collection_add_page')->name('rent_management.process.rent_collection')->middleware(['checkroute']);
     Route::post('/dashboard/rent-collection-add','rent_process_grid')->name('rent_management.process.rent_collection')->middleware(['checkroute']);
     Route::get('/dashboard/rent-collection-add/{id?}','rent_collection_single_edit_page')->name('rent_management.process.rent_collection')->middleware(['checkroute']);

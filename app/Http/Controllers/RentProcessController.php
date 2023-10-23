@@ -417,7 +417,7 @@ class RentProcessController extends Controller
     
         $menu_data = $this->common->get_page_menu();
 
-        $user_right_data = $this->common->get_page_menu_single_view('rent_management.process.add****rent_management.process.view');
+        $user_right_data = $this->common->get_page_menu_single_view('rent_management.process.add****rent_management.process.view****rent_management.process.rent_collection');
 
         return view('admin.rent_process.rent_process_single_view',compact('menu_data','rent_bill_data','user_right_data'));
     }
@@ -445,7 +445,7 @@ class RentProcessController extends Controller
         $level_data = $this->common->get_data_by_id('levels',$rent_bill_data->level_id,'');
         $unit_data = $this->common->get_data_by_id('units',$rent_bill_data->unit_id,'');
 
-        $user_right_data = $this->common->get_page_menu_single_view('rent_management.process.add****rent_management.process.invoice');
+        $user_right_data = $this->common->get_page_menu_single_view('rent_management.process.add****rent_management.process.invoice****rent_management.process.rent_collection');
 
         return view('admin.rent_process.rent_invoice_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
     }
@@ -461,7 +461,7 @@ class RentProcessController extends Controller
 
         $rent_bill_data = RentBill::where('delete_status',0)
             ->where('id',$id)
-            ->first();
+            ->first(); 
     
         $menu_data = $this->common->get_page_menu();
 
@@ -473,9 +473,27 @@ class RentProcessController extends Controller
         $level_data = $this->common->get_data_by_id('levels',$rent_bill_data->level_id,'');
         $unit_data = $this->common->get_data_by_id('units',$rent_bill_data->unit_id,'');
 
-        $user_right_data = $this->common->get_page_menu_single_view('rent_management.process.add****rent_management.process.rent_collection');
+        $user_right_data = $this->common->get_page_menu_single_view('rent_management.process.add****rent_management.process.rent_collection****rent_management.process.rent_collection');
 
         return view('admin.rent_process.rent_collection_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
+    }
+
+    public function rent_invoice_single_print($id,$status){
+
+        $rent_bill_data = RentBill::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+
+        $system_data = $this->common->get_system_data();
+        $user_data = $this->common->get_data_by_id('users',$rent_bill_data->tenant_id,'');
+        $month_data = $this->common->get_data_by_id('months',$rent_bill_data->month_id,'');
+
+        $building_data = $this->common->get_data_by_id('buildings',$rent_bill_data->building_id,'');
+        $level_data = $this->common->get_data_by_id('levels',$rent_bill_data->level_id,'');
+        $unit_data = $this->common->get_data_by_id('units',$rent_bill_data->unit_id,'');
+
+        return view('admin.rent_process.invoice_print',compact('rent_bill_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
+
     }
 
     public function rent_collection_update ($id, Request $request){
