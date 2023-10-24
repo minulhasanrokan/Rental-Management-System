@@ -24,7 +24,7 @@
                                     <th width="100">Mobile</th>
                                     <th width="150">Enrty</th>
                                     <th width="150">Out</th>
-                                    <th width="200">Action</th>
+                                    <th width="250">Action</th>
                                 </tr>
                             </thead>
                         </table>
@@ -50,7 +50,7 @@
             "colReorder": true,
             "processing": true,
             "ajax":{
-                "url": "{{route('visitor_management.visitor.edit')}}",
+                "url": "{{route('visitor_management.visitor.delete')}}",
                 "dataType": "json",
                 "type": "POST",
                 "data":{ _token: token},

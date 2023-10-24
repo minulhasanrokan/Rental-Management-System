@@ -512,4 +512,8 @@ Route::controller(VisitorController::class)->group(function(){
     Route::get('/dashboard/visitor-edit/{id?}','visitor_single_edit_page')->name('visitor_management.visitor.edit')->middleware(['checkroute']);
     Route::post('/dashboard/visitor-edit/{id?}','visitor_update')->name('visitor_management.visitor.edit')->middleware(['checkroute']);
 
+    Route::get('/dashboard/visitor-delete','visitor_delete_page')->name('visitor_management.visitor.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/visitor-delete','visitor_grid')->name('visitor_management.visitor.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/visitor-delete/{id?}','visitor_delete')->name('visitor_management.visitor.delete')->middleware(['checkroute']);
+
 });
