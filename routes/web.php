@@ -503,4 +503,13 @@ Route::controller(VisitorController::class)->group(function(){
     Route::get('/dashboard/visitor-add','visitor_add_page')->name('visitor_management.visitor.add')->middleware(['checkroute']);
     Route::post('/dashboard/visitor-add','visitor_store')->name('visitor_management.visitor.add')->middleware(['checkroute']);
 
+    Route::get('/dashboard/visitor-view','visitor_view_page')->name('visitor_management.visitor.view')->middleware(['checkroute']);
+    Route::post('/dashboard/visitor-view','visitor_grid')->name('visitor_management.visitor.view')->middleware(['checkroute']);
+    Route::get('/dashboard/visitor-view/{id?}','visitor_single_view_page')->name('visitor_management.visitor.view')->middleware(['checkroute']);
+
+    Route::get('/dashboard/visitor-edit','visitor_edit_page')->name('visitor_management.visitor.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/visitor-edit','visitor_grid')->name('visitor_management.visitor.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/visitor-edit/{id?}','visitor_single_edit_page')->name('visitor_management.visitor.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/visitor-edit/{id?}','visitor_update')->name('visitor_management.visitor.edit')->middleware(['checkroute']);
+
 });

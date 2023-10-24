@@ -108,7 +108,7 @@ class RentalController extends Controller
         $data->charity_bill = $request->charity_bill;
         $data->other_bill = $request->other_bill;
         $data->start_date = $request->start_date;
-        $data->discount = $request->discount;
+        $data->discount = $request->discount==''?0:$request->discount;
         $data->add_by = $user_id;
         $data->created_at = now();
 
@@ -525,7 +525,7 @@ class RentalController extends Controller
         $data->charity_bill = $request->charity_bill;
         $data->other_bill = $request->other_bill;
         $data->start_date = $request->start_date;
-        $data->discount = $request->discount;
+        $data->discount = $request->discount==''?0:$request->discount;
         $data->edit_by = $user_id;
         $data->updated_at = now();
         $data->edit_status = 1;

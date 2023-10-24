@@ -19,42 +19,42 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="entry_date">Entry Date <span style="color:red;">*</span></label>
-                                    <input type="date" class="form-control" id="entry_date" name="entry_date" placeholder="Enter Entry Date" required>
+                                    <input type="date" class="form-control" id="entry_date" name="entry_date" placeholder="Enter Entry Date" value="{{$visitor_data->entry_date}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="entry_date_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="entry_time">Entry Time <span style="color:red;">*</span></label>
-                                    <input type="time" class="form-control" id="entry_time" name="entry_time" placeholder="Enter Entry Date" required>
+                                    <input type="time" class="form-control" id="entry_time" name="entry_time" placeholder="Enter Entry Date" value="{{$visitor_data->entry_time}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="entry_time_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="visitor_name">Visitor Name <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="visitor_name" name="visitor_name" placeholder="Enter Visitor Name" required>
+                                    <input type="text" class="form-control" id="visitor_name" name="visitor_name" placeholder="Enter Visitor Name" value="{{$visitor_data->visitor_name}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="visitor_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="visitor_mobile">Visitor Mobile <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="visitor_mobile" name="visitor_mobile" placeholder="Enter Visitor Mobile" required>
+                                    <input type="text" class="form-control" id="visitor_mobile" name="visitor_mobile" placeholder="Enter Visitor Mobile" value="{{$visitor_data->visitor_mobile}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="visitor_mobile_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="visitor_address">Visitor Address <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="visitor_address" name="visitor_address" placeholder="Enter Visitor Address" required>
+                                    <input type="text" class="form-control" id="visitor_address" name="visitor_address" placeholder="Enter Visitor Address" value="{{$visitor_data->visitor_address}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="visitor_address_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="visitor_reason">Visit Reason</label>
-                                    <textarea class="form-control" id="visitor_reason" name="visitor_reason"></textarea>
+                                    <textarea class="form-control" id="visitor_reason" name="visitor_reason">{{$visitor_data->visitor_reason}}</textarea>
                                     <div class="input-error" style="display:none; color: red;" id="visitor_reason_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -154,10 +154,11 @@
         form_data.append("unit_id", unit_id);
         form_data.append("tenant_name", tenant_name);
         form_data.append("tenant_id", tenant_id);
+        form_data.append("update_id", {{$visitor_data->id}});
 
         form_data.append("_token", token);
 
-        http.open("POST","{{route('visitor_management.visitor.add')}}",true);
+        http.open("POST","{{route('visitor_management.visitor.edit',$visitor_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
         http.onreadystatechange = save_visitor_info_data_response;
@@ -212,17 +213,6 @@
                         break; 
                     }
 
-                    if(data.alert_type=='success'){
-
-                        document.getElementById("visitor_form").reset();
-
-                        $('#visitor_reason').summernote('reset');
-
-                        $("#tenant_id").val('');
-                        $("#tenant_name").val('');
-
-                    }
-
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
                     $('input[name="_token"]').attr('value', data.csrf_token);
                 }
@@ -230,7 +220,11 @@
         }
     }
 
-    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'',0,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\',\'\',\'\')"');
+    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$visitor_data->building_id}}',0,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\',\'\',\'\')"');
+
+    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$visitor_data->level_id}}',1,'{{$visitor_data->building_id}}','building_id','onchange=get_unit_load_drop_down_by_id(this.value)','','');
+
+    load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'{{$visitor_data->unit_id}}',1,'{{$visitor_data->level_id}}','level_id',"onchange=\"get_tenant_data(this.value);\"",'rent_status','1');
 
     function get_unit_load_drop_down_by_id(value){
 
@@ -287,5 +281,7 @@
             }
         }
     }
+
+    get_tenant_data('{{$visitor_data->unit_id}}');
 
 </script>****{{csrf_token()}}

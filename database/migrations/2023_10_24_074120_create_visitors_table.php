@@ -32,7 +32,6 @@ return new class extends Migration
             $table->integer('add_by')->nullable();
             $table->integer('edit_by')->nullable();
             $table->integer('delete_by')->nullable();
-            $table->rememberToken();
             $table->timestamps();
         });
     }
