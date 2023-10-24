@@ -450,6 +450,11 @@ Route::controller(RentalController::class)->group(function(){
     Route::get('/dashboard/rental-change-rent/{id?}','rental_single_change_page')->name('rent_management.rental.change')->middleware(['checkroute']);
     Route::post('/dashboard/rental-change-rent/{id?}','rental_change')->name('rent_management.rental.change')->middleware(['checkroute']);
 
+    Route::get('/dashboard/rental-close','rental_close_page')->name('rent_management.rental.close')->middleware(['checkroute']);
+    Route::post('/dashboard/rental-close','rental_grid')->name('rent_management.rental.close')->middleware(['checkroute']);
+    Route::get('/dashboard/rental-close/{id?}','rental_single_close_page')->name('rent_management.rental.close')->middleware(['checkroute']);
+    Route::post('/dashboard/rental-close/{id?}','rent_close_update')->name('rent_management.rental.close')->middleware(['checkroute']);
+
 });
 
 Route::controller(RentProcessController::class)->group(function(){

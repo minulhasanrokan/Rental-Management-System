@@ -23,7 +23,7 @@
                                     <th width="80">Total Rent</th>
                                     <th width="100">Close Status</th>
                                     <th width="50">Status</th>
-                                    <th width="220">Action</th>
+                                    <th width="300">Action</th>
                                 </tr>
                             </thead>
                         </table>

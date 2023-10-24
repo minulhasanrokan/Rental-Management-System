@@ -49,7 +49,7 @@
             "colReorder": true,
             "processing": true,
             "ajax":{
-                "url": "{{route('rent_management.rental.view')}}",
+                "url": "{{route('rent_management.rental.close')}}",
                 "dataType": "json",
                 "type": "POST",
                 "data":{ _token: token},
