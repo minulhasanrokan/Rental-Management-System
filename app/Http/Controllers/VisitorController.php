@@ -73,6 +73,7 @@ class VisitorController extends Controller
         $data->visitor_mobile = $request->visitor_mobile;
         $data->visitor_address = $request->visitor_address;
         $data->visitor_reason = $request->visitor_reason;
+        $data->building_id = $request->building_id;
         $data->level_id = $request->level_id;
         $data->unit_id = $request->unit_id;
         $data->tenant_id = $request->tenant_id;
