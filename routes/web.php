@@ -25,6 +25,7 @@ use App\Http\Controllers\TagOwnerController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\RentProcessController;
 use App\Http\Controllers\VatTaxController;
+use App\Http\Controllers\VisitorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,8 @@ Route::controller(CommonController::class)->group(function(){
     Route::get('/dashboard/get-parameter-data-by-id/{table_name?}/{field_name?}/{value?}/{data_value?}/{data_name?}/{other_status?}/{other_value?}','get_parameter_data_by_id')->name('admin.get.parameter.data.by.id');
 
     Route::get('/dashboard/get-data-by-id/{table_name?}/{data_id?}/{field_name?}','get_data_by_id')->name('admin.get.data.by.id');
+
+    Route::get('/dashboard/get-current-tenant-info-by-unit/{value?}','current_tenant_info_by_unit')->name('admin.get.current.tenant.info.by.unit');
 });
 
 Route::controller(RegistrationController::class)->group(function(){
@@ -487,5 +490,12 @@ Route::controller(VatTaxController::class)->group(function(){
     Route::get('/dashboard/tax-delete','tax_delete_page')->name('reference_data.tax.delete')->middleware(['checkroute']);
     Route::post('/dashboard/tax-delete','tax_grid')->name('reference_data.tax.delete')->middleware(['checkroute']);
     Route::get('/dashboard/tax-delete/{id?}','tax_delete')->name('reference_data.tax.delete')->middleware(['checkroute']);
+
+});
+
+Route::controller(VisitorController::class)->group(function(){
+
+    Route::get('/dashboard/visitor-add','visitor_add_page')->name('visitor_management.visitor.add')->middleware(['checkroute']);
+    Route::post('/dashboard/visitor-add','visitor_store')->name('visitor_management.visitor.add')->middleware(['checkroute']);
 
 });

@@ -56,6 +56,21 @@ class CommonController extends Controller
         return $decrypt_data;
     }
 
+    public function current_tenant_info_by_unit($value){
+
+        $rent_data = DB::table('rents as a')
+            ->join('users as b', 'b.id', '=', 'a.tenant_id')
+            ->select('a.*', 'b.name as tenant_name')
+            ->where('a.delete_status',0)
+            ->where('a.status',1)
+            ->where('b.delete_status',0)
+            ->where('b.status',1)
+            ->where('a.unit_id',$value)
+            ->get()->toArray();
+
+        return json_encode($rent_data);
+    }
+
     public function get_page_menu(){
 
         $action_name = request()->route()->getName();

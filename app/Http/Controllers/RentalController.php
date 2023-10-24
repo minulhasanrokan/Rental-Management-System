@@ -27,8 +27,7 @@ class RentalController extends Controller
         return view('admin.rent.rent_add',compact('menu_data'));
     }
 
-    public function get_rent_info_value($value)
-    {
+    public function get_rent_info_value($value){
         $rent_data = DB::table('unit_rent_information')
             ->select('*')
             ->where('delete_status',0)
