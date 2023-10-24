@@ -24,7 +24,7 @@
                                     <th width="100">Mobile</th>
                                     <th width="150">Enrty</th>
                                     <th width="150">Out</th>
-                                    <th width="250">Action</th>
+                                    <th width="400">Action</th>
                                 </tr>
                             </thead>
                         </table>

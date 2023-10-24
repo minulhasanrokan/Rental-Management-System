@@ -516,4 +516,8 @@ Route::controller(VisitorController::class)->group(function(){
     Route::post('/dashboard/visitor-delete','visitor_grid')->name('visitor_management.visitor.delete')->middleware(['checkroute']);
     Route::get('/dashboard/visitor-delete/{id?}','visitor_delete')->name('visitor_management.visitor.delete')->middleware(['checkroute']);
 
+    Route::get('/dashboard/visitor-out','visitor_out_page')->name('visitor_management.visitor.out')->middleware(['checkroute']);
+    Route::post('/dashboard/visitor-out','visitor_grid')->name('visitor_management.visitor.out')->middleware(['checkroute']);
+    Route::get('/dashboard/visitor-out/{id?}','visitor_single_out_page')->name('visitor_management.visitor.out')->middleware(['checkroute']);
+    Route::post('/dashboard/visitor-out/{id?}','visitor_out')->name('visitor_management.visitor.out')->middleware(['checkroute']);
 });

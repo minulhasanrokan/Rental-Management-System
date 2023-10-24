@@ -50,7 +50,7 @@
             "colReorder": true,
             "processing": true,
             "ajax":{
-                "url": "{{route('visitor_management.visitor.view')}}",
+                "url": "{{route('visitor_management.visitor.out')}}",
                 "dataType": "json",
                 "type": "POST",
                 "data":{ _token: token},
