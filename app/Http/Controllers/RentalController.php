@@ -211,7 +211,6 @@ class RentalController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('e.user_type',$user_config_data['tenant_user_type'])
                 ->get();
 
             $filter_data = DB::table('rents as a')
@@ -225,7 +224,6 @@ class RentalController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('e.user_type',$user_config_data['tenant_user_type'])
                 ->where('c.level_name','like',"%".$search_value."%")
                 ->orWhere('b.building_name','like',"%".$search_value."%")
                 ->orWhere('d.unit_name','like',"%".$search_value."%")
@@ -243,7 +241,6 @@ class RentalController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('e.user_type',$user_config_data['tenant_user_type'])
                 ->where('c.level_name','like',"%".$search_value."%")
                 ->orWhere('b.building_name','like',"%".$search_value."%")
                 ->orWhere('d.unit_name','like',"%".$search_value."%")
@@ -266,7 +263,6 @@ class RentalController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('e.user_type',$user_config_data['tenant_user_type'])
                 ->get();
 
             $data = DB::table('rents as a')
@@ -280,7 +276,6 @@ class RentalController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('e.user_type',$user_config_data['tenant_user_type'])
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

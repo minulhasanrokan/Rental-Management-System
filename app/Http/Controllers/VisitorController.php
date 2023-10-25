@@ -161,7 +161,6 @@ class VisitorController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('e.user_type',$user_config_data['tenant_user_type'])
                 ->get();
 
             $filter_data = DB::table('visitors as a')
@@ -175,7 +174,6 @@ class VisitorController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('e.user_type',$user_config_data['tenant_user_type'])
                 ->where('c.level_name','like',"%".$search_value."%")
                 ->orWhere('b.building_name','like',"%".$search_value."%")
                 ->orWhere('d.unit_name','like',"%".$search_value."%")
@@ -195,7 +193,6 @@ class VisitorController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('e.user_type',$user_config_data['tenant_user_type'])
                 ->where('c.level_name','like',"%".$search_value."%")
                 ->orWhere('b.building_name','like',"%".$search_value."%")
                 ->orWhere('d.unit_name','like',"%".$search_value."%")
@@ -220,7 +217,6 @@ class VisitorController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('e.user_type',$user_config_data['tenant_user_type'])
                 ->get();
 
             $data = DB::table('visitors as a')
@@ -234,7 +230,177 @@ class VisitorController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('e.user_type',$user_config_data['tenant_user_type'])
+                ->orderBy($column_name,$column_ort_order)
+                ->offset($row)
+                ->limit($row_per_page)
+                ->get();
+
+            $total_data = $filter_data;
+        }
+
+        //$query = DB::getQueryLog();
+        //dd($query);
+
+        $sl = 0;
+
+        $sl_start = $row+1;
+
+        foreach($data as $value){
+
+            $record_data[$sl]['id'] = $value->id;
+            $record_data[$sl]['sl'] = $sl_start;
+            $record_data[$sl]['entry_date'] = $value->entry_date;
+            $record_data[$sl]['entry_time'] = $value->entry_time;
+            $record_data[$sl]['entry_date_time'] = $value->entry_date." ".$value->entry_time;
+            $record_data[$sl]['visitor_name'] = $value->visitor_name;
+            $record_data[$sl]['visitor_mobile'] = $value->visitor_mobile;
+            $record_data[$sl]['visitor_address'] = $value->visitor_address;
+            $record_data[$sl]['tenant_name'] = $value->tenant_name;
+            $record_data[$sl]['out_date'] = $value->out_date;
+            $record_data[$sl]['out_time'] = $value->out_time;
+            $record_data[$sl]['out_date_time'] = $value->out_date." ".$value->out_time;
+            $record_data[$sl]['visitor_reason'] = $value->visitor_reason;
+            $record_data[$sl]['building_name'] = $value->building_name;
+            $record_data[$sl]['level_name'] = $value->level_name;
+            $record_data[$sl]['unit_name'] = $value->unit_name;
+            $record_data[$sl]['name'] = $value->name;
+            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['menu_data'] = $menu_data;
+
+            $sl++;
+            $sl_start++;
+        }
+
+        $total_records = count($total_data);
+        $total_records_with_filer = count($filter_data);
+
+        $response['draw'] = $draw;
+        $response['iTotalRecords'] = $total_records;
+        $response['iTotalDisplayRecords'] = $total_records_with_filer;
+        $response['aaData'] = $record_data;
+        $response['csrf_token'] = $csrf_token;
+
+        echo json_encode($response);
+    }
+
+    public function my_visitor_grid (Request $request){
+        
+        DB::enableQueryLog();
+
+        $menu_data = $this->common->get_page_menu_grid('visitor_management.visitor.add');
+
+        $user_config_data = $this->common->get_user_config_data();
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        $csrf_token = csrf_token();
+
+        $draw = $request->draw;
+        $row = $request->start;
+        $row_per_page  = $request->length;
+
+        $column_index  = $request->order[0]['column'];
+        $column_name = $request->columns[$column_index]['data'];
+
+        $column_ort_order = $request->order[0]['dir'];
+
+        $search_value  = trim($request->search['value']);
+
+        $total_data = array();
+        $filter_data = array();
+        $data = array();
+        $record_data = array();
+        $response = array();
+
+        if($search_value!=''){
+
+            $total_data = DB::table('visitors as a')
+                ->join('buildings as b', 'b.id', '=', 'a.building_id')
+                ->join('levels as c', 'c.id', '=', 'a.level_id')
+                ->join('units as d', 'd.id', '=', 'a.unit_id')
+                ->join('users as e', 'e.id', '=', 'a.tenant_id')
+                ->select('a.id')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->where('c.delete_status',0)
+                ->where('d.delete_status',0)
+                ->where('e.delete_status',0)
+                ->where('a.tenant_id',$user_id)
+                ->get();
+
+            $filter_data = DB::table('visitors as a')
+                ->join('buildings as b', 'b.id', '=', 'a.building_id')
+                ->join('levels as c', 'c.id', '=', 'a.level_id')
+                ->join('units as d', 'd.id', '=', 'a.unit_id')
+                ->join('users as e', 'e.id', '=', 'a.tenant_id')
+                ->select('a.id')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->where('c.delete_status',0)
+                ->where('d.delete_status',0)
+                ->where('e.delete_status',0)
+                ->where('a.tenant_id',$user_id)
+                ->where('c.level_name','like',"%".$search_value."%")
+                ->orWhere('b.building_name','like',"%".$search_value."%")
+                ->orWhere('d.unit_name','like',"%".$search_value."%")
+                ->orWhere('e.name','like',"%".$search_value."%")
+                ->orWhere('a.visitor_name','like',"%".$search_value."%")
+                ->orWhere('a.visitor_mobile','like',"%".$search_value."%")
+                ->get();
+
+            $data = DB::table('visitors as a')
+                ->join('buildings as b', 'b.id', '=', 'a.building_id')
+                ->join('levels as c', 'c.id', '=', 'a.level_id')
+                ->join('units as d', 'd.id', '=', 'a.unit_id')
+                ->join('users as e', 'e.id', '=', 'a.tenant_id')
+                ->select('a.id', 'a.entry_date', 'a.entry_time', 'a.visitor_name', 'a.visitor_mobile', 'a.visitor_address', 'a.tenant_name', 'a.out_date', 'a.out_time', 'a.visitor_reason', 'b.building_name', 'c.level_name', 'd.unit_name', 'e.name')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->where('c.delete_status',0)
+                ->where('d.delete_status',0)
+                ->where('e.delete_status',0)
+                ->where('a.tenant_id',$user_id)
+                ->where('c.level_name','like',"%".$search_value."%")
+                ->orWhere('b.building_name','like',"%".$search_value."%")
+                ->orWhere('d.unit_name','like',"%".$search_value."%")
+                ->orWhere('e.name','like',"%".$search_value."%")
+                ->orWhere('a.visitor_name','like',"%".$search_value."%")
+                ->orWhere('a.visitor_mobile','like',"%".$search_value."%")
+                ->orderBy($column_name,$column_ort_order)
+                ->offset($row)
+                ->limit($row_per_page)
+                ->get();
+        }
+        else{
+
+            $filter_data = DB::table('visitors as a')
+                ->join('buildings as b', 'b.id', '=', 'a.building_id')
+                ->join('levels as c', 'c.id', '=', 'a.level_id')
+                ->join('units as d', 'd.id', '=', 'a.unit_id')
+                ->join('users as e', 'e.id', '=', 'a.tenant_id')
+                ->select('a.id')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->where('c.delete_status',0)
+                ->where('d.delete_status',0)
+                ->where('e.delete_status',0)
+                ->where('a.tenant_id',$user_id)
+                ->get();
+
+            $data = DB::table('visitors as a')
+                ->join('buildings as b', 'b.id', '=', 'a.building_id')
+                ->join('levels as c', 'c.id', '=', 'a.level_id')
+                ->join('units as d', 'd.id', '=', 'a.unit_id')
+                ->join('users as e', 'e.id', '=', 'a.tenant_id')
+                ->select('a.id', 'a.entry_date', 'a.entry_time', 'a.visitor_name', 'a.visitor_mobile', 'a.visitor_address', 'a.tenant_name', 'a.out_date', 'a.out_time', 'a.visitor_reason', 'b.building_name', 'c.level_name', 'd.unit_name', 'e.name')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->where('c.delete_status',0)
+                ->where('d.delete_status',0)
+                ->where('e.delete_status',0)
+                ->where('a.tenant_id',$user_id)
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)
@@ -565,5 +731,25 @@ class VisitorController extends Controller
         $user_right_data = $this->common->get_page_menu_single_view('visitor_management.visitor.add****visitor_management.visitor.view');
 
         return view('admin.visitor.visitor_single_view',compact('menu_data','visitor_data','user_right_data'));
+    }
+
+    public function my_visitor_single_view_page($id){
+
+        $visitor_data = Visitor::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('visitor_management.my_visitor.view');
+
+        return view('admin.visitor.visitor_single_view',compact('menu_data','visitor_data','user_right_data'));
+    }
+
+    public function my_visitor_view_page (){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.visitor.my_visitor_view',compact('menu_data'));
     }
 }

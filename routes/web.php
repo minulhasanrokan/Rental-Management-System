@@ -520,4 +520,8 @@ Route::controller(VisitorController::class)->group(function(){
     Route::post('/dashboard/visitor-out','visitor_grid')->name('visitor_management.visitor.out')->middleware(['checkroute']);
     Route::get('/dashboard/visitor-out/{id?}','visitor_single_out_page')->name('visitor_management.visitor.out')->middleware(['checkroute']);
     Route::post('/dashboard/visitor-out/{id?}','visitor_out')->name('visitor_management.visitor.out')->middleware(['checkroute']);
+
+    Route::get('/dashboard/my-visitor-view','my_visitor_view_page')->name('visitor_management.my_visitor.view')->middleware(['checkroute']);
+    Route::post('/dashboard/my-visitor-view','my_visitor_grid')->name('visitor_management.my_visitor.view')->middleware(['checkroute']);
+    Route::get('/dashboard/my-visitor-view/{id?}','my_visitor_single_view_page')->name('visitor_management.my_visitor.view')->middleware(['checkroute']);
 });
