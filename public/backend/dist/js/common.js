@@ -75,6 +75,9 @@ function form_validation(control,msg_text)
                     {
                         $(this).html('Please Fill up '+msg_text[i]+' field Value').removeClass('messagebox').addClass('messagebox_error').fadeOut(2500);
                     });*/
+
+                    alert("Please Fill up "+msg_text[i]+" field Value");
+
                     return 0;
                 }
             }
@@ -90,6 +93,9 @@ function form_validation(control,msg_text)
                 {
                     $(this).html('Please Fill up '+msg_text[i]+' field Value').removeClass('messagebox').addClass('messagebox_error').fadeOut(2500);
                 });*/
+
+                alert("Please Fill up "+msg_text[i]+" field Value");
+
                 return 0;
             }
         }
@@ -105,6 +111,9 @@ function form_validation(control,msg_text)
                 {
                     $(this).html('Please Fill up '+msg_text[i]+' field Value').removeClass('messagebox').addClass('messagebox_error').fadeOut(2500);
                 });*/
+
+                alert("Please Fill up "+msg_text[i]+" field Value");
+
                 return 0;
             }
         }
@@ -120,6 +129,9 @@ function form_validation(control,msg_text)
                     $(this).html('Please Select  '+msg_text[i]+' field Value').removeClass('messagebox').addClass('messagebox_error').fadeOut(2500);
 
                 });*/
+
+                alert("Please Select "+msg_text[i]+" field Value");
+
                 return 0;
             }
         }
@@ -139,6 +151,9 @@ function form_validation(control,msg_text)
                         $(this).html('Please Fill up or Select '+msg_text[i]+' field Value').removeClass('messagebox').addClass('messagebox_error').fadeOut(2500);
 
                     });*/
+
+                    alert("Please Fill up or Select "+msg_text[i]+" field Value");
+
                     return 0;
                 }
                 else
@@ -148,9 +163,11 @@ function form_validation(control,msg_text)
                         $(this).html('Please fill up master field Value').removeClass('messagebox').addClass('messagebox_error').fadeOut(2500);
 
                     });*/
+
+                    alert("Please Fill up or Select "+msg_text[i]+" field Value");
+
                     return 0;
                 }
-
             }
         }
   }

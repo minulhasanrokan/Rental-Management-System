@@ -26,6 +26,7 @@ use App\Http\Controllers\RentalController;
 use App\Http\Controllers\RentProcessController;
 use App\Http\Controllers\VatTaxController;
 use App\Http\Controllers\VisitorController;
+use App\Http\Controllers\ComplainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -496,6 +497,12 @@ Route::controller(VatTaxController::class)->group(function(){
     Route::post('/dashboard/tax-delete','tax_grid')->name('reference_data.tax.delete')->middleware(['checkroute']);
     Route::get('/dashboard/tax-delete/{id?}','tax_delete')->name('reference_data.tax.delete')->middleware(['checkroute']);
 
+});
+
+Route::controller(ComplainController::class)->group(function(){
+
+    Route::get('/dashboard/complain-add','complain_add_page')->name('complain_management.manage.add')->middleware(['checkroute']);
+    Route::post('/dashboard/complain-add','complain_store')->name('complain_management.manage.add')->middleware(['checkroute']);
 });
 
 Route::controller(VisitorController::class)->group(function(){
