@@ -503,6 +503,10 @@ Route::controller(ComplainController::class)->group(function(){
 
     Route::get('/dashboard/complain-add','complain_add_page')->name('complain_management.manage.add')->middleware(['checkroute']);
     Route::post('/dashboard/complain-add','complain_store')->name('complain_management.manage.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/complain-view','complain_view_page')->name('complain_management.manage.view')->middleware(['checkroute']);
+    Route::post('/dashboard/complain-view','complain_grid')->name('complain_management.manage.view')->middleware(['checkroute']);
+    Route::get('/dashboard/complain-view/{id?}','complain_single_view_page')->name('complain_management.manage.view')->middleware(['checkroute']);
 });
 
 Route::controller(VisitorController::class)->group(function(){
