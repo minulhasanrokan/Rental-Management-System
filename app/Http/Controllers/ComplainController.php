@@ -27,6 +27,26 @@ class ComplainController extends Controller
         return view('admin.complain.complain_add',compact('menu_data'));
     }
 
+    public function assign_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.complain.complain_assign',compact('menu_data'));
+    }
+
+    public function assign_single_page($id){
+
+        $complain_data = Complain::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('complain_management.manage.add****complain_management.manage.assign');
+
+        return view('admin.complain.complain_assign_edit_view',compact('menu_data','complain_data','user_right_data'));
+    }
+
     public function complain_store(Request $request){
 
         $validator = Validator::make($request->all(), [
