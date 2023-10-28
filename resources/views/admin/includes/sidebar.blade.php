@@ -167,7 +167,14 @@
     </div>
 <!-- /.sidebar -->
 </aside>
-
+<div id="boxes" class="modal-dialog">
+    <div id="dialog" class="window" >
+        <div id="msg" class="msg_header">0</div>
+        <div style="width:400; height:150px; vertical-align:middle">
+            <img src="{{asset('uploads/loader')}}/{{!empty($system_data['loader'])?$system_data['loader']:'loader.gif'}}" width="30" height="30" clear="all" style="vertical-align:middle;" /> <span id="msg_text" style="font-size:14px; color:white;"> </span>
+        </div>
+    </div>
+</div>
 <style type="text/css">
     .menu-bg-color{
         background-color: #3f6791 !important;
@@ -226,6 +233,8 @@
             name_details +=" - "+name;
         }
 
+        freeze_window(0);
+
         document.title = r_title +name_details+ ' | '+'{{!empty($system_data['system_name'])?$system_data['system_name']:'Rental Management System'}}';
 
         http.open("GET",route_name+"/"+data,true);
@@ -252,6 +261,8 @@
 
                 $('meta[name="csrf-token"]').attr('content', reponse[1]);
             }
+
+            release_freezing();
         }
     }
 
