@@ -48,6 +48,13 @@ class ComplainController extends Controller
         return view('admin.complain.complain_edit',compact('menu_data'));
     }
 
+    public function complain_delete_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.complain.complain_delete',compact('menu_data'));
+    }
+
     public function assign_single_page($id){
 
         $complain_data = Complain::where('delete_status',0)
@@ -598,5 +605,62 @@ class ComplainController extends Controller
         }
 
         return response()->json($notification);
+    }
+
+    public function complain_delete($id){
+
+        $notification = array();
+
+        $data = Complain::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+
+        if(empty($data)){
+
+            $notification = array(
+                'message'=> "Complain Data Not Found!!!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            $user_session_data = session()->all();
+
+            $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+            DB::beginTransaction();
+
+            $data->delete_by = $user_id;
+            $data->delete_status = 1;
+            $data->deleted_at = now();
+
+            $data->save();
+
+            if($data==true){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Complain Details Deleted Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Complain Details Not Deleted Successfully",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.complain.complain_delete_alert',compact('menu_data','notification'));
     }
 } 
