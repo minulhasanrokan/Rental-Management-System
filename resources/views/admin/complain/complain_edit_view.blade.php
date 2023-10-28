@@ -1,15 +1,3 @@
-@php
-    
-    $user_type = $user_config_data['employee_user_type'];
-
-    $user_data = DB::table('users')
-        ->where('users.status',1)
-        ->where('users.user_type',$user_type)
-        ->where('users.delete_status',0)
-        ->orderBy('users.name', 'ASC')
-        ->get()->toArray();
-
-@endphp
 <div class="container-fluid" style="padding-top: 5px !important;">
     <div class="row">
         <!-- left column -->
@@ -17,7 +5,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Assign User Complain Information</h3>
+                    <h3 class="card-title">Update Complain Information</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -65,25 +53,11 @@
                                     <div class="input-error" style="display:none; color: red;" id="tenant_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="complain_title">Complain Title <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="complain_title" name="complain_title" placeholder="Enter Complain Title" value="{{$complain_data->complain_title}}" readonly required>
+                                    <input type="text" class="form-control" id="complain_title" name="complain_title" placeholder="Enter Complain Title" value="{{$complain_data->complain_title}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="complain_title_error" style="display: inline-block; width:100%; color: red;"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="assign_user">Assign User <span style="color:red;">*</span></label>
-                                    <div id="assign_user_container">
-                                        <select class="form-control select" style="width: 100%;" name="assign_user" id="assign_user">
-                                            <option value="">Select User</option>
-                                            @foreach($user_data as $data)
-                                            <option value="{{$data->id}}">{{$data->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="input-error" style="display:none; color: red;" id="assign_user_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -100,7 +74,7 @@
                         @foreach($user_right_data as $data)
                             <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$complain_data->id}}','{{$complain_data->complain_title}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
                         @endforeach
-                        <button type="button" style="float:right" onclick="save_assign_info_data();" class="btn btn-primary">Assign User</button>
+                        <button type="button" style="float:right" onclick="save_assign_info_data();" class="btn btn-primary">Update Complain</button>
                     </div>
                 </form>
             </div>
@@ -121,13 +95,9 @@
         })
     });
 
-    $('#complain_details').summernote('disable');
-
-    $("#assign_user").val('{{$complain_data->assign_user}}');
-
     function save_assign_info_data(){
 
-        if( form_validation('building_id*level_id*unit_id*tenant_name*tenant_id*complain_title*assign_user*complain_details','Building Name*Level Name*Unit Name*Tenant Name*Tenant Name*Complain Title*Assign User*Complain Details')==false ){
+        if( form_validation('building_id*level_id*unit_id*tenant_name*tenant_id*complain_title*complain_details','Building Name*Level Name*Unit Name*Tenant Name*Tenant Name*Complain Title*Complain Details')==false ){
 
             return false;
         }
@@ -138,7 +108,6 @@
         var tenant_name = $("#tenant_name").val();
         var tenant_id = $("#tenant_id").val();
         var complain_title = $("#complain_title").val();
-        var assign_user = $("#assign_user").val();
         var complain_details = $("#complain_details").val();
 
         var token = $('meta[name="csrf-token"]').attr('content');
@@ -151,14 +120,13 @@
         form_data.append("tenant_name", tenant_name);
         form_data.append("tenant_id", tenant_id);
         form_data.append("complain_title", complain_title);
-        form_data.append("assign_user", assign_user);
         form_data.append("complain_details", complain_details);
 
         form_data.append("update_id",{{$complain_data->id}});
 
         form_data.append("_token", token);
 
-        http.open("POST","{{route('complain_management.manage.assign',$complain_data->id)}}",true);
+        http.open("POST","{{route('complain_management.manage.edit',$complain_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
         http.onreadystatechange = save_assign_info_data_response;
@@ -220,11 +188,11 @@
         }
     }
 
-    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$complain_data->building_id}}',1,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\',\'\',\'\')"');
+    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$complain_data->building_id}}',0,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\',\'\',\'\')"');
 
-    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$complain_data->level_id}}',1,'{{$complain_data->building_id}}','building_id','onchange=get_unit_load_drop_down_by_id(this.value)','','');
+    load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$complain_data->level_id}}',0,'{{$complain_data->building_id}}','building_id','onchange=get_unit_load_drop_down_by_id(this.value)','','');
 
-    load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'{{$complain_data->unit_id}}',1,'{{$complain_data->level_id}}','level_id',"onchange=\" get_tenant_data(this.value);\"",'rent_status','1');
+    load_drop_down_by_id('units','id,unit_name','unit_id','unit_id_container','Select Unit',0,1,'{{$complain_data->unit_id}}',0,'{{$complain_data->level_id}}','level_id',"onchange=\" get_tenant_data(this.value);\"",'rent_status','1');
 
     function get_unit_load_drop_down_by_id(value){
 

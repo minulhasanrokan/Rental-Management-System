@@ -518,6 +518,11 @@ Route::controller(ComplainController::class)->group(function(){
     Route::get('/dashboard/complain-status/{id?}','status_single_page')->name('complain_management.manage.status')->middleware(['checkroute']);
     Route::post('/dashboard/complain-status/{id?}','status_add')->name('complain_management.manage.status')->middleware(['checkroute']);
 
+    Route::get('/dashboard/complain-edit','edit_page')->name('complain_management.manage.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/complain-edit','complain_grid')->name('complain_management.manage.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/complain-edit/{id?}','edit_single_page')->name('complain_management.manage.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/complain-edit/{id?}','edit_add')->name('complain_management.manage.edit')->middleware(['checkroute']);
+
 });
 
 Route::controller(VisitorController::class)->group(function(){
