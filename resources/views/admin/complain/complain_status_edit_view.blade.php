@@ -24,7 +24,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form id="assing_form" method="post" autocomplete="off">
+                <form id="status_form" method="post" autocomplete="off">
                     @csrf
                     <div class="card-body" style="padding-bottom:5px !important; padding-top: 10px !important; margin: 0px !important;">
                         <div class="row">
@@ -65,7 +65,7 @@
                                     <div class="input-error" style="display:none; color: red;" id="tenant_name_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="complain_title">Complain Title <span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="complain_title" name="complain_title" placeholder="Enter Complain Title" value="{{$complain_data->complain_title}}" readonly required>
@@ -86,11 +86,32 @@
                                     <div class="input-error" style="display:none; color: red;" id="assign_user_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="process_status">Process Status <span style="color:red;">*</span></label>
+                                    <div id="process_status_container">
+                                        <select class="form-control select" style="width: 100%;" name="process_status" id="process_status">
+                                            <option value="0">Pending</option>
+                                            <option value="0">In progress</option>
+                                            <option value="0">On hold</option>
+                                            <option value="">Completed</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-error" style="display:none; color: red;" id="process_status_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="complain_details">Complain Details <span style="color:red;">*</span></label>
                                     <textarea class="form-control" id="complain_details" name="complain_details">{{$complain_data->complain_details}}</textarea>
                                     <div class="input-error" style="display:none; color: red;" id="complain_details_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="complain_remarks">Complain Remarks <span style="color:red;">*</span></label>
+                                    <textarea class="form-control" id="complain_remarks" name="complain_remarks">{{$complain_data->complain_remarks}}</textarea>
+                                    <div class="input-error" style="display:none; color: red;" id="complain_remarks_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +121,7 @@
                         @foreach($user_right_data as $data)
                             <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$complain_data->id}}','{{$complain_data->complain_title}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
                         @endforeach
-                        <button type="button" style="float:right" onclick="save_assign_info_data();" class="btn btn-primary">Assign User</button>
+                        <button type="button" style="float:right" onclick="save_status_info_data();" class="btn btn-primary">Assign User</button>
                     </div>
                 </form>
             </div>
@@ -121,13 +142,23 @@
         })
     });
 
+    $(function () {
+
+        $('#complain_remarks').summernote({
+            height: 150,
+            focus: true
+        })
+    });
+
     $('#complain_details').summernote('disable');
 
     $("#assign_user").val('{{$complain_data->assign_user}}');
 
-    function save_assign_info_data(){
+    $('#assign_user').attr('disabled','disabled');
 
-        if( form_validation('building_id*level_id*unit_id*tenant_name*tenant_id*complain_title*assign_user*complain_details','Building Name*Level Name*Unit Name*Tenant Name*Tenant Name*Complain Title*Assign User*Complain Details')==false ){
+    function save_status_info_data(){
+
+        if( form_validation('building_id*level_id*unit_id*tenant_name*tenant_id*complain_title*assign_user*process_status*complain_details','Building Name*Level Name*Unit Name*Tenant Name*Tenant Name*Complain Title*Assign User*Process Status*Complain Details*Complain Remarks')==false ){
 
             return false;
         }
@@ -139,6 +170,8 @@
         var tenant_id = $("#tenant_id").val();
         var complain_title = $("#complain_title").val();
         var assign_user = $("#assign_user").val();
+        var process_status = $("#process_status").val();
+        var complain_remarks = $("#complain_remarks").val();
         var complain_details = $("#complain_details").val();
 
         var token = $('meta[name="csrf-token"]').attr('content');
@@ -152,19 +185,21 @@
         form_data.append("tenant_id", tenant_id);
         form_data.append("complain_title", complain_title);
         form_data.append("assign_user", assign_user);
+        form_data.append("process_status", process_status);
         form_data.append("complain_details", complain_details);
+        form_data.append("complain_remarks", complain_remarks);
 
         form_data.append("update_id",{{$complain_data->id}});
 
         form_data.append("_token", token);
 
-        http.open("POST","{{route('complain_management.manage.assign',$complain_data->id)}}",true);
+        http.open("POST","{{route('complain_management.manage.status',$complain_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
-        http.onreadystatechange = save_assign_info_data_response;
+        http.onreadystatechange = save_status_info_data_response;
     }
 
-    function save_assign_info_data_response(){
+    function save_status_info_data_response(){
 
         if(http.readyState == 4)
         {

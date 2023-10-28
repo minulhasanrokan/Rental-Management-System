@@ -80,7 +80,7 @@
                 },
                 { data: "complain_title" },
                 { data: "created_at" },
-                { data: "assign_user" },
+                { data: "user_name" },
                 {
                     "data": "process_status",
                     "render": function(data, type, full, meta) {
