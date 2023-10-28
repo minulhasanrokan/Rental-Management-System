@@ -92,9 +92,9 @@
                                     <div id="process_status_container">
                                         <select class="form-control select" style="width: 100%;" name="process_status" id="process_status">
                                             <option value="0">Pending</option>
-                                            <option value="0">In progress</option>
-                                            <option value="0">On hold</option>
-                                            <option value="">Completed</option>
+                                            <option value="1">In progress</option>
+                                            <option value="2">On hold</option>
+                                            <option value="3">Completed</option>
                                         </select>
                                     </div>
                                     <div class="input-error" style="display:none; color: red;" id="process_status_error" style="display: inline-block; width:100%; color: red;"></div>
@@ -121,7 +121,7 @@
                         @foreach($user_right_data as $data)
                             <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$complain_data->id}}','{{$complain_data->complain_title}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
                         @endforeach
-                        <button type="button" style="float:right" onclick="save_status_info_data();" class="btn btn-primary">Assign User</button>
+                        <button type="button" style="float:right" onclick="save_status_info_data();" class="btn btn-primary">Update Status</button>
                     </div>
                 </form>
             </div>

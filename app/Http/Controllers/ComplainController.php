@@ -445,7 +445,7 @@ class ComplainController extends Controller
             ->first();
 
         $data->assign_user = $request->assign_user;
-        $data->assign_by = $ser_id;
+        $data->assign_by = $user_id;
         $data->assign_date = now();
 
         $data->save();
