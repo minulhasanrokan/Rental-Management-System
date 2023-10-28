@@ -81,6 +81,19 @@ class ComplainController extends Controller
         return view('admin.complain.complain_status_edit_view',compact('menu_data','complain_data','user_right_data'));
     }
 
+    public function complain_single_view_page($id){
+
+        $complain_data = Complain::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('complain_management.manage.add****complain_management.manage.view');
+
+        return view('admin.complain.complain_status_single_view',compact('menu_data','complain_data','user_right_data'));
+    }
+
     public function edit_single_page($id){
 
         $complain_data = Complain::where('delete_status',0)
