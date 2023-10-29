@@ -530,8 +530,21 @@ Route::controller(ComplainController::class)->group(function(){
     Route::get('/dashboard/my-complain','my_complain_add_page')->name('complain_management.my_complain.add')->middleware(['checkroute']);
     Route::post('/dashboard/my-complain','my_complain_store')->name('complain_management.my_complain.add')->middleware(['checkroute']);
 
-    Route::get('/dashboard/get-level-data-by-building-id/{value?}','get_level_data_by_building_id')->name('admin.get.level.data.by.building.id');
-    Route::get('/dashboard/get-unit-data-by-level-id/{value?}','get_unit_data_by_level_id')->name('admin.get.unit.data.by.level.id');
+    Route::get('/dashboard/get-level-data-by-building-id/{value?}/{id_value?}','get_level_data_by_building_id')->name('admin.get.level.data.by.building.id');
+    Route::get('/dashboard/get-unit-data-by-level-id/{value?}/{id_value?}','get_unit_data_by_level_id')->name('admin.get.unit.data.by.level.id');
+
+    Route::get('/dashboard/my-complain-view','my_complain_view_page')->name('complain_management.my_complain.view')->middleware(['checkroute']);
+    Route::post('/dashboard/my-complain-view','my_complain_grid')->name('complain_management.my_complain.view')->middleware(['checkroute']);
+    Route::get('/dashboard/my-complain-view/{id?}','my_complain_single_view_page')->name('complain_management.my_complain.view')->middleware(['checkroute']);
+
+    Route::get('/dashboard/my-complain-edit','my_edit_page')->name('complain_management.my_complain.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/my-complain-edit','my_complain_grid')->name('complain_management.my_complain.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/my-complain-edit/{id?}','my_edit_single_page')->name('complain_management.my_complain.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/my-complain-edit/{id?}','my_edit_add')->name('complain_management.my_complain.edit')->middleware(['checkroute']);
+
+    Route::get('/dashboard/my-complain-delete','my_complain_delete_page')->name('complain_management.my_complain.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/my-complain-delete','my_complain_grid')->name('complain_management.my_complain.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/my-complain-delete/{id?}','my_complain_delete')->name('complain_management.my_complain.delete')->middleware(['checkroute']);
 
 });
 

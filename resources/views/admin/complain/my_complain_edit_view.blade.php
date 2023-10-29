@@ -11,6 +11,7 @@
         ->where('a.status',1)
         ->where('b.status',1)
         ->where('b.tenant_id',$user_id)
+        ->orWhere('a.id',$complain_data->building_id)
         ->groupBy('a.id','a.building_name')
         ->get();
 
@@ -22,7 +23,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Add Complain Information</h3>
+                    <h3 class="card-title">Edit Complain Information</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -72,14 +73,14 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="complain_title">Complain Title <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="complain_title" name="complain_title" placeholder="Enter Complain Title" required>
+                                    <input type="text" class="form-control" id="complain_title" name="complain_title" placeholder="Enter Complain Title" value="{{$complain_data->complain_title}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="complain_title_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="complain_details">Complain Details <span style="color:red;">*</span></label>
-                                    <textarea class="form-control" id="complain_details" name="complain_details"></textarea>
+                                    <textarea class="form-control" id="complain_details" name="complain_details">{{$complain_data->complain_details}}</textarea>
                                     <div class="input-error" style="display:none; color: red;" id="complain_details_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -87,7 +88,10 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" style="float:right" onclick="save_complain_info_data();" class="btn btn-primary">Add Complain Information</button>
+                        @foreach($user_right_data as $data)
+                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$complain_data->id}}','{{$complain_data->complain_title}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
+                        @endforeach
+                        <button type="button" style="float:right" onclick="save_complain_info_data();" class="btn btn-primary">Update Complain Information</button>
                     </div>
                 </form>
             </div>
@@ -130,10 +134,11 @@
         form_data.append("unit_id", unit_id);
         form_data.append("complain_title", complain_title);
         form_data.append("complain_details", complain_details);
+        form_data.append("update_id", {{$complain_data->id}});
 
         form_data.append("_token", token);
 
-        http.open("POST","{{route('complain_management.my_complain.add')}}",true);
+        http.open("POST","{{route('complain_management.my_complain.edit',$complain_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
         http.onreadystatechange = save_complain_info_data_response;
@@ -186,13 +191,6 @@
                         case 'error':
                         toastr.error(data.message);
                         break; 
-                    }
-
-                    if(data.alert_type=='success'){
-
-                        document.getElementById("complain_form").reset();
-
-                        $('#complain_details').summernote('reset');
                     }
 
                     $('meta[name="csrf-token"]').attr('content', data.csrf_token);
@@ -325,5 +323,10 @@
             http.send(data);
         }
     }
+
+    $("#building_id").val('{{$complain_data->building_id}}');
+
+    load_drop_down_level_by_id('{{$complain_data->building_id}}','{{$complain_data->level_id}}');
+    load_drop_down_unit_by_id('{{$complain_data->level_id}}','{{$complain_data->unit_id}}');
 
 </script>****{{csrf_token()}}
