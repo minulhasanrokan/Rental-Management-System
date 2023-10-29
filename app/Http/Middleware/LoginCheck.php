@@ -27,6 +27,5 @@ class LoginCheck
         session()->regenerate();
 
         return $next($request);
-        
     }
 }
