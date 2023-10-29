@@ -1,0 +1,315 @@
+@php
+
+    $user_id = Session::get(config('app.app_session_name').'.id');
+
+    $building_data = DB::table('buildings as a')
+        ->join('rents as b', 'a.id', '=', 'b.building_id')
+        ->select('a.*')
+        ->where('a.delete_status',0)
+        ->where('b.delete_status',0)
+        ->where('b.close_status',0)
+        ->where('a.status',1)
+        ->where('b.status',1)
+        ->where('b.tenant_id',$user_id)
+        ->get();
+
+@endphp
+<div class="container-fluid" style="padding-top: 5px !important;">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
+                <div class="card-header">
+                    <h3 class="card-title">Add Complain Information</h3>
+                </div>
+                <div class="card-header" style="background-color: white;">
+                    {!!$menu_data!!}
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="complain_form" method="post" autocomplete="off">
+                    @csrf
+                    <div class="card-body" style="padding-bottom:5px !important; padding-top: 10px !important; margin: 0px !important;">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="building_id">Building <span style="color:red;">*</span></label>
+                                    <div id="building_id_container">
+                                        <select class="form-control select" onchange="load_drop_down_level_by_id(this.value)" style="width: 100%;" name="building_id" id="building_id">
+                                            <option value="">Select Building</option>
+                                            @foreach($building_data as $data)
+                                                <option value="{{$data->id}}">{{$data->building_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="input-error" style="display:none; color: red;" id="building_id_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="level_id">Level <span style="color:red;">*</span></label>
+                                    <div id="level_id_container">
+                                        <select class="form-control select" style="width: 100%;" name="level_id" id="level_id">
+                                            <option value="">Select Level</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-error" style="display:none; color: red;" id="level_id_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="unit_id">Unit <span style="color:red;">*</span></label>
+                                    <div id="unit_id_container">
+                                        <select class="form-control select" style="width: 100%; float: left;" name="unit_id" id="unit_id">
+                                            <option value="">Select Unit</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-error" style="display:none; color: red;" id="unit_id_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="complain_title">Complain Title <span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="complain_title" name="complain_title" placeholder="Enter Complain Title" required>
+                                    <div class="input-error" style="display:none; color: red;" id="complain_title_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="complain_details">Complain Details <span style="color:red;">*</span></label>
+                                    <textarea class="form-control" id="complain_details" name="complain_details"></textarea>
+                                    <div class="input-error" style="display:none; color: red;" id="complain_details_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <button type="button" style="float:right" onclick="save_complain_info_data();" class="btn btn-primary">Add Complain Information</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card -->
+        </div>
+        <!--/.col (left) -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<script>
+
+    $(function () {
+
+        $('#complain_details').summernote({
+            height: 150,
+            focus: true
+        })
+    });
+
+    function save_complain_info_data(){
+
+        if( form_validation('building_id*level_id*unit_id*complain_title*complain_details','Building Name*Level Name*Unit Name*Complain Title*Complain Details')==false ){
+
+            return false;
+        }
+
+        var building_id = $("#building_id").val();
+        var level_id = $("#level_id").val();
+        var unit_id = $("#unit_id").val();
+        var complain_title = $("#complain_title").val();
+        var complain_details = $("#complain_details").val();
+
+        var token = $('meta[name="csrf-token"]').attr('content');
+
+        var form_data = new FormData();
+        
+        form_data.append("building_id", building_id);
+        form_data.append("level_id", level_id);
+        form_data.append("unit_id", unit_id);
+        form_data.append("complain_title", complain_title);
+        form_data.append("complain_details", complain_details);
+
+        form_data.append("_token", token);
+
+        http.open("POST","{{route('complain_management.my_complain.add')}}",true);
+        http.setRequestHeader("X-CSRF-TOKEN",token);
+        http.send(form_data);
+        http.onreadystatechange = save_complain_info_data_response;
+    }
+
+    function save_complain_info_data_response(){
+
+        if(http.readyState == 4)
+        {
+            if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
+
+                alert('Session Expire');
+
+                location.replace('<?php echo url('/dashboard/logout');?>');
+            }
+            else{
+                var data = JSON.parse(http.responseText);
+
+                if (data.errors && data.success==false) {
+
+                    $.each(data.errors, function(field, errors) {
+
+                        $("#" + field + "_error").text(errors);
+
+                        $("#" + field + "_error").show();
+                    });
+
+                    $('meta[name="csrf-token"]').attr('content', data.csrf_token);
+                    $('input[name="_token"]').attr('value', data.csrf_token);
+
+                    // hide all input error.............
+                    //$(".input-error").delay(3000).fadeOut(800);
+                }
+                else{
+
+                    switch(data.alert_type){
+
+                        case 'info':
+                        toastr.info(data.message);
+                        break;
+
+                        case 'success':
+                        toastr.success(data.message);
+                        break;
+
+                        case 'warning':
+                        toastr.warning(data.message);
+                        break;
+
+                        case 'error':
+                        toastr.error(data.message);
+                        break; 
+                    }
+
+                    if(data.alert_type=='success'){
+
+                        document.getElementById("complain_form").reset();
+
+                        $('#complain_details').summernote('reset');
+
+                        $("#tenant_id").val('');
+                        $("#tenant_name").val('');
+                    }
+
+                    $('meta[name="csrf-token"]').attr('content', data.csrf_token);
+                    $('input[name="_token"]').attr('value', data.csrf_token);
+                }
+            }
+        }
+    }
+
+    function load_drop_down_level_by_id(selected_value) {
+
+        var value = 0;
+
+        if(selected_value!=''){
+
+            value = selected_value;
+        }
+
+        var http = createObject();
+
+        var data="&value="+value;
+
+        if( http ) {
+            
+            http.onreadystatechange = function() {
+
+                if( http.readyState == 4 ) {
+
+                    if( http.status == 200 ){
+
+                        var reponse=trim(http.responseText).split("\*\*\*\*");
+
+                        if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+
+                            location.replace('<?php echo url('/dashboard/logout');?>');
+                        }
+                        else{
+
+                            data ='<select onchange="load_drop_down_unit_by_id(this.value)" class="form-control select" style="width: 100%;" name="level_id" id="level_id"><option value="">Select Level</option>';
+
+                            var json_data = JSON.parse(reponse[0]);
+
+                            var data_length = Object.keys(json_data).length;
+
+                            for(var i=0; i<data_length; i++){
+
+                                data +='<option value="'+json_data[i]['id']+'">'+json_data[i]['level_name']+'</option>';
+                            }
+
+                            data +='</select>';
+
+                            document.getElementById('level_id_container').innerHTML = data;
+                        }
+                    }
+                }
+            }
+
+            http.open("GET","{{route('admin.get.level.data.by.building.id')}}"+"/"+value,true);
+            http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            http.send(data);
+        }
+    }
+
+    function load_drop_down_unit_by_id(selected_value) {
+
+        var value = 0;
+
+        if(selected_value!=''){
+
+            value = selected_value;
+        }
+
+        var http = createObject();
+
+        var data="&value="+value;
+
+        if( http ) {
+            
+            http.onreadystatechange = function() {
+
+                if( http.readyState == 4 ) {
+
+                    if( http.status == 200 ){
+
+                        var reponse=trim(http.responseText).split("\*\*\*\*");
+
+                        if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+
+                            location.replace('<?php echo url('/dashboard/logout');?>');
+                        }
+                        else{
+
+                            data ='<select class="form-control select" style="width: 100%;" name="unit_id" id="unit_id"><option value="">Select Level</option>';
+
+                            var json_data = JSON.parse(reponse[0]);
+
+                            var data_length = Object.keys(json_data).length;
+
+                            for(var i=0; i<data_length; i++){
+
+                                data +='<option value="'+json_data[i]['id']+'">'+json_data[i]['unit_name']+'</option>';
+                            }
+
+                            data +='</select>';
+
+                            document.getElementById('unit_id_container').innerHTML = data;
+                        }
+                    }
+                }
+            }
+
+            http.open("GET","{{route('admin.get.unit.data.by.level.id')}}"+"/"+value,true);
+            http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            http.send(data);
+        }
+    }
+
+</script>****{{csrf_token()}}

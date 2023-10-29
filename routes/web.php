@@ -530,6 +530,9 @@ Route::controller(ComplainController::class)->group(function(){
     Route::get('/dashboard/my-complain','my_complain_add_page')->name('complain_management.my_complain.add')->middleware(['checkroute']);
     Route::post('/dashboard/my-complain','my_complain_store')->name('complain_management.my_complain.add')->middleware(['checkroute']);
 
+    Route::get('/dashboard/get-level-data-by-building-id/{value?}','get_level_data_by_building_id')->name('admin.get.level.data.by.building.id');
+    Route::get('/dashboard/get-unit-data-by-level-id/{value?}','get_unit_data_by_level_id')->name('admin.get.unit.data.by.level.id');
+
 });
 
 Route::controller(VisitorController::class)->group(function(){
