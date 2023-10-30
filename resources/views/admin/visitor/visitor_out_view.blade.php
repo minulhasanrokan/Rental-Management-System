@@ -5,7 +5,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Add Visitor Information</h3>
+                    <h3 class="card-title">Add Out Visitor Information</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -116,7 +116,7 @@
                         @foreach($user_right_data as $data)
                             <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$visitor_data->id}}','{{$visitor_data->visitor_name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
                         @endforeach
-                        <button type="button" style="float:right" onclick="save_visitor_info_data();" class="btn btn-primary">Add Rent Information</button>
+                        <button type="button" style="float:right" onclick="save_visitor_info_data();" class="btn btn-primary">Out Rent Information</button>
                     </div>
                 </form>
             </div>
@@ -241,7 +241,7 @@
         }
     }
 
-    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$visitor_data->building_id}}',0,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\',\'\',\'\')"');
+    load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$visitor_data->building_id}}',1,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\',\'\',\'\')"');
 
     load_drop_down_by_id('levels','id,level_name','level_id','level_id_container','Select Level',0,1,'{{$visitor_data->level_id}}',1,'{{$visitor_data->building_id}}','building_id','onchange=get_unit_load_drop_down_by_id(this.value)','','');
 
