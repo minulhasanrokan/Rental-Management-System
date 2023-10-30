@@ -546,6 +546,11 @@ Route::controller(ComplainController::class)->group(function(){
     Route::post('/dashboard/my-complain-delete','my_complain_grid')->name('complain_management.my_complain.delete')->middleware(['checkroute']);
     Route::get('/dashboard/my-complain-delete/{id?}','my_complain_delete')->name('complain_management.my_complain.delete')->middleware(['checkroute']);
 
+    Route::get('/dashboard/my-complain-feedback','my_feedback_page')->name('complain_management.my_complain.feedback')->middleware(['checkroute']);
+    Route::post('/dashboard/my-complain-feedback','my_complain_grid')->name('complain_management.my_complain.feedback')->middleware(['checkroute']);
+    Route::get('/dashboard/my-complain-feedback/{id?}','my_feedback_single_page')->name('complain_management.my_complain.feedback')->middleware(['checkroute']);
+    Route::post('/dashboard/my-complain-feedback/{id?}','my_feedback_add')->name('complain_management.my_complain.feedback')->middleware(['checkroute']);
+
 });
 
 Route::controller(VisitorController::class)->group(function(){

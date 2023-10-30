@@ -46,7 +46,7 @@
             "colReorder": true,
             "processing": true,
             "ajax":{
-                "url": "{{route('complain_management.my_complain.edit')}}",
+                "url": "{{route('complain_management.my_complain.feedback')}}",
                 "dataType": "json",
                 "type": "POST",
                 "data":{ _token: token},

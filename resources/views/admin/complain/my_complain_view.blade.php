@@ -20,7 +20,7 @@
                                     <th width="150">Date</th>
                                     <th width="100">Assigned</th>
                                     <th width="100">Status</th>
-                                    <th width="100">Action</th>
+                                    <th width="150">Action</th>
                                 </tr>
                             </thead>
                         </table>

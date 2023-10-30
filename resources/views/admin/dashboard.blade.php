@@ -803,6 +803,8 @@
     <link rel="stylesheet" href="{{asset('backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{asset('backend/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
+    <!-- bootstrap slider -->
+  <link rel="stylesheet" href="{{asset('backend/plugins/bootstrap-slider/css/bootstrap-slider.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('backend/dist/css/adminlte.min.css')}}">
     <!-- summernote -->
@@ -827,6 +829,8 @@
     <script src="{{asset('backend/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('backend/dist/js/adminlte.js')}}"></script>
+    <!-- Bootstrap slider -->
+<script src="{{asset('backend/plugins/bootstrap-slider/bootstrap-slider.min.js')}}"></script>
     <!-- jQuery Mapael -->
     <script src="{{asset('backend/plugins/jquery-mousewheel/jquery.mousewheel.js')}}"></script>
     <script src="{{asset('backend/plugins/raphael/raphael.min.js')}}"></script>

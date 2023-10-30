@@ -27,6 +27,13 @@ class ComplainController extends Controller
         return view('admin.complain.complain_add',compact('menu_data'));
     }
 
+    public function my_feedback_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.complain.complain_feedback',compact('menu_data'));
+    }
+
     public function my_complain_add_page(){
 
         $menu_data = $this->common->get_page_menu();
@@ -126,6 +133,19 @@ class ComplainController extends Controller
         $user_right_data = $this->common->get_page_menu_single_view('complain_management.my_complain.add****complain_management.my_complain.view');
 
         return view('admin.complain.my_complain_status_single_view',compact('menu_data','complain_data','user_right_data'));
+    }
+
+    public function my_feedback_single_page($id){
+
+        $complain_data = Complain::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('complain_management.my_complain.add****complain_management.my_complain.feedback');
+
+        return view('admin.complain.my_complain_feedback_single_view',compact('menu_data','complain_data','user_right_data'));
     }
 
     public function edit_single_page($id){
@@ -880,6 +900,72 @@ class ComplainController extends Controller
 
             $notification = array(
                 'message'=> "Complain Does Not Updated Successfully",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
+    }
+
+    public function my_feedback_add  ($id, Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'building_id' => 'required',
+            'level_id' => 'required',
+            'unit_id' => 'required',
+            'complain_title' => 'required|string|max:250',
+            'complain_details' => 'required',
+            'remarks_star' => 'required',
+            'tenant_remarks' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
+        DB::beginTransaction();
+
+        $data = Complain::where('delete_status',0)
+            ->where('id',$request->update_id)
+            ->first();
+
+        $remarks_star_arr = explode(",",trim($request->remarks_star));
+
+        $data->remarks_star = $remarks_star_arr[1];
+        $data->tenant_remarks = $request->tenant_remarks;
+        $data->remarks_date = now();
+
+        $data->save();
+
+        if($data==true){
+
+            DB::commit();
+
+            $notification = array(
+                'message'=> "Complain Remarks Successfully",
+                'alert_type'=>'success',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "Complain Does Not Remarks Successfully",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );

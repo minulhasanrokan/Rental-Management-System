@@ -25,7 +25,9 @@ return new class extends Migration
             $table->integer('process_status')->default(0);
             $table->integer('assign_user')->nullable();
             $table->integer('assign_by')->nullable();
+            $table->integer('remarks_star')->nullable();
             $table->date('assign_date')->nullable();
+            $table->date('remarks_date')->nullable();
             $table->date('complate_date')->nullable();
             $table->integer('delete_status')->default(0);
             $table->integer('status')->default(1);
