@@ -27,6 +27,7 @@ use App\Http\Controllers\RentProcessController;
 use App\Http\Controllers\VatTaxController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\ComplainController;
+use App\Http\Controllers\NoticeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -579,4 +580,10 @@ Route::controller(VisitorController::class)->group(function(){
     Route::get('/dashboard/my-visitor-view','my_visitor_view_page')->name('visitor_management.my_visitor.view')->middleware(['checkroute']);
     Route::post('/dashboard/my-visitor-view','my_visitor_grid')->name('visitor_management.my_visitor.view')->middleware(['checkroute']);
     Route::get('/dashboard/my-visitor-view/{id?}','my_visitor_single_view_page')->name('visitor_management.my_visitor.view')->middleware(['checkroute']);
+});
+
+Route::controller(NoticeController::class)->group(function(){
+
+    Route::get('/dashboard/notice-add','notice_add_page')->name('notice_manage.manage.add')->middleware(['checkroute']);
+    Route::post('/dashboard/notice-add','notice_store')->name('notice_manage.manage.add')->middleware(['checkroute']);
 });
