@@ -110,11 +110,118 @@ class NoticeController extends Controller
         return response()->json($notification);
     }
 
+    public function notice_update ($update_id, Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'notice_title' => 'required|string|max:250',
+            'notice_date' => 'required|date',
+            'notice_status' => 'required',
+            'notice_details' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        DB::beginTransaction();
+
+        $data = Notice::where('delete_status',0)
+            ->where('id',$request->update_id)
+            ->first();
+
+        $data->notice_title = $request->notice_title;
+        $data->notice_group = $request->notice_group;
+        $data->user_id = $request->user_id;
+        $data->notice_date = $request->notice_date;
+        $data->notice_status = $request->notice_status;
+        $data->notice_details = $request->notice_details;
+        $data->add_by = $user_id;
+        $data->created_at = now();
+
+        if ($request->hasFile('notice_file')) {
+
+            $file = $request->file('notice_file');
+
+            $extension = $file->getClientOriginalExtension();
+
+            $fileName = 'notice_'.time().'.'.$extension;
+
+            $file->move('uploads/notice/', $fileName);
+
+            if($data->notice_file!='')
+            {
+                $deletePhoto = "uploads/notice/".$data->notice_file;
+                
+                if(file_exists($deletePhoto)){
+
+                    unlink($deletePhoto);
+                }
+            }
+
+            $data->notice_file = $fileName;
+        }
+
+        $data->save();
+
+        if($data==true){
+
+            DB::commit();
+
+            $notification = array(
+                'message'=> "Notice Details Updated Successfully",
+                'alert_type'=>'success',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "Notice Details Does Not Updated Successfully",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
+    }
+
     public function notice_view_page(){
 
         $menu_data = $this->common->get_page_menu();
 
         return view('admin.notice.notice_view',compact('menu_data'));
+    }
+
+    public function notice_edit_page (){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.notice.notice_edit',compact('menu_data'));
+    }
+
+    public function notice_delete_page (){
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.notice.notice_delete',compact('menu_data'));
     }
 
     public function notice_grid (Request $request){
@@ -243,5 +350,75 @@ class NoticeController extends Controller
         $user_right_data = $this->common->get_page_menu_single_view('notice_manage.manage.add****notice_manage.manage.view');
 
         return view('admin.notice.notice_single_view',compact('menu_data','notice_data','user_right_data'));
+    }
+
+    public function notice_delete($id){
+
+        $notification = array();
+
+        $data = Notice::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+
+        if(empty($data)){
+
+            $notification = array(
+                'message'=> "Notice Data Not Found!!!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            $user_session_data = session()->all();
+
+            $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+            DB::beginTransaction();
+
+            $data->delete_by = $user_id;
+            $data->delete_status = 1;
+            $data->deleted_at = now();
+
+            $data->save();
+
+            if($data==true){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Notice Details Deleted Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Notice Details Not Deleted Successfully",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+
+        $menu_data = $this->common->get_page_menu();
+
+        return view('admin.notice.notice_delete_alert',compact('menu_data','notification'));
+    }
+
+    public function notice_single_edit_page($id){
+
+        $notice_data = Notice::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('notice_manage.manage.add****notice_manage.manage.edit');
+
+        return view('admin.notice.notice_edit_view',compact('menu_data','notice_data','user_right_data'));
     }
 }

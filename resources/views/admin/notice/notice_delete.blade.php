@@ -48,7 +48,7 @@
             "colReorder": true,
             "processing": true,
             "ajax":{
-                "url": "{{route('notice_manage.manage.view')}}",
+                "url": "{{route('notice_manage.manage.delete')}}",
                 "dataType": "json",
                 "type": "POST",
                 "data":{ _token: token},
