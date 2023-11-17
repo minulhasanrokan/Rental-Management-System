@@ -41,14 +41,14 @@
                                     <div class="input-error" style="display:none; color: red;" id="user_id_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="notice_date">Notice Date <span style="color:red;">*</span></label>
                                     <input type="date" class="form-control" id="notice_date" name="notice_date" placeholder="Enter Tenant Name" required>
                                     <div class="input-error" style="display:none; color: red;" id="notice_date_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="notice_status">Notice Status <span style="color:red;">*</span></label>
                                     <div id="notice_status_container">
@@ -58,6 +58,18 @@
                                         </select>
                                     </div>
                                     <div class="input-error" style="display:none; color: red;" id="notice_status_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="email_status">E-mail Status <span style="color:red;">*</span></label>
+                                    <div id="notice_status_container">
+                                        <select class="form-control select" style="width: 100%;" name="email_status" id="email_status">
+                                            <option value="0">No</option>
+                                            <option value="1">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-error" style="display:none; color: red;" id="email_status_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -79,7 +91,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" style="float:right" onclick="save_complain_info_data();" class="btn btn-primary">Add Notice Information</button>
+                        <button type="button" style="float:right" onclick="save_complain_info_data();" class="btn btn-primary">Add Notice</button>
                     </div>
                 </form>
             </div>
@@ -112,6 +124,7 @@
         var user_id = $("#user_id").val();
         var notice_date = $("#notice_date").val();
         var notice_status = $("#notice_status").val();
+        var email_status = $("#email_status").val();
         var notice_details = $("#notice_details").val();
 
         var token = $('meta[name="csrf-token"]').attr('content');
@@ -127,6 +140,7 @@
         form_data.append("user_id", user_id);
         form_data.append("notice_date", notice_date);
         form_data.append("notice_status", notice_status);
+        form_data.append("email_status", email_status);
         form_data.append("notice_details", notice_details);
 
         form_data.append("_token", token);

@@ -68,6 +68,7 @@ class NoticeController extends Controller
         $data->notice_date = $request->notice_date;
         $data->notice_status = $request->notice_status;
         $data->notice_details = $request->notice_details;
+        $data->email_status = $request->email_status;
         $data->add_by = $user_id;
         $data->created_at = now();
 
@@ -151,6 +152,7 @@ class NoticeController extends Controller
         $data->notice_date = $request->notice_date;
         $data->notice_status = $request->notice_status;
         $data->notice_details = $request->notice_details;
+        $data->email_status = $request->email_status;
         $data->add_by = $user_id;
         $data->created_at = now();
 

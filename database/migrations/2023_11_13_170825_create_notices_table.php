@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('notice_date')->nullable();
             $table->text('notice_details')->nullable();
             $table->text('notice_file')->nullable();
+            $table->integer('email_status')->default(0);
             $table->integer('delete_status')->default(0);
             $table->integer('status')->default(1);
             $table->integer('edit_status')->default(0);
