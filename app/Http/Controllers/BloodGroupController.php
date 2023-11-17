@@ -116,7 +116,7 @@ class BloodGroupController extends Controller
         }
 
         return response()->json($notification);
-    }
+    } 
 
     public function blood_group_edit_page(){
 

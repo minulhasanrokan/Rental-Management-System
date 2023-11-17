@@ -126,7 +126,7 @@
                         }
                         else
                         {
-                            return 'notice_file';
+                            return '';
                         }
                     }
                 },

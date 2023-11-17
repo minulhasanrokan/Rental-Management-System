@@ -231,4 +231,17 @@ class NoticeController extends Controller
 
         echo json_encode($response);
     }
+
+    public function notice_single_view_page($id){
+
+        $notice_data = Notice::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('notice_manage.manage.add****notice_manage.manage.view');
+
+        return view('admin.notice.notice_single_view',compact('menu_data','notice_data','user_right_data'));
+    }
 }
