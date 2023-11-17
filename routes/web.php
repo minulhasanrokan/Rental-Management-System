@@ -586,4 +586,8 @@ Route::controller(NoticeController::class)->group(function(){
 
     Route::get('/dashboard/notice-add','notice_add_page')->name('notice_manage.manage.add')->middleware(['checkroute']);
     Route::post('/dashboard/notice-add','notice_store')->name('notice_manage.manage.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/notice-view','notice_view_page')->name('notice_manage.manage.view')->middleware(['checkroute']);
+    Route::post('/dashboard/notice-view','notice_grid')->name('notice_manage.manage.view')->middleware(['checkroute']);
+    Route::get('/dashboard/notice-view/{id?}','notice_single_view_page')->name('notice_manage.manage.view')->middleware(['checkroute']);
 });
