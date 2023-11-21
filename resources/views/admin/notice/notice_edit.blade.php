@@ -15,13 +15,13 @@
                         <table id="level_data_table" class="table table-bordered table-striped" style="text-align: center !important; vertical-align: middle !important;" rules="all">
                             <thead>
                                 <tr>
-                                    <th width="50">Sl</th>
-                                    <th width="100">Group</th>
-                                    <th width="100">User</th>
-                                    <th width="100">Title</th>
-                                    <th width="100">Date</th>
-                                    <th width="100">File</th>
-                                    <th width="100">Status</th>
+                                    <th width="10">Sl</th>
+                                    <th width="80">Group</th>
+                                    <th width="80">User</th>
+                                    <th width="200">Title</th>
+                                    <th width="40">Date</th>
+                                    <th width="40">File</th>
+                                    <th width="40">Status</th>
                                     <th width="150">Action</th>
                                 </tr>
                             </thead>

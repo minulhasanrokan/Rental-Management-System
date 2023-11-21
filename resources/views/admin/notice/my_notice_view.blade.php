@@ -5,7 +5,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">View All Notice Information</h3>
+                    <h3 class="card-title">View My Notice Information</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -22,7 +22,7 @@
                                     <th width="40">Date</th>
                                     <th width="40">File</th>
                                     <th width="40">Status</th>
-                                    <th width="150">Action</th>
+                                    <th width="40">Action</th>
                                 </tr>
                             </thead>
                         </table>
@@ -48,7 +48,7 @@
             "colReorder": true,
             "processing": true,
             "ajax":{
-                "url": "{{route('notice_manage.manage.view')}}",
+                "url": "{{route('notice_manage.my_notice.view')}}",
                 "dataType": "json",
                 "type": "POST",
                 "data":{ _token: token},

@@ -599,4 +599,8 @@ Route::controller(NoticeController::class)->group(function(){
     Route::get('/dashboard/notice-delete','notice_delete_page')->name('notice_manage.manage.delete')->middleware(['checkroute']);
     Route::post('/dashboard/notice-delete','notice_grid')->name('notice_manage.manage.delete')->middleware(['checkroute']);
     Route::get('/dashboard/notice-delete/{id?}','notice_delete')->name('notice_manage.manage.delete')->middleware(['checkroute']);
+
+    Route::get('/dashboard/my-notice-view','my_notice_view_page')->name('notice_manage.my_notice.view')->middleware(['checkroute']);
+    Route::post('/dashboard/my-notice-view','my_notice_grid')->name('notice_manage.my_notice.view')->middleware(['checkroute']);
+    Route::get('/dashboard/my-notice-view/{id?}','my_notice_single_view_page')->name('notice_manage.my_notice.view')->middleware(['checkroute']);
 });
