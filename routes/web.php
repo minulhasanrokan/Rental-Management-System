@@ -28,6 +28,7 @@ use App\Http\Controllers\VatTaxController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\SmsAlertController;
 
 /*
 |--------------------------------------------------------------------------
@@ -603,4 +604,10 @@ Route::controller(NoticeController::class)->group(function(){
     Route::get('/dashboard/my-notice-view','my_notice_view_page')->name('notice_manage.my_notice.view')->middleware(['checkroute']);
     Route::post('/dashboard/my-notice-view','my_notice_grid')->name('notice_manage.my_notice.view')->middleware(['checkroute']);
     Route::get('/dashboard/my-notice-view/{id?}','my_notice_single_view_page')->name('notice_manage.my_notice.view')->middleware(['checkroute']);
+});
+
+Route::controller(SmsAlertController::class)->group(function(){
+
+    Route::get('/dashboard/sms-alert-add','alert_add_page')->name('sms_email_alert.manage.add')->middleware(['checkroute']);
+    Route::post('/dashboard/sms-alert-add','alert_store')->name('sms_email_alert.manage.add')->middleware(['checkroute']);
 });
