@@ -298,4 +298,17 @@ class SmsAlertController extends Controller
 
         return response()->json($notification);
     }
+
+    public function alert_single_view_page($id){
+
+        $alert_data = SMSAlert::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('sms_email_alert.manage.add****sms_email_alert.manage.view');
+
+        return view('admin.alert.alert_single_view',compact('menu_data','alert_data','user_right_data'));
+    }
 }
