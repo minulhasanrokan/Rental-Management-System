@@ -110,7 +110,7 @@ class NoticeController extends Controller
 
         return response()->json($notification);
     }
-
+ 
     public function notice_update ($update_id, Request $request){
 
         $validator = Validator::make($request->all(), [
@@ -153,8 +153,9 @@ class NoticeController extends Controller
         $data->notice_status = $request->notice_status;
         $data->notice_details = $request->notice_details;
         $data->email_status = $request->email_status;
-        $data->add_by = $user_id;
-        $data->created_at = now();
+        $data->edit_by = $user_id;
+        $data->edit_status = 1;
+        $data->updated_at = now();
 
         if ($request->hasFile('notice_file')) {
 
@@ -260,7 +261,7 @@ class NoticeController extends Controller
                 ->where('a.delete_status',0)
                 ->get();
 
-            $filter_data = DB::table('users as a')
+            $filter_data = DB::table('notices as a')
                 ->leftjoin('user_groups as b', 'b.id', '=', 'a.notice_group')
                 ->leftjoin('users as c', 'c.id', '=', 'a.user_id')
                 ->select('a.id')
@@ -271,7 +272,7 @@ class NoticeController extends Controller
                 ->orWhere('c.name','like',"%".$search_value."%")
                 ->get();
 
-            $data = DB::table('users as a')
+            $data = DB::table('notices as a')
                 ->leftjoin('user_groups as b', 'b.id', '=', 'a.notice_group')
                 ->leftjoin('users as c', 'c.id', '=', 'a.user_id')
                 ->select('a.*','b.group_name','c.name as user_name')
