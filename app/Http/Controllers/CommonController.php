@@ -667,4 +667,165 @@ class CommonController extends Controller
 
         return $system_data;
     }
+
+    public function send_sms_email_alert(){
+
+        $sms_data = DB::table('s_m_s_alerts  as a')
+            ->select('a.*')
+            ->where('a.status',1)
+            ->where('a.send_status',0)
+            ->where('a.delete_status',0)
+            ->get()->toArray();
+
+        $user_data_arr = array();
+        $email_data_arr = array();
+
+        if(!empty($sms_data)){
+
+            $sl = 0;
+            $sl1 = 0;
+
+            foreach($sms_data as $data){
+
+                $user_id = $data->user_id==''?'0':$data->user_id;
+                $alert_group = $data->alert_group==''?'0':$data->alert_group;
+
+                $user_data = DB::table('users as a')
+                    ->select('a.id', 'a.email', 'a.mobile', 'a.group')
+                    ->where('a.delete_status', 0);
+
+                if ($alert_group != 0) {
+                    $user_data->where('a.group', $alert_group);
+                }
+
+                if ($user_id != 0) {
+                    $user_data->where('a.id', $user_id);
+                }
+
+                $user_data_result = $user_data->get()->toArray();
+
+                $user_session_data = session()->all();
+
+                $user_id = $user_session_data[config('app.app_session_name')]['id'];
+                
+                if(!empty($user_data_result))
+                {
+                    foreach($user_data_result as $user_data){
+
+                        $user_data_arr[$sl]['user_id'] = $user_data->id;
+                        $user_data_arr[$sl]['email'] = $user_data->email;
+                        $user_data_arr[$sl]['mobile'] = $user_data->mobile;
+                        $user_data_arr[$sl]['group'] = $user_data->group;
+                        $user_data_arr[$sl]['email_status'] = $data->email_status;
+                        $user_data_arr[$sl]['alert_title'] = $data->alert_title;
+                        $user_data_arr[$sl]['alert_details'] = trim($data->alert_details);
+                        $user_data_arr[$sl]['alert_id'] = $data->id;
+                        $user_data_arr[$sl]['add_by'] = $user_id;
+                        $user_data_arr[$sl]['created_at'] = now();
+
+                        if($user_data->email_status==1){
+
+                            $email_data_arr[$sl1]['user_id'] = $user_data->id;
+                            $email_data_arr[$sl1]['email'] = $user_data->email;
+                            $email_data_arr[$sl1]['mobile'] = $user_data->mobile;
+                            $email_data_arr[$sl1]['group'] = $user_data->group;
+                            $email_data_arr[$sl1]['email_status'] = $data->email_status;
+                            $email_data_arr[$sl1]['alert_title'] = $data->alert_title;
+                            $email_data_arr[$sl1]['alert_details'] = trim($data->alert_details);
+                            $email_data_arr[$sl1]['alert_id'] = $data->id;
+                            $email_data_arr[$sl1]['add_by'] = $user_id;
+                            $email_data_arr[$sl1]['created_at'] = now();
+
+                            $sl1++;
+                        }
+
+                        $sl++;
+                    }
+                }
+            }
+        }
+
+        if(!empty($user_data_arr)){
+
+            $send_status_arr = array();
+            $table_arr = array();
+
+            $sl = 0;
+
+            foreach($user_data_arr as $data){
+
+                $sms = $data['alert_details'];
+                $mobile = $data['mobile'];
+
+                $send_status = $this->send_sms($mobile,$sms);
+
+                $send_status_arr[$sl]['send_status'] = $send_status;
+                $send_status_arr[$sl]['user_id'] = $data['user_id'];
+                $send_status_arr[$sl]['group'] = $data['group'];
+                $send_status_arr[$sl]['mobile'] = $data['mobile'];
+                $send_status_arr[$sl]['email'] = $data['email'];
+                $send_status_arr[$sl]['alert_title'] = $data['alert_title'];
+                $send_status_arr[$sl]['alert_details'] = $data['alert_details'];
+                $send_status_arr[$sl]['add_by'] = $data['add_by'];
+                $send_status_arr[$sl]['alert_id'] = $data['alert_id'];
+                $send_status_arr[$sl]['created_at'] = $data['created_at'];
+
+                $table_arr[$sl]= $data['alert_id'];
+
+                $sl++;
+            }
+
+            if(!empty($send_status_arr)){
+
+                DB::table('sms_histories')->insert($send_status_arr);
+
+                DB::table('s_m_s_alerts')
+                    ->whereIn('id', $table_arr)
+                    ->update(['send_status' => 1, 'alert_status' => 1]);
+            }
+        }
+    }
+
+    public function send_sms($mobile,$sms){
+
+        $to = $mobile;
+        $message = $sms;
+
+        $data = SystemDetails::where('delete_status',0)
+            ->where('status',1)
+            //->where('id',1)
+            ->first();
+
+        $api_data = DB::table('sms_apis as a')
+            ->select('a.*')
+            ->where('status',1)
+            ->first();
+
+        if(!empty($api_data)){
+
+            /*$token = $api_data->api_token;
+            $url = $api_data->api_url;
+
+            $data= array(
+                'to'=>"$to",
+                'message'=>"$message",
+                'token'=>"$token"
+            );
+
+            $ch = curl_init(); 
+            curl_setopt($ch, CURLOPT_URL,$url);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_ENCODING, '');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $smsresult = curl_exec($ch);
+            */
+            return 1;
+        }
+        else{
+
+            return 0;
+        }
+    }
 }

@@ -80,7 +80,7 @@
 
 <script>
 
-    $(function () {
+    /*$(function () {
 
         $('#alert_details').summernote({
             height: 150,
@@ -88,7 +88,7 @@
         })
     });
 
-    $('#alert_details').summernote('disable');
+    $('#alert_details').summernote('disable');*/
 
     function save_complain_info_data(){
 

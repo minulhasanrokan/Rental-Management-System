@@ -235,7 +235,7 @@ class SmsAlertController extends Controller
         echo json_encode($response);
     }
 
-    public function alert_update  ($update_id, Request $request){
+    public function alert_update ($update_id, Request $request){
 
         $validator = Validator::make($request->all(), [
             'alert_title' => 'required|string|max:250',
@@ -269,6 +269,7 @@ class SmsAlertController extends Controller
             ->first();
 
         $data->edit_status = 1;
+        $data->send_status = 0;
         $data->total_sent = $data->total_sent+1;
         $data->edit_by = $user_id;
         $data->updated_at = now();

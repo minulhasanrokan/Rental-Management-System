@@ -77,13 +77,13 @@
 
 <script>
 
-    $(function () {
+    /*$(function () {
 
         $('#alert_details').summernote({
             height: 150,
             focus: true
         })
-    });
+    });*/
 
     function save_complain_info_data(){
 
@@ -169,7 +169,7 @@
 
                         document.getElementById("alert_form").reset();
 
-                        $('#alert_details').summernote('reset');
+                        // $('#alert_details').summernote('reset');
 
                         $("#alert_status").val('1');
                         load_drop_down_by_id('users','id,name','user_id','user_id_container','All User',0,1,'',0,0,'group','','','');

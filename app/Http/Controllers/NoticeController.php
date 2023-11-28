@@ -400,7 +400,7 @@ class NoticeController extends Controller
                 })
                 ->get();
 
-            $filter_data = DB::table('users as a')
+            $filter_data = DB::table('notices as a')
                 ->leftjoin('user_groups as b', 'b.id', '=', 'a.notice_group')
                 ->leftjoin('users as c', 'c.id', '=', 'a.user_id')
                 ->select('a.id')
@@ -430,7 +430,7 @@ class NoticeController extends Controller
                 ->orWhere('c.name','like',"%".$search_value."%")
                 ->get();
 
-            $data = DB::table('users as a')
+            $data = DB::table('notices as a')
                 ->leftjoin('user_groups as b', 'b.id', '=', 'a.notice_group')
                 ->leftjoin('users as c', 'c.id', '=', 'a.user_id')
                 ->select('a.*','b.group_name','c.name as user_name')
