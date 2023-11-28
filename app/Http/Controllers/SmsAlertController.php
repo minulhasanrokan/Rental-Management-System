@@ -268,34 +268,45 @@ class SmsAlertController extends Controller
             ->where('id',$request->update_id)
             ->first();
 
-        $data->edit_status = 1;
-        $data->send_status = 0;
-        $data->alert_status = 0;
-        $data->total_sent = $data->total_sent+1;
-        $data->edit_by = $user_id;
-        $data->updated_at = now();
-
-        $data->save();
-
-        if($data==true){
-
-            DB::commit();
-
+        if($data->send_status==0)
+        {
             $notification = array(
-                'message'=> "Alert Details Updated Successfully",
+                'message'=> "Alert Details Pending In send Queue",
                 'alert_type'=>'success',
                 'csrf_token' => csrf_token()
             );
         }
         else{
 
-            DB::rollBack();
+            $data->edit_status = 1;
+            $data->send_status = 0;
+            $data->alert_status = 0;
+            $data->total_sent = $data->total_sent+1;
+            $data->edit_by = $user_id;
+            $data->updated_at = now();
 
-            $notification = array(
-                'message'=> "Alert Details Does Not Updated Successfully",
-                'alert_type'=>'warning',
-                'csrf_token' => csrf_token()
-            );
+            $data->save();
+
+            if($data==true){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Alert Details Updated Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Alert Details Updated Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
 
         return response()->json($notification);

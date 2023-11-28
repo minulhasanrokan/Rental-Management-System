@@ -723,7 +723,7 @@ class CommonController extends Controller
                         $user_data_arr[$sl]['add_by'] = $user_id;
                         $user_data_arr[$sl]['created_at'] = now();
 
-                        if($user_data->email_status==1){
+                        if($data->email_status==1){
 
                             $email_data_arr[$sl1]['user_id'] = $user_data->id;
                             $email_data_arr[$sl1]['email'] = $user_data->email;
