@@ -96,6 +96,9 @@ Route::controller(SystemSettingController::class)->group(function(){
 
     Route::get('/dashboard/system-setting-mail','system_mail_page')->name('system_setting.mail.add')->middleware(['checkroute']);
     Route::post('/dashboard/system-setting-mail','system_mail_update')->name('system_setting.mail.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/system-setting-sms','system_sms_page')->name('system_setting.sms.add')->middleware(['checkroute']);
+    Route::post('/dashboard/system-setting-sms','system_sms_update')->name('system_setting.sms.add')->middleware(['checkroute']);
 });
 
 Route::controller(UserConfigController::class)->group(function(){

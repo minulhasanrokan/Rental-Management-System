@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SystemDetails;
 use App\Models\MailSetup;
+use App\Models\SmsApi;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use DB;
@@ -372,6 +373,136 @@ class SystemSettingController extends Controller
 
             $notification = array(
                 'message'=> "System E-mail Does Not Created Successfully",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
+    }
+
+    public function system_sms_page(){
+
+        $data = SmsApi::where('delete_status',0)
+            ->where('status',1)
+            //->where('id',1)
+            ->first();
+
+        $sms_data = array();
+
+        if($data!=''){
+
+            $password = $this->common->decrypt_data($data->api_password);
+
+            $sms_data['api_token']=$data->api_token;
+            $sms_data['api_url']=$data->api_url;
+            $sms_data['api_mobile']=$data->api_mobile;
+            $sms_data['api_username']=$data->api_username;
+            $sms_data['api_password']=$password;
+            $sms_data['system_url']=$data->system_url;
+            $sms_data['add_by']=$data->add_by;
+            $sms_data['edit_by']=$data->edit_by;
+            $sms_data['delete_by']=$data->delete_by;
+            $sms_data['id']=$data->id;
+            $sms_data['edit_status']=$data->edit_status;
+            $sms_data['delete_status']=$data->delete_status;
+        }
+        else{
+            $sms_data['api_token']='';
+            $sms_data['api_url']='';
+            $sms_data['api_mobile']='';
+            $sms_data['api_username']='';
+            $sms_data['api_password']='';
+            $sms_data['system_url']='';
+            $sms_data['add_by']='';
+            $sms_data['edit_by']='';
+            $sms_data['delete_by']='';
+            $sms_data['id']='';
+            $sms_data['edit_status']='';
+            $sms_data['delete_status']='';
+        }
+
+        return view('admin.system_setting.sms_setup',compact('sms_data'));
+    }
+
+    public function system_sms_update (Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'api_token' => 'required|string|max:250',
+            'api_url' => 'required|string|max:250',
+            'api_mobile' => 'required|string|max:250',
+            'api_username' => 'required|string|max:250',
+            'api_password' => 'required|string|max:250',
+            'system_url' => 'required|string|max:250',
+        ]);
+  
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
+        DB::beginTransaction();
+
+        $data = SmsApi::where('delete_status',0)
+            ->where('status',1)
+            //->where('id',1)
+            ->first();
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        if($data==''){
+
+            $data = new SmsApi;
+
+            $data->add_by = $user_id;
+        }
+        else{
+
+            $data->edit_by = $user_id;
+            $data->edit_status = 1;
+            $data->updated_at = now();
+        }
+
+        $password = $this->common->encrypt_data($request->api_password);
+
+        $data->api_token = $request->api_token;
+        $data->api_url = $request->api_url;
+        $data->api_mobile = $request->api_mobile;
+        $data->api_username = $request->api_username;
+        $data->api_password = $password;
+        $data->system_url = $request->system_url;
+
+        $data->save();
+
+        if($data==true){
+
+            DB::commit();
+
+            $notification = array(
+                'message'=> "SMS API Details Created Successfully",
+                'alert_type'=>'success',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "SMS API Details Does Not Created Successfully",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );
