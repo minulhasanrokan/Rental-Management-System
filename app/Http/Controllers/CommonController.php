@@ -71,6 +71,20 @@ class CommonController extends Controller
         return json_encode($rent_data);
     }
 
+    public function check_header_info(){
+
+        $customHeader = 'X_DATA_TOKEN';
+
+        if (isset($_SERVER['HTTP_'.$customHeader])){
+            
+            return 1;
+        }
+        else{
+            
+            return 0;
+        }
+    }
+
     public function get_page_menu(){
 
         $action_name = request()->route()->getName();

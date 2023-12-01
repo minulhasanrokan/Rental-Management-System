@@ -13,18 +13,33 @@ class BloodGroupController extends Controller
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
 
     public function blood_group_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.blood_group.blood_group_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.blood_group.blood_group_add',compact('menu_data','header_status'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.blood_group.blood_group_add',compact('menu_data','header_status','system_data'));
+        }
     }
 
     public function blood_group_store (Request $request){

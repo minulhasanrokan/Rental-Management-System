@@ -242,8 +242,8 @@
         freeze_window(0);
 
         http.open("GET",route_name+"/"+data,true);
-        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        http.setRequestHeader("page_load_value","54545df4sfsfcs5fs54f4sfs4f6sf");
+        http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        http.setRequestHeader('X-Data-Token', 'mljjljklfdgjkldfjgkljdflkgjldfgjlk');
         http.send();
         http.onreadystatechange = get_new_page_reponse;
     }

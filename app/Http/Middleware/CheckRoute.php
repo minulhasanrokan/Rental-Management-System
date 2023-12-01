@@ -23,6 +23,13 @@ class CheckRoute
             session()->flush();
             session()->regenerate();
 
+            $customHeader = 'X_DATA_TOKEN';
+
+            if (!isset($_SERVER['HTTP_'.$customHeader])){
+                
+                return redirect('/login');
+            }
+
             echo 'Session Expire';
 
             die;
@@ -43,6 +50,13 @@ class CheckRoute
                 ->get()->toArray();
 
             if(empty($user_right_data)){
+
+                $customHeader = 'X_DATA_TOKEN';
+
+                if (!isset($_SERVER['HTTP_'.$customHeader])){
+                    
+                    return redirect('/dashboard');
+                }
 
                 echo 'Right Not Found';
 
