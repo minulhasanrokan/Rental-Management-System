@@ -82,8 +82,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var building_id = $("#building_id").val();
         var level_name = $("#level_name").val();
         var level_code = $("#level_code").val();
@@ -100,6 +98,8 @@
         form_data.append("level_title", level_title);
         form_data.append("level_deatils", level_deatils);
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('floor_management.level.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);

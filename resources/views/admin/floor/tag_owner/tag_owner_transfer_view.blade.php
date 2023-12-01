@@ -146,8 +146,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var owner_id = $("#owner_id").val();
         var building_id = $("#building_id").val();
         var level_id = $("#level_id").val();
@@ -170,6 +168,8 @@
         form_data.append("update_id", '{{$tag_owner_data->id}}');
         form_data.append("_token", token);
 
+        freeze_window(0);
+
         http.open("POST","{{route('floor_management.tag_unit_owner.transfer',$tag_owner_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
@@ -180,7 +180,6 @@
 
         if(http.readyState == 4)
         {
-
             release_freezing();
             
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
