@@ -233,12 +233,17 @@
             name_details +=" - "+name;
         }
 
-        freeze_window(0);
-
         document.title = r_title +name_details+ ' | '+'{{!empty($system_data['system_name'])?$system_data['system_name']:'Rental Management System'}}';
+
+        var title = r_title +name_details+ ' | '+'{{!empty($system_data['system_name'])?$system_data['system_name']:'Rental Management System'}}';
+
+        window.history.pushState({}, title, route_name+'/'+data);
+
+        freeze_window(0);
 
         http.open("GET",route_name+"/"+data,true);
         http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        http.setRequestHeader("page_load_value","54545df4sfsfcs5fs54f4sfs4f6sf");
         http.send();
         http.onreadystatechange = get_new_page_reponse;
     }
@@ -247,6 +252,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+
             var reponse=trim(http.responseText).split("****");
 
             if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
@@ -261,8 +268,6 @@
 
                 $('meta[name="csrf-token"]').attr('content', reponse[1]);
             }
-
-            release_freezing();
         }
     }
 
