@@ -161,6 +161,8 @@
 
         form_data.append("_token", token);
 
+        freeze_window(0);
+
         http.open("POST","{{route('visitor_management.visitor.edit',$visitor_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
@@ -171,6 +173,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');
