@@ -75,8 +75,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var blood_group_name = $("#blood_group_name").val();
         var blood_group_code = $("#blood_group_code").val();
         var blood_group_title = $("#blood_group_title").val();
@@ -91,6 +89,8 @@
         form_data.append("blood_group_title", blood_group_title);
         form_data.append("blood_group_deatils", blood_group_deatils);
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('reference_data.blood_group.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
