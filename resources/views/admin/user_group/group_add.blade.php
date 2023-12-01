@@ -125,7 +125,7 @@
         form_data.append("group_deatils", group_deatils);
         form_data.append("_token", token);
 
-        reeze_window(0);
+        freeze_window(0);
 
         http.open("POST","{{route('user_management.user_group.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
