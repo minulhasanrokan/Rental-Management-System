@@ -32,13 +32,13 @@ class BloodGroupController extends Controller
 
         if($header_status==1){
 
-            return view('admin.reference.blood_group.blood_group_add',compact('menu_data','header_status'));
+            return view('admin.reference.blood_group.blood_group_add',compact('menu_data'));
         }
         else{
 
             $system_data = $this->common->get_system_data();
 
-            return view('admin.reference.blood_group.blood_group_add',compact('menu_data','header_status','system_data'));
+            return view('admin.reference.blood_group.blood_group_add_master',compact('menu_data','system_data'));
         }
     }
 
@@ -141,13 +141,13 @@ class BloodGroupController extends Controller
 
         if($header_status==1){
 
-            return view('admin.reference.blood_group.blood_group_edit',compact('menu_data','header_status'));
+            return view('admin.reference.blood_group.blood_group_edit',compact('menu_data'));
         }
         else{
 
             $system_data = $this->common->get_system_data();
 
-            return view('admin.reference.blood_group.blood_group_edit',compact('menu_data','header_status','system_data'));
+            return view('admin.reference.blood_group.blood_group_edit_master',compact('menu_data','system_data'));
         }
     }
 
@@ -362,13 +362,13 @@ class BloodGroupController extends Controller
 
         if($header_status==1){
 
-            return view('admin.reference.blood_group.blood_group_view',compact('menu_data','header_status'));
+            return view('admin.reference.blood_group.blood_group_view',compact('menu_data'));
         }
         else{
 
             $system_data = $this->common->get_system_data();
 
-            return view('admin.reference.blood_group.blood_group_view',compact('menu_data','header_status','system_data'));
+            return view('admin.reference.blood_group.blood_group_view_master',compact('menu_data','system_data'));
         }
     }
 
@@ -393,13 +393,13 @@ class BloodGroupController extends Controller
 
         if($header_status==1){
 
-            return view('admin.reference.blood_group.blood_group_delete',compact('menu_data','header_status'));
+            return view('admin.reference.blood_group.blood_group_delete',compact('menu_data'));
         }
         else{
 
             $system_data = $this->common->get_system_data();
 
-            return view('admin.reference.blood_group.blood_group_delete',compact('menu_data','header_status','system_data'));
+            return view('admin.reference.blood_group.blood_group_delete_master',compact('menu_data','system_data'));
         }
     }
 
@@ -457,6 +457,17 @@ class BloodGroupController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.blood_group.blood_group_delete_alert',compact('menu_data','notification'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.blood_group.blood_group_delete_alert',compact('menu_data','notification'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.blood_group.blood_group_delete_alert_master',compact('menu_data','notification','system_data'));
+        }
     }
 }
