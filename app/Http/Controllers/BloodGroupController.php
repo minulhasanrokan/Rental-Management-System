@@ -137,7 +137,18 @@ class BloodGroupController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.blood_group.blood_group_edit',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.blood_group.blood_group_edit',compact('menu_data','header_status'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.blood_group.blood_group_edit',compact('menu_data','header_status','system_data'));
+        }
     }
 
     public function blood_group_grid(Request $request){
@@ -347,7 +358,18 @@ class BloodGroupController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.blood_group.blood_group_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.blood_group.blood_group_view',compact('menu_data','header_status'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.blood_group.blood_group_view',compact('menu_data','header_status','system_data'));
+        }
     }
 
     public function blood_group_single_view_page($id){
@@ -367,7 +389,18 @@ class BloodGroupController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.blood_group.blood_group_delete',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.blood_group.blood_group_delete',compact('menu_data','header_status'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.blood_group.blood_group_delete',compact('menu_data','header_status','system_data'));
+        }
     }
 
     public function blood_group_delete($id){
