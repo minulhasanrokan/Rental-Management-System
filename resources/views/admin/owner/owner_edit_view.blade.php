@@ -211,8 +211,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var token = $('meta[name="csrf-token"]').attr('content');
 
         var form_data = new FormData();
@@ -237,6 +235,8 @@
         form_data.append("hidden_user_photo", hidden_user_photo);
         form_data.append("update_id", '{{$user_data->id}}');
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('user_management.owner.edit',$user_data->id)}}",true); 
         http.setRequestHeader("X-CSRF-TOKEN",token);

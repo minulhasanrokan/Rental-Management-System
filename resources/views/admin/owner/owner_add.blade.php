@@ -203,8 +203,6 @@
 
         var user_photo = $('#user_photo')[0].files;
 
-        freeze_window(0);
-
         form_data.append('user_photo',user_photo[0]);
 
         form_data.append("name", name);
@@ -221,6 +219,8 @@
         form_data.append("address", address);
         form_data.append("details", details);
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('user_management.owner.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
