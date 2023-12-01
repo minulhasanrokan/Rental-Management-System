@@ -185,7 +185,6 @@
 
     load_drop_down('months','id,name','month_id','month_id_container','Select Month',0,1,'',0,'');
 
-
     var dateDropdown = document.getElementById('year_id');
 
     var currentYear = new Date().getFullYear();
