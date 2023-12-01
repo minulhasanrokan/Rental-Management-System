@@ -133,8 +133,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var notice_title = $("#notice_title").val();
         var notice_group = $("#notice_group").val();
         var user_id = $("#user_id").val();
@@ -162,6 +160,8 @@
         form_data.append("update_id", '{{$notice_data->id}}');
 
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('notice_manage.manage.edit',$notice_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);

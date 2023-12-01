@@ -119,8 +119,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var notice_title = $("#notice_title").val();
         var notice_group = $("#notice_group").val();
         var user_id = $("#user_id").val();
@@ -146,6 +144,8 @@
         form_data.append("notice_details", notice_details);
 
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('notice_manage.manage.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
