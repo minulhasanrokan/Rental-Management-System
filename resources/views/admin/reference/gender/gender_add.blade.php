@@ -75,8 +75,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var gender_name = $("#gender_name").val();
         var gender_code = $("#gender_code").val();
         var gender_title = $("#gender_title").val();
@@ -91,6 +89,8 @@
         form_data.append("gender_title", gender_title);
         form_data.append("gender_deatils", gender_deatils);
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('reference_data.gender.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
