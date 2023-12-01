@@ -97,8 +97,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var alert_title = $("#alert_title").val();
         var alert_group = $("#alert_group").val();
         var user_id = $("#user_id").val();
@@ -118,6 +116,8 @@
         form_data.append("update_id", '{{$alert_data->id}}');
 
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('sms_email_alert.manage.re_send',$alert_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
