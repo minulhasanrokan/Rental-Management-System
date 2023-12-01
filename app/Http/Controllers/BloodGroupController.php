@@ -259,15 +259,31 @@ class BloodGroupController extends Controller
 
         $header_status = $this->header_status;
 
-        if($header_status==1){
+        if(empty($blood_group_data)){
 
-            return view('admin.reference.blood_group.blood_group_edit_view',compact('menu_data','blood_group_data','user_right_data'));
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','blood_group_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','blood_group_data','user_right_data','system_data'));
+            }
         }
         else{
 
-            $system_data = $this->common->get_system_data();
+            if($header_status==1){
 
-            return view('admin.reference.blood_group.blood_group_edit_view_master',compact('menu_data','blood_group_data','user_right_data','system_data'));
+                return view('admin.reference.blood_group.blood_group_edit_view',compact('menu_data','blood_group_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.reference.blood_group.blood_group_edit_view_master',compact('menu_data','blood_group_data','user_right_data','system_data'));
+            }
         }
     }
 
@@ -395,15 +411,31 @@ class BloodGroupController extends Controller
 
         $header_status = $this->header_status;
 
-        if($header_status==1){
+        if(empty($blood_group_data)){
 
-            return view('admin.reference.blood_group.blood_group_single_view',compact('menu_data','blood_group_data','user_right_data'));
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','blood_group_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','blood_group_data','user_right_data','system_data'));
+            }
         }
         else{
 
-            $system_data = $this->common->get_system_data();
+            if($header_status==1){
 
-            return view('admin.reference.blood_group.blood_group_single_view_master',compact('menu_data','blood_group_data','user_right_data','system_data'));
+                return view('admin.reference.blood_group.blood_group_single_view',compact('menu_data','blood_group_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.reference.blood_group.blood_group_single_view_master',compact('menu_data','blood_group_data','user_right_data','system_data'));
+            }
         }
     }
 
