@@ -75,8 +75,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var department_name = $("#department_name").val();
         var department_code = $("#department_code").val();
         var department_title = $("#department_title").val();
@@ -91,6 +89,8 @@
         form_data.append("department_title", department_title);
         form_data.append("department_deatils", department_deatils);
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('reference_data.department.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
