@@ -78,6 +78,8 @@
             return false;
         }
 
+        freeze_window(0);
+
         var gender_name = $("#gender_name").val();
         var gender_code = $("#gender_code").val();
         var gender_title = $("#gender_title").val();
@@ -104,6 +106,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+            
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');

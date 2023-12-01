@@ -78,6 +78,8 @@
             return false;
         }
 
+        freeze_window(0);
+
         var designation_name = $("#designation_name").val();
         var designation_code = $("#designation_code").val();
         var designation_title = $("#designation_title").val();
@@ -104,6 +106,9 @@
 
         if(http.readyState == 4)
         {
+
+            release_freezing();
+            
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');

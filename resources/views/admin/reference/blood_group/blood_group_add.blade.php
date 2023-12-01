@@ -75,6 +75,8 @@
             return false;
         }
 
+        freeze_window(0);
+
         var blood_group_name = $("#blood_group_name").val();
         var blood_group_code = $("#blood_group_code").val();
         var blood_group_title = $("#blood_group_title").val();
@@ -100,6 +102,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');

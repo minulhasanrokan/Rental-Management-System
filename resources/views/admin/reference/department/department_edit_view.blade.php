@@ -78,6 +78,8 @@
             return false;
         }
 
+        freeze_window(0);
+
         var department_name = $("#department_name").val();
         var department_code = $("#department_code").val();
         var department_title = $("#department_title").val();
@@ -104,6 +106,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+            
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');

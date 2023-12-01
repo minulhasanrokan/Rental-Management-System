@@ -75,6 +75,8 @@
             return false;
         }
 
+        freeze_window(0);
+
         var user_type_name = $("#user_type_name").val();
         var user_type_code = $("#user_type_code").val();
         var user_type_title = $("#user_type_title").val();
@@ -100,6 +102,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');
