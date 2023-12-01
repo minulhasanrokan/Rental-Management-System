@@ -363,6 +363,8 @@
         form_data.append("_token", token);
         form_data.append("user_id", user_id);
 
+        freeze_window(0);
+
         http.open("POST","{{route('user_management.tenant.right',$user_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
@@ -373,6 +375,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');
