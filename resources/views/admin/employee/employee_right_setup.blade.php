@@ -360,6 +360,8 @@
             }
         }
 
+        freeze_window(0);
+
         form_data.append("_token", token);
         form_data.append("user_id", user_id);
 
@@ -373,6 +375,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+            
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');

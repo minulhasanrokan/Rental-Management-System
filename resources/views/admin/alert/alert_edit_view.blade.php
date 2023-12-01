@@ -97,6 +97,8 @@
             return false;
         }
 
+        freeze_window(0);
+
         var alert_title = $("#alert_title").val();
         var alert_group = $("#alert_group").val();
         var user_id = $("#user_id").val();
@@ -127,6 +129,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');

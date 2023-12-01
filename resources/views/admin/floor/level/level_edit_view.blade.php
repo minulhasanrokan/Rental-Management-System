@@ -85,6 +85,8 @@
             return false;
         }
 
+        freeze_window(0);
+
         var building_id = $("#building_id").val();
         var level_name = $("#level_name").val();
         var level_code = $("#level_code").val();
@@ -113,6 +115,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+            
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');

@@ -203,6 +203,8 @@
 
         var user_photo = $('#user_photo')[0].files;
 
+        freeze_window(0);
+
         form_data.append('user_photo',user_photo[0]);
 
         form_data.append("name", name);
@@ -230,6 +232,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+            
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');

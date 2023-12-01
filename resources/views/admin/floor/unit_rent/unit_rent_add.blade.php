@@ -132,6 +132,8 @@
             return false;
         }
 
+        freeze_window(0);
+
         var building_id = $("#building_id").val();
         var level_id = $("#level_id").val();
         var unit_id = $("#unit_id").val();
@@ -174,6 +176,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');
@@ -230,7 +234,6 @@
             }
         }
     }
-
 
     load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'',0,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\',\'\',\'\')"');
 

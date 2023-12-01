@@ -190,6 +190,8 @@
             }
         }
 
+        freeze_window(0);
+
         var name = $("#name").val();
         var email = $("#email").val();
         var mobile = $("#mobile").val();
@@ -246,6 +248,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');

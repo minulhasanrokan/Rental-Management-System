@@ -211,6 +211,8 @@
             return false;
         }
 
+        freeze_window(0);
+
         var token = $('meta[name="csrf-token"]').attr('content');
 
         var form_data = new FormData();
@@ -246,6 +248,8 @@
 
         if(http.readyState == 4)
         {
+            release_freezing();
+
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){
 
                 alert('Session Expire');
