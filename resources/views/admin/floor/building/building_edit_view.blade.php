@@ -130,8 +130,6 @@
             }
         }
 
-        freeze_window(0);
-
         var building_name = $("#building_name").val();
         var building_code = $("#building_code").val();
         var building_title = $("#building_title").val();
@@ -158,6 +156,8 @@
         form_data.append("update_id", '{{$building_data->id}}');
         form_data.append("_token", token);
 
+        freeze_window(0);
+
         http.open("POST","{{route('floor_management.building.edit',$building_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
@@ -168,7 +168,6 @@
 
         if(http.readyState == 4)
         {
-
             release_freezing();
             
             if(http.responseText=='Session Expire' || http.responseText=='Right Not Found'){

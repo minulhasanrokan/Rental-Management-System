@@ -108,8 +108,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var building_name = $("#building_name").val();
         var building_code = $("#building_code").val();
         var building_title = $("#building_title").val();
@@ -132,6 +130,8 @@
         form_data.append("building_address", building_address);
         form_data.append("building_deatils", building_deatils);
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('floor_management.building.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
