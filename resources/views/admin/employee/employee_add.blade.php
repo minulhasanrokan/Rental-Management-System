@@ -151,8 +151,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var mobile = $("#mobile").val();
 
         var status = check_mobile_number(mobile);
@@ -221,6 +219,8 @@
         form_data.append("address", address);
         form_data.append("details", details);
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('user_management.employee.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);

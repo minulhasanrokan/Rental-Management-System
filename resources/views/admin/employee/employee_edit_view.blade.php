@@ -190,8 +190,6 @@
             }
         }
 
-        freeze_window(0);
-
         var name = $("#name").val();
         var email = $("#email").val();
         var mobile = $("#mobile").val();
@@ -237,6 +235,8 @@
         form_data.append("hidden_user_photo", hidden_user_photo);
         form_data.append("update_id", '{{$user_data->id}}');
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('user_management.employee.edit',$user_data->id)}}",true); 
         http.setRequestHeader("X-CSRF-TOKEN",token);
