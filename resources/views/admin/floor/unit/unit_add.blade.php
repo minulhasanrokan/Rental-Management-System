@@ -120,8 +120,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var unit_name = $("#unit_name").val();
         var building_id = $("#building_id").val();
         var level_id = $("#level_id").val();
@@ -151,6 +149,8 @@
         form_data.append("unit_deatils", unit_deatils);
         form_data.append("hidden_unit_photo", hidden_unit_photo);
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('floor_management.unit.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);

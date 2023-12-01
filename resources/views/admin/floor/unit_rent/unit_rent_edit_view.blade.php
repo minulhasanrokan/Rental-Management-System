@@ -142,8 +142,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var building_id = $("#building_id").val();
         var level_id = $("#level_id").val();
         var unit_id = $("#unit_id").val();
@@ -175,6 +173,8 @@
         form_data.append("other_bill", other_bill);
         form_data.append("update_id", '{{$unit_rent_data->id}}');
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('floor_management.unit_rent.edit',$unit_rent_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
