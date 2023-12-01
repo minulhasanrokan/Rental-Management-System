@@ -119,8 +119,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var building_id = $("#building_id").val();
         var level_id = $("#level_id").val();
         var unit_id = $("#unit_id").val();
@@ -139,6 +137,8 @@
         form_data.append("update_id", {{$complain_data->id}});
 
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('complain_management.my_complain.edit',$complain_data->id)}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
