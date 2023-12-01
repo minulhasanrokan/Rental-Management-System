@@ -75,8 +75,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var designation_name = $("#designation_name").val();
         var designation_code = $("#designation_code").val();
         var designation_title = $("#designation_title").val();
@@ -91,6 +89,8 @@
         form_data.append("designation_title", designation_title);
         form_data.append("designation_deatils", designation_deatils);
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('reference_data.designation.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
