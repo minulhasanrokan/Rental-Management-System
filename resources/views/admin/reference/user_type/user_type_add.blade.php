@@ -75,8 +75,6 @@
             return false;
         }
 
-        freeze_window(0);
-
         var user_type_name = $("#user_type_name").val();
         var user_type_code = $("#user_type_code").val();
         var user_type_title = $("#user_type_title").val();
@@ -91,6 +89,8 @@
         form_data.append("user_type_title", user_type_title);
         form_data.append("user_type_deatils", user_type_deatils);
         form_data.append("_token", token);
+
+        freeze_window(0);
 
         http.open("POST","{{route('reference_data.user.type.add')}}",true);
         http.setRequestHeader("X-CSRF-TOKEN",token);
