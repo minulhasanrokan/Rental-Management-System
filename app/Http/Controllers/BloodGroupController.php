@@ -257,7 +257,18 @@ class BloodGroupController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('reference_data.blood_group.add****reference_data.blood_group.edit');
 
-        return view('admin.reference.blood_group.blood_group_edit_view',compact('menu_data','blood_group_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.blood_group.blood_group_edit_view',compact('menu_data','blood_group_data','user_right_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.blood_group.blood_group_edit_view_master',compact('menu_data','blood_group_data','user_right_data','system_data'));
+        }
     }
 
     public function blood_group_update($id, Request $request){
@@ -382,7 +393,18 @@ class BloodGroupController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('reference_data.blood_group.add****reference_data.blood_group.view');
 
-        return view('admin.reference.blood_group.blood_group_single_view',compact('menu_data','blood_group_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.blood_group.blood_group_single_view',compact('menu_data','blood_group_data','user_right_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.blood_group.blood_group_single_view_master',compact('menu_data','blood_group_data','user_right_data','system_data'));
+        }
     }
 
     public function blood_group_delete_page(){
