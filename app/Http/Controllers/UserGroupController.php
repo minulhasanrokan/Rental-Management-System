@@ -17,18 +17,33 @@ class UserGroupController extends Controller
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
     
     public function user_group_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.user_group.group_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.user_group.group_add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.user_group.group_add_master',compact('menu_data','system_data'));
+        }
     }
 
     public function user_group_store(Request $request){
@@ -157,7 +172,19 @@ class UserGroupController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.user_group.group_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.user_group.group_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.user_group.group_view_master',compact('menu_data','system_data'));
+        }
+
     }
 
     public function user_group_grid(Request $request){
@@ -266,18 +293,57 @@ class UserGroupController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('user_management.user_group.add****user_management.user_group.view');
 
-        return view('admin.user_group.group_single_view',compact('menu_data','group_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($group_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','group_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','group_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.user_group.group_single_view',compact('menu_data','group_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.user_group.group_single_view_master',compact('menu_data','group_data','user_right_data','system_data'));
+            }
+        }
+
     }
 
     public function user_group_edit_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.user_group.group_edit',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.user_group.group_edit',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.user_group.group_edit_master',compact('menu_data','system_data'));
+        }
+
     }
 
     public function user_group_single_edit_page($id){
-
 
         $group_data = UserGroup::where('delete_status',0)
             ->where('id',$id)
@@ -287,7 +353,34 @@ class UserGroupController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('user_management.user_group.add****user_management.user_group.edit');
 
-        return view('admin.user_group.group_edit_view',compact('menu_data','group_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($group_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','group_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','group_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.user_group.group_edit_view',compact('menu_data','group_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.user_group.group_edit_view_master',compact('menu_data','group_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function user_group_update($update_id, Request $request){
@@ -441,7 +534,18 @@ class UserGroupController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.user_group.group_delete',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.user_group.group_delete',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.user_group.group_delete_master',compact('menu_data','system_data'));
+        }
     }
 
     public function user_group_delete($id){
@@ -498,14 +602,36 @@ class UserGroupController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.user_group.group_delete_alert',compact('menu_data','notification'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.user_group.group_delete_alert',compact('menu_data','notification'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.user_group.group_delete_alert_master',compact('menu_data','notification','system_data'));
+        }
     }
 
     public function user_group_right_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.user_group.group_right',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.user_group.group_right',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.user_group.group_right_master',compact('menu_data','system_data'));
+        }
     }
 
     public function user_group_right_setup_page($id){
@@ -522,7 +648,35 @@ class UserGroupController extends Controller
 
         $group_right_data = $this->common->get_group_right($group_data->id);
 
-        return view('admin.user_group.group_right_setup',compact('menu_data','group_data','user_right_data','all_right_data','group_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($group_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','group_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','group_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.user_group.group_right_setup',compact('menu_data','group_data','user_right_data','all_right_data','group_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.user_group.group_right_setup_master',compact('menu_data','group_data','user_right_data','all_right_data','group_right_data','system_data'));
+            }
+        }
+
     }
 
     public function user_group_right_store ($id, Request $request){
