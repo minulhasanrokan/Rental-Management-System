@@ -446,7 +446,18 @@ class SystemSettingController extends Controller
             $sms_data['delete_status']='';
         }
 
-        return view('admin.system_setting.sms_setup',compact('sms_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.system_setting.sms_setup',compact('sms_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.system_setting.sms_setup_master',compact('sms_data','system_data'));
+        }
     }
 
     public function system_sms_update (Request $request){
