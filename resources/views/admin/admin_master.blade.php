@@ -31,6 +31,8 @@
 
         <!-- jQuery -->
         <script src="{{asset('backend/plugins/jquery/jquery.min.js')}}"></script>
+        <!--common js-->
+        <script src="{{asset('backend/dist/js/common.js')}}"></script>
         <!-- /.css -->
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
     </head>
@@ -90,8 +92,6 @@
         <script src="{{asset('backend/dist/js/pages/dashboard2.js')}}"></script>
         <!-- Summernote -->
         <script src="{{asset('backend/plugins/summernote/summernote-bs4.min.js')}}"></script>
-        <!--common js-->
-        <script src="{{asset('backend/dist/js/common.js')}}"></script>
         <!-- /.js -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script>

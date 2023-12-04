@@ -13,11 +13,15 @@ class UserConfigController extends Controller
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
 
     public function user_config_page(){
@@ -65,7 +69,18 @@ class UserConfigController extends Controller
             $user_config_data['system_bg_image']='';
         }
 
-        return view('admin.system_setting.user_config_info',compact('user_config_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.system_setting.user_config_info',compact('user_config_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.system_setting.user_config_info_master',compact('user_config_data','system_data'));
+        }
     }
 
     public function user_config_update(Request $request){
