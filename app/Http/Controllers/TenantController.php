@@ -18,18 +18,33 @@ class TenantController extends Controller
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
     
     public function tenant_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.tenant.tenant_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.tenant.tenant_add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.tenant.tenant_add_master',compact('menu_data','system_data'));
+        }
     }
 
     public function tenant_store(Request $request){
@@ -230,7 +245,18 @@ class TenantController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.tenant.tenant_edit',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.tenant.tenant_edit',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.tenant.tenant_edit_master',compact('menu_data','system_data'));
+        }
     }
 
     public function tenant_grid(Request $request){
@@ -356,7 +382,18 @@ class TenantController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.tenant.tenant_delete',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.tenant.tenant_delete',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.tenant.tenant_delete_master',compact('menu_data','system_data'));
+        }
     }
 
     public function tenant_single_edit_page($id){
@@ -369,7 +406,34 @@ class TenantController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('user_management.tenant.add****user_management.tenant.edit');
 
-        return view('admin.tenant.tenant_edit_view',compact('menu_data','tenant_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($tenant_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.tenant.tenant_edit_view',compact('menu_data','tenant_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.tenant.tenant_edit_view_master',compact('menu_data','tenant_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function tenant_update($update_id, Request $request){
@@ -611,14 +675,36 @@ class TenantController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.tenant.tenant_delete_alert',compact('menu_data','notification'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.tenant.tenant_delete_alert',compact('menu_data','notification'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.tenant.tenant_delete_alert_master',compact('menu_data','notification','system_data'));
+        }
     }
 
     public function tenant_view_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.tenant.tenant_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.tenant.tenant_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.tenant.tenant_view_master',compact('menu_data','system_data'));
+        }
     }
 
     public function tenant_single_view_page($id){
@@ -631,14 +717,52 @@ class TenantController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('user_management.tenant.add****user_management.tenant.view');
 
-        return view('admin.tenant.tenant_single_view',compact('menu_data','user_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($user_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.tenant.tenant_single_view',compact('menu_data','user_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.tenant.tenant_single_view_master',compact('menu_data','user_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function tenant_right_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.tenant.tenant_right',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.tenant.tenant_right',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.tenant.tenant_right_master',compact('menu_data','system_data'));
+        }
     }
 
     public function tenant_right_setup_page($id){
@@ -653,9 +777,36 @@ class TenantController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('user_management.tenant.add****user_management.tenant.right');
 
-        $right_data = $this->common->get_user_right($user_data->id);
+        $header_status = $this->header_status;
 
-        return view('admin.tenant.tenant_right_setup',compact('menu_data','user_data','user_right_data','all_right_data','right_data'));
+        if(empty($user_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            $right_data = $this->common->get_user_right($user_data->id);
+
+            if($header_status==1){
+
+                return view('admin.tenant.tenant_right_setup',compact('menu_data','user_data','user_right_data','all_right_data','right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.tenant.tenant_right_setup_master',compact('menu_data','user_data','user_right_data','all_right_data','right_data','system_data'));
+            }
+        }
     }
 
     public function tenant_right_store ($id, Request $request){
