@@ -16,11 +16,15 @@ class SystemSettingController extends Controller
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
 
     public function system_setting_page(){
@@ -70,7 +74,16 @@ class SystemSettingController extends Controller
             $system_data['system_bg_image']='';
         }
 
-        return view('admin.system_setting.system_info',compact('system_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.system_setting.system_info',compact('system_data'));
+        }
+        else{
+
+            return view('admin.system_setting.system_info_master',compact('system_data'));
+        }
     }
 
     public function system_information_update(Request $request){
@@ -285,7 +298,18 @@ class SystemSettingController extends Controller
             $mail_data['email_driver']='';
         }
 
-        return view('admin.system_setting.mail_setup',compact('mail_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.system_setting.mail_setup',compact('mail_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.system_setting.mail_setup_master',compact('mail_data','system_data'));
+        }
     }
 
     public function system_mail_update(Request $request){
