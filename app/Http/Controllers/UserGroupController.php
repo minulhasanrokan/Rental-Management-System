@@ -12,7 +12,7 @@ use DB;
 
 class UserGroupController extends Controller
 {
-
+ 
     public $common;
 
     public $app_session_name ='';
@@ -299,13 +299,13 @@ class UserGroupController extends Controller
 
             if($header_status==1){
 
-                return view('admin.404',compact('menu_data','group_data','user_right_data'));
+                return view('admin.404',compact('menu_data','user_right_data'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.404_master',compact('menu_data','group_data','user_right_data','system_data'));
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
             }
         }
         else{
@@ -359,13 +359,13 @@ class UserGroupController extends Controller
 
             if($header_status==1){
 
-                return view('admin.404',compact('menu_data','group_data','user_right_data'));
+                return view('admin.404',compact('menu_data','user_right_data'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.404_master',compact('menu_data','group_data','user_right_data','system_data'));
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
             }
         }
         else{
@@ -646,24 +646,24 @@ class UserGroupController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('user_management.user_group.add****user_management.user_group.right');
 
-        $group_right_data = $this->common->get_group_right($group_data->id);
-
         $header_status = $this->header_status;
 
         if(empty($group_data)){
 
             if($header_status==1){
 
-                return view('admin.404',compact('menu_data','group_data','user_right_data'));
+                return view('admin.404',compact('menu_data','user_right_data'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.404_master',compact('menu_data','group_data','user_right_data','system_data'));
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
             }
         }
         else{
+
+            $group_right_data = $this->common->get_group_right($group_data->id);
 
             if($header_status==1){
 

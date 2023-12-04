@@ -263,13 +263,13 @@ class BloodGroupController extends Controller
 
             if($header_status==1){
 
-                return view('admin.404',compact('menu_data','blood_group_data','user_right_data'));
+                return view('admin.404',compact('menu_data','user_right_data'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.404_master',compact('menu_data','blood_group_data','user_right_data','system_data'));
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
             }
         }
         else{
@@ -415,13 +415,13 @@ class BloodGroupController extends Controller
 
             if($header_status==1){
 
-                return view('admin.404',compact('menu_data','blood_group_data','user_right_data'));
+                return view('admin.404',compact('menu_data','user_right_data'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.404_master',compact('menu_data','blood_group_data','user_right_data','system_data'));
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
             }
         }
         else{
