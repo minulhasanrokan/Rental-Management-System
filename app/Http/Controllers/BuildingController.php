@@ -14,18 +14,33 @@ class BuildingController extends Controller
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
 
     public function building_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.floor.building.building_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.floor.building.building_add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.floor.building.building_add_master',compact('menu_data','system_data'));
+        }
     }
 
     public function building_store (Request $request){
@@ -170,7 +185,18 @@ class BuildingController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.floor.building.building_edit',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.floor.building.building_edit',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.floor.building.building_edit_master',compact('menu_data','system_data'));
+        }
     }
 
     public function building_grid(Request $request){
@@ -278,11 +304,37 @@ class BuildingController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('floor_management.building.add****floor_management.building.edit');
 
-        return view('admin.floor.building.building_edit_view',compact('menu_data','building_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($building_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.floor.building.building_edit_view',compact('menu_data','building_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.floor.building.building_edit_view_master',compact('menu_data','building_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function building_update($update_id, Request $request){
-
 
         $validator = Validator::make($request->all(), [
             'building_name' => 'required|string|max:250',
@@ -448,7 +500,18 @@ class BuildingController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.floor.building.building_delete',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.floor.building.building_delete',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.floor.building.building_delete_master',compact('menu_data','system_data'));
+        }
     }
 
     public function building_delete($id){
@@ -505,14 +568,36 @@ class BuildingController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.floor.building.building_delete_alert',compact('menu_data','notification'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.floor.building.building_delete_alert',compact('menu_data','notification'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.floor.building.building_delete_alert_master',compact('menu_data','notification','system_data'));
+        }
     }
 
     public function building_view_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.floor.building.building_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.floor.building.building_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.floor.building.building_view_master',compact('menu_data','system_data'));
+        }
     }
 
     public function building_single_view_page($id){
@@ -525,6 +610,33 @@ class BuildingController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('floor_management.building.add****floor_management.building.view');
 
-        return view('admin.floor.building.building_single_view',compact('menu_data','building_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($building_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.floor.building.building_single_view',compact('menu_data','building_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.floor.building.building_single_view_master',compact('menu_data','building_data','user_right_data','system_data'));
+            }
+        }
     }
 }
