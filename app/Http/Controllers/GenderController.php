@@ -13,18 +13,33 @@ class GenderController extends Controller
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
 
     public function gender_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.gender.gender_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.gender.gender_add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.gender.gender_add_master',compact('menu_data','system_data'));
+        }
     }
 
     public function gender_add_store(Request $request){
@@ -122,7 +137,18 @@ class GenderController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.gender.gender_edit',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.gender.gender_edit',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.gender.gender_edit_master',compact('menu_data','system_data'));
+        }
     }
 
     public function gender_grid(Request $request){
@@ -231,7 +257,34 @@ class GenderController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('reference_data.gender.add****reference_data.gender.edit');
 
-        return view('admin.reference.gender.gender_edit_view',compact('menu_data','gender_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($gender_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.reference.gender.gender_edit_view',compact('menu_data','gender_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.reference.gender.gender_edit_view_master',compact('menu_data','gender_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function gender_update($id, Request $request){
@@ -332,7 +385,18 @@ class GenderController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.gender.gender_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.gender.gender_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.gender.gender_view_master',compact('menu_data','system_data'));
+        }
     }
 
     public function gender_single_view_page($id){
@@ -345,14 +409,52 @@ class GenderController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('reference_data.gender.add****reference_data.gender.view');
 
-        return view('admin.reference.gender.gender_single_view',compact('menu_data','gender_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($gender_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.reference.gender.gender_single_view',compact('menu_data','gender_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.reference.gender.gender_single_view_master',compact('menu_data','gender_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function gender_delete_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.gender.gender_delete',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.gender.gender_delete',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.gender.gender_delete_master',compact('menu_data','system_data'));
+        }
     }
 
     public function gender_delete($id){
@@ -409,6 +511,17 @@ class GenderController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.gender.gender_delete_alert',compact('menu_data','notification'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.gender.gender_delete_alert',compact('menu_data','notification'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.gender.gender_delete_alert_master',compact('menu_data','notification','system_data'));
+        }
     }
 }
