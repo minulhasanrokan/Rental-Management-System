@@ -13,18 +13,33 @@ class VatTaxController extends Controller
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
 
     public function tax_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.tax.tax_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.tax.tax_add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.tax.tax_add_master',compact('menu_data','system_data'));
+        }
     }
 
     public function tax_store (Request $request){
@@ -122,7 +137,18 @@ class VatTaxController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.tax.tax_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.tax.tax_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.tax.tax_view_master',compact('menu_data','system_data'));
+        }
     }
 
     public function tax_grid(Request $request){
@@ -244,14 +270,36 @@ class VatTaxController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.tax.tax_edit',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.tax.tax_edit',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.tax.tax_edit_master',compact('menu_data','system_data'));
+        }
     }
 
     public function tax_delete_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.tax.tax_delete',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.tax.tax_delete',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.tax.tax_delete_master',compact('menu_data','system_data'));
+        }
     }
 
     public function tax_single_edit_page($id){
@@ -264,7 +312,34 @@ class VatTaxController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('reference_data.tax.add****reference_data.tax.edit');
 
-        return view('admin.reference.tax.tax_edit_view',compact('menu_data','tax_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($tax_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.reference.tax.tax_edit_view',compact('menu_data','tax_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.reference.tax.tax_edit_view_master',compact('menu_data','tax_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function tax_update($id, Request $request){
@@ -371,7 +446,34 @@ class VatTaxController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('reference_data.tax.add****reference_data.tax.view');
 
-        return view('admin.reference.tax.tax_single_view',compact('menu_data','tax_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($tax_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.reference.tax.tax_single_view',compact('menu_data','tax_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.reference.tax.tax_single_view_master',compact('menu_data','tax_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function tax_delete($id){
@@ -428,6 +530,17 @@ class VatTaxController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.reference.tax.tax_delete_alert',compact('menu_data','notification'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.reference.tax.tax_delete_alert',compact('menu_data','notification'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.reference.tax.tax_delete_alert_master',compact('menu_data','notification','system_data'));
+        }
     }
 }
