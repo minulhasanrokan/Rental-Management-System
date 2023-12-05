@@ -14,18 +14,33 @@ class UnitController extends Controller
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
 
     public function unit_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.floor.unit.unit_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.floor.unit.unit_add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.floor.unit.unit_add_master',compact('menu_data','system_data'));
+        }
     }
 
     public function unit_store (Request $request){
@@ -160,7 +175,18 @@ class UnitController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.floor.unit.unit_edit',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.floor.unit.unit_edit',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.floor.unit.unit_edit_master',compact('menu_data','system_data'));
+        }
     }
 
     public function unit_grid(Request $request){
@@ -310,11 +336,38 @@ class UnitController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('floor_management.unit.add****floor_management.unit.edit');
 
-        return view('admin.floor.unit.unit_edit_view',compact('menu_data','unit_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($unit_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.floor.unit.unit_edit_view',compact('menu_data','unit_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.floor.unit.unit_edit_view_master',compact('menu_data','unit_data','user_right_data','system_data'));
+
+            }
+        }
     }
 
     public function unit_update($id, Request $request){
-
 
         $validator = Validator::make($request->all(), [
             'building_id' => 'required',
@@ -459,7 +512,18 @@ class UnitController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.floor.unit.unit_delete',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.floor.unit.unit_delete',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.floor.unit.unit_delete_master',compact('menu_data','system_data'));
+        }
     }
 
     public function unit_delete($id){
@@ -516,14 +580,36 @@ class UnitController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.floor.unit.unit_delete_alert',compact('menu_data','notification'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.floor.unit.unit_delete_alert',compact('menu_data','notification'));;
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.floor.unit.unit_delete_alert_master',compact('menu_data','notification','system_data'));
+        }
     }
 
     public function unit_view_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.floor.unit.unit_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.floor.unit.unit_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.floor.unit.unit_view_master',compact('menu_data','system_data'));
+        }
     }
 
     public function unit_single_view_page($id){
@@ -536,6 +622,34 @@ class UnitController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('floor_management.unit.add****floor_management.unit.view');
 
-        return view('admin.floor.unit.unit_single_view',compact('menu_data','unit_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($unit_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.floor.unit.unit_single_view',compact('menu_data','unit_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.floor.unit.unit_single_view_master',compact('menu_data','unit_data','user_right_data','system_data'));
+
+            }
+        }
     }
 }
