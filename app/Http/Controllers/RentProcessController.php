@@ -15,18 +15,33 @@ class RentProcessController extends Controller
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
 
     public function rent_process_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.rent_process.rent_process_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.rent_process.rent_process_add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.rent_process.rent_process_add_master',compact('menu_data','system_data'));
+        }
     }
 
     public function rent_process_store (Request $request){
@@ -228,7 +243,18 @@ class RentProcessController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.rent_process.rent_process_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.rent_process.rent_process_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.rent_process.rent_process_view_master',compact('menu_data','system_data'));
+        }
     }
 
     public function rent_process_grid(Request $request){
@@ -415,14 +441,52 @@ class RentProcessController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('rent_management.process.add****rent_management.process.view****rent_management.process.rent_collection');
 
-        return view('admin.rent_process.rent_process_single_view',compact('menu_data','rent_bill_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($rent_bill_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.rent_process.rent_process_single_view',compact('menu_data','rent_bill_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.rent_process.rent_process_single_view_master',compact('menu_data','rent_bill_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function rent_invoice_view_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.rent_process.rent_invoice_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.rent_process.rent_invoice_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.rent_process.rent_invoice_view_master',compact('menu_data','system_data'));
+        }
     }
 
     public function rent_invoice_single_view_page($id){
@@ -443,14 +507,52 @@ class RentProcessController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('rent_management.process.add****rent_management.process.invoice****rent_management.process.rent_collection');
 
-        return view('admin.rent_process.rent_invoice_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
+        $header_status = $this->header_status;
+
+        if(empty($rent_bill_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.rent_process.rent_invoice_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.rent_process.rent_invoice_single_view_master',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data','system_data'));
+            }
+        }
     }
 
     public function rent_collection_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.rent_process.rent_collection_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.rent_process.rent_collection_add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.rent_process.rent_collection_add_master',compact('menu_data','system_data'));
+        }
     }
 
     public function rent_collection_single_edit_page($id){
@@ -471,7 +573,34 @@ class RentProcessController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('rent_management.process.add****rent_management.process.rent_collection****rent_management.process.rent_collection');
 
-        return view('admin.rent_process.rent_collection_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
+        $header_status = $this->header_status;
+
+        if(empty($rent_bill_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.rent_process.rent_collection_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.rent_process.rent_collection_single_view_master',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data','system_data'));
+            }
+        }
     }
 
     public function rent_invoice_single_print($id,$status){

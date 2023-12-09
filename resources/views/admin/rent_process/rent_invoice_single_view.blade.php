@@ -182,5 +182,4 @@
         }
     }
 
-</script>
-****{{csrf_token()}}
+</script>****{{csrf_token()}}
