@@ -45,7 +45,6 @@ class OwnerController extends Controller
 
             return view('admin.owner.owner_add_master',compact('menu_data','system_data'));
         }
-
     }
 
     public function owner_store(Request $request){
