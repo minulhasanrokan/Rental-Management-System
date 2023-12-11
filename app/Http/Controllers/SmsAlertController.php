@@ -13,18 +13,33 @@ class SmsAlertController extends Controller
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
 
     public function alert_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.alert.alert_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.alert.alert_add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.alert.alert_add_master',compact('menu_data','system_data'));
+        }
     }
 
     public function alert_store (Request $request){
@@ -98,14 +113,36 @@ class SmsAlertController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.alert.alert_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.alert.alert_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.alert.alert_view_master',compact('menu_data','system_data'));
+        }
     }
 
     public function alert_re_send_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.alert.alert_re_send',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.alert.alert_re_send',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.alert.alert_re_send_master',compact('menu_data','system_data'));
+        }
     }
 
     public function alert_single_re_send_page($id){
@@ -118,7 +155,34 @@ class SmsAlertController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('sms_email_alert.manage.add****sms_email_alert.manage.re_send');
 
-        return view('admin.alert.alert_edit_view',compact('menu_data','alert_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($alert_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.alert.alert_edit_view',compact('menu_data','alert_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.alert.alert_edit_view_master',compact('menu_data','alert_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function alert_grid (Request $request){
@@ -322,6 +386,33 @@ class SmsAlertController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('sms_email_alert.manage.add****sms_email_alert.manage.view');
 
-        return view('admin.alert.alert_single_view',compact('menu_data','alert_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($alert_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.alert.alert_single_view',compact('menu_data','alert_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.alert.alert_single_view_master',compact('menu_data','alert_data','user_right_data','system_data'));
+            }
+        }
     }
 }
