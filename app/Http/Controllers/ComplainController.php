@@ -13,74 +13,179 @@ class ComplainController extends Controller
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
 
     public function complain_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.complain_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.complain_add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.complain_add_master',compact('menu_data','system_data'));
+        }
     }
 
     public function my_feedback_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.complain_feedback',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.complain_feedback',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.complain_feedback_master',compact('menu_data','system_data'));
+        }
     }
 
     public function my_complain_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.my_complain_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.my_complain_add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.my_complain_add_master',compact('menu_data','system_data'));
+        }
     }
 
     public function assign_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.complain_assign',compact('menu_data'));
+        $menu_data = $this->common->get_page_menu();
+
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.complain_assign',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.complain_assign_master',compact('menu_data','system_data'));
+        }
     }
 
     public function status_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.complain_status',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.complain_status',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.complain_status_master',compact('menu_data','system_data'));
+        }
     }
 
     public function edit_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.complain_edit',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.complain_edit',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.complain_edit_master',compact('menu_data','system_data'));
+        }
     }
 
     public function my_edit_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.my_complain_edit',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.my_complain_edit',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.my_complain_edit_master',compact('menu_data','system_data'));
+        }
     }
 
     public function complain_delete_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.complain_delete',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.complain_delete',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.complain_delete_master',compact('menu_data','system_data'));
+        }
     }
 
     public function my_complain_delete_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.my_complain_delete',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.my_complain_delete',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.my_complain_delete_master',compact('menu_data','system_data'));
+        }
     }
 
     public function assign_single_page($id){
@@ -93,7 +198,34 @@ class ComplainController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('complain_management.manage.add****complain_management.manage.assign');
 
-        return view('admin.complain.complain_assign_edit_view',compact('menu_data','complain_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($complain_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.complain.complain_assign_edit_view',compact('menu_data','complain_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.complain.complain_assign_edit_view_master',compact('menu_data','complain_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function status_single_page($id){
@@ -106,7 +238,34 @@ class ComplainController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('complain_management.manage.add****complain_management.manage.status');
 
-        return view('admin.complain.complain_status_edit_view',compact('menu_data','complain_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($complain_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.complain.complain_status_edit_view',compact('menu_data','complain_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.complain.complain_status_edit_view_master',compact('menu_data','complain_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function complain_single_view_page($id){
@@ -119,7 +278,34 @@ class ComplainController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('complain_management.manage.add****complain_management.manage.view');
 
-        return view('admin.complain.complain_status_single_view',compact('menu_data','complain_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($complain_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.complain.complain_status_single_view',compact('menu_data','complain_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.complain.complain_status_single_view_master',compact('menu_data','complain_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function my_complain_single_view_page($id){
@@ -132,7 +318,34 @@ class ComplainController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('complain_management.my_complain.add****complain_management.my_complain.view');
 
-        return view('admin.complain.my_complain_status_single_view',compact('menu_data','complain_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($complain_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.complain.my_complain_status_single_view',compact('menu_data','complain_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.complain.my_complain_status_single_view_master',compact('menu_data','complain_data','user_right_data','system_data','system_data'));
+            }
+        }
     }
 
     public function my_feedback_single_page($id){
@@ -145,7 +358,36 @@ class ComplainController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('complain_management.my_complain.add****complain_management.my_complain.feedback');
 
-        return view('admin.complain.my_complain_feedback_single_view',compact('menu_data','complain_data','user_right_data'));
+        $user_right_data = $this->common->get_page_menu_single_view('complain_management.my_complain.add****complain_management.my_complain.view');
+
+        $header_status = $this->header_status;
+
+        if(empty($complain_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.complain.my_complain_feedback_single_view',compact('menu_data','complain_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.complain.my_complain_feedback_single_view_master',compact('menu_data','complain_data','user_right_data','system_data','system_data'));
+            }
+        }
     }
 
     public function edit_single_page($id){
@@ -158,7 +400,34 @@ class ComplainController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('complain_management.manage.add****complain_management.manage.edit');
 
-        return view('admin.complain.complain_edit_view',compact('menu_data','complain_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($complain_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.complain.complain_edit_view',compact('menu_data','complain_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.complain.complain_edit_view_master',compact('menu_data','complain_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function my_edit_single_page($id){
@@ -171,7 +440,34 @@ class ComplainController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('complain_management.my_complain.add****complain_management.my_complain.edit');
 
-        return view('admin.complain.my_complain_edit_view',compact('menu_data','complain_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($complain_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.complain.my_complain_edit_view',compact('menu_data','complain_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.complain.my_complain_edit_view_master',compact('menu_data','complain_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function complain_store(Request $request){
@@ -321,14 +617,36 @@ class ComplainController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.complain_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.complain_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.complain_view_master',compact('menu_data','system_data'));
+        }
     }
 
     public function my_complain_view_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.my_complain_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.my_complain_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.my_complain_view_master',compact('menu_data','system_data'));
+        }
     }
 
     public function complain_grid(Request $request){
@@ -1173,7 +1491,18 @@ class ComplainController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.complain_delete_alert',compact('menu_data','notification'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.complain_delete_alert',compact('menu_data','notification'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.complain_delete_alert_master',compact('menu_data','notification','system_data'));
+        }
     }
 
     public function my_complain_delete($id){
@@ -1230,6 +1559,17 @@ class ComplainController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.complain.my_complain_delete_alert',compact('menu_data','notification'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.complain.my_complain_delete_alert',compact('menu_data','notification'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.complain.my_complain_delete_alert_master',compact('menu_data','notification','system_data'));
+        }
     }
-} 
+}
