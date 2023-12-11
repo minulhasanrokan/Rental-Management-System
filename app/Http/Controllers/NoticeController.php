@@ -8,25 +8,39 @@ use Intervention\Image\Facades\Image;
 use App\Models\Notice;
 use DB;
 
-
 class NoticeController extends Controller
 {
     public $common;
 
     public $app_session_name ='';
 
+    public $header_status = 0;
+
     public function __construct(){
 
         $this->common = new CommonController();
 
         $this->app_session_name = config('app.app_session_name');
+
+        $this->header_status = $this->common->check_header_info();
     }
 
     public function notice_add_page(){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.notice.notice_add',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.notice.notice_add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.notice.notice_add_master',compact('menu_data'));
+        }
     }
 
     public function notice_store (Request $request){
@@ -210,21 +224,54 @@ class NoticeController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.notice.notice_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.notice.notice_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.notice.notice_view_master',compact('menu_data'));
+        }
     }
 
     public function notice_edit_page (){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.notice.notice_edit',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.notice.notice_edit',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.notice.notice_edit_master',compact('menu_data'));
+        }
     }
 
     public function notice_delete_page (){
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.notice.notice_delete',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.notice.notice_delete',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.notice.notice_delete_master',compact('menu_data'));
+        }
     }
 
     public function notice_grid (Request $request){
@@ -346,7 +393,18 @@ class NoticeController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.notice.my_notice_view',compact('menu_data'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.notice.my_notice_view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.notice.my_notice_view_master',compact('menu_data'));
+        }
     }
 
     public function my_notice_grid (Request $request){
@@ -567,7 +625,34 @@ class NoticeController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('notice_manage.manage.add****notice_manage.manage.view');
 
-        return view('admin.notice.notice_single_view',compact('menu_data','notice_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($notice_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.notice.notice_single_view',compact('menu_data','notice_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.notice.notice_single_view_master',compact('menu_data','notice_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function my_notice_single_view_page($id){
@@ -580,7 +665,34 @@ class NoticeController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('notice_manage.my_notice.view');
 
-        return view('admin.notice.my_notice_single_view',compact('menu_data','notice_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($notice_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.notice.my_notice_single_view',compact('menu_data','notice_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.notice.my_notice_single_view_master',compact('menu_data','notice_data','user_right_data','system_data'));
+            }
+        }
     }
 
     public function notice_delete($id){
@@ -637,7 +749,18 @@ class NoticeController extends Controller
 
         $menu_data = $this->common->get_page_menu();
 
-        return view('admin.notice.notice_delete_alert',compact('menu_data','notification'));
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.notice.notice_delete_alert',compact('menu_data','notification'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.notice.notice_delete_alert_master',compact('menu_data','notification','system_data'));
+        }
     }
 
     public function notice_single_edit_page($id){
@@ -650,6 +773,33 @@ class NoticeController extends Controller
 
         $user_right_data = $this->common->get_page_menu_single_view('notice_manage.manage.add****notice_manage.manage.edit');
 
-        return view('admin.notice.notice_edit_view',compact('menu_data','notice_data','user_right_data'));
+        $header_status = $this->header_status;
+
+        if(empty($notice_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.notice.notice_edit_view',compact('menu_data','notice_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.notice.notice_edit_view_master',compact('menu_data','notice_data','user_right_data','system_data'));
+            }
+        }
     }
 }
