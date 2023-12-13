@@ -412,7 +412,7 @@ class RentProcessController extends Controller
             $record_data[$sl]['month_name'] = $value->month_name.'-'.$value->year_id;
             $record_data[$sl]['paid_status'] = $value->paid_status;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -431,7 +431,9 @@ class RentProcessController extends Controller
         echo json_encode($response);
     }
 
-    public function rent_process_single_view_page($id){
+    public function rent_process_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $rent_bill_data = RentBill::where('delete_status',0)
             ->where('id',$id)
@@ -460,13 +462,13 @@ class RentProcessController extends Controller
 
             if($header_status==1){
 
-                return view('admin.rent_process.rent_process_single_view',compact('menu_data','rent_bill_data','user_right_data'));
+                return view('admin.rent_process.rent_process_single_view',compact('menu_data','rent_bill_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.rent_process.rent_process_single_view_master',compact('menu_data','rent_bill_data','user_right_data','system_data'));
+                return view('admin.rent_process.rent_process_single_view_master',compact('menu_data','rent_bill_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -489,7 +491,9 @@ class RentProcessController extends Controller
         }
     }
 
-    public function rent_invoice_single_view_page($id){
+    public function rent_invoice_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $rent_bill_data = RentBill::where('delete_status',0)
             ->where('id',$id)
@@ -526,13 +530,13 @@ class RentProcessController extends Controller
 
             if($header_status==1){
 
-                return view('admin.rent_process.rent_invoice_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
+                return view('admin.rent_process.rent_invoice_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.rent_process.rent_invoice_single_view_master',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data','system_data'));
+                return view('admin.rent_process.rent_invoice_single_view_master',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data','encrypt_id','system_data'));
             }
         }
     }
@@ -555,7 +559,9 @@ class RentProcessController extends Controller
         }
     }
 
-    public function rent_collection_single_edit_page($id){
+    public function rent_collection_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $rent_bill_data = RentBill::where('delete_status',0)
             ->where('id',$id)
@@ -592,18 +598,20 @@ class RentProcessController extends Controller
 
             if($header_status==1){
 
-                return view('admin.rent_process.rent_collection_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
+                return view('admin.rent_process.rent_collection_single_view',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.rent_process.rent_collection_single_view_master',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data','system_data'));
+                return view('admin.rent_process.rent_collection_single_view_master',compact('menu_data','rent_bill_data','user_right_data','system_data','user_data','month_data','building_data','level_data','unit_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function rent_invoice_single_print($id,$status){
+    public function rent_invoice_single_print($encrypt_id,$status){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $rent_bill_data = RentBill::where('delete_status',0)
             ->where('id',$id)
@@ -619,11 +627,11 @@ class RentProcessController extends Controller
 
         if($status==0){
 
-            return view('admin.rent_process.invoice_print',compact('rent_bill_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
+            return view('admin.rent_process.invoice_print',compact('rent_bill_data','system_data','user_data','month_data','building_data','level_data','unit_data','encrypt_id'));
         }
         else{
 
-            $pdf = PDF::loadView('admin.rent_process.invoice_print',compact('rent_bill_data','system_data','user_data','month_data','building_data','level_data','unit_data'));
+            $pdf = PDF::loadView('admin.rent_process.invoice_print',compact('rent_bill_data','system_data','user_data','month_data','building_data','level_data','unit_data','encrypt_id'));
      
             return $pdf->download($rent_bill_data->invoice_no.'.pdf');
         }

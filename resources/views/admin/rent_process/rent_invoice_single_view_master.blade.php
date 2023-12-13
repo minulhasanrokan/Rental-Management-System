@@ -147,12 +147,12 @@
 	                <div class="row no-print">
 	                    <div class="col-12">
 	                        @foreach($user_right_data as $data)
-	                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$rent_bill_data->id}}','{{$rent_bill_data->unit_rent}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
+	                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$encrypt_id}}','{{$rent_bill_data->unit_rent}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
 	                        @endforeach
 	                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-	                            <a style="text-decoration:none; color: white;" href="{{route('rent_management.process.print',$rent_bill_data->id)}}/1"><i class="fas fa-download"></i> Generate PDF</a>
+	                            <a style="text-decoration:none; color: white;" href="{{route('rent_management.process.print',$encrypt_id)}}/1"><i class="fas fa-download"></i> Generate PDF</a>
 	                        </button>
-	                        <button onclick="print_invoice({{$rent_bill_data->id}},0)" type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+	                        <button onclick="print_invoice('{{$encrypt_id}}',0)" type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
 	                          <i class="fas fa-print"></i> Print
 	                        </button>
 	                    </div>
@@ -167,7 +167,7 @@
 	    {
 	        if(status==0){
 
-	            http.open("GET","{{route('rent_management.process.print',$rent_bill_data->id)}}/"+status,true);
+	            http.open("GET","{{route('rent_management.process.print',$encrypt_id)}}/"+status,true);
 	            http.send();
 	            http.onreadystatechange = print_invoice_response;
 	        }
