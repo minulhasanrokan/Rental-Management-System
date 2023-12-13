@@ -52,7 +52,7 @@
 	                    <!-- /.card-body -->
 	                    <div class="card-footer">
 	                        @foreach($user_right_data as $data)
-	                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$user_type_data->id}}','{{$user_type_data->user_type_name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
+	                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$encrypt_id}}','{{$user_type_data->user_type_name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
 	                        @endforeach
 	                        <button type="button" style="float:right" onclick="save_user_type_info_data();" class="btn btn-primary">Update User Type Information</button>
 	                    </div>

@@ -21,7 +21,7 @@
                             <hr style="border: 1px solid white; width: 100%;">
                             <div class="col-md-12">
                                 @foreach($user_right_data as $data)
-                                    <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$user_type_data->id}}','{{$user_type_data->user_type_name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
+                                    <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$encrypt_id}}','{{$user_type_data->user_type_name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
                                 @endforeach
                             </div>
                         </div>
