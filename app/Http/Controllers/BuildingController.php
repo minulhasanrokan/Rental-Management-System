@@ -275,7 +275,7 @@ class BuildingController extends Controller
             $record_data[$sl]['building_title'] = $value->building_title;
             $record_data[$sl]['building_code'] = $value->building_code;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -294,7 +294,9 @@ class BuildingController extends Controller
         echo json_encode($response);
     }
 
-    public function building_single_edit_page($id){
+    public function building_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $building_data = Building::where('delete_status',0)
             ->where('id',$id)
@@ -323,13 +325,13 @@ class BuildingController extends Controller
 
             if($header_status==1){
 
-                return view('admin.floor.building.building_edit_view',compact('menu_data','building_data','user_right_data'));
+                return view('admin.floor.building.building_edit_view',compact('menu_data','building_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.floor.building.building_edit_view_master',compact('menu_data','building_data','user_right_data','system_data'));
+                return view('admin.floor.building.building_edit_view_master',compact('menu_data','building_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -514,7 +516,9 @@ class BuildingController extends Controller
         }
     }
 
-    public function building_delete($id){
+    public function building_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
@@ -600,7 +604,9 @@ class BuildingController extends Controller
         }
     }
 
-    public function building_single_view_page($id){
+    public function building_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $building_data = Building::where('delete_status',0)
             ->where('id',$id)
@@ -629,13 +635,13 @@ class BuildingController extends Controller
 
             if($header_status==1){
 
-                return view('admin.floor.building.building_single_view',compact('menu_data','building_data','user_right_data'));
+                return view('admin.floor.building.building_single_view',compact('menu_data','building_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.floor.building.building_single_view_master',compact('menu_data','building_data','user_right_data','system_data'));
+                return view('admin.floor.building.building_single_view_master',compact('menu_data','building_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
