@@ -10,7 +10,8 @@ use App\Models\UserGroup;
 use App\Models\UserGroupRight;
 use DB;
 
-class UserGroupController extends Controller{
+class UserGroupController extends Controller
+{
 
     public $common;
 

@@ -12,7 +12,8 @@ use App\Models\UserGroup;
 use App\Models\UserRight;
 use DB;
 
-class UserController extends Controller{
+class UserController extends Controller
+{
     
     public $common;
 

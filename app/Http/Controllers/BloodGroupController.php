@@ -228,7 +228,7 @@ class BloodGroupController extends Controller
             $record_data[$sl]['add_by'] = $value->add_by;
             $record_data[$sl]['edit_by'] = $value->edit_by;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -247,7 +247,9 @@ class BloodGroupController extends Controller
         echo json_encode($response);
     }
 
-    public function blood_group_single_edit_page($id){
+    public function blood_group_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $blood_group_data = BloodGroup::where('delete_status',0)
             ->where('id',$id)
@@ -276,13 +278,13 @@ class BloodGroupController extends Controller
 
             if($header_status==1){
 
-                return view('admin.reference.blood_group.blood_group_edit_view',compact('menu_data','blood_group_data','user_right_data'));
+                return view('admin.reference.blood_group.blood_group_edit_view',compact('menu_data','blood_group_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.reference.blood_group.blood_group_edit_view_master',compact('menu_data','blood_group_data','user_right_data','system_data'));
+                return view('admin.reference.blood_group.blood_group_edit_view_master',compact('menu_data','blood_group_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -399,7 +401,9 @@ class BloodGroupController extends Controller
         }
     }
 
-    public function blood_group_single_view_page($id){
+    public function blood_group_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $blood_group_data = BloodGroup::where('delete_status',0)
             ->where('id',$id)
@@ -428,13 +432,13 @@ class BloodGroupController extends Controller
 
             if($header_status==1){
 
-                return view('admin.reference.blood_group.blood_group_single_view',compact('menu_data','blood_group_data','user_right_data'));
+                return view('admin.reference.blood_group.blood_group_single_view',compact('menu_data','blood_group_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.reference.blood_group.blood_group_single_view_master',compact('menu_data','blood_group_data','user_right_data','system_data'));
+                return view('admin.reference.blood_group.blood_group_single_view_master',compact('menu_data','blood_group_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -457,7 +461,9 @@ class BloodGroupController extends Controller
         }
     }
 
-    public function blood_group_delete($id){
+    public function blood_group_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
