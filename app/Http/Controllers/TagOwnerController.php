@@ -282,7 +282,7 @@ class TagOwnerController extends Controller
             $record_data[$sl]['level_name'] = $value->level_name;
             $record_data[$sl]['unit_name'] = $value->unit_name;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -301,7 +301,9 @@ class TagOwnerController extends Controller
         echo json_encode($response);
     }
 
-    public function tag_owner_single_edit_page($id){
+    public function tag_owner_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $tag_owner_data = TagOwner::where('delete_status',0)
             ->where('id',$id)
@@ -309,7 +311,7 @@ class TagOwnerController extends Controller
     
         $menu_data = $this->common->get_page_menu();
 
-        $user_right_data = $this->common->get_page_menu_single_view('floor_management.tag_unit_owner.add****floor_management.tag_unit_owner.edit');
+        $user_right_data = $this->common->get_page_menu_single_view('floor_management.tag_unit_owner.add****floor_management.tag_unit_owner.edit****floor_management.tag_unit_owner.transfer_view');
 
         $header_status = $this->header_status;
 
@@ -330,13 +332,13 @@ class TagOwnerController extends Controller
 
             if($header_status==1){
 
-                return view('admin.floor.tag_owner.tag_owner_edit_view',compact('menu_data','tag_owner_data','user_right_data'));
+                return view('admin.floor.tag_owner.tag_owner_edit_view',compact('menu_data','tag_owner_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.floor.tag_owner.tag_owner_edit_view_master',compact('menu_data','tag_owner_data','user_right_data','system_data'));
+                return view('admin.floor.tag_owner.tag_owner_edit_view_master',compact('menu_data','tag_owner_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -457,7 +459,9 @@ class TagOwnerController extends Controller
         }
     }
 
-    public function tag_owner_delete($id){
+    public function tag_owner_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
@@ -543,7 +547,9 @@ class TagOwnerController extends Controller
         }
     }
 
-    public function tag_owner_single_view_page($id){
+    public function tag_owner_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $tag_owner_data = TagOwner::where('delete_status',0)
             ->where('id',$id)
@@ -551,7 +557,7 @@ class TagOwnerController extends Controller
     
         $menu_data = $this->common->get_page_menu();
 
-        $user_right_data = $this->common->get_page_menu_single_view('floor_management.tag_unit_owner.add****floor_management.tag_unit_owner.view');
+        $user_right_data = $this->common->get_page_menu_single_view('floor_management.tag_unit_owner.add****floor_management.tag_unit_owner.view****floor_management.tag_unit_owner.transfer_view');
 
         $header_status = $this->header_status;
 
@@ -572,13 +578,13 @@ class TagOwnerController extends Controller
 
             if($header_status==1){
 
-                return view('admin.floor.tag_owner.tag_owner_single_view',compact('menu_data','tag_owner_data','user_right_data'));
+                return view('admin.floor.tag_owner.tag_owner_single_view',compact('menu_data','tag_owner_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.floor.tag_owner.tag_owner_single_view_master',compact('menu_data','tag_owner_data','user_right_data','system_data'));
+                return view('admin.floor.tag_owner.tag_owner_single_view_master',compact('menu_data','tag_owner_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -601,7 +607,9 @@ class TagOwnerController extends Controller
         }
     }
 
-    public function tag_owner_transfer($id){
+    public function tag_owner_transfer($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $tag_owner_data = TagOwner::where('delete_status',0)
             ->where('id',$id)
@@ -609,7 +617,7 @@ class TagOwnerController extends Controller
     
         $menu_data = $this->common->get_page_menu();
 
-        $user_right_data = $this->common->get_page_menu_single_view('floor_management.tag_unit_owner.add****floor_management.tag_unit_owner.transfer');
+        $user_right_data = $this->common->get_page_menu_single_view('floor_management.tag_unit_owner.add****floor_management.tag_unit_owner.transfer****floor_management.tag_unit_owner.transfer_view');
 
         $header_status = $this->header_status;
 
@@ -630,13 +638,13 @@ class TagOwnerController extends Controller
 
             if($header_status==1){
 
-                return view('admin.floor.tag_owner.tag_owner_transfer_view',compact('menu_data','tag_owner_data','user_right_data'));
+                return view('admin.floor.tag_owner.tag_owner_transfer_view',compact('menu_data','tag_owner_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.floor.tag_owner.tag_owner_transfer_view_master',compact('menu_data','tag_owner_data','user_right_data','system_data'));
+                return view('admin.floor.tag_owner.tag_owner_transfer_view_master',compact('menu_data','tag_owner_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -872,7 +880,7 @@ class TagOwnerController extends Controller
             $record_data[$sl]['transfer_owner_name'] = $value->transfer_owner_name;
             $record_data[$sl]['transfer_date'] = $value->transfer_date;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['unit_id'] = $value->unit_id;
             $record_data[$sl]['menu_data'] = $menu_data;
 
