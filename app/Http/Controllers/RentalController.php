@@ -334,7 +334,7 @@ class RentalController extends Controller
             $record_data[$sl]['name'] = $value->name;
             $record_data[$sl]['status'] = $value->status;
             $record_data[$sl]['close_status'] = $value->close_status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -425,7 +425,9 @@ class RentalController extends Controller
         }
     }
 
-    public function rental_delete($id){
+    public function rental_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
@@ -497,7 +499,9 @@ class RentalController extends Controller
         }
     }
 
-    public function rental_single_edit_page($id){
+    public function rental_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $rent_data = Rent::where('delete_status',0)
             ->where('id',$id)
@@ -526,18 +530,20 @@ class RentalController extends Controller
 
             if($header_status==1){
 
-                return view('admin.rent.rent_edit_view',compact('menu_data','rent_data','user_right_data'));
+                return view('admin.rent.rent_edit_view',compact('menu_data','rent_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.rent.rent_edit_view_master',compact('menu_data','rent_data','user_right_data','system_data'));
+                return view('admin.rent.rent_edit_view_master',compact('menu_data','rent_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function rental_single_close_page($id){
+    public function rental_single_close_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $rent_data = Rent::where('delete_status',0)
             ->where('id',$id)
@@ -566,13 +572,13 @@ class RentalController extends Controller
 
             if($header_status==1){
 
-                return view('admin.rent.rent_close_view',compact('menu_data','rent_data','user_right_data'));
+                return view('admin.rent.rent_close_view',compact('menu_data','rent_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.rent.rent_close_view_master',compact('menu_data','rent_data','user_right_data','system_data'));
+                return view('admin.rent.rent_close_view_master',compact('menu_data','rent_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -796,7 +802,9 @@ class RentalController extends Controller
         return response()->json($notification);
     }
 
-    public function rental_single_view_page($id){
+    public function rental_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $rent_data = Rent::where('delete_status',0)
             ->where('id',$id)
@@ -825,18 +833,20 @@ class RentalController extends Controller
 
             if($header_status==1){
 
-                return view('admin.rent.rent_single_view',compact('menu_data','rent_data','user_right_data'));
+                return view('admin.rent.rent_single_view',compact('menu_data','rent_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.rent.rent_single_view_master',compact('menu_data','rent_data','user_right_data','system_data'));
+                return view('admin.rent.rent_single_view_master',compact('menu_data','rent_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function rental_single_change_page($id){
+    public function rental_single_change_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $rent_data = Rent::where('delete_status',0)
             ->where('id',$id)
@@ -865,13 +875,13 @@ class RentalController extends Controller
 
             if($header_status==1){
 
-                return view('admin.rent.rent_single_change_page',compact('menu_data','rent_data','user_right_data'));
+                return view('admin.rent.rent_single_change_page',compact('menu_data','rent_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.rent.rent_single_change_page_master',compact('menu_data','rent_data','user_right_data','system_data'));
+                return view('admin.rent.rent_single_change_page_master',compact('menu_data','rent_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -1014,5 +1024,4 @@ class RentalController extends Controller
 
         return response()->json($notification);
     }
-
 }
