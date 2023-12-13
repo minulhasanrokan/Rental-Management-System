@@ -359,7 +359,7 @@ class TenantController extends Controller
             $record_data[$sl]['email'] = $value->email;
             $record_data[$sl]['mobile'] = $value->mobile;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->user_id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->user_id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -396,7 +396,9 @@ class TenantController extends Controller
         }
     }
 
-    public function tenant_single_edit_page($id){
+    public function tenant_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $tenant_data = User::where('delete_status',0)
             ->where('id',$id)
@@ -425,13 +427,13 @@ class TenantController extends Controller
 
             if($header_status==1){
 
-                return view('admin.tenant.tenant_edit_view',compact('menu_data','tenant_data','user_right_data'));
+                return view('admin.tenant.tenant_edit_view',compact('menu_data','tenant_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.tenant.tenant_edit_view_master',compact('menu_data','tenant_data','user_right_data','system_data'));
+                return view('admin.tenant.tenant_edit_view_master',compact('menu_data','tenant_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -613,7 +615,9 @@ class TenantController extends Controller
         return response()->json($notification);
     }
 
-    public function tenant_delete($id){
+    public function tenant_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
@@ -707,7 +711,9 @@ class TenantController extends Controller
         }
     }
 
-    public function tenant_single_view_page($id){
+    public function tenant_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $user_data = User::where('delete_status',0)
             ->where('id',$id)
@@ -736,13 +742,13 @@ class TenantController extends Controller
 
             if($header_status==1){
 
-                return view('admin.tenant.tenant_single_view',compact('menu_data','user_data','user_right_data'));
+                return view('admin.tenant.tenant_single_view',compact('menu_data','user_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.tenant.tenant_single_view_master',compact('menu_data','user_data','user_right_data','system_data'));
+                return view('admin.tenant.tenant_single_view_master',compact('menu_data','user_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -765,7 +771,9 @@ class TenantController extends Controller
         }
     }
 
-    public function tenant_right_setup_page($id){
+    public function tenant_right_setup_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $user_data = User::where('delete_status',0)
             ->where('id',$id)
@@ -798,13 +806,13 @@ class TenantController extends Controller
 
             if($header_status==1){
 
-                return view('admin.tenant.tenant_right_setup',compact('menu_data','user_data','user_right_data','all_right_data','right_data'));
+                return view('admin.tenant.tenant_right_setup',compact('menu_data','user_data','user_right_data','all_right_data','right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.tenant.tenant_right_setup_master',compact('menu_data','user_data','user_right_data','all_right_data','right_data','system_data'));
+                return view('admin.tenant.tenant_right_setup_master',compact('menu_data','user_data','user_right_data','all_right_data','right_data','encrypt_id','system_data'));
             }
         }
     }
