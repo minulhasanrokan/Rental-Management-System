@@ -247,7 +247,7 @@ class VatTaxController extends Controller
             $record_data[$sl]['tax_amount'] = $value->tax_amount;
             $record_data[$sl]['name'] = $value->name;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -302,7 +302,9 @@ class VatTaxController extends Controller
         }
     }
 
-    public function tax_single_edit_page($id){
+    public function tax_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $tax_data = VatTax::where('delete_status',0)
             ->where('id',$id)
@@ -331,13 +333,13 @@ class VatTaxController extends Controller
 
             if($header_status==1){
 
-                return view('admin.reference.tax.tax_edit_view',compact('menu_data','tax_data','user_right_data'));
+                return view('admin.reference.tax.tax_edit_view',compact('menu_data','tax_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.reference.tax.tax_edit_view_master',compact('menu_data','tax_data','user_right_data','system_data'));
+                return view('admin.reference.tax.tax_edit_view_master',compact('menu_data','tax_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -436,7 +438,9 @@ class VatTaxController extends Controller
         return response()->json($notification);
     }
 
-    public function tax_single_view_page($id){
+    public function tax_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $tax_data = VatTax::where('delete_status',0)
             ->where('id',$id)
@@ -465,18 +469,20 @@ class VatTaxController extends Controller
 
             if($header_status==1){
 
-                return view('admin.reference.tax.tax_single_view',compact('menu_data','tax_data','user_right_data'));
+                return view('admin.reference.tax.tax_single_view',compact('menu_data','tax_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.reference.tax.tax_single_view_master',compact('menu_data','tax_data','user_right_data','system_data'));
+                return view('admin.reference.tax.tax_single_view_master',compact('menu_data','tax_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function tax_delete($id){
+    public function tax_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 

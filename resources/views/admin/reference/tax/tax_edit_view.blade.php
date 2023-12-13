@@ -46,7 +46,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer">
                          @foreach($user_right_data as $data)
-                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$tax_data->id}}','{{$tax_data->month_id}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
+                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$encrypt_id}}','{{$tax_data->month_id}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
                         @endforeach
                         <button type="button" style="float:right" onclick="save_vat_tax_info_data();" class="btn btn-primary">Update Vat Tax Information</button>
                     </div>
