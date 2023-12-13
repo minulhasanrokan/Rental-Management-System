@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use App\Models\Unit;
-use DB;
+use DB; 
 
 class UnitController extends Controller
 {

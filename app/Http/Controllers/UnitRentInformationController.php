@@ -288,7 +288,7 @@ class UnitRentInformationController extends Controller
             $record_data[$sl]['level_name'] = $value->level_name;
             $record_data[$sl]['unit_name'] = $value->unit_name;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -307,7 +307,9 @@ class UnitRentInformationController extends Controller
         echo json_encode($response);
     }
 
-    public function unit_rent_single_edit_page($id){
+    public function unit_rent_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $unit_rent_data = UnitRentInformation::where('delete_status',0)
             ->where('id',$id)
@@ -336,13 +338,13 @@ class UnitRentInformationController extends Controller
 
             if($header_status==1){
 
-                return view('admin.floor.unit_rent.unit_rent_edit_view',compact('menu_data','unit_rent_data','user_right_data'));
+                return view('admin.floor.unit_rent.unit_rent_edit_view',compact('menu_data','unit_rent_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.floor.unit_rent.unit_rent_edit_view_master',compact('menu_data','unit_rent_data','user_right_data','system_data'));
+                return view('admin.floor.unit_rent.unit_rent_edit_view_master',compact('menu_data','unit_rent_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -463,7 +465,9 @@ class UnitRentInformationController extends Controller
         }
     }
 
-    public function unit_rent_delete($id){
+    public function unit_rent_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
@@ -549,7 +553,9 @@ class UnitRentInformationController extends Controller
         }
     }
 
-    public function unit_rent_single_view_page($id){
+    public function unit_rent_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $unit_rent_data = UnitRentInformation::where('delete_status',0)
             ->where('id',$id)
@@ -578,13 +584,13 @@ class UnitRentInformationController extends Controller
 
             if($header_status==1){
 
-                return view('admin.floor.unit_rent.unit_rent_single_view',compact('menu_data','unit_rent_data','user_right_data'));
+                return view('admin.floor.unit_rent.unit_rent_single_view',compact('menu_data','unit_rent_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.floor.unit_rent.unit_rent_single_view_master',compact('menu_data','unit_rent_data','user_right_data','system_data'));
+                return view('admin.floor.unit_rent.unit_rent_single_view_master',compact('menu_data','unit_rent_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
