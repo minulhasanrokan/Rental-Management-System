@@ -255,7 +255,7 @@ class CommonController extends Controller
         return $data;
     }
 
-    public function get_duplicate_value_two($field_name, $field_name2, $table_name, $value, $value2, $data_id,$other_status,$other_value){
+    public function get_duplicate_value_two($field_name, $field_name2, $table_name, $value, $value2, $data_id,$other_status='',$other_value=''){
 
         $field_name = trim($field_name);
         $field_name2 = trim($field_name2);

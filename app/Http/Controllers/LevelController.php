@@ -245,7 +245,7 @@ class LevelController extends Controller
             $record_data[$sl]['building_name'] = $value->building_name;
             $record_data[$sl]['level_code'] = $value->level_code;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -264,7 +264,9 @@ class LevelController extends Controller
         echo json_encode($response);
     }
 
-    public function level_single_edit_page($id){
+    public function level_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $level_data = Level::where('delete_status',0)
             ->where('id',$id)
@@ -293,13 +295,13 @@ class LevelController extends Controller
 
             if($header_status==1){
 
-                return view('admin.floor.level.level_edit_view',compact('menu_data','level_data','user_right_data'));
+                return view('admin.floor.level.level_edit_view',compact('menu_data','level_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.floor.level.level_edit_view_master',compact('menu_data','level_data','user_right_data','system_data'));
+                return view('admin.floor.level.level_edit_view_master',compact('menu_data','level_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -418,7 +420,9 @@ class LevelController extends Controller
         }
     }
 
-    public function level_delete($id){
+    public function level_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
@@ -505,7 +509,9 @@ class LevelController extends Controller
         }
     }
 
-    public function level_single_view_page($id){
+    public function level_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $level_data = Level::where('delete_status',0)
             ->where('id',$id)
@@ -534,13 +540,13 @@ class LevelController extends Controller
 
             if($header_status==1){
 
-                return view('admin.floor.level.level_single_view',compact('menu_data','level_data','user_right_data'));
+                return view('admin.floor.level.level_single_view',compact('menu_data','level_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.floor.level.level_single_view_master',compact('menu_data','level_data','user_right_data','system_data'));
+                return view('admin.floor.level.level_single_view_master',compact('menu_data','level_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }

@@ -346,7 +346,7 @@ Route::controller(BuildingController::class)->group(function(){
     Route::get('/dashboard/building-view/{id?}','building_single_view_page')->name('floor_management.building.view')->middleware(['checkroute']);
 });
 
-Route::controller(LevelController::class)->group(function(){
+Route::controller(LevelController::class)->group(function(){ 
 
     Route::get('/dashboard/level-add','level_add_page')->name('floor_management.level.add')->middleware(['checkroute']);
     Route::post('/dashboard/level-add','level_store')->name('floor_management.level.add')->middleware(['checkroute']);
