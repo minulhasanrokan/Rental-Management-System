@@ -126,7 +126,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer">
                         @foreach($user_right_data as $data)
-                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$group_data->id}}','{{$group_data->group_name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
+                            <button style="float:left; margin-left:5px;" onclick="get_new_page('{{route($data->r_route_name)}}','{{$data->r_title}}','{{$encrypt_id}}','{{$group_data->group_name}}');" type="button" class="btn btn-primary"><i class="fa {{$data->r_icon}}"></i>&nbsp;{{$data->r_name}}</button>
                         @endforeach
                         <button type="button" style="float:right" onclick="save_user_group_right();" class="btn btn-primary">Set User Group Right</button>
                     </div>

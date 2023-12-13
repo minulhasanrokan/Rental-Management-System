@@ -10,9 +10,8 @@ use App\Models\UserGroup;
 use App\Models\UserGroupRight;
 use DB;
 
-class UserGroupController extends Controller
-{
- 
+class UserGroupController extends Controller{
+
     public $common;
 
     public $app_session_name ='';
@@ -263,7 +262,7 @@ class UserGroupController extends Controller
             $record_data[$sl]['group_title'] = $value->group_title;
             $record_data[$sl]['group_code'] = $value->group_code;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -283,7 +282,9 @@ class UserGroupController extends Controller
 
     }
 
-    public function user_group_single_view_page($id){
+    public function user_group_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $group_data = UserGroup::where('delete_status',0)
             ->where('id',$id)
@@ -312,13 +313,13 @@ class UserGroupController extends Controller
 
             if($header_status==1){
 
-                return view('admin.user_group.group_single_view',compact('menu_data','group_data','user_right_data'));
+                return view('admin.user_group.group_single_view',compact('menu_data','group_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.user_group.group_single_view_master',compact('menu_data','group_data','user_right_data','system_data'));
+                return view('admin.user_group.group_single_view_master',compact('menu_data','group_data','user_right_data','encrypt_id','system_data'));
             }
         }
 
@@ -343,7 +344,9 @@ class UserGroupController extends Controller
 
     }
 
-    public function user_group_single_edit_page($id){
+    public function user_group_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $group_data = UserGroup::where('delete_status',0)
             ->where('id',$id)
@@ -372,13 +375,13 @@ class UserGroupController extends Controller
 
             if($header_status==1){
 
-                return view('admin.user_group.group_edit_view',compact('menu_data','group_data','user_right_data'));
+                return view('admin.user_group.group_edit_view',compact('menu_data','group_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.user_group.group_edit_view_master',compact('menu_data','group_data','user_right_data','system_data'));
+                return view('admin.user_group.group_edit_view_master',compact('menu_data','group_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -548,7 +551,9 @@ class UserGroupController extends Controller
         }
     }
 
-    public function user_group_delete($id){
+    public function user_group_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
@@ -634,7 +639,9 @@ class UserGroupController extends Controller
         }
     }
 
-    public function user_group_right_setup_page($id){
+    public function user_group_right_setup_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $group_data = UserGroup::where('delete_status',0)
             ->where('id',$id)
@@ -667,13 +674,13 @@ class UserGroupController extends Controller
 
             if($header_status==1){
 
-                return view('admin.user_group.group_right_setup',compact('menu_data','group_data','user_right_data','all_right_data','group_right_data'));
+                return view('admin.user_group.group_right_setup',compact('menu_data','group_data','user_right_data','all_right_data','group_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.user_group.group_right_setup_master',compact('menu_data','group_data','user_right_data','all_right_data','group_right_data','system_data'));
+                return view('admin.user_group.group_right_setup_master',compact('menu_data','group_data','user_right_data','all_right_data','group_right_data','encrypt_id','system_data'));
             }
         }
 
