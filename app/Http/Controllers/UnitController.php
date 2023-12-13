@@ -307,7 +307,7 @@ class UnitController extends Controller
             $record_data[$sl]['level_name'] = $value->level_name;
             $record_data[$sl]['status'] = $value->status;
             $record_data[$sl]['unit_size'] = $value->unit_size;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -326,7 +326,9 @@ class UnitController extends Controller
         echo json_encode($response);
     }
 
-    public function unit_single_edit_page($id){
+    public function unit_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $unit_data = Unit::where('delete_status',0)
             ->where('id',$id)
@@ -355,13 +357,13 @@ class UnitController extends Controller
 
             if($header_status==1){
 
-                return view('admin.floor.unit.unit_edit_view',compact('menu_data','unit_data','user_right_data'));
+                return view('admin.floor.unit.unit_edit_view',compact('menu_data','unit_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.floor.unit.unit_edit_view_master',compact('menu_data','unit_data','user_right_data','system_data'));
+                return view('admin.floor.unit.unit_edit_view_master',compact('menu_data','unit_data','user_right_data','encrypt_id','system_data'));
 
             }
         }
@@ -526,7 +528,9 @@ class UnitController extends Controller
         }
     }
 
-    public function unit_delete($id){
+    public function unit_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
@@ -612,7 +616,9 @@ class UnitController extends Controller
         }
     }
 
-    public function unit_single_view_page($id){
+    public function unit_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $unit_data = Unit::where('delete_status',0)
             ->where('id',$id)
@@ -641,13 +647,13 @@ class UnitController extends Controller
 
             if($header_status==1){
 
-                return view('admin.floor.unit.unit_single_view',compact('menu_data','unit_data','user_right_data'));
+                return view('admin.floor.unit.unit_single_view',compact('menu_data','unit_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.floor.unit.unit_single_view_master',compact('menu_data','unit_data','user_right_data','system_data'));
+                return view('admin.floor.unit.unit_single_view_master',compact('menu_data','unit_data','user_right_data','encrypt_id','system_data'));
 
             }
         }
