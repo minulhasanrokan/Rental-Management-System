@@ -369,7 +369,7 @@ class NoticeController extends Controller
             $record_data[$sl]['group_name'] = $value->group_name;
             $record_data[$sl]['user_name'] = $value->user_name;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['id'] = $value->id;
             $record_data[$sl]['menu_data'] = $menu_data;
 
@@ -595,7 +595,7 @@ class NoticeController extends Controller
             $record_data[$sl]['group_name'] = $value->group_name;
             $record_data[$sl]['user_name'] = $value->user_name;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['id'] = $value->id;
             $record_data[$sl]['menu_data'] = $menu_data;
 
@@ -615,7 +615,9 @@ class NoticeController extends Controller
         echo json_encode($response);
     }
 
-    public function notice_single_view_page($id){
+    public function notice_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notice_data = Notice::where('delete_status',0)
             ->where('id',$id)
@@ -644,18 +646,20 @@ class NoticeController extends Controller
 
             if($header_status==1){
 
-                return view('admin.notice.notice_single_view',compact('menu_data','notice_data','user_right_data'));
+                return view('admin.notice.notice_single_view',compact('menu_data','notice_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.notice.notice_single_view_master',compact('menu_data','notice_data','user_right_data','system_data'));
+                return view('admin.notice.notice_single_view_master',compact('menu_data','notice_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function my_notice_single_view_page($id){
+    public function my_notice_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notice_data = Notice::where('delete_status',0)
             ->where('id',$id)
@@ -684,18 +688,20 @@ class NoticeController extends Controller
 
             if($header_status==1){
 
-                return view('admin.notice.my_notice_single_view',compact('menu_data','notice_data','user_right_data'));
+                return view('admin.notice.my_notice_single_view',compact('menu_data','notice_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.notice.my_notice_single_view_master',compact('menu_data','notice_data','user_right_data','system_data'));
+                return view('admin.notice.my_notice_single_view_master',compact('menu_data','notice_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function notice_delete($id){
+    public function notice_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
@@ -763,7 +769,9 @@ class NoticeController extends Controller
         }
     }
 
-    public function notice_single_edit_page($id){
+    public function notice_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notice_data = Notice::where('delete_status',0)
             ->where('id',$id)
@@ -792,13 +800,13 @@ class NoticeController extends Controller
 
             if($header_status==1){
 
-                return view('admin.notice.notice_edit_view',compact('menu_data','notice_data','user_right_data'));
+                return view('admin.notice.notice_edit_view',compact('menu_data','notice_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.notice.notice_edit_view_master',compact('menu_data','notice_data','user_right_data','system_data'));
+                return view('admin.notice.notice_edit_view_master',compact('menu_data','notice_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
