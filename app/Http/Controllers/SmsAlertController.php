@@ -459,10 +459,13 @@ class SmsAlertController extends Controller
                 ->leftjoin('users as c', 'c.id', '=', 'a.user_id')
                 ->select('a.id')
                 ->where('a.delete_status',0)
-                ->where('a.alert_title','like',"%".$search_value."%")
-                ->orWhere('a.alert_date','like',"%".$search_value."%")
-                ->orWhere('b.name','like',"%".$search_value."%")
-                ->orWhere('c.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                        
+                    $query->where('a.alert_title','like',"%".$search_value."%")
+                        ->orWhere('a.alert_date','like',"%".$search_value."%")
+                        ->orWhere('b.group_name','like',"%".$search_value."%")
+                        ->orWhere('c.name','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = DB::table('s_m_s_alerts as a')
@@ -470,10 +473,13 @@ class SmsAlertController extends Controller
                 ->leftjoin('users as c', 'c.id', '=', 'a.user_id')
                 ->select('a.*','b.group_name','c.name as user_name')
                 ->where('a.delete_status',0)
-                ->where('a.alert_title','like',"%".$search_value."%")
-                ->orWhere('a.alert_date','like',"%".$search_value."%")
-                ->orWhere('b.name','like',"%".$search_value."%")
-                ->orWhere('c.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                        
+                    $query->where('a.alert_title','like',"%".$search_value."%")
+                        ->orWhere('a.alert_date','like',"%".$search_value."%")
+                        ->orWhere('b.group_name','like',"%".$search_value."%")
+                        ->orWhere('c.name','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)
