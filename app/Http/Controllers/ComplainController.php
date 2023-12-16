@@ -188,7 +188,9 @@ class ComplainController extends Controller
         }
     }
 
-    public function assign_single_page($id){
+    public function assign_single_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $complain_data = Complain::where('delete_status',0)
             ->where('id',$id)
@@ -217,18 +219,20 @@ class ComplainController extends Controller
 
             if($header_status==1){
 
-                return view('admin.complain.complain_assign_edit_view',compact('menu_data','complain_data','user_right_data'));
+                return view('admin.complain.complain_assign_edit_view',compact('menu_data','complain_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.complain.complain_assign_edit_view_master',compact('menu_data','complain_data','user_right_data','system_data'));
+                return view('admin.complain.complain_assign_edit_view_master',compact('menu_data','complain_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function status_single_page($id){
+    public function status_single_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $complain_data = Complain::where('delete_status',0)
             ->where('id',$id)
@@ -257,18 +261,20 @@ class ComplainController extends Controller
 
             if($header_status==1){
 
-                return view('admin.complain.complain_status_edit_view',compact('menu_data','complain_data','user_right_data'));
+                return view('admin.complain.complain_status_edit_view',compact('menu_data','complain_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.complain.complain_status_edit_view_master',compact('menu_data','complain_data','user_right_data','system_data'));
+                return view('admin.complain.complain_status_edit_view_master',compact('menu_data','complain_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function complain_single_view_page($id){
+    public function complain_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $complain_data = Complain::where('delete_status',0)
             ->where('id',$id)
@@ -297,18 +303,20 @@ class ComplainController extends Controller
 
             if($header_status==1){
 
-                return view('admin.complain.complain_status_single_view',compact('menu_data','complain_data','user_right_data'));
+                return view('admin.complain.complain_status_single_view',compact('menu_data','complain_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.complain.complain_status_single_view_master',compact('menu_data','complain_data','user_right_data','system_data'));
+                return view('admin.complain.complain_status_single_view_master',compact('menu_data','complain_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function my_complain_single_view_page($id){
+    public function my_complain_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $complain_data = Complain::where('delete_status',0)
             ->where('id',$id)
@@ -337,18 +345,20 @@ class ComplainController extends Controller
 
             if($header_status==1){
 
-                return view('admin.complain.my_complain_status_single_view',compact('menu_data','complain_data','user_right_data'));
+                return view('admin.complain.my_complain_status_single_view',compact('menu_data','complain_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.complain.my_complain_status_single_view_master',compact('menu_data','complain_data','user_right_data','system_data','system_data'));
+                return view('admin.complain.my_complain_status_single_view_master',compact('menu_data','complain_data','user_right_data','system_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function my_feedback_single_page($id){
+    public function my_feedback_single_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $complain_data = Complain::where('delete_status',0)
             ->where('id',$id)
@@ -379,18 +389,20 @@ class ComplainController extends Controller
 
             if($header_status==1){
 
-                return view('admin.complain.my_complain_feedback_single_view',compact('menu_data','complain_data','user_right_data'));
+                return view('admin.complain.my_complain_feedback_single_view',compact('menu_data','complain_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.complain.my_complain_feedback_single_view_master',compact('menu_data','complain_data','user_right_data','system_data','system_data'));
+                return view('admin.complain.my_complain_feedback_single_view_master',compact('menu_data','complain_data','user_right_data','system_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function edit_single_page($id){
+    public function edit_single_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $complain_data = Complain::where('delete_status',0)
             ->where('id',$id)
@@ -419,18 +431,20 @@ class ComplainController extends Controller
 
             if($header_status==1){
 
-                return view('admin.complain.complain_edit_view',compact('menu_data','complain_data','user_right_data'));
+                return view('admin.complain.complain_edit_view',compact('menu_data','complain_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.complain.complain_edit_view_master',compact('menu_data','complain_data','user_right_data','system_data'));
+                return view('admin.complain.complain_edit_view_master',compact('menu_data','complain_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function my_edit_single_page($id){
+    public function my_edit_single_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $complain_data = Complain::where('delete_status',0)
             ->where('id',$id)
@@ -459,13 +473,13 @@ class ComplainController extends Controller
 
             if($header_status==1){
 
-                return view('admin.complain.my_complain_edit_view',compact('menu_data','complain_data','user_right_data'));
+                return view('admin.complain.my_complain_edit_view',compact('menu_data','complain_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.complain.my_complain_edit_view_master',compact('menu_data','complain_data','user_right_data','system_data'));
+                return view('admin.complain.my_complain_edit_view_master',compact('menu_data','complain_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -735,7 +749,7 @@ class ComplainController extends Controller
             $record_data[$sl]['process_status'] = $value->process_status;
             $record_data[$sl]['user_name'] = $value->user_name;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -849,7 +863,7 @@ class ComplainController extends Controller
             $record_data[$sl]['process_status'] = $value->process_status;
             $record_data[$sl]['user_name'] = $value->user_name;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -1063,7 +1077,7 @@ class ComplainController extends Controller
             $record_data[$sl]['process_status'] = $value->process_status;
             $record_data[$sl]['user_name'] = $value->user_name;
             $record_data[$sl]['status'] = $value->status;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -1437,7 +1451,9 @@ class ComplainController extends Controller
         return response()->json($notification);
     }
 
-    public function complain_delete($id){
+    public function complain_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
@@ -1505,7 +1521,9 @@ class ComplainController extends Controller
         }
     }
 
-    public function my_complain_delete($id){
+    public function my_complain_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
