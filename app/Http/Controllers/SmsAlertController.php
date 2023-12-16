@@ -347,6 +347,7 @@ class SmsAlertController extends Controller
             $data->edit_status = 1;
             $data->send_status = 0;
             $data->alert_status = 0;
+            $data->email_send_status = 0;
             $data->total_sent = $data->total_sent+1;
             $data->edit_by = $user_id;
             $data->updated_at = now();

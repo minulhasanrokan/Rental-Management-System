@@ -58,7 +58,8 @@ Route::controller(CommonController::class)->group(function(){
 
     Route::get('/dashboard/get-current-tenant-info-by-unit/{value?}','current_tenant_info_by_unit')->name('admin.get.current.tenant.info.by.unit');
 
-    Route::get('/dashboard/send-sms-email','send_sms_email_alert')->name('admin.send.sms.email');
+    Route::get('/dashboard/send-sms','send_sms_alert')->name('admin.send.sms');
+    Route::get('/dashboard/send-email','send_email_alert')->name('admin.send.email');
 });
 
 Route::controller(RegistrationController::class)->group(function(){

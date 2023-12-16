@@ -11,21 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('s_m_s_alerts', function (Blueprint $table) {
+        Schema::create('email_histories', function (Blueprint $table) {
             $table->id();
-            $table->integer('alert_status')->nullable();
+            $table->integer('send_status')->nullable();
             $table->string('user_id')->nullable();
-            $table->integer('alert_group')->nullable();
+            $table->integer('group')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('email')->nullable();
             $table->string('alert_title')->nullable();
-            $table->date('alert_date')->nullable();
             $table->text('alert_details')->nullable();
-            $table->integer('email_status')->default(0);
-            $table->integer('delete_status')->default(0);
+            $table->integer('alert_id')->nullable();
             $table->integer('status')->default(1);
             $table->integer('edit_status')->default(0);
-            $table->integer('send_status')->default(0);
-            $table->integer('email_send_status')->default(0);
-            $table->integer('total_sent')->default(0);
             $table->integer('add_by')->nullable();
             $table->integer('edit_by')->nullable();
             $table->integer('delete_by')->nullable();
@@ -38,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('s_m_s_alerts');
+        Schema::dropIfExists('email_histories');
     }
 };
