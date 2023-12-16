@@ -42,7 +42,7 @@ class VisitorController extends Controller
         }
     }
 
-    public function visitor_out_page (){
+    public function visitor_out_page(){
 
         $menu_data = $this->common->get_page_menu();
 
@@ -301,7 +301,7 @@ class VisitorController extends Controller
             $record_data[$sl]['level_name'] = $value->level_name;
             $record_data[$sl]['unit_name'] = $value->unit_name;
             $record_data[$sl]['name'] = $value->name;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -472,7 +472,7 @@ class VisitorController extends Controller
             $record_data[$sl]['level_name'] = $value->level_name;
             $record_data[$sl]['unit_name'] = $value->unit_name;
             $record_data[$sl]['name'] = $value->name;
-            $record_data[$sl]['action'] = $value->id;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
             $record_data[$sl]['menu_data'] = $menu_data;
 
             $sl++;
@@ -527,7 +527,9 @@ class VisitorController extends Controller
         }
     }
 
-    public function visitor_single_edit_page($id){
+    public function visitor_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $visitor_data = Visitor::where('delete_status',0)
             ->where('id',$id)
@@ -556,18 +558,20 @@ class VisitorController extends Controller
 
             if($header_status==1){
 
-                return view('admin.visitor.visitor_edit_view',compact('menu_data','visitor_data','user_right_data'));
+                return view('admin.visitor.visitor_edit_view',compact('menu_data','visitor_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.visitor.visitor_edit_view_master',compact('menu_data','visitor_data','user_right_data','system_data'));
+                return view('admin.visitor.visitor_edit_view_master',compact('menu_data','visitor_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function visitor_single_out_page($id){
+    public function visitor_single_out_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $visitor_data = Visitor::where('delete_status',0)
             ->where('id',$id)
@@ -596,13 +600,13 @@ class VisitorController extends Controller
 
             if($header_status==1){
 
-                return view('admin.visitor.visitor_out_view',compact('menu_data','visitor_data','user_right_data'));
+                return view('admin.visitor.visitor_out_view',compact('menu_data','visitor_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.visitor.visitor_out_view_master',compact('menu_data','visitor_data','user_right_data','system_data'));
+                return view('admin.visitor.visitor_out_view_master',compact('menu_data','visitor_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
@@ -776,7 +780,9 @@ class VisitorController extends Controller
         return response()->json($notification);
     }
 
-    public function visitor_delete ($id){
+    public function visitor_delete ($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $notification = array();
 
@@ -845,7 +851,9 @@ class VisitorController extends Controller
 
     }
 
-    public function visitor_single_view_page($id){
+    public function visitor_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $visitor_data = Visitor::where('delete_status',0)
             ->where('id',$id)
@@ -874,18 +882,20 @@ class VisitorController extends Controller
 
             if($header_status==1){
 
-                return view('admin.visitor.visitor_single_view',compact('menu_data','visitor_data','user_right_data'));
+                return view('admin.visitor.visitor_single_view',compact('menu_data','visitor_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.visitor.visitor_single_view_master',compact('menu_data','visitor_data','user_right_data','system_data'));
+                return view('admin.visitor.visitor_single_view_master',compact('menu_data','visitor_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
 
-    public function my_visitor_single_view_page($id){
+    public function my_visitor_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
 
         $visitor_data = Visitor::where('delete_status',0)
             ->where('id',$id)
@@ -914,13 +924,13 @@ class VisitorController extends Controller
 
             if($header_status==1){
 
-                return view('admin.visitor.visitor_single_view',compact('menu_data','visitor_data','user_right_data'));
+                return view('admin.visitor.visitor_single_view',compact('menu_data','visitor_data','user_right_data','encrypt_id'));
             }
             else{
 
                 $system_data = $this->common->get_system_data();
 
-                return view('admin.visitor.visitor_single_view_master',compact('menu_data','visitor_data','user_right_data','system_data'));
+                return view('admin.visitor.visitor_single_view_master',compact('menu_data','visitor_data','user_right_data','encrypt_id','system_data'));
             }
         }
     }
