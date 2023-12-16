@@ -625,4 +625,7 @@ Route::controller(SmsAlertController::class)->group(function(){
     Route::post('/dashboard/sms-alert-resend','alert_grid')->name('sms_email_alert.manage.re_send')->middleware(['checkroute']);
     Route::get('/dashboard/sms-alert-resend/{id?}','alert_single_re_send_page')->name('sms_email_alert.manage.re_send')->middleware(['checkroute']);
     Route::post('/dashboard/sms-alert-resend/{id?}','alert_update')->name('sms_email_alert.manage.re_send')->middleware(['checkroute']);
+
+    Route::get('/dashboard/sms-alert-history/{id?}','alert_history_page')->name('sms_email_alert.manage.history')->middleware(['checkroute']);
+    Route::post('/dashboard/sms-alert-history/{id?}','alert_history_grid')->name('sms_email_alert.manage.history')->middleware(['checkroute']);
 });

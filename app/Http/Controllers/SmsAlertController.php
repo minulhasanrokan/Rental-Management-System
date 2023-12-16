@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\SMSAlert;
+use App\Models\SmsHistory;
 use DB;
 
 class SmsAlertController extends Controller
@@ -39,6 +40,77 @@ class SmsAlertController extends Controller
             $system_data = $this->common->get_system_data();
 
             return view('admin.alert.alert_add_master',compact('menu_data','system_data'));
+        }
+    }
+
+    public function alert_history_page($encrypt_id=null){
+
+        $encrypt_id_arr = explode('****', $encrypt_id);
+
+        if(count($encrypt_id_arr)==2)
+        {
+            $id = $this->common->decrypt_data($encrypt_id_arr[0]);
+
+            $alert_history_data = SmsHistory::where('id',$id)
+                ->first();
+        
+            $menu_data = $this->common->get_page_menu();
+
+            $user_right_data = $this->common->get_page_menu_single_view('sms_email_alert.manage.add****sms_email_alert.manage.view****sms_email_alert.manage.re_send****sms_email_alert.manage.history');
+
+            $header_status = $this->header_status;
+
+            if(empty($alert_history_data)){
+
+                if($header_status==1){
+
+                    return view('admin.404',compact('menu_data','user_right_data'));
+                }
+                else{
+
+                    $system_data = $this->common->get_system_data();
+
+                    return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+                }
+            }
+            else{
+
+                $encrypt_id = $encrypt_id_arr[0];
+
+                if($header_status==1){
+
+                    return view('admin.alert.alert_history_single_view',compact('menu_data','alert_history_data','user_right_data','encrypt_id'));
+                }
+                else{
+
+                    $system_data = $this->common->get_system_data();
+
+                    return view('admin.alert.alert_single_history_view_master',compact('menu_data','alert_history_data','user_right_data','encrypt_id','system_data'));
+                }
+            }
+        }
+        else{
+
+            $id = $this->common->decrypt_data($encrypt_id);
+
+            $alert_data = SMSAlert::where('delete_status',0)
+                ->where('id',$id)
+                ->first();
+
+            $menu_data = $this->common->get_page_menu();
+
+            $header_status = $this->header_status;
+
+            if($header_status==1){
+
+                return view('admin.alert.alert_history_page',compact('menu_data','alert_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.alert.alert_history_page_master',compact('menu_data','system_data','alert_data'));
+            }
         }
     }
 
@@ -185,6 +257,167 @@ class SmsAlertController extends Controller
                 return view('admin.alert.alert_edit_view_master',compact('menu_data','alert_data','user_right_data','encrypt_id','system_data'));
             }
         }
+    }
+
+    public function alert_history_grid ($id=null, Request $request){
+
+        $menu_data = $this->common->get_page_menu_grid('sms_email_alert.manage.add****sms_email_alert.manage.view****sms_email_alert.manage.re_send');
+
+        $user_config_data = $this->common->get_user_config_data();
+
+        $csrf_token = csrf_token();
+
+        $draw = $request->draw;
+        $row = $request->start;
+        $row_per_page  = $request->length;
+
+        $column_index  = $request->order[0]['column'];
+        $column_name = $request->columns[$column_index]['data'];
+
+        $column_ort_order = $request->order[0]['dir'];
+
+        $search_value  = trim($request->search['value']);
+
+        $total_data = array();
+        $filter_data = array();
+        $data = array();
+        $record_data = array();
+        $response = array();
+
+        if($id!=null && $id!=0 && $id!=''){
+
+            if($search_value!=''){
+
+                $total_data = DB::table('sms_histories as a')
+                    ->join('users as b', 'b.id', '=', 'a.user_id')
+                    ->select('a.id')
+                    ->where('a.alert_id',$id)
+                    ->get();
+
+                $filter_data = DB::table('sms_histories as a')
+                    ->join('users as b', 'b.id', '=', 'a.user_id')
+                    ->select('a.id')
+                    ->where('a.alert_id',$id)
+                    ->where(function ($query) use ($search_value) {
+                        
+                        $query->where('a.alert_title','like',"%".$search_value."%")
+                            ->orWhere('b.name','like',"%".$search_value."%");
+                    })
+                    ->get();
+
+                $data = DB::table('sms_histories as a')
+                    ->join('users as b', 'b.id', '=', 'a.user_id')
+                    ->select('a.*','b.name as user_name')
+                    ->where('a.alert_id',$id)
+                    ->where(function ($query) use ($search_value) {
+                        
+                        $query->where('a.alert_title','like',"%".$search_value."%")
+                            ->orWhere('b.name','like',"%".$search_value."%");
+                    })
+                    ->orderBy($column_name,$column_ort_order)
+                    ->offset($row)
+                    ->limit($row_per_page)
+                    ->get();
+            }
+            else{
+
+                $filter_data = DB::table('sms_histories as a')
+                    ->join('users as b', 'b.id', '=', 'a.user_id')
+                    ->select('a.id')
+                    ->where('a.alert_id',$id)
+                    ->get();
+
+                $data = DB::table('sms_histories as a')
+                    ->join('users as b', 'b.id', '=', 'a.user_id')
+                    ->select('a.*','b.name as user_name')
+                    ->where('a.alert_id',$id)
+                    ->orderBy($column_name,$column_ort_order)
+                    ->offset($row)
+                    ->limit($row_per_page)
+                    ->get();
+
+                $total_data = $filter_data;
+            }
+        }
+        else{
+
+            if($search_value!=''){
+
+                $total_data = DB::table('sms_histories as a')
+                    ->join('users as b', 'b.id', '=', 'a.user_id')
+                    ->select('a.id')
+                    ->get();
+
+                $filter_data = DB::table('sms_histories as a')
+                    ->join('users as b', 'b.id', '=', 'a.user_id')
+                    ->select('a.id')
+                    ->where(function ($query) use ($search_value) {
+                        
+                        $query->where('a.alert_title','like',"%".$search_value."%")
+                            ->orWhere('b.name','like',"%".$search_value."%");
+                    })
+                    ->get();
+
+                $data = DB::table('sms_histories as a')
+                    ->join('users as b', 'b.id', '=', 'a.user_id')
+                    ->select('a.*','b.name as user_name')
+                    ->where(function ($query) use ($search_value) {
+                        
+                        $query->where('a.alert_title','like',"%".$search_value."%")
+                            ->orWhere('b.name','like',"%".$search_value."%");
+                    })
+                    ->orderBy($column_name,$column_ort_order)
+                    ->offset($row)
+                    ->limit($row_per_page)
+                    ->get();
+            }
+            else{
+
+                $filter_data = DB::table('sms_histories as a')
+                    ->join('users as b', 'b.id', '=', 'a.user_id')
+                    ->select('a.id')
+                    ->get();
+
+                $data = DB::table('sms_histories as a')
+                    ->join('users as b', 'b.id', '=', 'a.user_id')
+                    ->select('a.*','b.name as user_name')
+                    ->orderBy($column_name,$column_ort_order)
+                    ->offset($row)
+                    ->limit($row_per_page)
+                    ->get();
+
+                $total_data = $filter_data;
+            }
+        }
+
+        $sl = 0;
+
+        $sl_start = $row+1;
+
+        foreach($data as $value){
+
+            $record_data[$sl]['alert_title'] = $value->alert_title;
+            $record_data[$sl]['sl'] = $sl_start;
+            $record_data[$sl]['user_name'] = $value->user_name;
+            $record_data[$sl]['status'] = $value->status;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id).'****01';
+            $record_data[$sl]['id'] = $value->id;
+            $record_data[$sl]['menu_data'] = $menu_data;
+
+            $sl++;
+            $sl_start++;
+        }
+
+        $total_records = count($total_data);
+        $total_records_with_filer = count($filter_data);
+
+        $response['draw'] = $draw;
+        $response['iTotalRecords'] = $total_records;
+        $response['iTotalDisplayRecords'] = $total_records_with_filer;
+        $response['aaData'] = $record_data;
+        $response['csrf_token'] = $csrf_token;
+
+        echo json_encode($response);
     }
 
     public function alert_grid (Request $request){
