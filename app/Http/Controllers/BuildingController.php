@@ -230,16 +230,20 @@ class BuildingController extends Controller
 
             $filter_data = Building::select('id')
                 ->where('delete_status',0)
-                ->where('building_name','like',"%".$search_value."%")
-                ->orWhere('building_code','like',"%".$search_value."%")
-                ->orWhere('building_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('building_name','like',"%".$search_value."%")
+                        ->orWhere('building_code','like',"%".$search_value."%")
+                        ->orWhere('building_title','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = Building::select('id','building_logo','building_photo','building_name','building_title','building_code','status')
                 ->where('delete_status',0)
-                ->where('building_name','like',"%".$search_value."%")
-                ->orWhere('building_code','like',"%".$search_value."%")
-                ->orWhere('building_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('building_name','like',"%".$search_value."%")
+                        ->orWhere('building_code','like',"%".$search_value."%")
+                        ->orWhere('building_title','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

@@ -190,9 +190,11 @@ class VatTaxController extends Controller
                 ->select('a.id')
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
-                ->where('a.year_id','like',"%".$search_value."%")
-                ->where('a.tax_amount','like',"%".$search_value."%")
-                ->orWhere('b.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('a.year_id','like',"%".$search_value."%")
+                        ->where('a.tax_amount','like',"%".$search_value."%")
+                        ->orWhere('b.name','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = DB::table('vat_taxes as a')
@@ -200,9 +202,11 @@ class VatTaxController extends Controller
                 ->select('a.id', 'a.month_id', 'a.year_id', 'a.tax_amount', 'b.name', 'a.status')
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
-                ->where('a.year_id','like',"%".$search_value."%")
-                ->where('a.tax_amount','like',"%".$search_value."%")
-                ->orWhere('b.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('a.year_id','like',"%".$search_value."%")
+                        ->where('a.tax_amount','like',"%".$search_value."%")
+                        ->orWhere('b.name','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

@@ -182,16 +182,20 @@ class GenderController extends Controller
 
             $filter_data = Gender::select('id')
                 ->where('delete_status',0)
-                ->where('gender_name','like',"%".$search_value."%")
-                ->orWhere('gender_code','like',"%".$search_value."%")
-                ->orWhere('gender_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('gender_name','like',"%".$search_value."%")
+                        ->orWhere('gender_code','like',"%".$search_value."%")
+                        ->orWhere('gender_title','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = Gender::select('id','gender_name','gender_code','gender_title','gender_deatils','add_by','edit_by','status')
                 ->where('delete_status',0)
-                ->where('gender_name','like',"%".$search_value."%")
-                ->orWhere('gender_code','like',"%".$search_value."%")
-                ->orWhere('gender_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('gender_name','like',"%".$search_value."%")
+                        ->orWhere('gender_code','like',"%".$search_value."%")
+                        ->orWhere('gender_title','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

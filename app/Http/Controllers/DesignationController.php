@@ -183,16 +183,20 @@ class DesignationController extends Controller
 
             $filter_data = Designation::select('id')
                 ->where('delete_status',0)
-                ->where('designation_name','like',"%".$search_value."%")
-                ->orWhere('designation_code','like',"%".$search_value."%")
-                ->orWhere('designation_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('designation_name','like',"%".$search_value."%")
+                        ->orWhere('designation_code','like',"%".$search_value."%")
+                        ->orWhere('designation_title','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = Designation::select('id','designation_name','designation_code','designation_title','designation_deatils','add_by','edit_by','status')
                 ->where('delete_status',0)
-                ->where('designation_name','like',"%".$search_value."%")
-                ->orWhere('designation_code','like',"%".$search_value."%")
-                ->orWhere('designation_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('designation_name','like',"%".$search_value."%")
+                        ->orWhere('designation_code','like',"%".$search_value."%")
+                        ->orWhere('designation_title','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

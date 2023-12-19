@@ -190,10 +190,12 @@ class LevelController extends Controller
                 ->select('a.id')
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
-                ->where('a.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('a.level_title','like',"%".$search_value."%")
-                ->orWhere('a.level_code','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('a.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('a.level_title','like',"%".$search_value."%")
+                        ->orWhere('a.level_code','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = DB::table('levels as a')
@@ -201,10 +203,12 @@ class LevelController extends Controller
                 ->select('a.id', 'a.level_name', 'a.level_title', 'b.building_name', 'a.level_code', 'a.status')
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
-                ->where('a.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('a.level_title','like',"%".$search_value."%")
-                ->orWhere('a.level_code','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('a.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('a.level_title','like',"%".$search_value."%")
+                        ->orWhere('a.level_code','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

@@ -300,10 +300,12 @@ class OwnerController extends Controller
                 ->where('a.user_type',$user_config_data['owner_user_type'])
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
-                ->where('a.name','like',"%".$search_value."%")
-                ->orWhere('b.group_name','like',"%".$search_value."%")
-                ->orWhere('a.email','like',"%".$search_value."%")
-                ->orWhere('a.mobile','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('a.name','like',"%".$search_value."%")
+                        ->orWhere('b.group_name','like',"%".$search_value."%")
+                        ->orWhere('a.email','like',"%".$search_value."%")
+                        ->orWhere('a.mobile','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = DB::table('users as a')
@@ -312,10 +314,12 @@ class OwnerController extends Controller
                 ->where('a.user_type',$user_config_data['owner_user_type'])
                 ->where('a.delete_status',0)
                 ->where('b.delete_status',0)
-                ->where('a.name','like',"%".$search_value."%")
-                ->orWhere('b.group_name','like',"%".$search_value."%")
-                ->orWhere('a.email','like',"%".$search_value."%")
-                ->orWhere('a.mobile','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('a.name','like',"%".$search_value."%")
+                        ->orWhere('b.group_name','like',"%".$search_value."%")
+                        ->orWhere('a.email','like',"%".$search_value."%")
+                        ->orWhere('a.mobile','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

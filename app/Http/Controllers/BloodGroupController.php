@@ -182,16 +182,20 @@ class BloodGroupController extends Controller
 
             $filter_data = BloodGroup::select('id')
                 ->where('delete_status',0)
-                ->where('blood_group_name','like',"%".$search_value."%")
-                ->orWhere('blood_group_code','like',"%".$search_value."%")
-                ->orWhere('blood_group_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('blood_group_name','like',"%".$search_value."%")
+                        ->orWhere('blood_group_code','like',"%".$search_value."%")
+                        ->orWhere('blood_group_title','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = BloodGroup::select('id','blood_group_name','blood_group_code','blood_group_title','blood_group_deatils','add_by','edit_by','status')
                 ->where('delete_status',0)
-                ->where('blood_group_name','like',"%".$search_value."%")
-                ->orWhere('blood_group_code','like',"%".$search_value."%")
-                ->orWhere('blood_group_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {   
+                    $query->where('blood_group_name','like',"%".$search_value."%")
+                        ->orWhere('blood_group_code','like',"%".$search_value."%")
+                        ->orWhere('blood_group_title','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

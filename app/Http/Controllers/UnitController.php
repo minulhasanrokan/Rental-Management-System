@@ -234,11 +234,13 @@ class UnitController extends Controller
                 //->where('b.id','c.building_id')
                 ->where('b.delete_status',0)
                 ->where('c.delete_status',0)
-                ->where('c.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('a.unit_name','like',"%".$search_value."%")
-                ->orWhere('a.unit_code','like',"%".$search_value."%")
-                ->orWhere('a.unit_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('c.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('a.unit_name','like',"%".$search_value."%")
+                        ->orWhere('a.unit_code','like',"%".$search_value."%")
+                        ->orWhere('a.unit_title','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = DB::table('units as a')
@@ -249,11 +251,13 @@ class UnitController extends Controller
                 //->where('b.id','c.building_id')
                 ->where('b.delete_status',0)
                 ->where('c.delete_status',0)
-                ->where('c.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('a.unit_name','like',"%".$search_value."%")
-                ->orWhere('a.unit_code','like',"%".$search_value."%")
-                ->orWhere('a.unit_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('c.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('a.unit_name','like',"%".$search_value."%")
+                        ->orWhere('a.unit_code','like',"%".$search_value."%")
+                        ->orWhere('a.unit_title','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)
@@ -364,7 +368,6 @@ class UnitController extends Controller
                 $system_data = $this->common->get_system_data();
 
                 return view('admin.floor.unit.unit_edit_view_master',compact('menu_data','unit_data','user_right_data','encrypt_id','system_data'));
-
             }
         }
     }

@@ -205,10 +205,12 @@ class TagOwnerController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('c.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('d.unit_name','like',"%".$search_value."%")
-                ->orWhere('e.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('c.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('d.unit_name','like',"%".$search_value."%")
+                        ->orWhere('e.name','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = DB::table('tag_owners as a')
@@ -222,10 +224,12 @@ class TagOwnerController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('c.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('d.unit_name','like',"%".$search_value."%")
-                ->orWhere('e.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('c.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('d.unit_name','like',"%".$search_value."%")
+                        ->orWhere('e.name','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)
@@ -271,7 +275,6 @@ class TagOwnerController extends Controller
         $sl = 0;
 
         $sl_start = $row+1;
-
 
         foreach($data as $value){
 
@@ -800,11 +803,13 @@ class TagOwnerController extends Controller
                 ->where('b.delete_status',0)
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
-                ->where('c.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('d.unit_name','like',"%".$search_value."%")
-                ->orWhere('e.name','like',"%".$search_value."%")
-                ->orWhere('f.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('c.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('d.unit_name','like',"%".$search_value."%")
+                        ->orWhere('e.name','like',"%".$search_value."%")
+                        ->orWhere('f.name','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = DB::table('transfer_owners as a')
@@ -818,11 +823,13 @@ class TagOwnerController extends Controller
                 ->where('b.delete_status',0)
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
-                ->where('c.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('d.unit_name','like',"%".$search_value."%")
-                ->orWhere('e.name','like',"%".$search_value."%")
-                ->orWhere('f.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('c.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('d.unit_name','like',"%".$search_value."%")
+                        ->orWhere('e.name','like',"%".$search_value."%")
+                        ->orWhere('f.name','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

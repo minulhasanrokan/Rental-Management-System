@@ -211,12 +211,14 @@ class VisitorController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('c.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('d.unit_name','like',"%".$search_value."%")
-                ->orWhere('e.name','like',"%".$search_value."%")
-                ->orWhere('a.visitor_name','like',"%".$search_value."%")
-                ->orWhere('a.visitor_mobile','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('c.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('d.unit_name','like',"%".$search_value."%")
+                        ->orWhere('e.name','like',"%".$search_value."%")
+                        ->orWhere('a.visitor_name','like',"%".$search_value."%")
+                        ->orWhere('a.visitor_mobile','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = DB::table('visitors as a')
@@ -230,12 +232,14 @@ class VisitorController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('c.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('d.unit_name','like',"%".$search_value."%")
-                ->orWhere('e.name','like',"%".$search_value."%")
-                ->orWhere('a.visitor_name','like',"%".$search_value."%")
-                ->orWhere('a.visitor_mobile','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('c.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('d.unit_name','like',"%".$search_value."%")
+                        ->orWhere('e.name','like',"%".$search_value."%")
+                        ->orWhere('a.visitor_name','like',"%".$search_value."%")
+                        ->orWhere('a.visitor_mobile','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)
@@ -379,12 +383,14 @@ class VisitorController extends Controller
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
                 ->where('a.tenant_id',$user_id)
-                ->where('c.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('d.unit_name','like',"%".$search_value."%")
-                ->orWhere('e.name','like',"%".$search_value."%")
-                ->orWhere('a.visitor_name','like',"%".$search_value."%")
-                ->orWhere('a.visitor_mobile','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('c.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('d.unit_name','like',"%".$search_value."%")
+                        ->orWhere('e.name','like',"%".$search_value."%")
+                        ->orWhere('a.visitor_name','like',"%".$search_value."%")
+                        ->orWhere('a.visitor_mobile','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = DB::table('visitors as a')
@@ -399,12 +405,14 @@ class VisitorController extends Controller
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
                 ->where('a.tenant_id',$user_id)
-                ->where('c.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('d.unit_name','like',"%".$search_value."%")
-                ->orWhere('e.name','like',"%".$search_value."%")
-                ->orWhere('a.visitor_name','like',"%".$search_value."%")
-                ->orWhere('a.visitor_mobile','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('c.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('d.unit_name','like',"%".$search_value."%")
+                        ->orWhere('e.name','like',"%".$search_value."%")
+                        ->orWhere('a.visitor_name','like',"%".$search_value."%")
+                        ->orWhere('a.visitor_mobile','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

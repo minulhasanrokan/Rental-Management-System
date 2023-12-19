@@ -182,16 +182,20 @@ class UserTypeController extends Controller
 
             $filter_data = UserType::select('id')
                 ->where('delete_status',0)
-                ->where('user_type_name','like',"%".$search_value."%")
-                ->orWhere('user_type_code','like',"%".$search_value."%")
-                ->orWhere('user_type_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('user_type_name','like',"%".$search_value."%")
+                        ->orWhere('user_type_code','like',"%".$search_value."%")
+                        ->orWhere('user_type_title','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = UserType::select('id','user_type_name','user_type_code','user_type_title','user_type_deatils','add_by','edit_by','status')
                 ->where('delete_status',0)
-                ->where('user_type_name','like',"%".$search_value."%")
-                ->orWhere('user_type_code','like',"%".$search_value."%")
-                ->orWhere('user_type_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('user_type_name','like',"%".$search_value."%")
+                        ->orWhere('user_type_code','like',"%".$search_value."%")
+                        ->orWhere('user_type_title','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

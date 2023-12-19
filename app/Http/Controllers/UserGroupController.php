@@ -218,16 +218,20 @@ class UserGroupController extends Controller
 
             $filter_data = UserGroup::select('id')
                 ->where('delete_status',0)
-                ->where('group_name','like',"%".$search_value."%")
-                ->orWhere('group_code','like',"%".$search_value."%")
-                ->orWhere('group_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('group_name','like',"%".$search_value."%")
+                        ->orWhere('group_code','like',"%".$search_value."%")
+                        ->orWhere('group_title','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = UserGroup::select('id','group_logo','group_icon','group_name','group_title','group_code','status')
                 ->where('delete_status',0)
-                ->where('group_name','like',"%".$search_value."%")
-                ->orWhere('group_code','like',"%".$search_value."%")
-                ->orWhere('group_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('group_name','like',"%".$search_value."%")
+                        ->orWhere('group_code','like',"%".$search_value."%")
+                        ->orWhere('group_title','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

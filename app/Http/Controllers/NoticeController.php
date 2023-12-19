@@ -313,10 +313,12 @@ class NoticeController extends Controller
                 ->leftjoin('users as c', 'c.id', '=', 'a.user_id')
                 ->select('a.id')
                 ->where('a.delete_status',0)
-                ->where('a.notice_title','like',"%".$search_value."%")
-                ->orWhere('a.notice_date','like',"%".$search_value."%")
-                ->orWhere('b.name','like',"%".$search_value."%")
-                ->orWhere('c.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('a.notice_title','like',"%".$search_value."%")
+                        ->orWhere('a.notice_date','like',"%".$search_value."%")
+                        ->orWhere('b.name','like',"%".$search_value."%")
+                        ->orWhere('c.name','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = DB::table('notices as a')
@@ -324,10 +326,12 @@ class NoticeController extends Controller
                 ->leftjoin('users as c', 'c.id', '=', 'a.user_id')
                 ->select('a.*','b.group_name','c.name as user_name')
                 ->where('a.delete_status',0)
-                ->where('a.notice_title','like',"%".$search_value."%")
-                ->orWhere('a.notice_date','like',"%".$search_value."%")
-                ->orWhere('b.name','like',"%".$search_value."%")
-                ->orWhere('c.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('a.notice_title','like',"%".$search_value."%")
+                        ->orWhere('a.notice_date','like',"%".$search_value."%")
+                        ->orWhere('b.name','like',"%".$search_value."%")
+                        ->orWhere('c.name','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)
@@ -482,10 +486,12 @@ class NoticeController extends Controller
                         ->orWhere('a.notice_group', '')
                         ->orWhereNull('a.notice_group');
                 })
-                ->where('a.notice_title','like',"%".$search_value."%")
-                ->orWhere('a.notice_date','like',"%".$search_value."%")
-                ->orWhere('b.name','like',"%".$search_value."%")
-                ->orWhere('c.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('a.notice_title','like',"%".$search_value."%")
+                        ->orWhere('a.notice_date','like',"%".$search_value."%")
+                        ->orWhere('b.name','like',"%".$search_value."%")
+                        ->orWhere('c.name','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = DB::table('notices as a')
@@ -512,10 +518,12 @@ class NoticeController extends Controller
                         ->orWhere('a.notice_group', '')
                         ->orWhereNull('a.notice_group');
                 })
-                ->where('a.notice_title','like',"%".$search_value."%")
-                ->orWhere('a.notice_date','like',"%".$search_value."%")
-                ->orWhere('b.name','like',"%".$search_value."%")
-                ->orWhere('c.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('a.notice_title','like',"%".$search_value."%")
+                        ->orWhere('a.notice_date','like',"%".$search_value."%")
+                        ->orWhere('b.name','like',"%".$search_value."%")
+                        ->orWhere('c.name','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

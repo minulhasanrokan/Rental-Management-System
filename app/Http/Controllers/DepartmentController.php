@@ -182,16 +182,20 @@ class DepartmentController extends Controller
 
             $filter_data = Department::select('id')
                 ->where('delete_status',0)
-                ->where('department_name','like',"%".$search_value."%")
-                ->orWhere('department_code','like',"%".$search_value."%")
-                ->orWhere('department_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('department_name','like',"%".$search_value."%")
+                        ->orWhere('department_code','like',"%".$search_value."%")
+                        ->orWhere('department_title','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = Department::select('id','department_name','department_code','department_title','department_deatils','add_by','edit_by','status')
                 ->where('delete_status',0)
-                ->where('department_name','like',"%".$search_value."%")
-                ->orWhere('department_code','like',"%".$search_value."%")
-                ->orWhere('department_title','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('department_name','like',"%".$search_value."%")
+                        ->orWhere('department_code','like',"%".$search_value."%")
+                        ->orWhere('department_title','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)

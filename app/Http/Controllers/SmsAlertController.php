@@ -299,7 +299,6 @@ class SmsAlertController extends Controller
                     ->select('a.id')
                     ->where('a.alert_id',$id)
                     ->where(function ($query) use ($search_value) {
-                        
                         $query->where('a.alert_title','like',"%".$search_value."%")
                             ->orWhere('b.name','like',"%".$search_value."%");
                     })
@@ -310,7 +309,6 @@ class SmsAlertController extends Controller
                     ->select('a.*','b.name as user_name')
                     ->where('a.alert_id',$id)
                     ->where(function ($query) use ($search_value) {
-                        
                         $query->where('a.alert_title','like',"%".$search_value."%")
                             ->orWhere('b.name','like',"%".$search_value."%");
                     })
@@ -352,7 +350,6 @@ class SmsAlertController extends Controller
                     ->join('users as b', 'b.id', '=', 'a.user_id')
                     ->select('a.id')
                     ->where(function ($query) use ($search_value) {
-                        
                         $query->where('a.alert_title','like',"%".$search_value."%")
                             ->orWhere('b.name','like',"%".$search_value."%");
                     })
@@ -362,7 +359,6 @@ class SmsAlertController extends Controller
                     ->join('users as b', 'b.id', '=', 'a.user_id')
                     ->select('a.*','b.name as user_name')
                     ->where(function ($query) use ($search_value) {
-                        
                         $query->where('a.alert_title','like',"%".$search_value."%")
                             ->orWhere('b.name','like',"%".$search_value."%");
                     })
@@ -460,7 +456,6 @@ class SmsAlertController extends Controller
                 ->select('a.id')
                 ->where('a.delete_status',0)
                 ->where(function ($query) use ($search_value) {
-                        
                     $query->where('a.alert_title','like',"%".$search_value."%")
                         ->orWhere('a.alert_date','like',"%".$search_value."%")
                         ->orWhere('b.group_name','like',"%".$search_value."%")
@@ -474,7 +469,6 @@ class SmsAlertController extends Controller
                 ->select('a.*','b.group_name','c.name as user_name')
                 ->where('a.delete_status',0)
                 ->where(function ($query) use ($search_value) {
-                        
                     $query->where('a.alert_title','like',"%".$search_value."%")
                         ->orWhere('a.alert_date','like',"%".$search_value."%")
                         ->orWhere('b.group_name','like',"%".$search_value."%")

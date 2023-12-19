@@ -251,10 +251,12 @@ class RentalController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('c.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('d.unit_name','like',"%".$search_value."%")
-                ->orWhere('e.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('c.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('d.unit_name','like',"%".$search_value."%")
+                        ->orWhere('e.name','like',"%".$search_value."%");
+                })
                 ->get();
 
             $data = DB::table('rents as a')
@@ -268,10 +270,12 @@ class RentalController extends Controller
                 ->where('c.delete_status',0)
                 ->where('d.delete_status',0)
                 ->where('e.delete_status',0)
-                ->where('c.level_name','like',"%".$search_value."%")
-                ->orWhere('b.building_name','like',"%".$search_value."%")
-                ->orWhere('d.unit_name','like',"%".$search_value."%")
-                ->orWhere('e.name','like',"%".$search_value."%")
+                ->where(function ($query) use ($search_value) {
+                    $query->where('c.level_name','like',"%".$search_value."%")
+                        ->orWhere('b.building_name','like',"%".$search_value."%")
+                        ->orWhere('d.unit_name','like',"%".$search_value."%")
+                        ->orWhere('e.name','like',"%".$search_value."%");
+                })
                 ->orderBy($column_name,$column_ort_order)
                 ->offset($row)
                 ->limit($row_per_page)
