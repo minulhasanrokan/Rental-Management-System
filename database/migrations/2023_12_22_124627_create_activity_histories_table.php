@@ -21,8 +21,10 @@ return new class extends Migration
             $table->string('activity')->nullable();
             $table->string('ip_address')->nullable();
             $table->string('mac_address')->nullable();
+            $table->string('search_data')->nullable();
             $table->integer('status')->default(1);
             $table->integer('edit_status')->default(0);
+            $table->integer('delete_status')->default(0);
             $table->integer('add_by')->nullable();
             $table->integer('edit_by')->nullable();
             $table->integer('delete_by')->nullable();

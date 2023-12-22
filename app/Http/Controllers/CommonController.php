@@ -230,7 +230,7 @@ class CommonController extends Controller
         return $user_right_data;
     }
 
-    public function add_user_activity_history($table_name=null,$table_id=null,$activity=null){
+    public function add_user_activity_history($table_name=null,$table_id=null,$activity=null,$search_data=null){
 
         $user_session_data = session()->all();
 
@@ -243,7 +243,7 @@ class CommonController extends Controller
         $right_id = isset($action_data->id)?$action_data->id:'';
 
         $ip_address = request()->ip();
-        $mac_address = 'aaa';
+        $mac_address = '';
 
         $data_arr = array(
             'group_id' => $group_id,
@@ -254,12 +254,13 @@ class CommonController extends Controller
             'activity' =>$activity,
             'ip_address' =>$ip_address,
             'mac_address' =>$mac_address,
+            'search_data' =>$search_data,
             'add_by' => $user_id,
             'created_at' =>now()
         );
 
         try {
-            
+
             DB::table('activity_histories')->insert($data_arr);
             
             return 1;

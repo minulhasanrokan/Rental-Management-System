@@ -29,6 +29,7 @@ use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\SmsAlertController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -628,4 +629,10 @@ Route::controller(SmsAlertController::class)->group(function(){
 
     Route::get('/dashboard/sms-alert-history/{id?}','alert_history_page')->name('sms_email_alert.manage.history')->middleware(['checkroute']);
     Route::post('/dashboard/sms-alert-history/{id?}','alert_history_grid')->name('sms_email_alert.manage.history')->middleware(['checkroute']);
+});
+
+Route::controller(ReportController::class)->group(function(){
+
+    Route::get('/dashboard/report/user-activity','user_activity_report_page')->name('report.system_report.user_activity_report')->middleware(['checkroute']);
+    Route::post('/dashboard/report/user-activity','user_activity_report')->name('report.system_report.user_activity_report')->middleware(['checkroute']);
 });
