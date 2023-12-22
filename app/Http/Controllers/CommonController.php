@@ -191,6 +191,84 @@ class CommonController extends Controller
         return $user_right;
     }
 
+    public function get_single_route_details(){
+
+        $action_name = request()->route()->getName();
+
+        $user_session_data = session()->all();
+
+        $user_right_data = array();
+
+        if($user_session_data[config('app.app_session_name')]['super_admin_status']==1){
+
+            $user_right_data = DB::table('right_details as a')
+                ->join('right_categories as b', 'b.id', '=', 'a.cat_id')
+                ->join('right_groups as d', 'd.id', '=', 'b.group_id')
+                ->select('a.*','d.id as group_id')
+                ->where('a.status',1)
+                ->where('a.r_route_name',$action_name)
+                ->where('a.delete_status',0)
+                ->first();
+        }
+        else{
+
+            $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+            $user_right_data = DB::table('right_details as a')
+                ->join('user_rights as c', 'c.r_id', '=', 'a.id')
+                ->join('right_categories as b', 'b.id', '=', 'a.cat_id')
+                ->join('right_groups as d', 'd.id', '=', 'b.group_id')
+                ->select('a.*','d.id as group_id')
+                ->where('a.status',1)
+                ->where('c.user_id',$user_id)
+                ->where('a.r_route_name',$action_name)
+                ->where('a.delete_status',0)
+                ->orderBy('a.r_short_order', 'ASC')
+                ->first();
+        }
+
+        return $user_right_data;
+    }
+
+    public function add_user_activity_history($table_name=null,$table_id=null,$activity=null){
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        $action_data = $this->get_single_route_details();
+
+        $group_id = isset($action_data->group_id)?$action_data->group_id:'';
+        $cat_id = isset($action_data->cat_id)?$action_data->cat_id:'';
+        $right_id = isset($action_data->id)?$action_data->id:'';
+
+        $ip_address = request()->ip();
+        $mac_address = 'aaa';
+
+        $data_arr = array(
+            'group_id' => $group_id,
+            'category_id' => $cat_id,
+            'right_id' => $right_id,
+            'table_name' =>$table_name,
+            'table_id' =>$table_id,
+            'activity' =>$activity,
+            'ip_address' =>$ip_address,
+            'mac_address' =>$mac_address,
+            'add_by' => $user_id,
+            'created_at' =>now()
+        );
+
+        try {
+            
+            DB::table('activity_histories')->insert($data_arr);
+            
+            return 1;
+        } catch (\Exception $e) {
+            
+            return 0;
+        }
+    }
+
     public function get_page_menu_single_view($route_name){
 
         $route_name_arr = explode("****",$route_name);

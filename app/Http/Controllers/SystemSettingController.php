@@ -97,7 +97,6 @@ class SystemSettingController extends Controller
             'system_logo' => $request->input('hidden_system_logo') === '' ? 'required' : '',
             'system_favicon' => $request->input('hidden_system_favicon') === '' ? 'required' : '',
             'system_bg_image' => $request->input('hidden_system_bg_image') === '' ? 'required' : '',
-
         ]);
   
         if ($validator->fails()) {
@@ -127,17 +126,23 @@ class SystemSettingController extends Controller
 
         $user_id = $user_session_data[config('app.app_session_name')]['id'];
 
+        $activity = '';
+
         if($data==''){
 
             $data = new SystemDetails;
 
             $data->add_by = $user_id;
+
+            $activity = 'Add System Information';
         }
         else{
 
             $data->edit_by = $user_id;
             $data->edit_status = 1;
             $data->updated_at = now();
+
+            $activity = 'Update System Information';
         }
 
         $data->system_name = $request->system_name;
@@ -227,13 +232,28 @@ class SystemSettingController extends Controller
 
         if($data==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('system_details',$data->id,$activity);
 
-            $notification = array(
-                'message'=> "System Details Created Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "System Details Created Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
