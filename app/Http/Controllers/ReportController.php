@@ -80,7 +80,7 @@ class ReportController extends Controller
             ->where('a.group_id',$request->group_id)
             ->where('a.category_id',$request->category_id)
             ->where('a.right_id',$request->right_id)
-            ->whereBetween('a.created_at', [$request->from_date, $request->to_date])
+            ->whereBetween(DB::raw('DATE_FORMAT(a.created_at, "%Y-%m-%d")'), [$request->from_date, $request->to_date])
             ->orderBy('a.id', 'desc')
             ->get()->toArray();
 
