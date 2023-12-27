@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('right_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('title')->nullable();;
+            $table->string('title')->nullable();
             $table->string('action_name')->nullable();
             $table->text('details')->nullable();
             $table->string('icon')->nullable();

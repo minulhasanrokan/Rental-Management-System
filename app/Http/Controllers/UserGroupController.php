@@ -807,7 +807,7 @@ class UserGroupController extends Controller
 
             if($status==true){
 
-                $status = $this->common->add_user_activity_history('user_groups',$data->id,'Add User Group Right Details');
+                $status = $this->common->add_user_activity_history('user_groups',$group_id,'Add User Group Right Details');
 
                 if($status==1){
 

@@ -636,7 +636,7 @@ class UnitController extends Controller
 
         if($header_status==1){
 
-            return view('admin.floor.unit.unit_delete_alert',compact('menu_data','notification'));;
+            return view('admin.floor.unit.unit_delete_alert',compact('menu_data','notification'));
         }
         else{
 

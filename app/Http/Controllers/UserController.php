@@ -940,7 +940,7 @@ class UserController extends Controller
 
             if($status==true){
 
-                $status = $this->common->add_user_activity_history('users',$data->id,'Add User Right Details');
+                $status = $this->common->add_user_activity_history('users',$user_id,'Add User Right Details');
 
                 if($status==1){
 

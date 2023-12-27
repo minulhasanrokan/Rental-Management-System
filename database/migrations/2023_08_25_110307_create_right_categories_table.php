@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('group_id');
             $table->string('c_name')->nullable();
-            $table->string('c_title')->nullable();;
+            $table->string('c_title')->nullable();
             $table->string('c_action_name')->nullable();
             $table->text('c_details')->nullable();
             $table->string('c_icon')->nullable();

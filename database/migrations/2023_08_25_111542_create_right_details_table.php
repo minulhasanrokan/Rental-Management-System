@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('cat_id');
             $table->string('r_name')->nullable();
-            $table->string('r_title')->nullable();;
+            $table->string('r_title')->nullable();
             $table->string('r_action_name')->nullable();
             $table->string('r_route_name')->nullable();
             $table->text('r_details')->nullable();

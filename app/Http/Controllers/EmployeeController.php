@@ -935,7 +935,7 @@ class EmployeeController extends Controller
 
             if($status==true){
 
-                $status = $this->common->add_user_activity_history('users',$data->id,'Add Employee Right Details');
+                $status = $this->common->add_user_activity_history('users',$user_id,'Add Employee Right Details');
 
                 if($status==1){
 

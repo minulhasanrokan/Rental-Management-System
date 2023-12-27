@@ -935,7 +935,7 @@ class TenantController extends Controller
 
             if($status==true){
 
-                $status = $this->common->add_user_activity_history('users',$data->id,'Add Tenant Right Details');
+                $status = $this->common->add_user_activity_history('users',$user_id,'Add Tenant Right Details');
 
                 if($status==1){
 
