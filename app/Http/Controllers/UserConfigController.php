@@ -123,17 +123,23 @@ class UserConfigController extends Controller
 
         $user_id = $user_session_data[config('app.app_session_name')]['id'];
 
+        $activity = '';
+
         if($data==''){
 
             $data = new UserConfig;
 
             $data->add_by = $user_id;
+
+            $activity = 'Add User Config Information';
         }
         else{
 
             $data->edit_by = $user_id;
             $data->edit_status = 1;
             $data->updated_at = now();
+
+            $activity = 'Edit User Config Information';
         }
 
         $data->normal_user_type = $request->normal_user_type;
@@ -149,13 +155,28 @@ class UserConfigController extends Controller
 
         if($data==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('user_configs',$data->id,$activity);
 
-            $notification = array(
-                'message'=> "user Config Data Created Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "user Config Data Created Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 

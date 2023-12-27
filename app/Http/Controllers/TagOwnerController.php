@@ -114,13 +114,28 @@ class TagOwnerController extends Controller
 
         if($data==true && $data1==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('tag_owners',$data->id,'Add Tag Owner Details');
 
-            $notification = array(
-                'message'=> "Tag Owner Details Created Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Tag Owner Details Created Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -422,13 +437,28 @@ class TagOwnerController extends Controller
 
         if($data==true && $data1==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('tag_owners',$data->id,'Edit Tag Owner Details');
 
-            $notification = array(
-                'message'=> "Tag Owner Details Updated Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Tag Owner Details Updated Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -496,13 +526,28 @@ class TagOwnerController extends Controller
 
             if($data==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('tag_owners',$data->id,'Delete Tag Owner Details');
 
-                $notification = array(
-                    'message'=> "Tag Owner Details Deleted Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Tag Owner Details Deleted Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 
@@ -705,6 +750,7 @@ class TagOwnerController extends Controller
         $data1->transfer_owner_id = $request->transfer_owner_id;
         $data1->transfer_date = $request->transfer_date;
         $data1->transfer_reason = $request->transfer_reason;
+        $data1->table_id = $data->id;
         $data1->add_by = $user_id;
         $data1->created_at = now();
 
@@ -712,13 +758,28 @@ class TagOwnerController extends Controller
 
         if($data==true && $data1==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('tag_owners',$data->id,'Transfer Tag Owner Details');
 
-            $notification = array(
-                'message'=> "Tag Owner Transfer Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Tag Owner Transfer Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 

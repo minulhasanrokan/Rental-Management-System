@@ -113,13 +113,28 @@ class LevelController extends Controller
 
         if($data==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('levels',$data->id,'Add Level Details');
 
-            $notification = array(
-                'message'=> "Level Details Created Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Level Details Created Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -384,13 +399,28 @@ class LevelController extends Controller
 
         if($data==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('levels',$data->id,'Edit Level Details');
 
-            $notification = array(
-                'message'=> "Level Details Updated Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Level Details Updated Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -458,13 +488,28 @@ class LevelController extends Controller
 
             if($data==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('levels',$data->id,'Delete Level Details');
 
-                $notification = array(
-                    'message'=> "Level Details Deleted Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Level Details Deleted Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 

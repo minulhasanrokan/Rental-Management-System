@@ -111,13 +111,28 @@ class DesignationController extends Controller
 
         if($data==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('designations',$data->id,'Add Designation Details');
 
-            $notification = array(
-                'message'=> "Designation Details Created Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Designation Details Created Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -366,13 +381,28 @@ class DesignationController extends Controller
 
         if($data==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('designations',$data->id,'Edit Designation Details');
 
-            $notification = array(
-                'message'=> "Designation Details Updated Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Designation Details Updated Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -500,13 +530,28 @@ class DesignationController extends Controller
 
             if($data==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('designations',$data->id,'Delete Designation Details');
 
-                $notification = array(
-                    'message'=> "Designation Details Deleted Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Designation Details Deleted Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 

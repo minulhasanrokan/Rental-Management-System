@@ -111,13 +111,28 @@ class GenderController extends Controller
 
         if($data==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('genders',$data->id,'Add Gender Details');
 
-            $notification = array(
-                'message'=> "Gender Details Created Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Gender Details Created Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -365,13 +380,28 @@ class GenderController extends Controller
 
         if($data==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('genders',$data->id,'Edit Gender Details');
 
-            $notification = array(
-                'message'=> "Gender Details Updated Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Gender Details Updated Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -499,13 +529,28 @@ class GenderController extends Controller
 
             if($data==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('genders',$data->id,'Delete Gender Details');
 
-                $notification = array(
-                    'message'=> "Gender Details Deleted Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Gender Details Deleted Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 

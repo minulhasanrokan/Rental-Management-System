@@ -146,13 +146,28 @@ class UserGroupController extends Controller
 
         if($data==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('user_groups',$data->id,'Add User Group Details');
 
-            $notification = array(
-                'message'=> "User Group Details Created Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "User Group Details Created Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -515,13 +530,28 @@ class UserGroupController extends Controller
 
         if($data==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('user_groups',$data->id,'Edit User Group Details');
 
-            $notification = array(
-                'message'=> "User Group Details Updated Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "User Group Details Updated Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -590,13 +620,28 @@ class UserGroupController extends Controller
 
             if($data==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('user_groups',$data->id,'Delete User Group Details');
 
-                $notification = array(
-                    'message'=> "User Group Details Deleted Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "User Group Details Deleted Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 
@@ -762,13 +807,28 @@ class UserGroupController extends Controller
 
             if($status==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('user_groups',$data->id,'Add User Group Right Details');
 
-                $notification = array(
-                    'message'=> "User Group Right Created Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "User Group Right Created Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 

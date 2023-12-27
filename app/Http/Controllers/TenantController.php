@@ -131,7 +131,7 @@ class TenantController extends Controller
         $data->date_of_birth = $request->date_of_birth;
         $data->sex = $request->sex;
         $data->blood_group = $request->blood_group;
-        $data->group = $user_config_data['tenant_user_group'];;
+        $data->group = $user_config_data['tenant_user_group'];
         $data->user_type = $user_config_data['tenant_user_type'];
         $data->department = $request->department;
         $data->assign_department = $request->assign_department;
@@ -205,14 +205,29 @@ class TenantController extends Controller
 
             if($status==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('users',$data->id,'Add Tenant Details');
 
-                $notification = array(
-                    'message'=> "Tenant Details Created Successfully",
-                    'alert_type'=>'success',
-                    'create_status'=>1,
-                    'user_id' =>$encrypt_data,
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Tenant Details Created Successfully",
+                        'alert_type'=>'success',
+                        'create_status'=>1,
+                        'user_id' =>$encrypt_data,
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 
@@ -594,15 +609,29 @@ class TenantController extends Controller
                 }
             }
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('users',$data->id,'Edit Tenant Details');
 
-            $notification = array(
-                'message'=> "Tenant Details Updated Successfully",
-                'alert_type'=>'success',
-                'create_status'=>1,
-                'user_id' =>$request->update_id,
-            );;
-            
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Tenant Details Updated Successfully",
+                    'alert_type'=>'success',
+                    'create_status'=>1,
+                    'user_id' =>$request->update_id,
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -660,13 +689,28 @@ class TenantController extends Controller
 
             if($data==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('users',$data->id,'Delete Tenant Details');
 
-                $notification = array(
-                    'message'=> "Tenant Details Deleted Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Tenant Details Deleted Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 
@@ -891,13 +935,28 @@ class TenantController extends Controller
 
             if($status==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('users',$data->id,'Add Tenant Right Details');
 
-                $notification = array(
-                    'message'=> "Tenant Right Created Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Tenant Right Created Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 

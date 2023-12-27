@@ -207,14 +207,29 @@ class UserController extends Controller
 
             if($status==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('users',$data->id,'Add User Details');
 
-                $notification = array(
-                    'message'=> "User Details Created Successfully",
-                    'alert_type'=>'success',
-                    'create_status'=>1,
-                    'user_id' =>$encrypt_data,
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "User Details Created Successfully",
+                        'alert_type'=>'success',
+                        'create_status'=>1,
+                        'user_id' =>$encrypt_data,
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 
@@ -580,15 +595,29 @@ class UserController extends Controller
                 }
             }
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('users',$data->id,'Edit User Details');
 
-            $notification = array(
-                'message'=> "User Details Updated Successfully",
-                'alert_type'=>'success',
-                'create_status'=>1,
-                'user_id' =>$request->update_id,
-            );;
-            
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "User Details Updated Successfully",
+                    'alert_type'=>'success',
+                    'create_status'=>1,
+                    'user_id' =>$request->update_id,
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -664,13 +693,28 @@ class UserController extends Controller
 
             if($data==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('users',$data->id,'Delete User Details');
 
-                $notification = array(
-                    'message'=> "User Details Deleted Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "User Details Deleted Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 
@@ -896,13 +940,28 @@ class UserController extends Controller
 
             if($status==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('users',$data->id,'Add User Right Details');
 
-                $notification = array(
-                    'message'=> "User Right Created Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "User Right Created Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 

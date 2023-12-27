@@ -205,14 +205,29 @@ class OwnerController extends Controller
 
             if($status==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('users',$data->id,'Add Owner Details');
 
-                $notification = array(
-                    'message'=> "Owner Details Created Successfully",
-                    'alert_type'=>'success',
-                    'create_status'=>1,
-                    'user_id' =>$encrypt_data,
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Owner Details Created Successfully",
+                        'alert_type'=>'success',
+                        'create_status'=>1,
+                        'user_id' =>$encrypt_data,
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 
@@ -577,15 +592,29 @@ class OwnerController extends Controller
                 }
             }
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('users',$data->id,'Edit Owner Details');
 
-            $notification = array(
-                'message'=> "Owner Details Updated Successfully",
-                'alert_type'=>'success',
-                'create_status'=>1,
-                'user_id' =>$request->update_id,
-            );;
-            
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Owner Details Updated Successfully",
+                    'alert_type'=>'success',
+                    'create_status'=>1,
+                    'user_id' =>$request->update_id,
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -661,13 +690,28 @@ class OwnerController extends Controller
 
             if($data==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('users',$data->id,'Delete Owner Details');
 
-                $notification = array(
-                    'message'=> "Owner Details Deleted Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Owner Details Deleted Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 
@@ -893,13 +937,28 @@ class OwnerController extends Controller
 
             if($status==true){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('users',$data->id,'Add Owner Right Details');
 
-                $notification = array(
-                    'message'=> "Owner Right Created Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Owner Right Created Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 

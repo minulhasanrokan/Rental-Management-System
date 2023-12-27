@@ -373,17 +373,23 @@ class SystemSettingController extends Controller
 
         $user_id = $user_session_data[config('app.app_session_name')]['id'];
 
+        $activity = '';
+
         if($data==''){
 
             $data = new MailSetup;
 
             $data->add_by = $user_id;
+
+            $activity = 'Add Mail Setup Information';
         }
         else{
 
             $data->edit_by = $user_id;
             $data->edit_status = 1;
             $data->updated_at = now();
+
+            $activity = 'Edit Mail Setup Information';
         }
 
         $password = $this->common->encrypt_data($request->email_password);
@@ -403,13 +409,28 @@ class SystemSettingController extends Controller
 
         if($data==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('mail_setups',$data->id,$activity);
 
-            $notification = array(
-                'message'=> "System E-mail Created Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "System E-mail Created Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
@@ -518,17 +539,23 @@ class SystemSettingController extends Controller
 
         $user_id = $user_session_data[config('app.app_session_name')]['id'];
 
+        $activity = '';
+
         if($data==''){
 
             $data = new SmsApi;
 
             $data->add_by = $user_id;
+
+            $activity = 'Add SMS API Information';
         }
         else{
 
             $data->edit_by = $user_id;
             $data->edit_status = 1;
             $data->updated_at = now();
+
+            $activity = 'Edit SMS API Information';
         }
 
         $password = $this->common->encrypt_data($request->api_password);
@@ -544,13 +571,28 @@ class SystemSettingController extends Controller
 
         if($data==true){
 
-            DB::commit();
+            $status = $this->common->add_user_activity_history('sms_apis',$data->id,$activity);
 
-            $notification = array(
-                'message'=> "SMS API Details Created Successfully",
-                'alert_type'=>'success',
-                'csrf_token' => csrf_token()
-            );
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "SMS API Details Created Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
         }
         else{
 
