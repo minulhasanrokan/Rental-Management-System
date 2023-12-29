@@ -261,9 +261,6 @@
 
 	                    $('meta[name="csrf-token"]').attr('content', data.csrf_token);
 	                    $('input[name="_token"]').attr('value', data.csrf_token);
-
-	                    // hide all input error.............
-	                    //$(".input-error").delay(3000).fadeOut(800);
 	                }
 	                else{
 
@@ -289,6 +286,9 @@
 	                    $('meta[name="csrf-token"]').attr('content', data.csrf_token);
 	                    $('input[name="_token"]').attr('value', data.csrf_token);
 	                }
+
+	                // hide all input error.............
+                	$(".input-error").delay(3000).fadeOut(800);
 	            }
 	        }
 	    }
