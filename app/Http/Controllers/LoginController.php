@@ -136,7 +136,6 @@ class LoginController extends Controller
                     );
 
                     return redirect('/dashboard')->with($notification);
-
                 }
             }
         }

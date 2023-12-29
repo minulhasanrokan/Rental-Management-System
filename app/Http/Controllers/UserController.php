@@ -46,7 +46,6 @@ class UserController extends Controller
 
             return view('admin.user.user_add_master',compact('menu_data','system_data'));
         }
-
     }
 
     public function user_store(Request $request){
@@ -983,6 +982,130 @@ class UserController extends Controller
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );
+        }
+
+        return response()->json($notification);
+    }
+
+    public function user_change_password_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.user.user_change_password',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.user.user_change_password_master',compact('menu_data','system_data'));
+        }
+    }
+
+    public function user_change_password_store(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'old_password'  =>      'required',
+            'password'          =>      'required|alpha_num|min:6|max:10',
+            'confirm_password'  =>      'required|same:password'
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        $notification = array();
+
+        $data = User::where('delete_status',0)
+            ->where('status',1)
+            ->where('id',$user_id)
+            ->first();
+
+        if(empty($data)){
+
+            $notification = array(
+                'message'=> "Something Went Wrong!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            $pass_check_status = Hash::check(trim($request->old_password), $data->password);
+
+            if($pass_check_status!=1){
+
+                $notification = array(
+                    'message'=> "User Password Does Not Matched!",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token(),
+                );
+            }
+            else{
+
+                $data->password_change_status = 1;
+
+                $data->password = Hash::make($request->password);
+
+                DB::beginTransaction();
+
+                $data->save();
+
+                if($data==true){
+
+                    $status = $this->common->add_user_activity_history('users',$data->id,'Update User Password');
+
+                    if($status==1){
+
+                        DB::commit();
+
+                        $notification = array(
+                            'message'=> "Successfully Changed Your Password!",
+                            'alert_type'=>'success',
+                            'csrf_token' => csrf_token()
+                        );
+                    }
+                    else{
+
+                        DB::rollBack();
+
+                        $notification = array(
+                            'message'=> "Something Went Wrong Try Again",
+                            'alert_type'=>'warning',
+                            'csrf_token' => csrf_token()
+                        );
+                    }
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong!",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+            }
         }
 
         return response()->json($notification);

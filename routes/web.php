@@ -157,6 +157,9 @@ Route::controller(UserController::class)->group(function(){
     Route::post('/dashboard/user-right','user_grid')->name('user_management.user.right')->middleware(['checkroute']);
     Route::get('/dashboard/user-right/{id?}','user_right_setup_page')->name('user_management.user.right')->middleware(['checkroute']);
     Route::post('/dashboard/user-right/{id?}','user_right_store')->name('user_management.user.right')->middleware(['checkroute']);
+
+    Route::get('/dashboard/user-change-password','user_change_password_page')->name('profile.manage.change_password')->middleware(['checkroute']);
+    Route::post('/dashboard/user-change-password','user_change_password_store')->name('profile.manage.change_password')->middleware(['checkroute']);
 });
 
 Route::controller(EmployeeController::class)->group(function(){
