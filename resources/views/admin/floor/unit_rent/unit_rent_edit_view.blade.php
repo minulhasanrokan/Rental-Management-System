@@ -195,7 +195,11 @@
                 location.replace('<?php echo url('/dashboard/logout');?>');
             }
             else{
+
                 var data = JSON.parse(http.responseText);
+
+                $('meta[name="csrf-token"]').attr('content', data.csrf_token);
+                $('input[name="_token"]').attr('value', data.csrf_token);
 
                 if (data.errors && data.success==false) {
 
@@ -205,9 +209,6 @@
 
                         $("#" + field + "_error").show();
                     });
-
-                    $('meta[name="csrf-token"]').attr('content', data.csrf_token);
-                    $('input[name="_token"]').attr('value', data.csrf_token);
                 }
                 else{
 
@@ -229,9 +230,6 @@
                         toastr.error(data.message);
                         break; 
                     }
-
-                    $('meta[name="csrf-token"]').attr('content', data.csrf_token);
-                    $('input[name="_token"]').attr('value', data.csrf_token);
                 }
 
                 // hide all input error.............
@@ -239,7 +237,6 @@
             }
         }
     }
-
 
     load_drop_down('buildings','id,building_name','building_id','building_id_container','Select Building',0,1,'{{$unit_rent_data->building_id}}',1,'onchange="load_drop_down_by_id(\'levels\',\'id,level_name\',\'level_id\',\'level_id_container\',\'Select Level\',0,1,\'\',0,this.value,\'building_id\',\'onchange=get_unit_load_drop_down_by_id(this.value)\',\'\',\'\')"');
 

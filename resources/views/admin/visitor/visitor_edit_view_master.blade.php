@@ -185,7 +185,11 @@
 	                location.replace('<?php echo url('/dashboard/logout');?>');
 	            }
 	            else{
+
 	                var data = JSON.parse(http.responseText);
+
+	                $('meta[name="csrf-token"]').attr('content', data.csrf_token);
+                	$('input[name="_token"]').attr('value', data.csrf_token);
 
 	                if (data.errors && data.success==false) {
 
@@ -195,9 +199,6 @@
 
 	                        $("#" + field + "_error").show();
 	                    });
-
-	                    $('meta[name="csrf-token"]').attr('content', data.csrf_token);
-	                    $('input[name="_token"]').attr('value', data.csrf_token);
 	                }
 	                else{
 
@@ -219,9 +220,6 @@
 	                        toastr.error(data.message);
 	                        break; 
 	                    }
-
-	                    $('meta[name="csrf-token"]').attr('content', data.csrf_token);
-	                    $('input[name="_token"]').attr('value', data.csrf_token);
 	                }
 
 	                // hide all input error.............
