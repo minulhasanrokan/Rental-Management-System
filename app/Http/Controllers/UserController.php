@@ -1110,4 +1110,204 @@ class UserController extends Controller
 
         return response()->json($notification);
     }
+
+    public function user_change_info_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        $header_status = $this->header_status;
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        $user_info_data = User::where('delete_status',0)
+            ->where('status',1)
+            ->where('status',$user_id)
+            ->first();
+
+        if(empty($user_info_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.user.user_change_info',compact('menu_data','user_info_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.user.user_change_info_master',compact('menu_data','system_data','user_info_data'));
+            }
+        }
+    }
+
+    public function user_change_info_store(Request $request){
+
+          $validator = Validator::make($request->all(), [
+            'name'              => 'required|string|max:30',
+            'email'             => 'required|email',Rule::unique('users')->ignore($request->update_id),
+            'mobile'            => 'required|string',Rule::unique('users')->ignore($request->update_id),
+            'date_of_birth'     => 'required|string|max:10',
+            'sex'               => 'required',
+            'blood_group'       => 'required',
+            'group'             => 'required|string|max:250',
+            'user_type'         => 'required',
+            'department'        => 'required',
+            'assign_department' => 'required',
+            'designation'       => 'required',
+            'address'           => 'required|string|max:250',
+            'user_photo' => $request->input('hidden_user_photo') === '' ? 'required' : ''
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
+        $duplicate_status_1 = $this->common->get_duplicate_value('email','users', $request->email,$request->update_id);
+
+        if($duplicate_status_1>0){
+
+            $notification = array(
+                'message'=> "Duplicate E-mail Address Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
+
+        $duplicate_status_2 = $this->common->get_duplicate_value('mobile','users', $request->mobile,$request->update_id);
+
+        if($duplicate_status_2>0){
+
+            $notification = array(
+                'message'=> "Duplicate Mobile Number Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        $user_config_data = $this->common->get_user_config_data();
+
+        $now = now();
+
+        DB::beginTransaction();
+
+        $data = User::where('delete_status',0)
+            ->where('id',$user_id)
+            ->first();
+
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->mobile = $request->mobile;
+        $data->date_of_birth = $request->date_of_birth;
+        $data->sex = $request->sex;
+        $data->blood_group = $request->blood_group;
+        $data->group = $request->group;
+        $data->user_type = $user_config_data['normal_user_type'];
+        $data->department = $request->department;
+        $data->assign_department = $request->assign_department;
+        $data->designation = $request->designation;
+        $data->address = $request->address;
+        $data->details = $request->details;
+        $data->edit_by = $user_id;
+        $data->updated_at = $now;
+
+        if ($request->hasFile('user_photo')) {
+
+            $file = $request->file('user_photo');
+
+            $extension = $file->getClientOriginalExtension();
+
+            $title_name = str_replace(' ','_',$request->name);
+
+            $fileName = $title_name.'_user_'.time().'.'.$extension;
+
+            Image::make($file)->resize(500,500)->save('uploads/user/'.$fileName);
+
+            if($data->user_photo!='')
+            {
+                $deletePhoto = "uploads/user/".$data->user_photo;
+                
+                if(file_exists($deletePhoto)){
+
+                    unlink($deletePhoto);
+                }
+            }
+
+            $data->user_photo = $fileName;
+        }
+
+        $data->save();
+
+        if($data==true){
+
+            $status = $this->common->add_user_activity_history('users',$data->id,'Edit User Details');
+
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "User Details Updated Successfully",
+                    'alert_type'=>'success',
+                    'create_status'=>1,
+                    'user_id' =>$request->update_id,
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "User Details Does Not Updated Successfully",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
+    }
 }

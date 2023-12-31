@@ -160,6 +160,9 @@ Route::controller(UserController::class)->group(function(){
 
     Route::get('/dashboard/user-change-password','user_change_password_page')->name('profile.manage.change_password')->middleware(['checkroute']);
     Route::post('/dashboard/user-change-password','user_change_password_store')->name('profile.manage.change_password')->middleware(['checkroute']);
+
+    Route::get('/dashboard/user-change-info','user_change_info_page')->name('profile.manage.change_info')->middleware(['checkroute']);
+    Route::post('/dashboard/user-change-info','user_change_info_store')->name('profile.manage.change_info')->middleware(['checkroute']);
 });
 
 Route::controller(EmployeeController::class)->group(function(){
