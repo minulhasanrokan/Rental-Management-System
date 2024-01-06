@@ -72,11 +72,25 @@
                                         <div class="input-error" style="display:none; color: red;" id="employee_user_group_error" style="display: inline-block; width:100%; color: red;"></div>
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="session_time">Session Idle Time (In Minute)<span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control text_boxes_numeric" id="session_time" name="session_time" placeholder="Enter System Session Idle Time (In Minute)" value="{{$user_config_data['session_time']}}" required>
+                                        <div class="input-error" style="display:none; color: red;" id="session_time_error" style="display: inline-block; width:100%; color: red;"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="session_check_time">Session Check Time (In Secound)<span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control text_boxes_numeric" id="session_check_time" name="session_check_time" placeholder="Enter System Session Idle Time (In Minute)" value="{{$user_config_data['session_check_time']}}" required>
+                                        <div class="input-error" style="display:none; color: red;" id="session_check_time_error" style="display: inline-block; width:100%; color: red;"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="button" style="float:right" onclick="save_system_info_data();" class="btn btn-primary">Update System Information</button>
+                            <button type="button" style="float:right" onclick="save_system_info_data();" class="btn btn-primary">Update User Config</button>
                         </div>
                     </form>
                 </div>
@@ -91,7 +105,7 @@
         
         function save_system_info_data(){
 
-            if( form_validation('normal_user_type*owner_user_type*tenant_user_type*employee_user_type*normal_user_group*owner_user_group*tenant_user_group*employee_user_group','Normal User Type*Owner User Type*Tenant User Type*Employee User Type*Normal User Group*Owner User Group*Tenant User Group*Employee User Group')==false ){
+            if( form_validation('normal_user_type*owner_user_type*tenant_user_type*employee_user_type*normal_user_group*owner_user_group*tenant_user_group*employee_user_group*session_time*session_check_time','Normal User Type*Owner User Type*Tenant User Type*Employee User Type*Normal User Group*Owner User Group*Tenant User Group*Employee User Group*Session Idle Time*Session Check Time')==false ){
 
                 return false;
             }
@@ -104,6 +118,8 @@
             var normal_user_group = $("#normal_user_group").val();
             var owner_user_group = $("#owner_user_group").val();
             var employee_user_group = $("#employee_user_group").val();
+            var session_time = $("#session_time").val();
+            var session_check_time = $("#session_check_time").val();
 
             if(normal_user_type==owner_user_type){
 
@@ -171,6 +187,8 @@
             form_data.append("normal_user_group", normal_user_group);
             form_data.append("owner_user_group", owner_user_group);
             form_data.append("employee_user_group", employee_user_group);
+            form_data.append("session_time", session_time);
+            form_data.append("session_check_time", session_check_time);
 
             form_data.append("_token", token);
 

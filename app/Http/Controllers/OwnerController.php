@@ -133,6 +133,7 @@ class OwnerController extends Controller
         $data->blood_group = $request->blood_group;
         $data->group = $request->group;
         $data->user_type = $user_config_data['owner_user_type'];
+        $data->user_session_time = $user_config_data['session_time']==''?'0.00':$user_config_data['session_time'];
         $data->department = $request->department;
         $data->assign_department = $request->assign_department;
         $data->designation = $request->designation;

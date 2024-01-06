@@ -61,6 +61,8 @@ Route::controller(CommonController::class)->group(function(){
 
     Route::get('/dashboard/send-sms','send_sms_alert')->name('admin.send.sms');
     Route::get('/dashboard/send-email','send_email_alert')->name('admin.send.email');
+
+    Route::get('/dashboard/check-session','check_session')->name('admin.check.session');
 });
 
 Route::controller(RegistrationController::class)->group(function(){

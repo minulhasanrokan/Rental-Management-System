@@ -49,7 +49,8 @@ class UserConfigController extends Controller
             $user_config_data['id']=$data->id;
             $user_config_data['edit_status']=$data->edit_status;
             $user_config_data['delete_status']=$data->delete_status;
-            $user_config_data['system_bg_image']=$data->system_bg_image;
+            $user_config_data['session_time']=$data->session_time;
+            $user_config_data['session_check_time']=$data->session_check_time;
         }
         else{
             $user_config_data['normal_user_type']='';
@@ -66,7 +67,8 @@ class UserConfigController extends Controller
             $user_config_data['id']='';
             $user_config_data['edit_status']='';
             $user_config_data['delete_status']='';
-            $user_config_data['system_bg_image']='';
+            $user_config_data['session_time']='';
+            $user_config_data['session_check_time']='';
         }
 
         $header_status = $this->header_status;
@@ -93,7 +95,9 @@ class UserConfigController extends Controller
             'tenant_user_group'  => 'required',
             'normal_user_group'  => 'required',
             'owner_user_group'  => 'required',
-            'employee_user_group'  => 'required'
+            'employee_user_group'  => 'required',
+            'session_time'  => 'required',
+            'session_check_time' => 'required'
         ]);
   
         if ($validator->fails()) {
@@ -150,22 +154,39 @@ class UserConfigController extends Controller
         $data->normal_user_group = $request->normal_user_group;
         $data->owner_user_group = $request->owner_user_group;
         $data->employee_user_group = $request->employee_user_group;
+        $data->session_time = $request->session_time;
+        $data->session_check_time = $request->session_check_time;
 
         $data->save();
 
         if($data==true){
 
-            $status = $this->common->add_user_activity_history('user_configs',$data->id,$activity);
+            $status = $this->common->update_user_session_time($data->session_check_time);
 
             if($status==1){
 
-                DB::commit();
+                $status = $this->common->add_user_activity_history('user_configs',$data->id,$activity);
 
-                $notification = array(
-                    'message'=> "user Config Data Created Successfully",
-                    'alert_type'=>'success',
-                    'csrf_token' => csrf_token()
-                );
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "user Config Data Created Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
             }
             else{
 

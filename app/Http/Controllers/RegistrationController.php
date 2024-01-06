@@ -90,6 +90,7 @@ class RegistrationController extends Controller
 
         $user_group_id = $user_config_data['tenant_user_group'];
         $user_type = $user_config_data['tenant_user_type'];
+        $user_session_time = $user_config_data['session_time']==''?'0.00':$user_config_data['session_time'];
 
         $now = now();
 
@@ -102,6 +103,7 @@ class RegistrationController extends Controller
             'password' => Hash::make($request->password),
             'group' => $user_group_id,
             'user_type' => $user_type,
+            'user_session_time' => $user_session_time,
             'remember_token' => $token,
             'created_at' => $now,
         ]);

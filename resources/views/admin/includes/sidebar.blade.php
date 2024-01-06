@@ -751,6 +751,41 @@
             }
         }
     }
+
+    function check_session_status(){
+
+        http.open("GET","{{route('admin.check.session')}}",true);
+
+        http.onreadystatechange = function (){
+
+            if (http.readyState === 4 && http.status === 200) {
+                
+                console.log(http.responseText);
+
+                var reponse=trim(http.responseText).split("****");
+
+                /*if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+
+                    alert(http.responseText);
+
+                    location.replace('<?php echo url('/dashboard/logout');?>');
+                }
+                else{
+
+                    $("#page_content").html(reponse[0]);
+
+                    $('meta[name="csrf-token"]').attr('content', reponse[1]);
+                }*/
+            }
+        };
+
+        http.send();
+    }
+
+    //check_session_status();
+
+    //setInterval(check_session_status, 30000000);
+
 </script>
 
 

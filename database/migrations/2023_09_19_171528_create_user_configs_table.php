@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('normal_user_group')->nullable();
             $table->integer('owner_user_group')->nullable();
             $table->integer('employee_user_group')->nullable();
+            $table->decimal('session_time', 10, 2)->default(0.00);
+            $table->decimal('session_check_time', 10, 2)->default(0.00);
             $table->integer('add_by')->nullable();
             $table->integer('edit_by')->nullable();
             $table->integer('delete_by')->nullable();

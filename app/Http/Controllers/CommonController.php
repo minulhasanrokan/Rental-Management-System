@@ -71,6 +71,15 @@ class CommonController extends Controller
         return json_encode($rent_data);
     }
 
+    function check_session(){
+
+        $user_session_data = session()->all();
+
+        if(isset($user_session_data[config('app.app_session_name')])){
+
+        }
+    }
+
     public function check_header_info(){
 
         $customHeader = 'X_DATA_TOKEN';
@@ -687,7 +696,7 @@ class CommonController extends Controller
             $user_config_data['id']=$data->id;
             $user_config_data['edit_status']=$data->edit_status;
             $user_config_data['delete_status']=$data->delete_status;
-            $user_config_data['system_bg_image']=$data->system_bg_image;
+            $user_config_data['session_time']=$data->session_time;
         }
         else{
             
@@ -705,10 +714,28 @@ class CommonController extends Controller
             $user_config_data['id']='';
             $user_config_data['edit_status']='';
             $user_config_data['delete_status']='';
-            $user_config_data['system_bg_image']='';
+            $user_config_data['session_time']='';
         }
 
         return $user_config_data;
+    }
+
+    function update_user_session_time($session_time){
+
+        $updateData = [
+            'user_session_time' => $session_time,
+        ];
+
+        try {
+
+            DB::table('users')->update($updateData);
+            
+            return 1;
+
+        } catch (\Exception $e) {
+            
+            return 0;
+        }
     }
 
     public function get_system_data(){
