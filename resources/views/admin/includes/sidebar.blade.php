@@ -783,6 +783,34 @@
 
     setInterval(check_session_status, {{$session_check_time*1000}});
 
+    function update_session(event){
+
+        http.open("GET","{{route('admin.update.session')}}",true);
+
+        http.onreadystatechange = function (){
+
+            if (http.readyState === 4 && http.status === 200) {
+
+                var reponse=trim(http.responseText);
+
+                if(reponse=='Session Expire'){
+
+                    alert(http.responseText);
+
+                    location.replace('<?php echo url('/dashboard/logout');?>');
+                }
+                else{
+
+                    $('meta[name="csrf-token"]').attr('content', reponse);
+                }
+            }
+        };
+
+        http.send();
+    }
+
+    document.addEventListener('mousemove', update_session);
+
 </script>
 
 

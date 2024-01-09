@@ -98,6 +98,24 @@ class CommonController extends Controller
         }
     }
 
+    function update_session(){
+
+        $user_session_data = session()->all();
+
+        if(isset($user_session_data[config('app.app_session_name')])){
+
+            $last_active_time_Key = config('app.app_session_name').'.last_active_time';
+
+            session()->put($last_active_time_Key, time());
+
+            echo csrf_token();
+        }
+        else{
+
+            echo 'Session Expire';
+        }
+    }
+
     public function check_header_info(){
 
         $customHeader = 'X_DATA_TOKEN';
