@@ -71,15 +71,15 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="session_time">Session Idle Time (In Minute)<span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control text_boxes_numeric" id="session_time" name="session_time" placeholder="Enter System Session Idle Time (In Minute)" value="{{$user_config_data['session_time']}}" required>
+                                    <label for="session_time">Session Idle Time (In Secound)<span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control text_boxes_numeric" id="session_time" name="session_time" placeholder="Enter System Session Idle Time (In Secound)" value="{{$user_config_data['session_time']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="session_time_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="session_check_time">Session Check Time (In Secound)<span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control text_boxes_numeric" id="session_check_time" name="session_check_time" placeholder="Enter System Session Idle Time (In Minute)" value="{{$user_config_data['session_check_time']}}" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="session_check_time" name="session_check_time" placeholder="Enter System Session Idle Time (In Secound)" value="{{$user_config_data['session_check_time']}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="session_check_time_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>

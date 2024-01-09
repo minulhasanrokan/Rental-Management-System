@@ -128,7 +128,7 @@ class LoginController extends Controller
 
                     $user_session_data = (array) json_decode(json_encode($user_data));
 
-                    $user_session_data['last_active_time'] = now();
+                    $user_session_data['last_active_time'] = time();
 
                     $request->session()->put($this->app_session_name, $user_session_data);
 

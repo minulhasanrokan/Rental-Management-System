@@ -77,6 +77,24 @@ class CommonController extends Controller
 
         if(isset($user_session_data[config('app.app_session_name')])){
 
+            $last_active_time = $user_session_data[config('app.app_session_name')]['last_active_time'];
+            $user_session_time = $user_session_data[config('app.app_session_name')]['user_session_time'];
+
+            if((time() - $last_active_time) > $user_session_time){
+
+                session()->flush();
+                session()->regenerate();
+
+                echo 'Session Expire';
+            }
+            else{
+
+                echo csrf_token();
+            }
+        }
+        else{
+
+            echo 'Session Expire';
         }
     }
 
@@ -720,10 +738,11 @@ class CommonController extends Controller
         return $user_config_data;
     }
 
-    function update_user_session_time($session_time){
+    function update_user_session_time($session_time,$session_check_time){
 
         $updateData = [
             'user_session_time' => $session_time,
+            'session_check_time' => $session_check_time,
         ];
 
         try {

@@ -4,6 +4,7 @@
     $user_id = Session::get(config('app.app_session_name').'.id');
     $user_name = Session::get(config('app.app_session_name').'.name');
     $user_photo = Session::get(config('app.app_session_name').'.user_photo');
+    $session_check_time = Session::get(config('app.app_session_name').'.session_check_time');
 
     $user_right_data = array();
 
@@ -759,12 +760,10 @@
         http.onreadystatechange = function (){
 
             if (http.readyState === 4 && http.status === 200) {
-                
-                console.log(http.responseText);
 
-                var reponse=trim(http.responseText).split("****");
+                var reponse=trim(http.responseText);
 
-                /*if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+                if(reponse=='Session Expire'){
 
                     alert(http.responseText);
 
@@ -772,19 +771,17 @@
                 }
                 else{
 
-                    $("#page_content").html(reponse[0]);
-
-                    $('meta[name="csrf-token"]').attr('content', reponse[1]);
-                }*/
+                    $('meta[name="csrf-token"]').attr('content', reponse);
+                }
             }
         };
 
         http.send();
     }
 
-    //check_session_status();
+    check_session_status();
 
-    //setInterval(check_session_status, 30000000);
+    setInterval(check_session_status, {{$session_check_time*1000}});
 
 </script>
 
