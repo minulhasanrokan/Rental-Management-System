@@ -126,18 +126,33 @@ class LoginController extends Controller
                 }
                 else{
 
-                    $user_session_data = (array) json_decode(json_encode($user_data));
+                    $user_log_id = $this->common->insert_user_log($user_data->id);
 
-                    $user_session_data['last_active_time'] = time();
+                    if($user_log_id!=0 and is_int($user_log_id)){
 
-                    $request->session()->put($this->app_session_name, $user_session_data);
+                        $user_session_data = (array) json_decode(json_encode($user_data));
 
-                    $notification = array(
-                        'message'=> "User Account Login Successfully!",
-                        'alert_type'=>'success'
-                    );
+                        $user_session_data['last_active_time'] = time();
+                        $user_session_data['user_log_id'] = $user_log_id;
 
-                    return redirect('/dashboard')->with($notification);
+                        $request->session()->put($this->app_session_name, $user_session_data);
+
+                        $notification = array(
+                            'message'=> "User Account Login Successfully!",
+                            'alert_type'=>'success'
+                        );
+
+                        return redirect('/dashboard')->with($notification);
+                    }
+                    else{
+
+                        $notification = array(
+                            'message'=> "Something Went Wrong!",
+                            'alert_type'=>'warning'
+                        );
+
+                        return redirect()->back()->with($notification);
+                    }
                 }
             }
         }

@@ -82,6 +82,8 @@ class CommonController extends Controller
 
             if((time() - $last_active_time) > $user_session_time){
 
+                $this->update_user_log_time(1,1);
+
                 session()->flush();
                 session()->regenerate();
 
@@ -89,10 +91,35 @@ class CommonController extends Controller
             }
             else{
 
-                echo csrf_token();
+                $user_log_id = $user_session_data[config('app.app_session_name')]['user_log_id'];
+
+                $log_data = DB::table('user_log_histories')
+                        ->select('id')
+                        ->where('delete_status',0)
+                        ->where('log_out_status',0)
+                        ->where('id',$user_log_id);
+
+                $total_log_data = $log_data->count();
+
+                if (!empty($total_log_data)) {
+                    
+                    $this->update_user_log_time(0,0);
+
+                    echo csrf_token();
+                }
+                else{
+
+                    session()->flush();
+                    session()->regenerate();
+
+                    echo 'Session Expire';
+                }
             }
         }
         else{
+
+            session()->flush();
+            session()->regenerate();
 
             echo 'Session Expire';
         }
@@ -109,6 +136,8 @@ class CommonController extends Controller
 
             if((time() - $last_active_time) > $user_session_time){
 
+                $this->update_user_log_time(1,1);
+
                 session()->flush();
                 session()->regenerate();
 
@@ -116,14 +145,39 @@ class CommonController extends Controller
             }
             else{
 
-                $last_active_time_Key = config('app.app_session_name').'.last_active_time';
+                $user_log_id = $user_session_data[config('app.app_session_name')]['user_log_id'];
 
-                session()->put($last_active_time_Key, time());
+                $log_data = DB::table('user_log_histories')
+                        ->select('id')
+                        ->where('delete_status',0)
+                        ->where('log_out_status',0)
+                        ->where('id',$user_log_id);
 
-                echo csrf_token();
+                $total_log_data = $log_data->count();
+
+                if (!empty($total_log_data)) {
+                    
+                    $this->update_user_log_time(0,0);
+
+                    $last_active_time_Key = config('app.app_session_name').'.last_active_time';
+
+                    session()->put($last_active_time_Key, time());
+
+                    echo csrf_token();
+                }
+                else{
+
+                    session()->flush();
+                    session()->regenerate();
+
+                    echo 'Session Expire';
+                }
             }
         }
         else{
+
+            session()->flush();
+            session()->regenerate();
 
             echo 'Session Expire';
         }
@@ -322,6 +376,61 @@ class CommonController extends Controller
             DB::table('activity_histories')->insert($data_arr);
             
             return 1;
+        } catch (\Exception $e) {
+            
+            return 0;
+        }
+    }
+
+    public function insert_user_log($user_id){
+
+        try {
+
+            $data_arr['user_id'] = $user_id;
+            $data_arr['ip_address'] = request()->ip();
+            $data_arr['log_in_time'] = now();
+            $data_arr['last_active_time'] = now();
+            $data_arr['log_out_time'] = now();
+            $data_arr['add_by'] = $user_id;
+
+            $updateData = [
+                'log_out_status' => 1,
+                'force_status' => 1,
+            ];
+
+            DB::table('user_log_histories')
+                ->where('user_id', $user_id)
+                ->where('log_out_status', 0)
+                ->where('force_status', 0)
+                ->update($updateData);
+
+            return DB::table('user_log_histories')->insertGetId($data_arr);
+
+        } catch (\Exception $e) {
+            
+            return 0;
+        }
+    }
+
+    function update_user_log_time($log_out_status=0,$force_status=0){
+
+        $updateData = [
+            'last_active_time' => now(),
+            'log_out_time' => now(),
+            'log_out_status' => $log_out_status,
+            'force_status' => $force_status,
+        ];
+
+        try {
+
+            $user_session_data = session()->all();
+
+            $user_log_id = $user_session_data[config('app.app_session_name')]['user_log_id'];
+
+            DB::table('user_log_histories')->where('id', $user_log_id) ->update($updateData);
+            
+            return 1;
+
         } catch (\Exception $e) {
             
             return 0;

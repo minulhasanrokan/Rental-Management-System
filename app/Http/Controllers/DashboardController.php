@@ -21,6 +21,8 @@ class DashboardController extends Controller
 
     public function logout(){
 
+        $this->common->update_user_log_time(1,0);
+
         session()->flush();
         session()->regenerate();
 
