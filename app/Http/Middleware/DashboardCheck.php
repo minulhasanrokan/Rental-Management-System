@@ -17,6 +17,8 @@ class DashboardCheck
     {
         $user_session_data = session()->all();
 
+        $this->check_session($user_session_data);
+
         if(isset($user_session_data[config('app.app_session_name')])){
 
             $last_active_time_Key = config('app.app_session_name').'.last_active_time';
@@ -37,5 +39,20 @@ class DashboardCheck
         }
 
         return $next($request);
+    }
+
+    protected function check_session($user_session_data){
+
+        if(isset($user_session_data[config('app.app_session_name')])){
+
+            $last_active_time = $user_session_data[config('app.app_session_name')]['last_active_time'];
+            $user_session_time = $user_session_data[config('app.app_session_name')]['user_session_time'];
+
+            if((time() - $last_active_time) > $user_session_time){
+
+                session()->flush();
+                session()->regenerate();
+            }
+        }
     }
 }

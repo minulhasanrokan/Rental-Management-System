@@ -31,6 +31,7 @@ return new class extends Migration
             $table->integer('verify_status')->default(0);
             $table->integer('delete_status')->default(0);
             $table->decimal('user_session_time', 10, 2)->default(0.00);
+            $table->decimal('session_check_time', 10, 2)->default(0.00);
             $table->integer('status')->default(1);
             $table->integer('edit_status')->default(0);
             $table->integer('super_admin_status')->default(0);

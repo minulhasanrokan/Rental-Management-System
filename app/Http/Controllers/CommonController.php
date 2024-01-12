@@ -104,11 +104,24 @@ class CommonController extends Controller
 
         if(isset($user_session_data[config('app.app_session_name')])){
 
-            $last_active_time_Key = config('app.app_session_name').'.last_active_time';
+            $last_active_time = $user_session_data[config('app.app_session_name')]['last_active_time'];
+            $user_session_time = $user_session_data[config('app.app_session_name')]['user_session_time'];
 
-            session()->put($last_active_time_Key, time());
+            if((time() - $last_active_time) > $user_session_time){
 
-            echo csrf_token();
+                session()->flush();
+                session()->regenerate();
+
+                echo 'Session Expire';
+            }
+            else{
+
+                $last_active_time_Key = config('app.app_session_name').'.last_active_time';
+
+                session()->put($last_active_time_Key, time());
+
+                echo csrf_token();
+            }
         }
         else{
 
