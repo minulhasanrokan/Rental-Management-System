@@ -700,9 +700,9 @@
                     <!-- /.footer -->
                 </div>
                 <!-- /.card -->
-                <!-- PRODUCT LIST -->
+                <!-- my_notice -->
                     @include('admin.dashboard.my_notice')
-                <!-- /.card -->
+                <!-- /.my_notice -->
             </div>
             <!-- /.col -->
         </div>
