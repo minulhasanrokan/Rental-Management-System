@@ -85,7 +85,7 @@ class CommonController extends Controller
                 $this->update_user_log_time(1,1);
 
                 session()->flush();
-                session()->regenerate();
+                //session()->regenerate();
 
                 echo 'Session Expire';
             }
@@ -110,7 +110,7 @@ class CommonController extends Controller
                 else{
 
                     session()->flush();
-                    session()->regenerate();
+                    //session()->regenerate();
 
                     echo 'Session Expire';
                 }
@@ -119,7 +119,7 @@ class CommonController extends Controller
         else{
 
             session()->flush();
-            session()->regenerate();
+            //session()->regenerate();
 
             echo 'Session Expire';
         }
@@ -139,7 +139,7 @@ class CommonController extends Controller
                 $this->update_user_log_time(1,1);
 
                 session()->flush();
-                session()->regenerate();
+                //session()->regenerate();
 
                 echo 'Session Expire';
             }
@@ -168,7 +168,7 @@ class CommonController extends Controller
                 else{
 
                     session()->flush();
-                    session()->regenerate();
+                    //session()->regenerate();
 
                     echo 'Session Expire';
                 }
@@ -177,7 +177,7 @@ class CommonController extends Controller
         else{
 
             session()->flush();
-            session()->regenerate();
+            //session()->regenerate();
 
             echo 'Session Expire';
         }

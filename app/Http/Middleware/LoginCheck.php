@@ -26,7 +26,7 @@ class LoginCheck
         }
 
         session()->forget(config('app.app_session_name'));
-        session()->regenerate();
+        //session()->regenerate();
 
         return $next($request);
     }
@@ -41,7 +41,7 @@ class LoginCheck
             if((time() - $last_active_time) > $user_session_time){
 
                 session()->flush();
-                session()->regenerate();
+                //session()->regenerate();
             }
         }
     }

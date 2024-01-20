@@ -24,7 +24,7 @@ class DashboardController extends Controller
         $this->common->update_user_log_time(1,0);
 
         session()->flush();
-        session()->regenerate();
+        //session()->regenerate();
 
         $notification = array(
             'message'=> "User Account Logout Successfully!",

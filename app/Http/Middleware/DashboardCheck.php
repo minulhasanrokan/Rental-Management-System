@@ -29,7 +29,7 @@ class DashboardCheck
         if(!isset($user_session_data[config('app.app_session_name')])){
 
             session()->flush();
-            session()->regenerate();
+            //session()->regenerate();
 
             return redirect('/login');
         }
@@ -51,7 +51,7 @@ class DashboardCheck
             if((time() - $last_active_time) > $user_session_time){
 
                 session()->flush();
-                session()->regenerate();
+                //session()->regenerate();
             }
         }
     }

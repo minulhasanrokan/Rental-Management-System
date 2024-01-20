@@ -30,7 +30,7 @@ class CheckRoute
         if(!isset($user_session_data[config('app.app_session_name')]) || $user_session_data[config('app.app_session_name')]['password_change_status']==0){
 
             session()->flush();
-            session()->regenerate();
+            //session()->regenerate();
 
             $customHeader = 'X_DATA_TOKEN';
 
@@ -86,7 +86,7 @@ class CheckRoute
             if((time() - $last_active_time) > $user_session_time){
 
                 session()->flush();
-                session()->regenerate();
+                //session()->regenerate();
             }
         }
     }

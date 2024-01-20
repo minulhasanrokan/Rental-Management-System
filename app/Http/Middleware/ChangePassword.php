@@ -46,7 +46,7 @@ class ChangePassword
             if((time() - $last_active_time) > $user_session_time){
 
                 session()->flush();
-                session()->regenerate();
+                //session()->regenerate();
             }
         }
     }
