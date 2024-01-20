@@ -437,7 +437,7 @@ class NoticeController extends Controller
 
             $system_data = $this->common->get_system_data();
 
-            return view('admin.notice.my_notice_view_master',compact('menu_data'));
+            return view('admin.notice.my_notice_view_master',compact('menu_data','system_data'));
         }
     }
 

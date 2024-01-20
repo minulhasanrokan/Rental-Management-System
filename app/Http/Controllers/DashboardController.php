@@ -81,6 +81,91 @@ class DashboardController extends Controller
             $system_data['system_bg_image']='';
         }
 
-       return view('admin.dashboard',compact('system_data'));
+        $user_session_data = session()->all();
+
+        $admin_status = $user_session_data[config('app.app_session_name')]['super_admin_status'];
+
+        $user_right_data = array();
+
+        if($admin_status==1)
+        {
+            $user_right_data = DB::table('right_details')
+                ->join('right_categories', 'right_categories.id', '=', 'right_details.cat_id')
+                ->join('right_groups', 'right_groups.id', '=', 'right_categories.group_id')
+                ->select('right_groups.id as g_id', 'right_groups.name as g_name', 'right_groups.action_name as g_action_name', 'right_groups.details as g_details', 'right_groups.title as g_title', 'right_groups.short_order as g_short_order', 'right_groups.icon as g_icon', 'right_categories.id as c_id', 'right_categories.group_id as group_id', 'right_categories.c_name', 'right_categories.c_title', 'right_categories.c_action_name', 'right_categories.c_details', 'right_categories.short_order as c_short_order', 'right_categories.c_icon as c_icon', 'right_details.id  as r_id', 'right_details.cat_id', 'right_details.r_name', 'right_details.r_title', 'right_details.r_action_name', 'right_details.r_route_name', 'right_details.r_details', 'right_details.r_short_order', 'right_details.r_icon')
+                ->where('right_groups.status',1)
+                ->where('right_categories.status',1)
+                ->where('right_details.status',1)
+                ->where('right_groups.delete_status',0)
+                ->where('right_categories.delete_status',0)
+                ->where('right_details.delete_status',0)
+                ->orderBy('right_groups.short_order', 'ASC')
+                ->orderBy('right_categories.short_order', 'ASC')
+                ->orderBy('right_details.r_short_order', 'ASC')
+                ->get()->toArray();
+        }
+        else{
+
+            $user_right_data = DB::table('right_details')
+                ->join('user_rights', 'right_details.id', '=', 'user_rights.r_id')
+                ->join('right_categories', 'right_categories.id', '=', 'right_details.cat_id')
+                ->join('right_groups', 'right_groups.id', '=', 'right_categories.group_id')
+                ->select('right_groups.id as g_id', 'right_groups.name as g_name', 'right_groups.action_name as g_action_name', 'right_groups.details as g_details', 'right_groups.title as g_title', 'right_groups.short_order as g_short_order', 'right_groups.icon as g_icon', 'right_categories.id as c_id', 'right_categories.group_id as group_id', 'right_categories.c_name', 'right_categories.c_title', 'right_categories.c_action_name', 'right_categories.c_details', 'right_categories.short_order as c_short_order', 'right_categories.c_icon as c_icon', 'right_details.id  as r_id', 'right_details.cat_id', 'right_details.r_name', 'right_details.r_title', 'right_details.r_action_name', 'right_details.r_route_name', 'right_details.r_details', 'right_details.r_short_order', 'right_details.r_icon')
+                ->where('user_rights.user_id',$user_id)
+                ->where('right_groups.status',1)
+                ->where('right_categories.status',1)
+                ->where('right_details.status',1)
+                ->where('right_groups.delete_status',0)
+                ->where('right_categories.delete_status',0)
+                ->where('right_details.delete_status',0)
+                ->orderBy('right_groups.short_order', 'ASC')
+                ->orderBy('right_categories.short_order', 'ASC')
+                ->orderBy('right_details.r_short_order', 'ASC')
+                ->get()->toArray();
+        }
+
+        $right_group_arr = array();
+        $right_cat_arr = array();
+        $right_arr = array();
+        $dash_board_right_arr = array();
+
+        if(!empty($user_right_data)){
+
+            foreach($user_right_data as $data){
+
+                $right_group_arr[$data->g_id]['g_id'] = $data->g_id;
+                $right_group_arr[$data->g_id]['g_name'] = $data->g_name;
+                $right_group_arr[$data->g_id]['g_action_name'] = $data->g_action_name;
+                $right_group_arr[$data->g_id]['g_details'] = $data->g_details;
+                $right_group_arr[$data->g_id]['g_title'] = $data->g_title;
+                $right_group_arr[$data->g_id]['g_short_order'] = $data->g_short_order;
+                $right_group_arr[$data->g_id]['g_icon'] = $data->g_icon;
+
+                $right_cat_arr[$data->g_id][$data->c_id]['c_id'] = $data->c_id;
+                $right_cat_arr[$data->g_id][$data->c_id]['c_name'] = $data->c_name;
+                $right_cat_arr[$data->g_id][$data->c_id]['c_title'] = $data->c_title;
+                $right_cat_arr[$data->g_id][$data->c_id]['c_action_name'] = $data->c_action_name;
+                $right_cat_arr[$data->g_id][$data->c_id]['c_details'] = $data->c_details;
+                $right_cat_arr[$data->g_id][$data->c_id]['c_short_order'] = $data->c_short_order;
+                $right_cat_arr[$data->g_id][$data->c_id]['c_icon'] = $data->c_icon;
+
+                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_id'] = $data->r_id;
+                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_name'] = $data->r_name;
+                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_title'] = $data->r_title;
+                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_action_name'] = $data->r_action_name;
+                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_route_name'] = $data->r_route_name;
+                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_details'] = $data->r_details;
+                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_short_order'] = $data->r_short_order;
+                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_icon'] = $data->r_icon;
+
+                $dash_board_right_arr['r_route_name'][$data->r_route_name] = $data->r_route_name;
+                $dash_board_right_arr['r_title'][$data->r_route_name] = $data->r_title;
+                $dash_board_right_arr['r_icon'][$data->r_route_name] = $data->r_icon;
+            }
+        }
+
+        $common = $this->common;
+
+       return view('admin.dashboard',compact('system_data','dash_board_right_arr','admin_status','common','user_session_data'));
     }
 }

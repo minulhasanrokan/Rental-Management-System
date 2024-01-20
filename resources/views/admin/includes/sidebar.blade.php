@@ -421,7 +421,7 @@
 
         const currentDate = new Date();
 
-        const age = currentDate.getFullYear() - dobDate.getFullYear();
+        var age = currentDate.getFullYear() - dobDate.getFullYear();
 
         if (currentDate.getMonth() < dobDate.getMonth() || (currentDate.getMonth() === dobDate.getMonth() && currentDate.getDate() < dobDate.getDate())){
 
@@ -783,33 +783,45 @@
 
     setInterval(check_session_status, {{$session_check_time*1000}});
 
+    var update_session_status = 0;
+
     function update_session(event){
 
-        http.open("GET","{{route('admin.update.session')}}",true);
+        if(update_session_status==0){
 
-        http.onreadystatechange = function (){
+            update_session_status = 1;
 
-            if (http.readyState === 4 && http.status === 200) {
+            http.open("GET","{{route('admin.update.session')}}",true);
 
-                var reponse=trim(http.responseText);
+            http.onreadystatechange = function (){
 
-                if(reponse=='Session Expire'){
+                if (http.readyState === 4 && http.status === 200) {
 
-                    alert(http.responseText);
+                    var reponse=trim(http.responseText);
 
-                    location.replace('<?php echo url('/dashboard/logout');?>');
+                    if(reponse=='Session Expire'){
+
+                        alert(http.responseText);
+
+                        location.replace('<?php echo url('/dashboard/logout');?>');
+                    }
+                    else{
+
+                        $('meta[name="csrf-token"]').attr('content', reponse);
+                    }
                 }
-                else{
+            };
 
-                    $('meta[name="csrf-token"]').attr('content', reponse);
-                }
-            }
-        };
+            http.send();
 
-        http.send();
+            setTimeout(function () {
+                update_session_status = 0;
+            }, 5000);
+        }
     }
 
     document.addEventListener('mousemove', update_session);
+    document.addEventListener('keydown', update_session);
 
 </script>
 
