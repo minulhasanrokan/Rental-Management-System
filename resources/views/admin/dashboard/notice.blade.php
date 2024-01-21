@@ -6,9 +6,6 @@
         $title = '';
         $icon = '';
 
-        $user_id = $user_session_data[config('app.app_session_name')]['id'];
-        $user_group_id = $user_session_data[config('app.app_session_name')]['group'];
-
         if($admin_status!=1){
 
             $route_name = route('notice_manage.manage.view');
