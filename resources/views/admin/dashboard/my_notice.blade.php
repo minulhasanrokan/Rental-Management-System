@@ -1,7 +1,7 @@
 @php
 
-    if(isset($dash_board_right_arr['r_route_name']['notice_manage.my_notice.view']) || $admin_status==1)
-    {
+    if(isset($dash_board_right_arr['r_route_name']['notice_manage']['notice_manage.my_notice']['notice_manage.my_notice.view']) || $admin_status==1){
+        
         $user_id = $user_session_data[config('app.app_session_name')]['id'];
         $user_group_id = $user_session_data[config('app.app_session_name')]['group'];
 
@@ -33,7 +33,7 @@
 @endphp
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{$dash_board_right_arr['r_title']['notice_manage.my_notice.view']}}</h3>
+                <h3 class="card-title">{{$dash_board_right_arr['r_title']['notice_manage']['notice_manage.my_notice']['notice_manage.my_notice.view']}}</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -52,8 +52,8 @@
                             {{substr($notice->notice_title,0,40)}}.....
                         </div>
                         <div class="product-info">
-                            <a href="#" onclick="get_new_page('{{$route_name}}','{{$notice->notice_title}}','{{$common->encrypt_data($notice->id)}}','{{$dash_board_right_arr['r_title']['notice_manage.my_notice.view']}}');" class="product-title">
-                                <span class="badge badge-warning float-right"><i class="nav-icon {{$dash_board_right_arr['r_icon']['notice_manage.my_notice.view']}}"></i></span>
+                            <a href="#" onclick="get_new_page('{{$route_name}}','{{$notice->notice_title}}','{{$common->encrypt_data($notice->id)}}','{{$dash_board_right_arr['r_title']['notice_manage']['notice_manage.my_notice']['notice_manage.my_notice.view']}}');" class="product-title">
+                                <span class="badge badge-warning float-right"><i class="nav-icon {{$dash_board_right_arr['r_icon']['notice_manage']['notice_manage.my_notice']['notice_manage.my_notice.view']}}"></i></span>
                             </a>
                         </div>
                     </li>
@@ -62,7 +62,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer text-center">
-                <a href="#" onclick="get_new_page('{{$route_name}}','{{$dash_board_right_arr['r_title']['notice_manage.my_notice.view']}}','','');" class="uppercase">{{$dash_board_right_arr['r_title']['notice_manage.my_notice.view']}}</a>
+                <a href="#" onclick="get_new_page('{{$route_name}}','{{$dash_board_right_arr['r_title']['notice_manage']['notice_manage.my_notice']['notice_manage.my_notice.view']}}','','');" class="uppercase">{{$dash_board_right_arr['r_title']['notice_manage']['notice_manage.my_notice']['notice_manage.my_notice.view']}}</a>
             </div>
             <!-- /.card-footer -->
         </div>

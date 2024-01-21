@@ -158,9 +158,9 @@ class DashboardController extends Controller
                 $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_short_order'] = $data->r_short_order;
                 $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_icon'] = $data->r_icon;
 
-                $dash_board_right_arr['r_route_name'][$data->r_route_name] = $data->r_route_name;
-                $dash_board_right_arr['r_title'][$data->r_route_name] = $data->r_title;
-                $dash_board_right_arr['r_icon'][$data->r_route_name] = $data->r_icon;
+                $dash_board_right_arr['r_route_name'][$data->g_action_name][$data->c_action_name][$data->r_route_name] = $data->r_route_name;
+                $dash_board_right_arr['r_title'][$data->g_action_name][$data->c_action_name][$data->r_route_name] = $data->r_title;
+                $dash_board_right_arr['r_icon'][$data->g_action_name][$data->c_action_name][$data->r_route_name] = $data->r_icon;
             }
         }
 

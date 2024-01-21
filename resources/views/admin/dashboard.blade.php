@@ -702,6 +702,7 @@
                 <!-- /.card -->
                 <!-- my_notice -->
                     @include('admin.dashboard.my_notice')
+                    @include('admin.dashboard.notice')
                 <!-- /.my_notice -->
             </div>
             <!-- /.col -->
