@@ -42,10 +42,6 @@ use App\Http\Controllers\ReportController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::controller(CommonController::class)->group(function(){
 
     Route::get('/dashboard/get-duplicate-value/{field_name?}/{table_name?}/{value?}/{data_id?}','get_duplicate_value')->name('admin.get.duplicate.value');
@@ -91,6 +87,8 @@ Route::controller(LoginController::class)->group(function(){
 });
 
 Route::controller(DashboardController::class)->group(function(){
+
+    Route::get('','dashboard')->name('admin.dashboard')->middleware(['dashboardcheck']);
 
     Route::get('/dashboard','dashboard')->name('admin.dashboard')->middleware(['dashboardcheck']);
     Route::get('/dashboard/logout','logout')->name('admin.logout')->middleware(['dashboardcheck']);
