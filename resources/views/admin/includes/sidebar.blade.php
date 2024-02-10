@@ -242,34 +242,36 @@
 
         freeze_window(0);
 
-        http.open("GET",route_name+"/"+data,true);
-        http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        http.setRequestHeader('X-Data-Token', 'mljjljklfdgjkldfjgkljdflkgjldfgjlk');
-        http.send();
-        http.onreadystatechange = get_new_page_reponse;
-    }
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: route_name+"/"+data,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('X-Data-Token', 'mljjljklfdgjkldfjgkljdflkgjldfgjlk');
+            },
+            success: function (response) {
 
-    function get_new_page_reponse(){
+                var reponse=trim(response).split("****");
 
-        if(http.readyState == 4)
-        {
-            release_freezing();
+                if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
 
-            var reponse=trim(http.responseText).split("****");
+                    release_freezing();
 
-            if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+                    alert(http.responseText);
 
-                alert(http.responseText);
+                    location.replace('<?php echo url('/dashboard/logout');?>');
+                }
+                else{
 
-                location.replace('<?php echo url('/dashboard/logout');?>');
+                    $("#page_content").html(reponse[0]);
+
+                    $('meta[name="csrf-token"]').attr('content', reponse[1]);
+
+                    release_freezing();
+                }
             }
-            else{
-
-                $("#page_content").html(reponse[0]);
-
-                $('meta[name="csrf-token"]').attr('content', reponse[1]);
-            }
-        }
+        });
     }
 
     function check_duplicate_value(field_name,table_name,value,data_id){
@@ -278,40 +280,41 @@
  
         var data="&field_name="+field_name+"&table_name="+table_name+"&value="+value+"&data_id="+data_id;
 
-        http.open("GET","{{route('admin.get.duplicate.value')}}"+"/"+field_name+"/"+table_name+"/"+value+"/"+data_id,true);
-        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        http.send(data);
-        http.onreadystatechange = check_duplicate_value_reponse;
-    }
+        if(value!=''){
 
-    function check_duplicate_value_reponse(){
+            $.ajax({
+                async: true,
+                type: "GET",
+                url: "{{route('admin.get.duplicate.value')}}"+"/"+field_name+"/"+table_name+"/"+value+"/"+data_id,
+                data: data,
+                contentType: "application/x-www-form-urlencoded",
+                success: function (response) {
 
-        if(http.readyState == 4)
-        {
+                    var reponse=trim(response).split("****");
 
-            var reponse=trim(http.responseText).split("****");
+                    if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
 
-            if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
+                        location.replace('<?php echo url('/dashboard/logout');?>');
+                    }
+                    else{
 
-                location.replace('<?php echo url('/dashboard/logout');?>');
-            }
-            else{
+                        if(reponse[0]*1>0){
 
-                if(reponse[0]*1>0){
+                            var field_name_arr = input_field_name.split("_");
 
-                    var field_name_arr = input_field_name.split("_");
+                            $("#"+input_field_name).val('');
 
-                    $("#"+input_field_name).val('');
+                            alert('Duplicate '+field_name_arr[0]+' '+field_name_arr[1]+' found');
 
-                    alert('Duplicate '+field_name_arr[0]+' '+field_name_arr[1]+' found');
+                            return false;
+                        }
+                        else{
 
-                    return false;
+                            return true;
+                        }
+                    }
                 }
-                else{
-
-                    return true;
-                }
-            }
+            });
         }
     }
 
@@ -360,42 +363,40 @@
         }
  
         var data="&field_name="+field_name+"&table_name="+table_name+"&value="+value+"&data_id="+data_id+"&value2="+value2+"&field_name2="+field_name2+"&other_status="+other_status+"&other_value="+other_value;
- 
-        http.open("GET","{{route('admin.get.duplicate.value.two')}}"+"/"+field_name+"/"+field_name2+"/"+table_name+"/"+value+"/"+value2+"/"+data_id+"/"+other_status+"/"+other_value,true);
-        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        http.send(data);
-        http.onreadystatechange = check_duplicate_value_with_two_filed_reponse;
-    }
 
-    function check_duplicate_value_with_two_filed_reponse(){
+        $.ajax({
+            async: true,
+            type: "GET",
+            url: "{{route('admin.get.duplicate.value.two')}}"+"/"+field_name+"/"+field_name2+"/"+table_name+"/"+value+"/"+value2+"/"+data_id+"/"+other_status+"/"+other_value,
+            data: data,
+            contentType: "application/x-www-form-urlencoded",
+            success: function (response) {
 
-        if(http.readyState == 4)
-        {
+                var reponse=trim(response).split("****");
 
-            var reponse=trim(http.responseText).split("****");
+                if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
 
-            if(reponse[0]=='Session Expire' || reponse[0]=='Right Not Found'){
-
-                location.replace('<?php echo url('/dashboard/logout');?>');
-            }
-            else{
-
-                if(reponse[0]*1>0){
-
-                    var field_name_arr = input_field_name.split("_");
-
-                    $("#"+input_field_name).val('');
-
-                    alert('Duplicate '+field_name_arr[0]+' '+field_name_arr[1]+' found');
-
-                    return false;
+                    location.replace('<?php echo url('/dashboard/logout');?>');
                 }
                 else{
 
-                    return true;
+                    if(reponse[0]*1>0){
+
+                        var field_name_arr = input_field_name.split("_");
+
+                        $("#"+input_field_name).val('');
+
+                        alert('Duplicate '+field_name_arr[0]+' '+field_name_arr[1]+' found');
+
+                        return false;
+                    }
+                    else{
+
+                        return true;
+                    }
                 }
             }
-        }
+        });
     }
 
     function check_mobile_number(value){
@@ -755,17 +756,19 @@
 
     function check_session_status(){
 
-        http.open("GET","{{route('admin.check.session')}}",true);
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "{{route('admin.check.session')}}",
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "text",
+            success: function (response) {
 
-        http.onreadystatechange = function (){
-
-            if (http.readyState === 4 && http.status === 200) {
-
-                var reponse=trim(http.responseText);
+                var reponse=trim(response);
 
                 if(reponse=='Session Expire'){
 
-                    alert(http.responseText);
+                    alert(reponse);
 
                     location.replace('<?php echo url('/dashboard/logout');?>');
                 }
@@ -774,9 +777,7 @@
                     $('meta[name="csrf-token"]').attr('content', reponse);
                 }
             }
-        };
-
-        http.send();
+        });
     }
 
     check_session_status();
@@ -791,17 +792,19 @@
 
             update_session_status = 1;
 
-            http.open("GET","{{route('admin.update.session')}}",true);
+            $.ajax({
+                async: false,
+                type: "GET",
+                url: "{{route('admin.update.session')}}",
+                contentType: "application/x-www-form-urlencoded",
+                dataType: "text",
+                success: function (response) {
 
-            http.onreadystatechange = function (){
-
-                if (http.readyState === 4 && http.status === 200) {
-
-                    var reponse=trim(http.responseText);
+                    var reponse=trim(response);
 
                     if(reponse=='Session Expire'){
 
-                        alert(http.responseText);
+                        alert(reponse);
 
                         location.replace('<?php echo url('/dashboard/logout');?>');
                     }
@@ -810,9 +813,7 @@
                         $('meta[name="csrf-token"]').attr('content', reponse);
                     }
                 }
-            };
-
-            http.send();
+            });
 
             setTimeout(function () {
                 update_session_status = 0;
@@ -821,7 +822,19 @@
     }
 
     document.addEventListener('mousemove', update_session);
-    document.addEventListener('keydown', update_session);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('keydown', function (event) {
+            update_session(event);
+        });
+
+        document.addEventListener('click', function (event) {
+            // Check if the click was not triggered by a keyboard event
+            //if (!event.key) {
+                update_session(event);
+            //}
+        });
+    });
 
 </script>
 

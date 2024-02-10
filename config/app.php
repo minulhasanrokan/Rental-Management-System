@@ -20,7 +20,7 @@ return [
 
 
     // session name
-    'app_session_name' => env('APP_SESSION_NAME', 'rental'),
+    'app_session_name' => 'rental',
 
     // encription method name
     'app_encrypt_method' => env('APP_ENCRIPTION_METHOD', 'AES-256-CBC'),
