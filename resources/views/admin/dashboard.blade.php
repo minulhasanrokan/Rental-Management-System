@@ -699,11 +699,27 @@
                     </div>
                     <!-- /.footer -->
                 </div>
-                <!-- /.card -->
-                <!-- my_notice -->
-                    @include('admin.dashboard.my_notice')
+                <!-- /.card --> 
+            </div>
+            <div class="col-md-4">
+                <!-- notice -->
                     @include('admin.dashboard.notice')
-                <!-- /.my_notice -->
+                <!-- /.notice -->
+            </div>
+            <div class="col-md-4">
+                <!-- my notice -->
+                    @include('admin.dashboard.my_notice')
+                <!-- /.my notice -->
+            </div>
+            <div class="col-md-4">
+                <!-- complain -->
+                    @include('admin.dashboard.complain')
+                <!-- /.complain -->
+            </div>
+            <div class="col-md-4">
+                <!-- my complain -->
+                    @include('admin.dashboard.my_complain')
+                <!-- /.my complain -->
             </div>
             <!-- /.col -->
         </div>

@@ -6,7 +6,7 @@
         $title = '';
         $icon = '';
 
-        if($admin_status!=1){
+        if($admin_status==1){
 
             $route_name = route('notice_manage.manage.view');
 
