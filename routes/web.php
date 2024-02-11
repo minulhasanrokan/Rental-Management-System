@@ -30,6 +30,7 @@ use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\SmsAlertController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\MaintenanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -642,4 +643,10 @@ Route::controller(ReportController::class)->group(function(){
 
     Route::get('/dashboard/report/user-activity','user_activity_report_page')->name('report.system_report.user_activity_report')->middleware(['checkroute']);
     Route::post('/dashboard/report/user-activity','user_activity_report')->name('report.system_report.user_activity_report')->middleware(['checkroute']);
+});
+
+Route::controller(MaintenanceController::class)->group(function(){
+
+    Route::get('/dashboard/maintenance-add','maintenance_add_page')->name('maintenance.manage.add')->middleware(['checkroute']);
+    Route::post('/dashboard/maintenance-add','maintenance_store')->name('maintenance.manage.add')->middleware(['checkroute']);
 });

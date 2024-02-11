@@ -32,7 +32,7 @@
                                             <div class="col-md-12">
                                                 <fieldset class="scheduler-border">
                                                     <legend class="scheduler-border">
-                                                        <label class="control-label input-label" for="g_id_checkbox_{{$i}}">{{$right_group['g_name']}} </label>
+                                                        <label class="control-label input-label" for="g_id_checkbox_{{$i}}">{{$right_group['g_name']}} <i class="fa {{$right_group['g_icon']}}"></i></label>
                                                         <input type="checkbox" value="0" id="g_id_checkbox_{{$i}}" name="g_id_checkbox_{{$i}}" onclick="select_all_group_right({{$i}});" />
                                                         <input type="hidden" id="g_id_{{$i}}" name="g_id_{{$i}}" value="{{$right_group['g_id']}}" />
                                                     </legend>
@@ -47,10 +47,10 @@
                                                                     $j++;
 
                                                         @endphp     
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-md-4">
                                                                         <div class="form-group">
                                                                             <h4>
-                                                                                <label class="control-label input-label" for="c_id_checkbox_{{$i}}_{{$j}}">{{$right_cat['c_name']}} </label>
+                                                                                <label class="control-label input-label" for="c_id_checkbox_{{$i}}_{{$j}}">{{$right_cat['c_name']}} <i class="fa {{$right_cat['c_icon']}}"></i></label>
                                                                                 <input type="checkbox" value="0" id="c_id_checkbox_{{$i}}_{{$j}}" name="c_id_checkbox_{{$i}}_{{$j}}" onclick="select_all_cat_right({{$i}},{{$j}});" />
                                                                                 <input type="hidden" id="c_id_{{$i}}_{{$j}}" name="c_id_{{$i}}_{{$j}}" value="{{$right_cat['c_id']}}" />
                                                                             </h5>
