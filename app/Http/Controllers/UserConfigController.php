@@ -161,7 +161,7 @@ class UserConfigController extends Controller
 
         if($data==true){
 
-            $status = $this->common->update_user_session_time($data->session_check_time,$data->session_check_time);
+            $status = $this->common->update_user_session_time($data->session_time,$data->session_check_time);
 
             if($status==1){
 

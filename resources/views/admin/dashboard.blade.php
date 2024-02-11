@@ -701,26 +701,24 @@
                 </div>
                 <!-- /.card --> 
             </div>
-            <div class="col-md-4">
-                <!-- notice -->
-                    @include('admin.dashboard.notice')
-                <!-- /.notice -->
-            </div>
-            <div class="col-md-4">
-                <!-- my notice -->
-                    @include('admin.dashboard.my_notice')
-                <!-- /.my notice -->
-            </div>
-            <div class="col-md-4">
-                <!-- complain -->
-                    @include('admin.dashboard.complain')
-                <!-- /.complain -->
-            </div>
-            <div class="col-md-4">
-                <!-- my complain -->
-                    @include('admin.dashboard.my_complain')
-                <!-- /.my complain -->
-            </div>
+            <!-- notice -->
+                @include('admin.dashboard.notice')
+            <!-- /.notice -->
+            <!-- my notice -->
+                @include('admin.dashboard.my_notice')
+            <!-- /.my notice -->
+            <!-- complain -->
+                @include('admin.dashboard.complain')
+            <!-- /.complain -->
+            <!-- my complain -->
+                @include('admin.dashboard.my_complain')
+            <!-- /.my complain -->
+            <!-- my visitor -->
+                @include('admin.dashboard.visitor')
+            <!-- /.my visitor -->
+            <!-- my my_visitor -->
+                @include('admin.dashboard.my_visitor')
+            <!-- /.my my_visitor -->
             <!-- /.col -->
         </div>
         <!-- /.row -->
