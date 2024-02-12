@@ -106,6 +106,8 @@ class DashboardController extends Controller
         }
         else{
 
+            $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
             $user_right_data = DB::table('right_details')
                 ->join('user_rights', 'right_details.id', '=', 'user_rights.r_id')
                 ->join('right_categories', 'right_categories.id', '=', 'right_details.cat_id')

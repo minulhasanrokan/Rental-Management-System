@@ -647,6 +647,25 @@ Route::controller(ReportController::class)->group(function(){
 
 Route::controller(MaintenanceController::class)->group(function(){
 
+    // reference cost........
+    Route::get('/dashboard/reference-cost-add','reference_cost_add_page')->name('reference_data.cost.add')->middleware(['checkroute']);
+    Route::post('/dashboard/reference-cost-add','reference_cost_store')->name('reference_data.cost.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/reference-cost-edit','reference_cost_edit_page')->name('reference_data.cost.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/reference-cost-edit','reference_cost_grid')->name('reference_data.cost.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/reference-cost-edit/{id?}','reference_cost_single_edit_page')->name('reference_data.cost.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/reference-cost-edit/{id?}','reference_cost_update')->name('reference_data.cost.edit')->middleware(['checkroute']);
+
+    Route::get('/dashboard/reference-cost-view','reference_cost_view_page')->name('reference_data.cost.view')->middleware(['checkroute']);
+    Route::post('/dashboard/reference-cost-view','reference_cost_grid')->name('reference_data.cost.view')->middleware(['checkroute']);
+    Route::get('/dashboard/reference-cost-view/{id?}','reference_cost_single_view_page')->name('reference_data.cost.view')->middleware(['checkroute']);
+
+    Route::get('/dashboard/reference-cost-delete','reference_cost_delete_page')->name('reference_data.cost.delete')->middleware(['checkroute']);
+    Route::post('/dashboard/reference-cost-delete','reference_cost_grid')->name('reference_data.cost.delete')->middleware(['checkroute']);
+    Route::get('/dashboard/reference-cost-delete/{id?}','reference_cost_delete')->name('reference_data.cost.delete')->middleware(['checkroute']);
+
+
+
     Route::get('/dashboard/maintenance-add','maintenance_add_page')->name('maintenance.manage.add')->middleware(['checkroute']);
     Route::post('/dashboard/maintenance-add','maintenance_store')->name('maintenance.manage.add')->middleware(['checkroute']);
 });
