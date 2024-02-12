@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('reference_cost_id')->nullable();
             $table->decimal('cost', 10, 2)->default(0.00);
             $table->date('cost_date')->nullable();
+            $table->string('cost_file')->nullable();
             $table->integer('add_by')->nullable();
             $table->integer('edit_by')->nullable();
             $table->integer('delete_by')->nullable();

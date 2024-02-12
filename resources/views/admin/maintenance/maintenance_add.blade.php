@@ -66,6 +66,14 @@
                                     <div class="input-error" style="display:none; color: red;" id="cost_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="cost_file">Cost File</label>
+                                    <input type="file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf, image/*" class="form-control" id="cost_file" name="cost_file">
+                                    <input type="hidden" name="hidden_cost_file" id="hidden_cost_file" value="">
+                                    <div class="input-error" style="display:none; color: red;" id="cost_file_error" style="display: inline-block; width:100%; color: red;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -85,7 +93,7 @@
 
     function save_cost_data(){
 
-        if( form_validation('cost_date*building_id*level_id*unit_id*reference_cost_id*cost','Cost Date*Building Name*Level Name*Unit Name*Unit Name*Cost Reference*Cost')==false ){
+        if( form_validation('cost_date*building_id*level_id*unit_id*reference_cost_id*cost*cost_file','Cost Date*Building Name*Level Name*Unit Name*Cost Reference*Cost*Cost File')==false ){
 
             return false;
         }
@@ -99,7 +107,11 @@
 
         var token = $('meta[name="csrf-token"]').attr('content');
 
+        var cost_file = $('#cost_file')[0].files;
+
         var form_data = new FormData();
+
+        form_data.append('cost_file',cost_file[0]);
 
         form_data.append("cost_date", cost_date);
         form_data.append("building_id", building_id);

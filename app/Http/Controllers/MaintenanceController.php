@@ -658,6 +658,19 @@ class MaintenanceController extends Controller
         $data->add_by = $user_id;
         $data->created_at = now();
 
+        if ($request->hasFile('cost_file')) {
+
+            $file = $request->file('cost_file');
+
+            $extension = $file->getClientOriginalExtension();
+
+            $fileName = 'cost_file_'.time().'.'.$extension;
+
+            $file->move('uploads/cost_file/', $fileName);
+
+            $data->cost_file = $fileName;
+        }
+
         $data->save();
 
         if($data==true){
