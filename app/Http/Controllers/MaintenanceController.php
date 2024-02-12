@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\ReferenceCost;
+use App\Models\MaintenanceCost;
 use DB;
 
 class MaintenanceController extends Controller
@@ -597,5 +598,104 @@ class MaintenanceController extends Controller
 
             return view('admin.maintenance.maintenance_add_master',compact('menu_data','system_data'));
         }
+    }
+
+    public function maintenance_store (Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'cost_date' => 'required',
+            'building_id' => 'required',
+            'level_id' => 'required',
+            'unit_id' => 'required',
+            'reference_cost_id' => 'required',
+            'cost' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
+        $owner_data = $this->common->get_owner_data_by_unit($request->building_id,$request->level_id,$request->unit_id);
+
+        if(empty($owner_data)){
+
+            $notification = array(
+                'message'=> "Building Owner Not Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        DB::beginTransaction();
+
+        $data = new MaintenanceCost;
+
+        $data->cost_date = $request->cost_date;
+        $data->building_id = $request->building_id;
+        $data->level_id = $request->level_id;
+        $data->unit_id = $request->unit_id;
+        $data->reference_cost_id = $request->reference_cost_id;
+        $data->owner_id = $owner_data->owner_id;
+        $data->cost = $request->cost;
+        $data->add_by = $user_id;
+        $data->created_at = now();
+
+        $data->save();
+
+        if($data==true){
+
+            $status = $this->common->add_user_activity_history('maintenance_costs',$data->id,'Add Maintenance Costs Details');
+
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Maintenance Costs Details Created Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "Maintenance Costs Details Does Not Created Successfully",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
     }
 }

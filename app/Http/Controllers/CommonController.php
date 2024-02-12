@@ -829,6 +829,19 @@ class CommonController extends Controller
         return $parameter_data;
     }
 
+    public function get_owner_data_by_unit($building_id=null,$level_id=null,$unit_id=null){
+
+        $owner_data = DB::table('tag_owners  as a')
+            ->select('a.*')
+            ->where('a.status',1)
+            ->where('a.building_id',$building_id)
+            ->where('a.level_id',$level_id)
+            ->where('a.unit_id',$unit_id)
+            ->first();
+
+        return $owner_data;
+    }
+
     public function get_user_config_data(){
 
         $data = UserConfig::where('delete_status',0)
