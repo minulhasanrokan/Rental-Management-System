@@ -18,7 +18,12 @@ class LoginCheck
 
         $user_session_data = session()->all();
 
-        $this->check_session($user_session_data);
+        $status = $this->check_session($user_session_data);
+
+        if($status==0){
+
+            $user_session_data = session()->all();
+        }
 
         if(isset($user_session_data[config('app.app_session_name')])){
 
@@ -42,6 +47,12 @@ class LoginCheck
 
                 session()->flush();
                 //session()->regenerate();
+
+                return 0;
+            }
+            else{
+
+                return 1;
             }
         }
     }
