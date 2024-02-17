@@ -4,12 +4,15 @@
     <div class="container-fluid" style="padding-top: 20px !important;">
         <!-- Info boxes -->
         <div class="row">
-            <div class="col-12 col-sm-6 col-md-3">
+            <!-- my my_visitor -->
+                @include('admin.dashboard.user')
+            <!-- /.my my_visitor -->
+            <div class="col-6 col-sm-3 col-md-2">
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">CPU Traffic</span>
-                        <span class="info-box-number">10<small>%</small></span>
+                        <span class="info-box-text">Total User</span>
+                        <span class="info-box-number">10</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>

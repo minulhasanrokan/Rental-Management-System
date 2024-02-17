@@ -26,13 +26,15 @@
             $route_name = '';
             $title = '';
             $icon = '';
+            $action_name = '';
 
             if($admin_status==1){
 
                 $route_name = route('visitor_management.my_visitor.view');
+                $action_name = 'visitor_management.my_visitor.view';
 
-                $title  = $dash_board_right_arr['r_title']['visitor_management']['visitor_management.my_visitor']['visitor_management.my_visitor.view'];
-                $icon   = $dash_board_right_arr['r_icon']['visitor_management']['visitor_management.my_visitor']['visitor_management.my_visitor.view'];
+                $title  = $dash_board_right_arr['r_title']['visitor_management']['visitor_management.my_visitor'][$action_name];
+                $icon   = $dash_board_right_arr['r_icon']['visitor_management']['visitor_management.my_visitor'][$action_name];
             }
             else{
 
@@ -55,7 +57,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{$dash_board_right_arr['r_title']['visitor_management']['visitor_management.my_visitor']['visitor_management.my_visitor.view']}}</h3>
+                    <h3 class="card-title">{{$dash_board_right_arr['r_title']['visitor_management']['visitor_management.my_visitor'][$action_name]}}</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
@@ -66,8 +68,8 @@
                                 {{substr($visitors->visitor_name,0,40)}}.....
                             </div>
                             <div class="product-info">
-                                <a href="#" onclick="get_new_page('{{$route_name}}','{{$visitors->visitor_name}}','{{$common->encrypt_data($visitors->id)}}','{{$dash_board_right_arr['r_title']['visitor_management']['visitor_management.my_visitor']['visitor_management.my_visitor.view']}}');" class="product-title">
-                                    <span class="badge badge-warning float-right"><i class="nav-icon {{$dash_board_right_arr['r_icon']['visitor_management']['visitor_management.my_visitor']['visitor_management.my_visitor.view']}}"></i></span>
+                                <a href="#" onclick="get_new_page('{{$route_name}}','{{$visitors->visitor_name}}','{{$common->encrypt_data($visitors->id)}}','{{$dash_board_right_arr['r_title']['visitor_management']['visitor_management.my_visitor'][$action_name]}}');" class="product-title">
+                                    <span class="badge badge-warning float-right"><i class="nav-icon {{$dash_board_right_arr['r_icon']['visitor_management']['visitor_management.my_visitor'][$action_name]}}"></i></span>
                                 </a>
                             </div>
                         </li>
@@ -76,7 +78,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer text-center">
-                    <a href="#" onclick="get_new_page('{{$route_name}}','{{$dash_board_right_arr['r_title']['visitor_management']['visitor_management.my_visitor']['visitor_management.my_visitor.view']}}','','');" class="uppercase">{{$dash_board_right_arr['r_title']['visitor_management']['visitor_management.my_visitor']['visitor_management.my_visitor.view']}}</a>
+                    <a href="#" onclick="get_new_page('{{$route_name}}','{{$dash_board_right_arr['r_title']['visitor_management']['visitor_management.my_visitor'][$action_name]}}','','');" class="uppercase">{{$dash_board_right_arr['r_title']['visitor_management']['visitor_management.my_visitor'][$action_name]}}</a>
                 </div>
                 <!-- /.card-footer -->
             </div>

@@ -135,39 +135,16 @@ class DashboardController extends Controller
 
             foreach($user_right_data as $data){
 
-                $right_group_arr[$data->g_id]['g_id'] = $data->g_id;
-                $right_group_arr[$data->g_id]['g_name'] = $data->g_name;
-                $right_group_arr[$data->g_id]['g_action_name'] = $data->g_action_name;
-                $right_group_arr[$data->g_id]['g_details'] = $data->g_details;
-                $right_group_arr[$data->g_id]['g_title'] = $data->g_title;
-                $right_group_arr[$data->g_id]['g_short_order'] = $data->g_short_order;
-                $right_group_arr[$data->g_id]['g_icon'] = $data->g_icon;
-
-                $right_cat_arr[$data->g_id][$data->c_id]['c_id'] = $data->c_id;
-                $right_cat_arr[$data->g_id][$data->c_id]['c_name'] = $data->c_name;
-                $right_cat_arr[$data->g_id][$data->c_id]['c_title'] = $data->c_title;
-                $right_cat_arr[$data->g_id][$data->c_id]['c_action_name'] = $data->c_action_name;
-                $right_cat_arr[$data->g_id][$data->c_id]['c_details'] = $data->c_details;
-                $right_cat_arr[$data->g_id][$data->c_id]['c_short_order'] = $data->c_short_order;
-                $right_cat_arr[$data->g_id][$data->c_id]['c_icon'] = $data->c_icon;
-
-                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_id'] = $data->r_id;
-                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_name'] = $data->r_name;
-                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_title'] = $data->r_title;
-                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_action_name'] = $data->r_action_name;
-                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_route_name'] = $data->r_route_name;
-                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_details'] = $data->r_details;
-                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_short_order'] = $data->r_short_order;
-                $right_arr[$data->g_id][$data->c_id][$data->r_id]['r_icon'] = $data->r_icon;
-
                 $dash_board_right_arr['r_route_name'][$data->g_action_name][$data->c_action_name][$data->r_route_name] = $data->r_route_name;
                 $dash_board_right_arr['r_title'][$data->g_action_name][$data->c_action_name][$data->r_route_name] = $data->r_title;
                 $dash_board_right_arr['r_icon'][$data->g_action_name][$data->c_action_name][$data->r_route_name] = $data->r_icon;
+
+                $right_group_icon_arr[$data->g_action_name]['g_icon'] = $data->g_icon;
             }
         }
 
         $common = $this->common;
 
-       return view('admin.dashboard',compact('system_data','dash_board_right_arr','admin_status','common','user_session_data'));
+       return view('admin.dashboard',compact('system_data','dash_board_right_arr','admin_status','common','user_session_data','right_group_icon_arr'));
     }
 }

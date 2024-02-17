@@ -17,13 +17,15 @@
             $route_name = '';
             $title = '';
             $icon = '';
+            $action_name = '';
 
             if($admin_status==1){
 
                 $route_name = route('notice_manage.manage.view');
+                $action_name = 'notice_manage.manage.view';
 
-                $title  = $dash_board_right_arr['r_title']['notice_manage']['notice_manage.manage']['notice_manage.manage.view'];
-                $icon   = $dash_board_right_arr['r_icon']['notice_manage']['notice_manage.manage']['notice_manage.manage.view'];
+                $title  = $dash_board_right_arr['r_title']['notice_manage']['notice_manage.manage'][$action_name];
+                $icon   = $dash_board_right_arr['r_icon']['notice_manage']['notice_manage.manage'][$action_name];
             }
             else{
 
@@ -46,7 +48,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{$dash_board_right_arr['r_title']['notice_manage']['notice_manage.manage']['notice_manage.manage.view']}}</h3>
+                    <h3 class="card-title">{{$dash_board_right_arr['r_title']['notice_manage']['notice_manage.manage'][$action_name]}}</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
@@ -57,8 +59,8 @@
                                 {{substr($notice->notice_title,0,40)}}.....
                             </div>
                             <div class="product-info">
-                                <a href="#" onclick="get_new_page('{{$route_name}}','{{$notice->notice_title}}','{{$common->encrypt_data($notice->id)}}','{{$dash_board_right_arr['r_title']['notice_manage']['notice_manage.manage']['notice_manage.manage.view']}}');" class="product-title">
-                                    <span class="badge badge-warning float-right"><i class="nav-icon {{$dash_board_right_arr['r_icon']['notice_manage']['notice_manage.manage']['notice_manage.manage.view']}}"></i></span>
+                                <a href="#" onclick="get_new_page('{{$route_name}}','{{$notice->notice_title}}','{{$common->encrypt_data($notice->id)}}','{{$dash_board_right_arr['r_title']['notice_manage']['notice_manage.manage'][$action_name]}}');" class="product-title">
+                                    <span class="badge badge-warning float-right"><i class="nav-icon {{$dash_board_right_arr['r_icon']['notice_manage']['notice_manage.manage'][$action_name]}}"></i></span>
                                 </a>
                             </div>
                         </li>
@@ -67,7 +69,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer text-center">
-                    <a href="#" onclick="get_new_page('{{$route_name}}','{{$dash_board_right_arr['r_title']['notice_manage']['notice_manage.manage']['notice_manage.manage.view']}}','','');" class="uppercase">{{$dash_board_right_arr['r_title']['notice_manage']['notice_manage.manage']['notice_manage.manage.view']}}</a>
+                    <a href="#" onclick="get_new_page('{{$route_name}}','{{$dash_board_right_arr['r_title']['notice_manage']['notice_manage.manage'][$action_name]}}','','');" class="uppercase">{{$dash_board_right_arr['r_title']['notice_manage']['notice_manage.manage'][$action_name]}}</a>
                 </div>
                 <!-- /.card-footer -->
             </div>
