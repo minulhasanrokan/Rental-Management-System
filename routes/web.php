@@ -666,6 +666,10 @@ Route::controller(MaintenanceController::class)->group(function(){
 
 
 
-    Route::get('/dashboard/maintenance-add','maintenance_add_page')->name('maintenance.manage.add')->middleware(['checkroute']);
-    Route::post('/dashboard/maintenance-add','maintenance_store')->name('maintenance.manage.add')->middleware(['checkroute']);
+    Route::get('/dashboard/maintenance-cost-add','maintenance_add_page')->name('maintenance.manage.add')->middleware(['checkroute']);
+    Route::post('/dashboard/maintenance-cost-add','maintenance_store')->name('maintenance.manage.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/maintenance-cost-view','maintenance_cost_view_page')->name('maintenance.manage.view')->middleware(['checkroute']);
+    Route::post('/dashboard/maintenance-cost-view','maintenance_cost_grid')->name('maintenance.manage.view')->middleware(['checkroute']);
+    Route::get('/dashboard/maintenance-cost-view/{id?}','maintenance_cost_single_view_page')->name('maintenance.manage.view')->middleware(['checkroute']);
 });
