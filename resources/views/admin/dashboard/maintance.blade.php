@@ -42,7 +42,7 @@
             <div class="info-box">
                 <span class="info-box-icon bg-info elevation-1"><i class="{{$right_group_icon_arr['maintenance']['maintenance.manage']['c_icon']}}"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Rent Maintenance</span>
+                    <span class="info-box-text">Maintenance Cost</span>
                     <span class="info-box-number">{{$cost->cost}}</span>
                 </div>
                 <!-- /.info-box-content -->

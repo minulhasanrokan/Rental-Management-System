@@ -4,86 +4,36 @@
     <div class="container-fluid" style="padding-top: 20px !important;">
         <!-- Info boxes -->
         <div class="row">
-            <!-- my user -->
+            <!-- user -->
                 @include('admin.dashboard.user')
-            <!-- /.my user -->
-            <!-- my tenant -->
+            <!-- /.user -->
+            <!-- tenant -->
                 @include('admin.dashboard.tenant')
-            <!-- /.my tenant -->
-            <!-- my owner -->
+            <!-- /.tenant -->
+            <!-- owner -->
                 @include('admin.dashboard.owner')
-            <!-- /.my owner -->
-            <!-- my employee -->
+            <!-- /.owner -->
+            <!-- employee -->
                 @include('admin.dashboard.employee')
-            <!-- /.my employee -->
-            <!-- my building -->
+            <!-- /.employee -->
+            <!-- building -->
                 @include('admin.dashboard.building')
-            <!-- /.my building -->
-            <!-- my level -->
+            <!-- /.building -->
+            <!-- level -->
                 @include('admin.dashboard.level')
-            <!-- /.my level -->
-            <!-- my unit -->
+            <!-- /.level -->
+            <!-- unit -->
                 @include('admin.dashboard.unit')
-            <!-- /.my unit -->
-            <!-- my rent -->
+            <!-- /.unit -->
+            <!-- rent -->
                 @include('admin.dashboard.rent')
-            <!-- /.my rent -->
-            <!-- my rent_bill -->
+            <!-- /.rent -->
+            <!-- rent_bill -->
                 @include('admin.dashboard.rent_bill')
-            <!-- /.my rent_bill -->
-            <!-- my maintance -->
+            <!-- /.rent_bill -->
+            <!-- maintance -->
                 @include('admin.dashboard.maintance')
-            <!-- /.my maintance -->
-            <div class="col-6 col-sm-3 col-md-2">
-                <div class="info-box">
-                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Total User</span>
-                        <span class="info-box-number">10</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Likes</span>
-                        <span class="info-box-number">41,410</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <!-- fix for small devices only -->
-            <div class="clearfix hidden-md-up"></div>
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Sales</span>
-                        <span class="info-box-number">760</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">New Members</span>
-                        <span class="info-box-number">2,000</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
+            <!-- /.maintance -->
         </div>
         <!-- /.row -->
         <div class="row">
