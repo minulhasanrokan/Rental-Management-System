@@ -139,12 +139,14 @@ class DashboardController extends Controller
                 $dash_board_right_arr['r_title'][$data->g_action_name][$data->c_action_name][$data->r_route_name] = $data->r_title;
                 $dash_board_right_arr['r_icon'][$data->g_action_name][$data->c_action_name][$data->r_route_name] = $data->r_icon;
 
-                $right_group_icon_arr[$data->g_action_name]['g_icon'] = $data->g_icon;
+                $right_group_icon_arr[$data->g_action_name][$data->c_action_name]['c_icon'] = $data->c_icon;
             }
         }
 
         $common = $this->common;
 
-       return view('admin.dashboard',compact('system_data','dash_board_right_arr','admin_status','common','user_session_data','right_group_icon_arr'));
+        $user_config_data = $this->common->get_user_config_data();
+
+       return view('admin.dashboard',compact('system_data','dash_board_right_arr','admin_status','common','user_session_data','right_group_icon_arr','user_config_data'));
     }
 }

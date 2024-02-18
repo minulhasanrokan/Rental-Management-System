@@ -4,9 +4,18 @@
     <div class="container-fluid" style="padding-top: 20px !important;">
         <!-- Info boxes -->
         <div class="row">
-            <!-- my my_visitor -->
+            <!-- my user -->
                 @include('admin.dashboard.user')
-            <!-- /.my my_visitor -->
+            <!-- /.my user -->
+            <!-- my tenant -->
+                @include('admin.dashboard.tenant')
+            <!-- /.my tenant -->
+            <!-- my owner -->
+                @include('admin.dashboard.owner')
+            <!-- /.my owner -->
+            <!-- my employee -->
+                @include('admin.dashboard.employee')
+            <!-- /.my employee -->
             <div class="col-6 col-sm-3 col-md-2">
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
