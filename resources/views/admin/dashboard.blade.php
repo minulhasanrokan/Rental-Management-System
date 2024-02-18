@@ -31,6 +31,9 @@
             <!-- my rent_bill -->
                 @include('admin.dashboard.rent_bill')
             <!-- /.my rent_bill -->
+            <!-- my maintance -->
+                @include('admin.dashboard.maintance')
+            <!-- /.my maintance -->
             <div class="col-6 col-sm-3 col-md-2">
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
