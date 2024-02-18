@@ -25,6 +25,12 @@
             <!-- my unit -->
                 @include('admin.dashboard.unit')
             <!-- /.my unit -->
+            <!-- my rent -->
+                @include('admin.dashboard.rent')
+            <!-- /.my rent -->
+            <!-- my rent_bill -->
+                @include('admin.dashboard.rent_bill')
+            <!-- /.my rent_bill -->
             <div class="col-6 col-sm-3 col-md-2">
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
