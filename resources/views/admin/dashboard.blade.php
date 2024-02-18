@@ -16,6 +16,15 @@
             <!-- my employee -->
                 @include('admin.dashboard.employee')
             <!-- /.my employee -->
+            <!-- my building -->
+                @include('admin.dashboard.building')
+            <!-- /.my building -->
+            <!-- my level -->
+                @include('admin.dashboard.level')
+            <!-- /.my level -->
+            <!-- my unit -->
+                @include('admin.dashboard.unit')
+            <!-- /.my unit -->
             <div class="col-6 col-sm-3 col-md-2">
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
