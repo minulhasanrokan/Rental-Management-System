@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\UserGroup;
 use App\Models\UserRight;
+use App\Models\Salary;
 use DB;
 
 class EmployeeController extends Controller
@@ -976,6 +977,116 @@ class EmployeeController extends Controller
 
             $notification = array(
                 'message'=> "Not Data Found!!!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
+    }
+
+    public function salary_add_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.salary.add',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.salary.add_master',compact('menu_data','system_data'));
+        }
+    }
+
+    public function salary_store(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'employee_id'       => 'required',
+            'salary'         => 'required'
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
+        $duplicate_status_1 = $this->common->get_duplicate_value('employee_id','salaries', $request->employee_id, 0);
+
+        if($duplicate_status_1>0){
+
+            $notification = array(
+                'message'=> "Duplicate Employee Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        DB::beginTransaction();
+
+        $data = new Salary;
+
+        $now = now();
+
+        $data->employee_id = $request->employee_id;
+        $data->salary = $request->salary;
+        $data->add_by = $user_id;
+        $data->created_at = $now;
+
+        $data->save();
+
+        if($data==true){
+
+            $status = $this->common->add_user_activity_history('salaries',$data->id,'Add Salary Details');
+
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Building Details Created Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                 $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "Salary Details Does Not Created Successfully",
                 'alert_type'=>'warning',
                 'csrf_token' => csrf_token()
             );

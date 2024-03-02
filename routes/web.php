@@ -190,6 +190,13 @@ Route::controller(EmployeeController::class)->group(function(){
     Route::get('/dashboard/employee-right/{id?}','employee_right_setup_page')->name('user_management.employee.right')->middleware(['checkroute']);
     Route::post('/dashboard/employee-right/{id?}','employee_right_store')->name('user_management.employee.right')->middleware(['checkroute']);
 
+    Route::get('/dashboard/salary-add','salary_add_page')->name('employee.salary.add')->middleware(['checkroute']);
+    Route::post('/dashboard/salary-add','salary_store')->name('employee.salary.add')->middleware(['checkroute']);
+
+    Route::get('/dashboard/salary-view','employee_view_page')->name('employee.salary.view')->middleware(['checkroute']);
+    Route::post('/dashboard/salary-view','employee_grid')->name('employee.salary.view')->middleware(['checkroute']);
+    Route::get('/dashboard/salary-view/{id?}','employee_single_view_page')->name('employee.salary.view')->middleware(['checkroute']);
+
 });
 
 Route::controller(OwnerController::class)->group(function(){
