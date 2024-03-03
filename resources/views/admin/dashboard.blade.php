@@ -34,6 +34,9 @@
             <!-- maintance -->
                 @include('admin.dashboard.maintance')
             <!-- /.maintance -->
+            <!-- salary -->
+                @include('admin.dashboard.salary')
+            <!-- /.salary -->
         </div>
         <!-- /.row -->
         <div class="row">
