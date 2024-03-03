@@ -1115,11 +1115,7 @@ class EmployeeController extends Controller
 
     public function salary_grid(Request $request){
 
-        $menu_data = $this->common->get_page_menu_grid('user_management.employee.add');
-
-        $user_config_data = $this->common->get_user_config_data();
-
-        $csrf_token = csrf_token();
+        $menu_data = $this->common->get_page_menu_grid('employee.salary.add');
 
         $draw = $request->draw;
         $row = $request->start;
@@ -1220,8 +1216,53 @@ class EmployeeController extends Controller
         $response['iTotalRecords'] = $total_records;
         $response['iTotalDisplayRecords'] = $total_records_with_filer;
         $response['aaData'] = $record_data;
-        $response['csrf_token'] = $csrf_token;
+        $response['csrf_token'] = csrf_token();
 
         echo json_encode($response);
+    }
+
+    public function salary_single_view_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
+
+        $salary_data = DB::table('salaries as a')
+            ->join('users as b', 'b.id', '=', 'a.employee_id')
+            ->select('a.id as salary_id', 'a.salary', 'b.*')
+            ->where('a.delete_status',0)
+            ->where('a.id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('employee.salary.add****employee.salary.view');
+
+        $header_status = $this->header_status;
+
+        if(empty($salary_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.salary.single_view',compact('menu_data','salary_data','user_right_data','encrypt_id'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.salary.single_view_master',compact('menu_data','salary_data','user_right_data','encrypt_id','system_data'));
+            }
+        }
     }
 }
