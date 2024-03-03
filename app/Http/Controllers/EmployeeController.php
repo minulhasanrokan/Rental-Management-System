@@ -1420,4 +1420,115 @@ class EmployeeController extends Controller
 
         return response()->json($notification);
     }
+
+    public function salary_delete_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.salary.delete',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.salary.delete_master',compact('menu_data','system_data'));
+        }
+    }
+
+    public function salary_delete($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
+
+        $notification = array();
+
+        $data = Salary::where('delete_status',0)
+            ->where('id',$id)
+            ->first();
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        if(empty($data)){
+
+            $notification = array(
+                'message'=> "Salary Data Not Found!!!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else if($data->employee_id==$user_id){
+
+            $notification = array(
+                'message'=> "You Can Not Delete Your Own Data!!!",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+        else{
+
+            DB::beginTransaction();
+
+            $data->delete_by = $user_id;
+            $data->delete_status = 1;
+            $data->deleted_at = now();
+
+            $data->save();
+
+            if($data==true){
+
+                $status = $this->common->add_user_activity_history('salaries',$data->id,'Delete Salary Details');
+
+                if($status==1){
+
+                    DB::commit();
+
+                    $notification = array(
+                        'message'=> "Salary Details Deleted Successfully",
+                        'alert_type'=>'success',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+                else{
+
+                    DB::rollBack();
+
+                    $notification = array(
+                        'message'=> "Something Went Wrong Try Again",
+                        'alert_type'=>'warning',
+                        'csrf_token' => csrf_token()
+                    );
+                }
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Salary Details Not Deleted Successfully",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+
+        $menu_data = $this->common->get_page_menu();
+
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.salary.delete_alert',compact('menu_data','notification'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.salary.delete_alert_master',compact('menu_data','notification','system_data'));
+        }
+    }
 }

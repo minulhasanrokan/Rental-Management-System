@@ -20,7 +20,7 @@
                                     <th width="200">Name</th>
                                     <th width="100">Salary</th>
                                     <th width="50">Status</th>
-                                    <th width="200">Action</th>
+                                    <th width="80">Action</th>
                                 </tr>
                             </thead>
                         </table>
