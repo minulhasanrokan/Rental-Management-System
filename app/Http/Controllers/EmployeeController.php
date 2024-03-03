@@ -1094,4 +1094,134 @@ class EmployeeController extends Controller
 
         return response()->json($notification);
     }
+
+    public function salary_view_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.salary.view',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.salary.view_master',compact('menu_data','system_data'));
+        }
+    }
+
+    public function salary_grid(Request $request){
+
+        $menu_data = $this->common->get_page_menu_grid('user_management.employee.add');
+
+        $user_config_data = $this->common->get_user_config_data();
+
+        $csrf_token = csrf_token();
+
+        $draw = $request->draw;
+        $row = $request->start;
+        $row_per_page  = $request->length;
+
+        $column_index  = $request->order[0]['column'];
+        $column_name = $request->columns[$column_index]['data'];
+
+        $column_ort_order = $request->order[0]['dir'];
+
+        $search_value  = trim($request->search['value']);
+
+        $total_data = array();
+        $filter_data = array();
+        $data = array();
+        $record_data = array();
+        $response = array();
+
+        if($search_value!=''){
+
+            $total_data = DB::table('salaries as a')
+                ->join('users as b', 'b.id', '=', 'a.employee_id')
+                ->select('a.id')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->get();
+
+            $filter_data = DB::table('salaries as a')
+                ->join('users as b', 'b.id', '=', 'a.employee_id')
+                ->select('a.id')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->where(function ($query) use ($search_value) {
+                    $query->where('a.salary','like',"%".$search_value."%")
+                        ->orWhere('b.name','like',"%".$search_value."%");
+                })
+                ->get();
+
+            $data = DB::table('salaries as a')
+                ->join('users as b', 'b.id', '=', 'a.employee_id')
+                ->select('a.id', 'a.salary', 'b.name', 'b.user_photo', 'a.status')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->where(function ($query) use ($search_value) {
+                    $query->where('a.salary','like',"%".$search_value."%")
+                        ->orWhere('b.name','like',"%".$search_value."%");
+                })
+                ->orderBy($column_name,$column_ort_order)
+                ->offset($row)
+                ->limit($row_per_page)
+                ->get();
+        }
+        else{
+
+            $filter_data = DB::table('salaries as a')
+                ->join('users as b', 'b.id', '=', 'a.employee_id')
+                ->select('a.id')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->get();
+
+            $data = DB::table('salaries as a')
+                ->join('users as b', 'b.id', '=', 'a.employee_id')
+                ->select('a.id', 'a.salary', 'b.name', 'b.user_photo', 'a.status')
+                ->where('a.delete_status',0)
+                ->where('b.delete_status',0)
+                ->orderBy($column_name,$column_ort_order)
+                ->offset($row)
+                ->limit($row_per_page)
+                ->get();
+
+            $total_data = $filter_data;
+        }
+
+        $sl = 0;
+
+        $sl_start = $row+1;
+
+        foreach($data as $value){
+
+            $record_data[$sl]['id'] = $value->id;
+            $record_data[$sl]['sl'] = $sl_start;
+            $record_data[$sl]['user_photo'] = $value->user_photo;
+            $record_data[$sl]['name'] = $value->name;
+            $record_data[$sl]['salary'] = $value->salary;
+            $record_data[$sl]['status'] = $value->status;
+            $record_data[$sl]['action'] = $this->common->encrypt_data($value->id);
+            $record_data[$sl]['menu_data'] = $menu_data;
+
+            $sl++;
+            $sl_start++;
+        }
+
+        $total_records = count($total_data);
+        $total_records_with_filer = count($filter_data);
+
+        $response['draw'] = $draw;
+        $response['iTotalRecords'] = $total_records;
+        $response['iTotalDisplayRecords'] = $total_records_with_filer;
+        $response['aaData'] = $record_data;
+        $response['csrf_token'] = $csrf_token;
+
+        echo json_encode($response);
+    }
 }
