@@ -171,8 +171,6 @@ class MaintenanceController extends Controller
 
         $menu_data = $this->common->get_page_menu_grid('reference_data.cost.add');
 
-        $csrf_token = csrf_token();
-
         $draw = $request->draw;
         $row = $request->start;
         $row_per_page  = $request->length;
@@ -262,7 +260,7 @@ class MaintenanceController extends Controller
         $response['iTotalRecords'] = $total_records;
         $response['iTotalDisplayRecords'] = $total_records_with_filer;
         $response['aaData'] = $record_data;
-        $response['csrf_token'] = $csrf_token;
+        $response['csrf_token'] = csrf_token();
 
         echo json_encode($response);
     }
@@ -738,8 +736,6 @@ class MaintenanceController extends Controller
 
         $user_config_data = $this->common->get_user_config_data();
 
-        $csrf_token = csrf_token();
-
         $draw = $request->draw;
         $row = $request->start;
         $row_per_page  = $request->length;
@@ -868,7 +864,7 @@ class MaintenanceController extends Controller
         $response['iTotalRecords'] = $total_records;
         $response['iTotalDisplayRecords'] = $total_records_with_filer;
         $response['aaData'] = $record_data;
-        $response['csrf_token'] = $csrf_token;
+        $response['csrf_token'] = csrf_token();
 
         echo json_encode($response);
     }

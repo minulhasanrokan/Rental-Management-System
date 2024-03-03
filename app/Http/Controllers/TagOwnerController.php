@@ -175,8 +175,6 @@ class TagOwnerController extends Controller
 
         $menu_data = $this->common->get_page_menu_grid('floor_management.tag_unit_owner.add****floor_management.tag_unit_owner.transfer_view');
 
-        $csrf_token = csrf_token();
-
         $draw = $request->draw;
         $row = $request->start;
         $row_per_page  = $request->length;
@@ -314,7 +312,7 @@ class TagOwnerController extends Controller
         $response['iTotalRecords'] = $total_records;
         $response['iTotalDisplayRecords'] = $total_records_with_filer;
         $response['aaData'] = $record_data;
-        $response['csrf_token'] = $csrf_token;
+        $response['csrf_token'] = csrf_token();
 
         echo json_encode($response);
     }
@@ -819,8 +817,6 @@ class TagOwnerController extends Controller
 
         $menu_data = $this->common->get_page_menu_grid('floor_management.tag_unit_owner.add****floor_management.tag_unit_owner.edit****floor_management.tag_unit_owner.delete****floor_management.tag_unit_owner.view****floor_management.tag_unit_owner.transfer');
 
-        $csrf_token = csrf_token();
-
         $draw = $request->draw;
         $row = $request->start;
         $row_per_page  = $request->length;
@@ -963,7 +959,7 @@ class TagOwnerController extends Controller
         $response['iTotalRecords'] = $total_records;
         $response['iTotalDisplayRecords'] = $total_records_with_filer;
         $response['aaData'] = $record_data;
-        $response['csrf_token'] = $csrf_token;
+        $response['csrf_token'] = csrf_token();
 
         echo json_encode($response);
     }

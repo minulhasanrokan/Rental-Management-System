@@ -181,8 +181,6 @@ class VisitorController extends Controller
 
         $user_config_data = $this->common->get_user_config_data();
 
-        $csrf_token = csrf_token();
-
         $draw = $request->draw;
         $row = $request->start;
         $row_per_page  = $request->length;
@@ -334,7 +332,7 @@ class VisitorController extends Controller
         $response['iTotalRecords'] = $total_records;
         $response['iTotalDisplayRecords'] = $total_records_with_filer;
         $response['aaData'] = $record_data;
-        $response['csrf_token'] = $csrf_token;
+        $response['csrf_token'] = csrf_token();
 
         echo json_encode($response);
     }
@@ -351,8 +349,6 @@ class VisitorController extends Controller
 
         $user_id = $user_session_data[config('app.app_session_name')]['id'];
 
-        $csrf_token = csrf_token();
-
         $draw = $request->draw;
         $row = $request->start;
         $row_per_page  = $request->length;
@@ -509,7 +505,7 @@ class VisitorController extends Controller
         $response['iTotalRecords'] = $total_records;
         $response['iTotalDisplayRecords'] = $total_records_with_filer;
         $response['aaData'] = $record_data;
-        $response['csrf_token'] = $csrf_token;
+        $response['csrf_token'] = csrf_token();
 
         echo json_encode($response);
     }

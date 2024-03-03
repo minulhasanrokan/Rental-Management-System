@@ -697,8 +697,6 @@ class ComplainController extends Controller
 
         $menu_data = $this->common->get_page_menu_grid('complain_management.manage.add');
 
-        $csrf_token = csrf_token();
-
         $draw = $request->draw;
         $row = $request->start;
         $row_per_page  = $request->length;
@@ -793,7 +791,7 @@ class ComplainController extends Controller
         $response['iTotalRecords'] = $total_records;
         $response['iTotalDisplayRecords'] = $total_records_with_filer;
         $response['aaData'] = $record_data;
-        $response['csrf_token'] = $csrf_token;
+        $response['csrf_token'] = csrf_token();
 
         echo json_encode($response);
     }
@@ -801,8 +799,6 @@ class ComplainController extends Controller
     public function my_complain_grid (Request $request){
 
         $menu_data = $this->common->get_page_menu_grid('complain_management.my_complain.add');
-
-        $csrf_token = csrf_token();
 
         $user_session_data = session()->all();
 
@@ -907,7 +903,7 @@ class ComplainController extends Controller
         $response['iTotalRecords'] = $total_records;
         $response['iTotalDisplayRecords'] = $total_records_with_filer;
         $response['aaData'] = $record_data;
-        $response['csrf_token'] = $csrf_token;
+        $response['csrf_token'] = csrf_token();
 
         echo json_encode($response);
     }
@@ -1020,8 +1016,6 @@ class ComplainController extends Controller
 
         $user_id = $user_session_data[config('app.app_session_name')]['id'];
 
-        $csrf_token = csrf_token();
-
         $draw = $request->draw;
         $row = $request->start;
         $row_per_page  = $request->length;
@@ -1121,7 +1115,7 @@ class ComplainController extends Controller
         $response['iTotalRecords'] = $total_records;
         $response['iTotalDisplayRecords'] = $total_records_with_filer;
         $response['aaData'] = $record_data;
-        $response['csrf_token'] = $csrf_token;
+        $response['csrf_token'] = csrf_token();
 
         echo json_encode($response);
     }
