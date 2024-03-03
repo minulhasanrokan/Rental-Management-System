@@ -197,6 +197,11 @@ Route::controller(EmployeeController::class)->group(function(){
     Route::post('/dashboard/salary-view','salary_grid')->name('employee.salary.view')->middleware(['checkroute']);
     Route::get('/dashboard/salary-view/{id?}','salary_single_view_page')->name('employee.salary.view')->middleware(['checkroute']);
 
+    Route::get('/dashboard/salary-edit','salary_edit_page')->name('employee.salary.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/salary-edit','salary_grid')->name('employee.salary.edit')->middleware(['checkroute']);
+    Route::get('/dashboard/salary-edit/{id?}','salary_single_edit_page')->name('employee.salary.edit')->middleware(['checkroute']);
+    Route::post('/dashboard/salary-edit/{id?}','salary_update')->name('employee.salary.edit')->middleware(['checkroute']);
+
 });
 
 Route::controller(OwnerController::class)->group(function(){

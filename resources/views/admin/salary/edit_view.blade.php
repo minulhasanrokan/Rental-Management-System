@@ -5,7 +5,7 @@
             <!-- general form elements -->
             <div class="card card-primary" style="padding-bottom:0px !important; margin: 0px !important;">
                 <div class="card-header">
-                    <h3 class="card-title">Add Salary Information</h3>
+                    <h3 class="card-title">Edit Salary Information</h3>
                 </div>
                 <div class="card-header" style="background-color: white;">
                     {!!$menu_data!!}
@@ -26,7 +26,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="salary">Salary <span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control text_boxes_numeric" id="salary" name="salary" placeholder="Enter Salary" required>
+                                    <input type="text" class="form-control text_boxes_numeric" id="salary" name="salary" placeholder="Enter Salary" value="{{$salary_data->salary}}" required>
                                     <div class="input-error" style="display:none; color: red;" id="salary_error" style="display: inline-block; width:100%; color: red;"></div>
                                 </div>
                             </div>
@@ -34,7 +34,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" style="float:right" onclick="save_salary_info_data();" class="btn btn-primary">Add Salary Information</button>
+                        <button type="button" style="float:right" onclick="save_salary_info_data();" class="btn btn-primary">Update Salary Information</button>
                     </div>
                 </form>
             </div>
@@ -63,11 +63,12 @@
 
         form_data.append("employee_id", employee_id);
         form_data.append("salary", salary);
+        form_data.append("update_id", '{{$salary_data->salary_id}}');
         form_data.append("_token", token);
 
         freeze_window(0);
 
-        http.open("POST","{{route('employee.salary.add')}}",true);
+        http.open("POST","{{route('employee.salary.edit',$salary_data->salary_id)}}",true); 
         http.setRequestHeader("X-CSRF-TOKEN",token);
         http.send(form_data);
         http.onreadystatechange = save_salary_info_data_response;
@@ -121,11 +122,6 @@
                         toastr.error(data.message);
                         break; 
                     }
-
-                    if(data.alert_type=='success'){
-
-                        document.getElementById("level_form").reset();
-                    }
                 }
 
                 // hide all input error.............
@@ -134,6 +130,6 @@
         }
     }
 
-    load_drop_down('users','id,name','employee_id','employee_id_container','Select Employee',0,1,'',0,'');
+    load_drop_down('users','id,name','employee_id','employee_id_container','Select Employee',0,1,'{{$salary_data->employee_id}}',0,'');
 
 </script>****{{csrf_token()}}

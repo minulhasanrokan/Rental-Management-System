@@ -1265,4 +1265,159 @@ class EmployeeController extends Controller
             }
         }
     }
+
+    public function salary_edit_page(){
+
+        $menu_data = $this->common->get_page_menu();
+
+        $header_status = $this->header_status;
+
+        if($header_status==1){
+
+            return view('admin.salary.edit',compact('menu_data'));
+        }
+        else{
+
+            $system_data = $this->common->get_system_data();
+
+            return view('admin.salary.edit_master',compact('menu_data','system_data'));
+        }
+    }
+
+    public function salary_single_edit_page($encrypt_id){
+
+        $id = $this->common->decrypt_data($encrypt_id);
+
+        $salary_data = DB::table('salaries as a')
+            ->join('users as b', 'b.id', '=', 'a.employee_id')
+            ->select('a.id as salary_id', 'a.salary','a.employee_id','b.*')
+            ->where('a.delete_status',0)
+            ->where('a.id',$id)
+            ->first();
+    
+        $menu_data = $this->common->get_page_menu();
+
+        $user_right_data = $this->common->get_page_menu_single_view('employee.salary.add****employee.salary.edit');
+
+        $header_status = $this->header_status;
+
+        if(empty($salary_data)){
+
+            if($header_status==1){
+
+                return view('admin.404',compact('menu_data','user_right_data'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.404_master',compact('menu_data','user_right_data','system_data'));
+            }
+        }
+        else{
+
+            if($header_status==1){
+
+                return view('admin.salary.edit_view',compact('menu_data','salary_data','user_right_data','encrypt_id'));
+            }
+            else{
+
+                $system_data = $this->common->get_system_data();
+
+                return view('admin.salary.edit_view_master',compact('menu_data','salary_data','user_right_data','encrypt_id','system_data'));
+            }
+        }
+    }
+
+    public function salary_update($update_id, Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'employee_id'       => 'required',
+            'salary'         => 'required'
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+            $errorArray = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                $errorArray[$field] = $messages[0];
+            }
+
+            return response()->json([
+                'errors' => $errorArray,
+                'success' => false,
+                'csrf_token' => csrf_token(),
+            ]);
+        }
+
+        $duplicate_status_1 = $this->common->get_duplicate_value('employee_id','salaries', $request->employee_id, $request->update_id);
+
+        if($duplicate_status_1>0){
+
+            $notification = array(
+                'message'=> "Duplicate Employee Found",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+
+            return response()->json($notification);
+        }
+
+        $user_session_data = session()->all();
+
+        $user_id = $user_session_data[config('app.app_session_name')]['id'];
+
+        DB::beginTransaction();
+
+        $data = salary::where('delete_status',0)
+            ->where('id',$request->update_id)
+            ->first();
+
+        $data->employee_id = $request->employee_id;
+        $data->salary = $request->salary;
+        $data->edit_by = $user_id;
+        $data->updated_at = now();
+
+        $data->save();
+
+        if($data==true){
+
+            $status = $this->common->add_user_activity_history('salaries',$data->id,'Edit Salary Details');
+
+            if($status==1){
+
+                DB::commit();
+
+                $notification = array(
+                    'message'=> "Salary Details Updated Successfully",
+                    'alert_type'=>'success',
+                    'csrf_token' => csrf_token()
+                );
+            }
+            else{
+
+                DB::rollBack();
+
+                $notification = array(
+                    'message'=> "Something Went Wrong Try Again",
+                    'alert_type'=>'warning',
+                    'csrf_token' => csrf_token()
+                );
+            }
+        }
+        else{
+
+            DB::rollBack();
+
+            $notification = array(
+                'message'=> "Salary Details Does Not Updated Successfully",
+                'alert_type'=>'warning',
+                'csrf_token' => csrf_token()
+            );
+        }
+
+        return response()->json($notification);
+    }
 }
